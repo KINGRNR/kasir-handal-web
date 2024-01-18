@@ -5,48 +5,27 @@
 // General mode(all devices)
 .aside {
 	display: flex;
+	flex-shrink: 0;
 	flex-direction: column;
-	box-shadow: get($aside-config, box-shadow);
-	background-color: get($aside-config, bg-color);
-	padding: 0;	
+	padding: 0;
 }
 
 // Desktop mode
 @include media-breakpoint-up(lg) {
 	.aside {
-		width: get($aside-config, width, desktop);
+		width: get($aside-config, width);
+		transition: width get($aside-config, transition-speed) ease;
 
-		// Logo
-		.aside-logo {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			background-color: get($aside-config, logo-bg-color);
-			height: get($aside-config, logo-height);
-			padding: 0 get($aside-config, padding-x);
-			flex-shrink: 0;
-		}
+		// Aside menu
+		.aside-menu {
+			width: get($aside-config, width); 
+		}	
+	}
 
-		// Aside footer
-		.aside-footer {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-		
-		// Fixed aside mode
-		.aside-fixed & {
-			position: fixed;
-			top: 0;
-			bottom: 0;
-			left: 0;
-			z-index: get($aside-config, z-index);
-		}
-
-		// Static aside mode
-		.aside-static & {
-			position: relative;
-			z-index: 1;
+	// Aside sticky mode 
+	.aside-enabled[data-kt-sticky-aside-sticky="on"] {
+		.content {
+			padding-left: get($aside-config, width) + get($content-spacing, desktop);
 		}
 	}
 }
@@ -54,12 +33,8 @@
 // Tablet & mobile modes
 @include media-breakpoint-down(lg) {
 	.aside {
+		box-shadow: none;
+		border-radius: 0;
 		display: none;
-		width: get($aside-config, width, tablet-and-mobile);
-
-		// Logo
-		.aside-logo {
-			display: none;
-		}
 	}
 }

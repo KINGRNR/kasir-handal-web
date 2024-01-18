@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\KategoriProdukController;
+use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\UserController;
+
 use App\Http\Middleware\roleCheck;
 use App\Http\Middleware\loginCheck;
 
@@ -16,7 +20,6 @@ use App\Http\Middleware\loginCheck;
 |
 */
 
-
 Route::get('/', function () {
     return view('welcome');
 })->name('index');
@@ -30,8 +33,12 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login.store');
 
 });
-Route::middleware([loginCheck::class])->group(function () {
+Route::middleware(['auth'])->group(function () {
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+});
 
+Route::middleware([loginCheck::class])->group(function () {
+    
     Route::group(['middleware' => ['roleCheck:FOV4Qtgi5lcQ9kCY']], function () {
         Route::get('/superadmin/dashboard', function () {
             return view('superadmin.dashboard.index');
@@ -42,6 +49,32 @@ Route::middleware([loginCheck::class])->group(function () {
         Route::get('/toko/dashboard', function () {
             return view('toko.dashboard.index');
         })->name('toko');
+        Route::get('/toko/petugas', function () {
+            return view('toko.petugas.index');
+        })->name('petugas');
+        Route::get('/toko/kategori', function () {
+            return view('toko.kategori.index');
+        })->name('kategori');
+        Route::get('/toko/produk', function () {
+            return view('toko.produk.index');
+        })->name('produk');
+        //controller
+
+        Route::controller(UserController::class)->group(function () {
+            foreach (['showPetugas', 'createPetugas', 'update', 'delete', 'getData'] as $key => $value) {
+                Route::post('/user/' . $value, $value);
+            }
+        });
+        Route::controller(KategoriProdukController::class)->group(function () {
+            foreach (['showKategori', 'save', 'detail', 'delete'] as $key => $value) {
+                Route::post('/kategori/' . $value, $value);
+            }
+        });
+        Route::controller(ProdukController::class)->group(function () {
+            foreach (['showProduk'] as $key => $value) {
+                Route::post('/produk/' . $value, $value);
+            }
+        });
     });
 
 
