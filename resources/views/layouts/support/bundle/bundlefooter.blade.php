@@ -5,18 +5,31 @@
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
 </script>
 <script>
-    var hostUrl = "assets/";
+    var hostUrl = "../assets/";
 </script>
 <!--begin::Javascript-->
 <!--begin::Global Javascript Bundle(used by all pages)-->
-<script src="assets/plugins/global/plugins.bundle.js"></script>
-<script src="assets/js/scripts.bundle.js"></script>
+<script src="../assets/plugins/global/plugins.bundle.js"></script>
+<script src="../assets/js/scripts.bundle.js"></script>
 <!--end::Global Javascript Bundle-->
 <!--begin::Page Vendors Javascript(used by this page)-->
-<script src="assets/plugins/custom/fslightbox/fslightbox.bundle.js"></script>
-<script src="assets/plugins/custom/typedjs/typedjs.bundle.js"></script>
+<script src="../assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
 <!--end::Page Vendors Javascript-->
 <!--begin::Page Custom Javascript(used by this page)-->
-<script src="assets/js/custom/landing.js"></script>
-<script src="assets/js/custom/pages/company/pricing.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../assets/js/custom/widgets.js"></script>
+<script src="../assets/js/custom/apps/chat/chat.js"></script>
+<script src="../assets/js/custom/modals/create-app.js"></script>
+<script src="../assets/js/custom/modals/upgrade-plan.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+{{-- <script src="../assets/plugins/custom/datatables/datatables.bundle.js"></script> --}}
+
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>

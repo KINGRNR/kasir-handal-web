@@ -52,24 +52,33 @@ class AuthController extends Controller
 
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = User::where('email', $request->email)->firstOrFail();
-            // $photo = DB::table('resume')->where('resume_user_id', $user->id)->first();
-            // if ($photo) {
-            //     session(['user_photo' => $photo->resume_official_photo]);
+            if ($user->users_role_id == 'BfiwyVUDrXOpmStr') {
+                $toko = DB::table('toko')->where('toko_user_id', $user->id)->first();
+                session(['toko_id' => $toko->toko_id]);
+
+            } else if ($user->users_role_id == 'TKQR2DSJlQ5b31V2') {
+                $id = DB::table('petugas')->where('petugas_user_id', $user->id)->first();
+                session(['toko_id' => $id->petugas_toko_id]);
+            }
+            // }
+            // if ($toko) {
             // }
             session(['user' => $user]);
             session(['user_id' => $user->id]);
             session(['user_role' => $user->users_role_id]);
 
-            $request->session()->regenerate();
 
             switch ($user->users_role_id) {
                 case 'FOV4Qtgi5lcQ9kCY':
+                    $request->session()->regenerate();
                     return redirect()->route('superadmin')->with('message', 'coba aja');
 
                 case 'BfiwyVUDrXOpmStr':
+                    $request->session()->regenerate();
                     return redirect()->route('toko')->with('message', 'no access');
 
                 case 'TKQR2DSJlQ5b31V2':
+                    $request->session()->regenerate();
                     return redirect()->route('petugas')->with('message', 'no access');
 
                 default:
