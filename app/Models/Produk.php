@@ -15,12 +15,13 @@ class Produk extends Model
         'id_produk_kategori',
         'nama_produk',
         'harga_produk',
-        'stok_produk'
+        'stok_produk',
+        'foto_produk'
     ];
+    const CREATED_AT = 'produk_created_at';
+    const UPDATED_AT = 'produk_updated_at';
     public function kategori()
     {
         return $this->belongsTo(Kategori::class, 'id_produk_kategori');
     }
-    // const CREATED_AT = 'kategori_created_at';
-    // const UPDATED_AT = 'kategori_updated_at';
 }

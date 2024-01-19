@@ -2,7 +2,7 @@
 <html lang="en">
     @include('layouts.support.bundle.bundleheader')    
 	
-    <body id="kt_body" style="background-image: url(../assets/media/patterns/header-bg.jpg)" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled">
+    <body id="kt_body" style="background-image: url(../assets/media/patterns/header-bg.jpg)" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled aside-enabled">
 		<!--begin::Main-->
 		<!--begin::Root-->
 		<div class="d-flex flex-column flex-root">
@@ -21,7 +21,7 @@
 					<div class="toolbar py-5 py-lg-15" id="kt_toolbar">
 						<div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
 							<div class="page-title d-flex flex-column me-3">
-								<h1 class="d-flex text-white fw-bolder my-1 fs-3">Produk	</h1>
+								<h1 class="d-flex text-white fw-bolder my-1 fs-3">Produk</h1>
 								<ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
 									<li class="breadcrumb-item text-white opacity-75">
 										<a href="../../demo2/dist/index.html" class="text-white text-hover-primary">Home</a>
@@ -29,13 +29,14 @@
 									<li class="breadcrumb-item">
 										<span class="bullet bg-white opacity-75 w-5px h-2px"></span>
 									</li>
-									<li class="breadcrumb-item text-white opacity-75">Produk	</li>
+									<li class="breadcrumb-item text-white opacity-75">Produk</li>
 								</ul>
 							</div>
 						</div>
 						<!--end::Container-->
 					</div>
-					<div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
+					<div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">'
+						@include('toko.header.sidebar')
 						<div class="content flex-row-fluid" id="kt_content">
 							@include('toko.produk.table')
 						</div>

@@ -55,7 +55,6 @@ class AuthController extends Controller
             if ($user->users_role_id == 'BfiwyVUDrXOpmStr') {
                 $toko = DB::table('toko')->where('toko_user_id', $user->id)->first();
                 session(['toko_id' => $toko->toko_id]);
-
             } else if ($user->users_role_id == 'TKQR2DSJlQ5b31V2') {
                 $id = DB::table('petugas')->where('petugas_user_id', $user->id)->first();
                 session(['toko_id' => $id->petugas_toko_id]);
@@ -138,5 +137,10 @@ class AuthController extends Controller
                 'message' => 'An error occurred during user registration.'
             ], $statusCode);
         }
+    }
+    public function getCsrfToken()
+    {
+        $token = Session::token();
+        return response()->json(['csrf_token' => $token]);
     }
 }
