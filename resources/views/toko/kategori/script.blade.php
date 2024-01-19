@@ -98,26 +98,52 @@
         $('#formKategori').trigger('reset');
         $('#id_kategori').val(null);
 
-        axios.post("/kategori/detail", {
+        $.ajax({
+            url: "/kategori/detail",
+            type: "POST",
+            data: {
                 id: id
-            }, {
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    // 'Content-Type': 'multipart/form-data',
-                }
-            })
-            .then(response => {
-                let data = response.data
+            },
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                // 'Content-Type': 'multipart/form-data',
+            },
+            success: function(data) {
                 $('#id_kategori').val(data.id_kategori);
                 $('#kode_kategori').val(data.kode_kategori);
-                $('#nama_kategori').val(data.nama_kategori)
+                $('#nama_kategori').val(data.nama_kategori);
                 $('#modalKategori').modal('show');
-
-            })
-            .catch(error => {
-                console.error('There has been a problem with your Axios operation:', error);
-            });
+            },
+            error: function(error) {
+                console.error('There has been a problem with your Ajax operation:', error);
+            }
+        });
     }
+
+    // function edit(id) {
+    //     $('#formKategori').trigger('reset');
+    //     $('#id_kategori').val(null);
+
+    //     axios.post("/kategori/detail", {
+    //             id: id
+    //         }, {
+    //             headers: {
+    //                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
+    //                 // 'Content-Type': 'multipart/form-data',
+    //             }
+    //         })
+    //         .then(response => {
+    //             let data = response.data
+    //             $('#id_kategori').val(data.id_kategori);
+    //             $('#kode_kategori').val(data.kode_kategori);
+    //             $('#nama_kategori').val(data.nama_kategori)
+    //             $('#modalKategori').modal('show');
+
+    //         })
+    //         .catch(error => {
+    //             console.error('There has been a problem with your Axios operation:', error);
+    //         });
+    // }
 
     function wipeData() {
         $('#formKategori').trigger('reset');

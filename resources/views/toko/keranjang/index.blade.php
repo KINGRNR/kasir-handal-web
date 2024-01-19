@@ -21,7 +21,7 @@
 					<div class="toolbar py-5 py-lg-15" id="kt_toolbar">
 						<div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
 							<div class="page-title d-flex flex-column me-3">
-								<h1 class="d-flex text-white fw-bolder my-1 fs-3">Kategori</h1>
+								<h1 class="d-flex text-white fw-bolder my-1 fs-3">Produk</h1>
 								<ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
 									<li class="breadcrumb-item text-white opacity-75">
 										<a href="../../demo2/dist/index.html" class="text-white text-hover-primary">Home</a>
@@ -29,16 +29,17 @@
 									<li class="breadcrumb-item">
 										<span class="bullet bg-white opacity-75 w-5px h-2px"></span>
 									</li>
-									<li class="breadcrumb-item text-white opacity-75">Kategori</li>
+									<li class="breadcrumb-item text-white opacity-75">Produk</li>
 								</ul>
 							</div>
 						</div>
 						<!--end::Container-->
 					</div>
 					<div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
-						@include('toko.header.sidebar')
-						<div class="content flex-row-fluid" id="kt_content">
-							@include('toko.kategori.table')
+							@include('toko.header.sidebar')
+							<div class="content flex-row-fluid" id="kt_content">
+
+							@include('toko.keranjang.invoice')
 						</div>
 					</div>
 					<div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
@@ -71,6 +72,6 @@
 	</body>
 
         @include('layouts.support.bundle.bundlefooter')
-		@include('toko.kategori.script')
+		@include('toko.keranjang.script')
 
 </html>

@@ -19,7 +19,13 @@ use App\Http\Middleware\loginCheck;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/api/getcsrf', [AuthController::class, 'getCsrfToken'])->name('getCsrfToken');
 
+Route::controller(KategoriProdukController::class)->group(function () {
+    foreach (['showKategori', 'save', 'detail', 'delete'] as $key => $value) {
+        Route::post('api/kategori/' . $value, $value);
+    }
+});
 Route::get('/', function () {
     return view('welcome');
 })->name('index');
@@ -30,7 +36,7 @@ Route::middleware(['guest'])->group(function () {
     Route::get('/register', function () {
         return view('auth.register');
     })->name('register');
-    Route::post('/login', [AuthController::class, 'login'])->name('login.store');
+    Route::post('/postlogin', [AuthController::class, 'login'])->name('login.store');
 
 });
 Route::middleware(['auth'])->group(function () {
@@ -58,6 +64,9 @@ Route::middleware([loginCheck::class])->group(function () {
         Route::get('/toko/produk', function () {
             return view('toko.produk.index');
         })->name('produk');
+        Route::get('/toko/keranjang', function () {
+            return view('toko.keranjang.index');
+        })->name('keranjang');
         //controller
 
         Route::controller(UserController::class)->group(function () {
@@ -71,7 +80,7 @@ Route::middleware([loginCheck::class])->group(function () {
             }
         });
         Route::controller(ProdukController::class)->group(function () {
-            foreach (['showProduk'] as $key => $value) {
+            foreach (['showProduk', 'getKategori', 'save'] as $key => $value) {
                 Route::post('/produk/' . $value, $value);
             }
         });

@@ -16,7 +16,7 @@
         console.log("tes")
         init();
         $('.menu_link').removeClass('active');
-        $('.barang').addClass('active');
+        $('.keranjang').addClass('active');
     });
 
     init = async () => {

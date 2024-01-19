@@ -6,7 +6,7 @@
         <div class="d-flex flex-column flex-lg-row flex-column-fluid">
             <!--begin::Aside-->
             <div class="d-flex flex-column flex-lg-row-auto w-xl-900px positon-xl-relative"
-                style="background-color: #F2C98A">
+                style="background: linear-gradient(180deg, #2F3281 0%, #40A0B6 66.27%, #08C0B5 100%);">
 
             </div>
             <!--end::Aside-->

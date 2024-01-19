@@ -1,4 +1,4 @@
-<div class="card table-switch-petugas">
+<div class="card table-switch-produk">
     <div class="card-header py-4">
         <div class="card-title">
             {{-- <h1
@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="card-toolbar">
-            <button type="button" class="btn btn-primary me-2 reset-filter" onclick="switchForm()">Tambah Petugas</button>
+            <button type="button" class="btn btn-primary me-2 reset-filter" onclick="switchForm()">Tambah Produk</button>
             <div class="d-flex">
                 <button type="button" class="btn btn-sm btn-danger deleted-selected"
                     data-kt-customer-table-select="delete_selected" style="display: none;"
@@ -49,6 +49,7 @@
                     <!--begin::Table row-->
                     <tr class="text-start align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                         <th class="ps-4" width="20">No</th>
+                        <th class="min-w-100px">Foto Produk</th>
                         <th class="min-w-125px">Nama Produk</th>
                         <th class="min-w-125px">Harga Produk</th>
                         <th class="min-w-125px">Stok</th>
@@ -65,6 +66,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalProduk" tabindex="-1" aria-labelledby="modalProduk" aria-hidden="true">
+<div class="formProduk" style="display: none;">
     @include('toko.produk.form')
 </div>
