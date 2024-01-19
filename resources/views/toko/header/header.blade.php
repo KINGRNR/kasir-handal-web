@@ -86,8 +86,8 @@
 								</div>
 							</div>
 						</div>
-						<div onclick="window.location.href='/toko/petugas'" class="menu-item me-lg-1">
-							<span class="menu-link py-3">
+						<div onclick="window.location.href='/toko/keranjang'" class="menu-item me-lg-1">
+							<span class="menu-link py-3 keranjang">
 								<span class="menu-title">Penjualan</span>
 								<span class="menu-arrow d-lg-none"></span>
 							</span>
@@ -1690,7 +1690,7 @@
 							<!--end::Menu item-->
 							<!--begin::Menu item-->
 							<div class="menu-item px-5">
-								<a href="../../demo2/dist/authentication/flows/basic/sign-in.html" class="menu-link px-5">Sign Out</a>
+								<a href="../logout" class="menu-link px-5">Sign Out</a>
 							</div>
 							<!--end::Menu item-->
 							<!--begin::Menu separator-->

@@ -4,7 +4,9 @@
 
 <body id="kt_body" data-bs-spy="scroll" data-bs-target="#kt_landing_menu" data-bs-offset="200"
     class="bg-white position-relative">
+
     <!--begin::Main-->
+
     <div class="d-flex flex-column flex-root">
         <!--begin::Header Section-->
         <div class="mb-0" id="home">
@@ -12,9 +14,27 @@
             <div class="bgi-no-repeat bgi-size-contain bgi-position-x-center bgi-position-y-bottom landing-dark-bg"
                 style="background-image: url(assets/media/svg/illustrations/landing.svg)">
                 <!--begin::Header-->
+                <div class="container-fluid" style="background: #40A0B6;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="total"
+                                style=" display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <!-- Content on the left (Removed "tes") -->
+                                </div>
+                                <div class="me-5 gap-2">
+                                    <a href="/register" class="text-white">Daftar</a>
+                                    <a href="/login" class="text-white">Login</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
                 <div class="landing-header" data-kt-sticky="true" data-kt-sticky-name="landing-header"
-                    data-kt-sticky-offset="{default: '200px', lg: '300px'}">
+                    data-kt-sticky-offset="{default: '200px', lg: '300px'}" style="background: white;">
                     <!--begin::Container-->
+                    
                     <div class="container">
                         <!--begin::Wrapper-->
                         <div class="d-flex align-items-center justify-content-between">
@@ -39,11 +59,16 @@
                                 </button>
                                 <!--end::Mobile menu toggle-->
                                 <!--begin::Logo image-->
-                                <a href="../../demo7/dist/landing.html">
-                                    <img alt="Logo" src="assets/media/logos/logo-landing.svg"
-                                        class="logo-default h-25px h-lg-30px" />
-                                    <img alt="Logo" src="assets/media/logos/logo-landing-dark.svg"
-                                        class="logo-sticky h-20px h-lg-25px" />
+                                <a href="/">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="25" viewBox="0 0 23 25" fill="none">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11.525 0C8.49212 0 5.72917 1.0232 4.09422 1.85918C3.94651 1.93462 3.80886 2.00868 3.68062 2.08001C3.42682 2.22128 3.21061 2.35295 3.03873 2.46885L4.8986 5.26551L5.77415 5.62144C9.19579 7.38461 13.7844 7.38461 17.2067 5.62144L18.2004 5.09475L19.9589 2.46885C19.5947 2.22612 19.2159 2.00692 18.8248 1.81255C17.198 0.985483 14.5008 0 11.5257 0M7.20028 3.16562C6.54168 3.03975 5.8912 2.87302 5.25245 2.66636C6.78399 1.97165 9.0662 1.23443 11.5257 1.23443C13.2291 1.23443 14.8399 1.58829 16.172 2.0368C14.6109 2.26106 12.9451 2.64167 11.3578 3.11007C10.1089 3.47902 8.64924 3.43925 7.20028 3.16562ZM17.9164 6.63846L17.7512 6.7235C13.9872 8.66292 8.99436 8.66292 5.23029 6.7235L5.07385 6.64258C-0.581655 12.98 -4.89898 24.6864 11.525 24.6864C27.949 24.6864 23.5269 12.7626 17.9164 6.63846ZM10.8274 12.3443C10.4712 12.3443 10.1297 12.4888 9.87782 12.746C9.62599 13.0032 9.48451 13.3521 9.48451 13.7158C9.48451 14.0796 9.62599 14.4285 9.87782 14.6857C10.1297 14.9429 10.4712 15.0874 10.8274 15.0874V12.3443ZM12.1702 10.9727V10.2869H10.8274V10.9727C10.1151 10.9727 9.43195 11.2617 8.92827 11.7761C8.4246 12.2906 8.14163 12.9883 8.14163 13.7158C8.14163 14.4434 8.4246 15.1411 8.92827 15.6555C9.43195 16.17 10.1151 16.459 10.8274 16.459V19.2022C10.2432 19.2022 9.7457 18.8216 9.56038 18.288C9.53288 18.2007 9.48853 18.1199 9.42994 18.0505C9.37135 17.981 9.29971 17.9242 9.21926 17.8835C9.13882 17.8428 9.05119 17.819 8.96158 17.8135C8.87196 17.808 8.78218 17.8209 8.69753 17.8514C8.61288 17.882 8.53509 17.9295 8.46875 17.9913C8.40242 18.0531 8.34889 18.1279 8.31134 18.2112C8.27378 18.2944 8.25296 18.3846 8.25011 18.4762C8.24725 18.5679 8.26243 18.6592 8.29472 18.7447C8.47993 19.2796 8.82293 19.7428 9.2765 20.0703C9.73006 20.3979 10.2719 20.5737 10.8274 20.5738V21.2595H12.1702V20.5738C12.8826 20.5738 13.5657 20.2847 14.0694 19.7703C14.573 19.2559 14.856 18.5581 14.856 17.8306C14.856 17.1031 14.573 16.4053 14.0694 15.8909C13.5657 15.3764 12.8826 15.0874 12.1702 15.0874V12.3443C12.7544 12.3443 13.2519 12.7249 13.4372 13.2584C13.4647 13.3457 13.5091 13.4265 13.5677 13.496C13.6263 13.5654 13.6979 13.6222 13.7784 13.6629C13.8588 13.7036 13.9464 13.7274 14.036 13.7329C14.1257 13.7385 14.2154 13.7256 14.3001 13.695C14.3847 13.6645 14.4625 13.6169 14.5289 13.5551C14.5952 13.4933 14.6487 13.4186 14.6863 13.3353C14.7238 13.252 14.7447 13.1618 14.7475 13.0702C14.7504 12.9785 14.7352 12.8872 14.7029 12.8017C14.5177 12.2668 14.1747 11.8037 13.7211 11.4761C13.2676 11.1486 12.7257 10.9727 12.1702 10.9727ZM12.1702 16.459V19.2022C12.5264 19.2022 12.868 19.0577 13.1198 18.8004C13.3716 18.5432 13.5131 18.1944 13.5131 17.8306C13.5131 17.4668 13.3716 17.118 13.1198 16.8607C12.868 16.6035 12.5264 16.459 12.1702 16.459Z" fill="#2F3281"/>
+                                      </svg>
+                                      <span class="mt-2" style="color: #2F3281;
+                                      font-family: Poppins;
+                                      font-size: 20px;
+                                      font-style: normal;
+                                      font-weight: 500;
+                                      line-height: 21px; /* 105% */">KasirHandal</span>
                                 </a>
                                 <!--end::Logo image-->
                             </div>
@@ -121,8 +146,6 @@
 
                                     <a href="{{ session('user_role') === 'FOV4Qtgi5lcQ9kCY' ? route('superadmin') : route('other_role_route') }}"
                                         class="btn btn-success">Portal</a>
-                                @else
-                                    <a href="/login" class="btn btn-success">Sign In</a>
                                     @endif
                                 </div>
                                 <!--end::Toolbar-->
@@ -133,89 +156,34 @@
                     </div>
                     <!--end::Header-->
                     <!--begin::Landing hero-->
-                    <div class="d-flex flex-column flex-center w-100 min-h-350px min-h-lg-500px px-9">
-                        <!--begin::Heading-->
-                        <div class="text-center mb-5 mb-lg-10 py-10 py-lg-20">
-                            <!--begin::Title-->
-                            <h1 class="text-white lh-base fw-bolder fs-2x fs-lg-3x mb-15">Build An Outstanding Solutions
-                                <br />with
-                                <span
-                                    style="background: linear-gradient(to right, #12CE5D 0%, #FFD80C 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">
-                                    <span id="kt_landing_hero_text">The Best Theme Ever</span>
-                                </span>
-                            </h1>
-                            <!--end::Title-->
-                            <!--begin::Action-->
-                            <a href="../../demo7/dist/index.html" class="btn btn-primary">Try Metronic</a>
-                            <!--end::Action-->
-                        </div>
-                        <!--end::Heading-->
-                        <!--begin::Clients-->
-                        <div class="d-flex flex-center flex-wrap position-relative px-5">
-                            <!--begin::Client-->
-                            <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="Fujifilm">
-                                <img src="assets/media/svg/brand-logos/fujifilm.svg" class="mh-30px mh-lg-40px"
-                                    alt="" />
-                            </div>
-                            <!--end::Client-->
-                            <!--begin::Client-->
-                            <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="Vodafone">
-                                <img src="assets/media/svg/brand-logos/vodafone.svg" class="mh-30px mh-lg-40px"
-                                    alt="" />
-                            </div>
-                            <!--end::Client-->
-                            <!--begin::Client-->
-                            <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip"
-                                title="KPMG International">
-                                <img src="assets/media/svg/brand-logos/kpmg.svg" class="mh-30px mh-lg-40px"
-                                    alt="" />
-                            </div>
-                            <!--end::Client-->
-                            <!--begin::Client-->
-                            <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="Nasa">
-                                <img src="assets/media/svg/brand-logos/nasa.svg" class="mh-30px mh-lg-40px"
-                                    alt="" />
-                            </div>
-                            <!--end::Client-->
-                            <!--begin::Client-->
-                            <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="Aspnetzero">
-                                <img src="assets/media/svg/brand-logos/aspnetzero.svg" class="mh-30px mh-lg-40px"
-                                    alt="" />
-                            </div>
-                            <!--end::Client-->
-                            <!--begin::Client-->
-                            <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip"
-                                title="AON - Empower Results">
-                                <img src="assets/media/svg/brand-logos/aon.svg" class="mh-30px mh-lg-40px"
-                                    alt="" />
-                            </div>
-                            <!--end::Client-->
-                            <!--begin::Client-->
-                            <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="Hewlett-Packard">
-                                <img src="assets/media/svg/brand-logos/hp-3.svg" class="mh-30px mh-lg-40px"
-                                    alt="" />
-                            </div>
-                            <!--end::Client-->
-                            <!--begin::Client-->
-                            <div class="d-flex flex-center m-3 m-md-6" data-bs-toggle="tooltip" title="Truman">
-                                <img src="assets/media/svg/brand-logos/truman.svg" class="mh-30px mh-lg-40px"
-                                    alt="" />
-                            </div>
-                            <!--end::Client-->
-                        </div>
-                        <!--end::Clients-->
+                    <div class="d-flex flex-column flex-center w-100 min-h-350px min-h-lg-500px px-9 position-relative" style="background: #08C0B5;">
+                        <!-- Image in bottom-left corner -->
+                        <img src="assets/assets_foto/kasir.png" class="img-fluid position-absolute start-0 top-0 height-100" alt="" style="height: 500px; width: 1040px;">
+                    
+                        <!-- SVG overlay on the right -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="996" height="500" viewBox="0 0 884 460" fill="none" style="position: absolute; top: 0; right: 0; width: 959px; height: 500px; flex-shrink: 0;">
+                            <path d="M113.965 2.4156C114.859 0.889945 116.47 0 118.239 0H879C881.762 0 884 2.23858 884 5V455C884 457.761 881.762 460 879 460H118.161C116.435 460 114.859 459.155 113.951 457.686C100.728 436.285 0.5 272.828 0.5 235C0.5 197.158 100.797 24.8709 113.965 2.4156Z" fill="url(#paint0_linear_98_941)"/>
+                            <defs>
+                                <linearGradient id="paint0_linear_98_941" x1="884" y1="230" x2="-229.471" y2="207.59" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#2F3281"/>
+                                    <stop offset="0.571924" stop-color="#40A0B6"/>
+                                    <stop offset="1" stop-color="#08C0B5"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    
+                        <!-- Your additional content goes here -->
                     </div>
-                    <!--end::Landing hero-->
                 </div>
                 <!--end::Wrapper-->
                 <!--begin::Curve bottom-->
-                <div class="landing-curve landing-dark-color mb-10 mb-lg-20">
+                {{-- <div class="landing-curve landing-dark-color mb-10 mb-lg-20">
                     <svg viewBox="15 12 1470 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M0 11C3.93573 11.3356 7.85984 11.6689 11.7725 12H1488.16C1492.1 11.6689 1496.04 11.3356 1500 11V12H1488.16C913.668 60.3476 586.282 60.6117 11.7725 12H0V11Z"
                             fill="currentColor"></path>
                     </svg>
-                </div>
+                </div> --}}
                 <!--end::Curve bottom-->
             </div>
             <!--end::Header Section-->
@@ -224,15 +192,11 @@
                 <!--begin::Container-->
                 <div class="container">
                     <!--begin::Heading-->
-                    <div class="text-center mb-17">
+                    <div class="text-center mt-5 mb-17">
                         <!--begin::Title-->
                         <h3 class="fs-2hx text-dark mb-5" id="how-it-works"
-                            data-kt-scroll-offset="{default: 100, lg: 150}">How it Works</h3>
+                            data-kt-scroll-offset="{default: 100, lg: 150}">Fitur Unggulan</h3>
                         <!--end::Title-->
-                        <!--begin::Text-->
-                        <div class="fs-5 text-muted fw-bold">Save thousands to millions of bucks by using single tool
-                            <br />for different amazing and great useful admin
-                        </div>
                         <!--end::Text-->
                     </div>
                     <!--end::Heading-->
@@ -241,25 +205,26 @@
                         <!--begin::Col-->
                         <div class="col-md-4 px-5">
                             <!--begin::Story-->
-                            <div class="text-center mb-10 mb-md-0">
+                            <div class="text-center mb-10 mb-md-0 border">
                                 <!--begin::Illustration-->
-                                <img src="assets/media/illustrations/sigma-1/2.png" class="mh-125px mb-9"
+                                {{-- <img src="assets/media/illustrations/sigma-1/2.png" class="mh-125px mb-9"
+                                    alt="" /> --}}
+                                    <img src="assets/assets_foto/1.png" class="mh-125px mb-9"
                                     alt="" />
                                 <!--end::Illustration-->
                                 <!--begin::Heading-->
                                 <div class="d-flex flex-center mb-5">
                                     <!--begin::Badge-->
-                                    <span class="badge badge-circle badge-light-success fw-bolder p-5 me-3 fs-3">1</span>
                                     <!--end::Badge-->
                                     <!--begin::Title-->
-                                    <div class="fs-5 fs-lg-3 fw-bolder text-dark">Jane Miller</div>
+                                    <div class="fs-5 fs-lg-3 fw-bolder text-dark">Laporan Penjualan</div>
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Heading-->
                                 <!--begin::Description-->
-                                <div class="fw-bold fs-6 fs-lg-4 text-muted">Save thousands to millions of bucks
-                                    <br />by using single tool for different
-                                    <br />amazing and great
+                                <div class="fw-bold fs-6 fs-lg-4 text-muted">Kasir Handal menyediakan
+                                    <br />Laporan Penjualan Toko Anda
+                                    <br />setiap bulannya.
                                 </div>
                                 <!--end::Description-->
                             </div>
@@ -267,27 +232,28 @@
                         </div>
                         <!--end::Col-->
                         <!--begin::Col-->
-                        <div class="col-md-4 px-5">
+                        <div class="col-md-4 px-5 border">
                             <!--begin::Story-->
                             <div class="text-center mb-10 mb-md-0">
                                 <!--begin::Illustration-->
-                                <img src="assets/media/illustrations/sigma-1/8.png" class="mh-125px mb-9"
-                                    alt="" />
+                                {{-- <img src="assets/media/illustrations/sigma-1/8.png" class="mh-125px mb-9"
+                                    alt="" /> --}}
+                                    <img src="assets/assets_foto/2.png" class="mh-125px mb-9"/>
+                                                                                                
                                 <!--end::Illustration-->
                                 <!--begin::Heading-->
                                 <div class="d-flex flex-center mb-5">
                                     <!--begin::Badge-->
-                                    <span class="badge badge-circle badge-light-success fw-bolder p-5 me-3 fs-3">2</span>
                                     <!--end::Badge-->
                                     <!--begin::Title-->
-                                    <div class="fs-5 fs-lg-3 fw-bolder text-dark">Setup Your App</div>
+                                    <div class="fs-5 fs-lg-3 fw-bolder text-dark">Transaksi Lebih Mudah</div>
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Heading-->
                                 <!--begin::Description-->
-                                <div class="fw-bold fs-6 fs-lg-4 text-muted">Save thousands to millions of bucks
-                                    <br />by using single tool for different
-                                    <br />amazing and great
+                                <div class="fw-bold fs-6 fs-lg-4 text-muted">Kasir Handal menyediakan banyak
+                                    <br />metode pembayaran, pelanggan
+                                    <br />bisa membayar lewat e-wallet maupun mobile banking. 
                                 </div>
                                 <!--end::Description-->
                             </div>
@@ -295,27 +261,26 @@
                         </div>
                         <!--end::Col-->
                         <!--begin::Col-->
-                        <div class="col-md-4 px-5">
+                        <div class="col-md-4 px-5 ">
                             <!--begin::Story-->
-                            <div class="text-center mb-10 mb-md-0">
+                            <div class="text-center mb-10 mb-md-0 border">
                                 <!--begin::Illustration-->
-                                <img src="assets/media/illustrations/sigma-1/12.png" class="mh-125px mb-9"
-                                    alt="" />
+                                {{-- <img src="assets/media/illustrations/sigma-1/12.png" class="mh-125px mb-9" --}}
+                                    {{-- alt="" /> --}}
+                                    <img src="assets/assets_foto/3.png" class="mh-125px mb-9"/>
+
                                 <!--end::Illustration-->
                                 <!--begin::Heading-->
                                 <div class="d-flex flex-center mb-5">
                                     <!--begin::Badge-->
-                                    <span class="badge badge-circle badge-light-success fw-bolder p-5 me-3 fs-3">3</span>
                                     <!--end::Badge-->
                                     <!--begin::Title-->
-                                    <div class="fs-5 fs-lg-3 fw-bolder text-dark">Enjoy Nautica App</div>
+                                    <div class="fs-5 fs-lg-3 fw-bolder text-dark">Perhitungan Tepat</div>
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Heading-->
                                 <!--begin::Description-->
-                                <div class="fw-bold fs-6 fs-lg-4 text-muted">Save thousands to millions of bucks
-                                    <br />by using single tool for different
-                                    <br />amazing and great
+                                <div class="fw-bold fs-6 fs-lg-4 text-muted">Dengan menggunakan Kasir Handal anda tidak akan mengalami kesalahan perhitungan.
                                 </div>
                                 <!--end::Description-->
                             </div>
