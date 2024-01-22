@@ -70,6 +70,20 @@ class ProdukController extends Controller
   //     ]);
   // }
   }
+  public function showProdukCart(Request $request) 
+  {
+    $id = session()->get('toko_id');
+    $operation = DB::table('v_produk')->where('id_kategori_toko', $id)->get();
+
+    return response()->json($operation);
+  }
+  public function addCart(Request $request) 
+  {
+    $id = $request->post();
+    $operation = DB::table('v_produk')->where('id_produk', $id)->first();
+
+    return response()->json($operation);
+  }
 }
   
 // }

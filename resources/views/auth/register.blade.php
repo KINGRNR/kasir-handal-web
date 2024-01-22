@@ -20,30 +20,22 @@
                         <form class="form w-100" id="form-register" novalidate="novalidate" id="kt_sign_up_form"
                             method="POST">
                             @csrf
-
-                            <div class="mb-10 text-center">
-                                <h1 class="text-dark mb-3">Create an Account</h1>
-                                <div class="text-gray-400 fw-bold fs-4">Already have an account?
-                                    <a href="{{ route('login') }}" class="link-primary fw-bolder">Sign in here</a>
+                            <div class="text-center mb-10">
+                                <!--begin::Title-->
+                                <h1 class="text-dark mb-3">Buat Akun untuk Melihat Fitur</h1>
+                                <!--end::Title-->
+                                <!--begin::Link-->
+                                <div class="text-gray-400 fw-bold fs-4">Sudah Punya Akun?
+                                    <a href="/login" class="link-primary fw-bolder">Masuk Sekarang</a>
                                 </div>
-                            </div>
-                            <button type="button" class="btn btn-light-primary fw-bolder w-100 mb-10">
-                                <img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg"
-                                    class="h-20px me-3" />Sign in with
-                                Google</button>
-                            <div class="d-flex align-items-center mb-10">
-                                <div class="border-bottom border-gray-300 mw-50 w-100"></div>
-                                <span class="fw-bold text-gray-400 fs-7 mx-2">OR</span>
-                                <div class="border-bottom border-gray-300 mw-50 w-100"></div>
+                                <!--end::Link-->
                             </div>
                             <div class="row fv-row mb-7">
-                                <div class="col-xl-6">
                                     <label class="form-label fw-bolder text-dark fs-6"> Name</label>
                                     <input id="name" type="text"
                                         class="form-control form-control-lg form-control-solid @error('name') is-invalid @enderror"
                                         name="name" value="{{ old('name') }}" required autocomplete="name"
                                         autofocus>
-                                </div>
                             </div>
                             @error('name')
                                 <span class="invalid-feedback" role="alert">

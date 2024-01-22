@@ -8,7 +8,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
 <script src="../assets/js/quickact.js"></script>
-
+<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+    data-client-key="SB-Mid-client-UQCyL2vrXEl4EHhd"></script>
 <script>
     APP_URL = "{{ getenv('APP_URL') }}/";
 
@@ -20,71 +21,19 @@
     });
 
     init = async () => {
-        await initializeDataTables();
-        await getKategori();
+        await showProduk();
         // quick.unblockPage()
     }
     $('#modal_form').on('hidden.bs.modal', function() {
         $(`input, select`).removeAttr('disabled');
     });
 
-    function getKategori() {
-        axios.post("/produk/getKategori", {
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    // 'Content-Type': 'multipart/form-data',
-                }
-            })
-            .then(response => {
-                var data = response.data
-                $.each(data, function(key, value) {
-                    $('#kategori_produk').append('<option value="' + value.id_kategori + '">' + value
-                        .nama_kategori + '</option>');
-                });
-            })
-            .catch(error => {
-                console.error('There has been a problem with your Axios operation:', error);
-            });
-    }
-    $(document).ready(function() {
-        $('#harga_produk').on('input', function() {
-            var inputValue = $(this).val();
-            var numericValue = inputValue.replace(/\D/g, ''); // Remove non-numeric characters
-            var formattedValue = formatRupiah(numericValue);
-            $(this).val(formattedValue);
-        });
 
-        // Fungsi untuk format rupiah
-        function formatRupiah(value) {
-            var numberString = value.toString().replace(/\D/g, '');
-            var split = numberString.split(',');
-            var sisa = split[0].length % 3;
-            var rupiah = split[0].substr(0, sisa);
-            var ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+    function showProduk() {
+        // $('#formKategori').trigger('reset');
+        // $('#id_kategori').val(null);
 
-            if (ribuan) {
-                var separator = sisa ? '.' : '';
-                rupiah += separator + ribuan.join('.');
-            }
-
-            rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
-            return rupiah;
-        }
-
-        // When submitting the form, get the numeric value without separators
-        $('#yourFormId').submit(function() {
-            var numericValue = $('#harga_produk').val().replace(/\D/g, '');
-            $('#harga_produk').val(numericValue);
-        });
-    });
-
-    function edit(id) {
-        $('#formKategori').trigger('reset');
-        $('#id_kategori').val(null);
-
-        axios.post("/kategori/detail", {
-                id: id
-            }, {
+        axios.post("/produk/showProdukCart", {
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     // 'Content-Type': 'multipart/form-data',
@@ -92,143 +41,102 @@
             })
             .then(response => {
                 let data = response.data
-                $('#id_kategori').val(data.id_kategori);
-                $('#kode_kategori').val(data.kode_kategori);
-                $('#nama_kategori').val(data.nama_kategori)
-                $('#modalKategori').modal('show');
+                console.log(data);
+                $.each(data, function(i, v) {
+                    console.log(v);
+
+                    var produk = `
+                    <div class="col-md-4 mb-4">
+                        <div class="card border rounded text-center">
+                            <img src="/file/produk_foto/${v.foto_produk}" class="card-img-top" alt="Product 1">
+                            <div class="card-body">
+                                <p class="card-text mb-2">${v.nama_kategori}</p>
+                                <h6 class="card-title mb-2">${v.nama_produk}</h6>
+                                <p class="card-text mb-2"><span class="badge bg-success">Rp.${v.harga_produk}</span>
+                                </p>
+                                <p class="card-text">Tersedia : ${v.stok_produk}</p>
+                                <button class="btn btn-sm btn-primary" id="tambahkeranjang${v.id_produk}" onclick="tambahKeranjang(${v.id_produk})">Tambah ke Keranjang</button>
+                            </div>
+                        </div>
+                    </div>
+
+              `
+                    $('.produk-container').append(produk)
+                })
+
 
             })
             .catch(error => {
                 console.error('There has been a problem with your Axios operation:', error);
             });
     }
-    //filter
-    var filterDatatable = [];
-    var menutable = null;
+    var totalPrice = 0;
+    var productCounter = 0;
 
-    function initializeDataTables(filterDatatable) {
-        menutable = $('#table-produk').DataTable({
-            processing: true,
-            serverSide: true,
-            clickable: true,
-            searchAble: true,
-            searching: true,
-            destroyAble: true,
-            ajax: {
-                url: APP_URL + 'produk/showProduk',
-                type: "POST",
-                dataType: "json",
+    function tambahKeranjang(id) {
+        $('#tambahkeranjang' + id).addClass('d-none');
+        axios.post("/produk/addCart", {
+                id: id
+            }, {
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-            },
-            columns: [{
-                    "targets": 0,
-                    render: function(data, type, row, meta) {
-                        return '<span class="ps-3">' + (meta.row + meta.settings._iDisplayStart + 1) +
-                            '</span>';
-                    }
-                },
-                {
-                    data: 'foto_produk',
-                    render: function(data, type, row) {
-                        return '<img src="/file/produk_foto/' + row.foto_produk +
-                            '" alt="Product Image" class="img-thumbnail" width="50" height="50">';
-                    }
-                },
-                {
-                    data: 'nama_produk',
-                    name: 'nama_produk'
-                },
-                {
-                    data: 'harga_produk',
-                    render: function(data, type, row) {
-                        return `<span class="badge bg-success">Rp. ${row.harga_produk}</span>`;
-                    }
-                },
-                {
-                    data: 'stok_produk',
-                    name: 'stok_produk'
-                },
-                {
-                    data: 'nama_kategori',
-                    name: 'nama_kategori'
-                },
-                {
-                    data: 'kode_kategori',
-                    name: 'kode_kategori'
-                }, {
-                    data: 'id',
-                    render: function(data, type, row) {
-                        console.log(row);
-                        var editButton = '<button class="btn btn-sm btn-warning" onclick="editRow(' +
-                            row.id + ')">Edit</button>';
-
-                        var deleteButton = '<button class="btn btn-sm btn-danger" onclick="deleteRow(' +
-                            row.id + ')">Delete</button>';
-
-                        return editButton + ' ' + deleteButton;
-                    }
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
                 }
-            ]
+            })
+            .then(response => {
+                let data = response.data;
+                console.log(data);
+                productCounter++;
 
-        });
+                var maxQuantity = data.stok_produk; // Maximum quantity is the available stock
+                var quantity = 1; // Default quantity
+                var id = data.id_produk;
+                var keranjang = `
+                <tr>
+                    <td class="ps-4">#</td>
+                    <td class="min-w-125px">${data.nama_produk}</td>
+                    <td class="min-w-125px quantity-controls">
+                        <button class="btn btn-sm btn-secondary" onclick="decrementQuantity(${maxQuantity}, ${data.harga_produk}, ${id})">-</button>
+                        <span class="mx-2" id="quantity${id}">${quantity}</span>
+                        <button class="btn btn-sm btn-primary" onclick="incrementQuantity(${maxQuantity}, ${data.harga_produk}, ${id})">+</button>
+                    </td>
+                    <td class="min-w-125px" id="harga${id}">${data.harga_produk}</td>
 
-        $('#search_menu').on('input', function() {
-            var searchValue = $(this).val();
-            menutable.search(searchValue).draw();
-        });
+                </tr>
+            `;
+                var form = `
+                    <input type="text" name="id_produk${productCounter}" id="id_produk${productCounter}" class="min-w-125px id_produk" value="${data.id_produk}"></input>
 
-        // $('#table-user tbody').on('click', 'tr', function() {
-        //     let rowData = userTable.row(this).data();
-        //     if (rowData) {
-        //         let id = rowData.id;
-        //         onDetail(id);
-        //     } else {
-        //         onReset();
-        //         $('#formExample').find('input, select').removeAttr('disabled');
-        //         $('.actCreate').removeClass('d-none');
-        //         $('.actEdit').addClass('d-none');
-        //     }
-        // }).css('cursor', 'pointer');
-    }
+                   <input type="text" name="nama_produk${productCounter}" id="nama_produk${productCounter}" class="min-w-125px" value="${data.nama_produk}"></input>
+                    <input type="text"name="qty_produk${productCounter}" id="qty_produk${productCounter}" class="quantity-controls${id}" value="${quantity}">
+                    </input>
+                    <input type="text" name="harga_produk${productCounter}" id="harga_produk${productCounter}" value="${data.harga_produk}"></input>
 
-    function switchForm() {
-        $('.table-switch-produk').animate({
-            top: '250px',
-            opacity: '0'
-        }, function() {
-            $('.formProduk').show();
-            $('.formProduk').animate({
-                top: '0px',
-                opacity: '1'
+            `;
+                $('.form-produk').append(form);
+                $('#idProduk').append(keranjang);
+                updateTotalPrice(totalPrice += data.harga_produk);
+
+            })
+            .catch(error => {
+                maxQuantity
+                console.error('There has been a problem with your Axios operation:', error);
             });
-            $('.table-switch-produk').hide();
-        });
     }
 
-    function switchTable() {
-        // Animate the form upward and fade it out
-        $('.formProduk').animate({
-            top: '-250px',
-            opacity: '0'
-        }, function() {
-            // Animation complete, show the table and hide the form
-            $('.table-switch-produk').show();
-            $('.table-switch-produk').animate({
-                top: '0px',
-                opacity: '1'
-            });
+    function startTransaksi() {
+        var form = "formTransaksi";
+        var formData = new FormData($('[name="' + form + '"]')[0]);
 
-            $('.formProduk').hide();
-        });
-    }
+        // Dynamically detect the number of sections
+        var numberOfSections = $('.id_produk').length;
+        // Loop through each dynamic section
+        for (var id = 1; id <= numberOfSections; id++) {
+            formData.append('id_produk' + id, $('#id_produk' + id).val());
+            formData.append('nama_produk' + id, $('#nama_produk' + id).val());
+            formData.append('qty_produk' + id, $('#qty_produk' + id).val());
+            formData.append('harga_produk' + id, $('#harga_produk' + id).val());
+        }
 
-    function save() {
-        var form = "formProduk";
-        var data = new FormData($('[name="' + form + '"]')[0]);
-        // $('#submit-btn').prop('disabled', true);
-        // console.log(data);
         Swal.fire({
             title: 'Apakah data yang anda input sudah benar?',
             icon: 'question',
@@ -239,22 +147,23 @@
             cancelButtonText: 'Tidak'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post("/produk/save", data, {
+                axios.post("/pay/initiatePayment", formData, {
                         headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Content-Type': 'multipart/form-data',
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            'Content-Type': 'application/json',
                         }
                     })
                     .then(response => {
+                        console.log(response)
+                        let token = response.data
+                        window.snap.pay(token);
                         if (response.data.success) {
-                            $('#formProduk').trigger('reset');
-                            $(".close-modal").trigger('click');
                             quick.toastNotif({
                                 title: 'success',
                                 icon: 'success',
                                 timer: 500,
                                 callback: function() {
-                                    menutable.ajax.reload();
+                                    window.location.reload()
                                 }
                             });
                         }
@@ -265,88 +174,38 @@
             }
         });
     };
-    document.addEventListener('DOMContentLoaded', function() {
-    var image = document.getElementById('image');
-    var existingImage = document.getElementById('existingImage').value;
-    var croppedPreview = document.getElementById('croppedPreview');
-    var inputImage = document.getElementById('inputImage');
-    var editImageBtn = document.getElementById('editImageBtn');
-    var cropper;
 
-    // Load existing image if available
-    if (existingImage) {
-        image.src = existingImage;
-        croppedPreview.src = existingImage;
+    function incrementQuantity(maxQuantity, harga, id) {
+        var currentQuantity = parseInt($('#quantity' + id).text());
+        if (currentQuantity < maxQuantity) {
+            $('#quantity' + id).text(currentQuantity + 1);
+            $(`.quantity-controls${id}`).val(currentQuantity + 1);
+            console.log(id)
+            var count = currentQuantity + 1;
+            $('#harga' + id).text(harga * count);
+            $('#harga_produk' + id).text(harga * count);
+            updateTotalPrice(totalPrice + harga);
+        }
     }
 
-    inputImage.addEventListener('change', function(e) {
-        var files = e.target.files;
-        var done = function(url) {
-            inputImage.value = '';
-            image.src = url;
-            croppedPreview.src = url;
-            $('#imageCropModal').modal('show');
-            initCropper();
-        };
+    function decrementQuantity(maxQuantity, harga, id) {
+        var currentQuantity = parseInt($('#quantity' + id).text());
+        if (currentQuantity > 1) {
+            $('#quantity' + id).text(currentQuantity - 1);
+            $(`.quantity-controls${id}`).val(currentQuantity - 1);
 
-        var reader;
-        var file;
-
-        if (files && files.length > 0) {
-            file = files[0];
-            if (URL) {
-                done(URL.createObjectURL(file));
-            } else if (FileReader) {
-                reader = new FileReader();
-                reader.onload = function(e) {
-                    done(reader.result);
-                };
-                reader.readAsDataURL(file);
-            }
+            var count = currentQuantity - 1;
+            $('#harga' + id).text(harga * count);
+            $('#harga_produk' + id).text(harga * count);
+            updateTotalPrice(totalPrice - harga);
         }
-    });
-
-    // Edit existing image
-    editImageBtn.addEventListener('click', function() {
-        if (existingImage) {
-            $('#imageCropModal').modal('show');
-            initCropper();
-        } else {
-            alert('No existing image to edit. Please upload a new image.');
-        }
-    });
-
-    document.getElementById('cropImage').addEventListener('click', function() {
-        if (cropper) {
-            var canvas = cropper.getCroppedCanvas();
-            if (canvas) {
-                var croppedDataUrl = canvas.toDataURL();
-                console.log('Cropped Data URL:', croppedDataUrl);
-                // Update the preview image
-                $('#croppedPhoto').val(croppedDataUrl)
-                croppedPreview.src = croppedDataUrl;
-            } else {
-                console.error('Canvas is null. Cropper might not have been properly initialized.');
-            }
-        } else {
-            console.error('Cropper is null. Initialization might be missing.');
-        }
-
-        // Close the modal
-        $('#imageCropModal').modal('hide');
-    });
-
-    function initCropper() {
-        if (cropper) {
-            cropper.destroy();
-        }
-
-        // Set aspect ratio and view mode
-        cropper = new Cropper(image, {
-            aspectRatio: 16 / 9, // Set the aspect ratio as needed
-            viewMode: 3, // Change the view mode as needed (1, 2, or 3)
-        });
     }
-});
 
+    function updateTotalPrice(newTotalPrice) {
+        totalPrice = newTotalPrice;
+        console.log('Total Price:', totalPrice);
+        $('#total_harga').val(totalPrice);
+        // Trigger a custom event
+        $(document).trigger('totalPriceChanged', [totalPrice]);
+    }
 </script>
