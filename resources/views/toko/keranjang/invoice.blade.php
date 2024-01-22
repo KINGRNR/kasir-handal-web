@@ -62,15 +62,18 @@
                         </div>
                         <div class="mb-3">
                             <label for="nama">Nama:</label>
-                            <input type="text" class="form-control" id="nama_pelanggan" name="nama_pelanggan" placeholder="Nama">
+                            <input type="text" class="form-control" id="nama_pelanggan" name="nama_pelanggan"
+                                placeholder="Nama">
                         </div>
                         <div class="mb-3">
                             <label for="noTelp">No. Telp:</label>
-                            <input type="tel" class="form-control" id="no_telp" name="no_telp" placeholder="No. Telp">
+                            <input type="tel" class="form-control" id="no_telp" name="no_telp"
+                                placeholder="No. Telp">
                         </div>
                         <div class="mb-3">
                             <label for="email">Email:</label>
-                            <input type="email" class="form-control" id="email_pelanggan" name="email_pelanggan" placeholder="Email">
+                            <input type="email" class="form-control" id="email_pelanggan" name="email_pelanggan"
+                                placeholder="Email">
                         </div>
                 </div>
 
@@ -85,31 +88,35 @@
                     <h4>Keranjang</h4>
                     <!-- Tampilkan barang yang dipilih dan jumlahnya di sini -->
                     <!-- Contoh: -->
-                    <table class="table align-middle table-hover  table-row-dashed fs-6 gy-5 text-center"
-                        id="table-kategori">
-                        <!--begin::Table head-->
-                        <thead>
-                            <!--begin::Table row-->
-                            <tr class="text-start align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                <th class="ps-4" width="20">No</th>
-                                <th class="min-w-125px">Nama</th>
-                                <th class="min-w-125px">Jumlah</th>
-                                <th class="min-w-125px">Harga</th>
-                            </tr>
-                            <!--end::Table row-->
-                        </thead>
-                        <tbody class="fw-bold text-gray-600 text-start align-middle" id="idProduk">
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table align-middle table-hover table-row-dashed fs-6 gy-5 text-center"
+                            id="table-kategori">
+                            <!--begin::Table head-->
+                            <thead>
+                                <!--begin::Table row-->
+                                <tr class="text-start align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                    <th class="ps-4" width="20">No</th>
+                                    <th class="min-w-125px">Nama</th>
+                                    <th class="min-w-125px">Jumlah</th>
+                                    <th class="min-w-125px">Harga</th>
+                                </tr>
+                                <!--end::Table row-->
+                            </thead>
+                            <tbody class="fw-bold text-gray-600 text-start align-middle" id="idProduk">
+                            </tbody>
+                        </table>
+                    </div>
+
                     <div class="form-produk d-none">
-                        
+
                     </div>
                 </div>
                 <div class="mb-4"> <!-- Tampilkan barang yang dipilih dan jumlahnya di sini -->
                     <!-- Contoh: -->
                     <div class="mb-3">
                         <label for="pajak">Pajak :</label>
-                        <input type="number" class="form-control" id="pajak_ptransaksi" name="pajak_transaksi" placeholder="%">
+                        <input type="number" class="form-control" id="pajak_ptransaksi" name="pajak_transaksi"
+                            placeholder="%">
                     </div>
                     <div class="mb-3">
                         <label for="nama">Total Harga :</label>

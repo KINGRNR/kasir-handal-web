@@ -142,11 +142,12 @@
                             <!--end::Menu wrapper-->
                             <!--begin::Toolbar-->
                             <div class="flex-equal text-end ms-1">
-                                @auth
+                                {{-- @auth
 
                                     <a href="{{ session('user_role') === 'FOV4Qtgi5lcQ9kCY' ? route('superadmin') : route('other_role_route') }}"
                                         class="btn btn-success">Portal</a>
-                                    @endif
+                                    @endif --}}
+                                    <a href="/toko/dashboard">Portal</a>
                                 </div>
                                 <!--end::Toolbar-->
                             </div>
