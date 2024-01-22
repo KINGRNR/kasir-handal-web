@@ -69,6 +69,8 @@
 			</span> 
 			<!--end::Svg Icon-->
 		</div>
+		@include('toko.bottomnavbar.botnav')
+
 	</body>
 
         @include('layouts.support.bundle.bundlefooter')

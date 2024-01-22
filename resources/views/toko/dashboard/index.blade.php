@@ -101,6 +101,8 @@
 			</span>
 			<!--end::Svg Icon-->
 		</div>
+		@include('toko.bottomnavbar.botnav')
+
 		@include('toko.dashboard.script')
 
 	</body>
