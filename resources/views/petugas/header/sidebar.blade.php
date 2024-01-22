@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link dashboard" href="/toko/dashboard">
+                    <a class="menu-link dashboard" href="/petugas/dashboard">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -38,7 +38,7 @@
                             </span>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-title">Dashboard Toko</span>
+                        <span class="menu-title">Dashboard petugas</span>
                     </a>
                 </div>
                 {{-- <div class="menu-item">
@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link petugas" href="/toko/petugas">
+                    <a class="menu-link petugas" href="/petugas/petugas">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -85,7 +85,7 @@
                     </a>
                 </div>
                 <div class="menu-item ">
-                    <a class="menu-link kategori" href="/toko/kategori">
+                    <a class="menu-link kategori" href="/petugas/kategori">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -107,7 +107,7 @@
                     </a>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link barang" href="/toko/produk">
+                    <a class="menu-link barang" href="/petugas/produk">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -134,7 +134,7 @@
                     </div>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link toko" href="/toko/toko">
+                    <a class="menu-link petugas" href="/petugas/petugas">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -152,7 +152,7 @@
                             </span>
                             <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-title">Pengaturan Toko</span>
+                        <span class="menu-title">Pengaturan petugas</span>
                     </a>
                 </div>
             </div>

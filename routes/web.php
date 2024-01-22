@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KategoriProdukController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
 
@@ -69,21 +70,7 @@ Route::middleware([loginCheck::class])->group(function () {
         })->name('keranjang');
         //controller
 
-        Route::controller(UserController::class)->group(function () {
-            foreach (['showPetugas', 'createPetugas', 'update', 'delete', 'getData'] as $key => $value) {
-                Route::post('/user/' . $value, $value);
-            }
-        });
-        Route::controller(KategoriProdukController::class)->group(function () {
-            foreach (['showKategori', 'save', 'detail', 'delete'] as $key => $value) {
-                Route::post('/kategori/' . $value, $value);
-            }
-        });
-        Route::controller(ProdukController::class)->group(function () {
-            foreach (['showProduk', 'getKategori', 'save'] as $key => $value) {
-                Route::post('/produk/' . $value, $value);
-            }
-        });
+       
     });
 
 
@@ -91,5 +78,35 @@ Route::middleware([loginCheck::class])->group(function () {
         Route::get('/petugas/dashboard', function () {
             return view('petugas.dashboard.index');
         })->name('petugas');
+        Route::get('/petugas/kategori', function () {
+            return view('petugas.kategori.index');
+        })->name('kategori');
+        Route::get('/petugas/produk', function () {
+            return view('petugas.produk.index');
+        })->name('produk');
+        Route::get('/petugas/keranjang', function () {
+            return view('petugas.keranjang.index');
+        })->name('keranjang');
+        //controller
+    });
+    Route::controller(UserController::class)->group(function () {
+        foreach (['showPetugas', 'createPetugas', 'update', 'delete', 'getData'] as $key => $value) {
+            Route::post('/user/' . $value, $value);
+        }
+    });
+    Route::controller(KategoriProdukController::class)->group(function () {
+        foreach (['showKategori', 'save', 'detail', 'delete'] as $key => $value) {
+            Route::post('/kategori/' . $value, $value);
+        }
+    });
+    Route::controller(ProdukController::class)->group(function () {
+        foreach (['showProduk', 'getKategori', 'save', 'showProdukCart', 'addCart'] as $key => $value) {
+            Route::post('/produk/' . $value, $value);
+        }
+    });
+    Route::controller(PaymentController::class)->group(function () {
+        foreach (['initiatePayment'] as $key => $value) {
+            Route::post('/pay/' . $value, $value);
+        }
     });
 });
