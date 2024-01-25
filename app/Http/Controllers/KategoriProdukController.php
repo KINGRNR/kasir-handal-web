@@ -36,16 +36,16 @@ class KategoriProdukController extends Controller
                 $kategori->update($data);
             } else {
                 $data['id_kategori_toko'] = session()->get('toko_id');
-                $prefix = strtoupper(substr($data['nama_kategori'], 0, 2));
+                // $prefix = strtoupper(substr($data['nama_kategori'], 0, 2));
 
-                $latestKategori = Kategori::where('id_kategori_toko', $data['id_kategori_toko'])
-                    ->orderBy('kode_kategori', 'desc')
-                    ->first();
+                // $latestKategori = Kategori::where('id_kategori_toko', $data['id_kategori_toko'])
+                //     ->orderBy('kode_kategori', 'desc')
+                //     ->first();
 
-                $sequenceNumber = $latestKategori ? intval(substr($latestKategori->kode_kategori, 3)) + 1 : 1;
+                // $sequenceNumber = $latestKategori ? intval(substr($latestKategori->kode_kategori, 3)) + 1 : 1;
 
-                $formattedSequence = sprintf('%04d', $sequenceNumber);
-                $data['kode_kategori'] = $prefix . '-' . $formattedSequence;
+                // $formattedSequence = sprintf('%04d', $sequenceNumber);
+                // $data['kode_kategori'] = $prefix . '-' . $formattedSequence;
 
                 Kategori::create($data);
             }

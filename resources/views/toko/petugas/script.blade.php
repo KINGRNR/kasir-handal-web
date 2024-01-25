@@ -62,14 +62,10 @@
                 }, {
                     data: 'id',
                     render: function(data, type, row) {
-                        console.log(row);
-                        var editButton = '<button class="btn btn-sm btn-warning" onclick="editRow(' +
-                            row.id + ')">Edit</button>';
-
                         var deleteButton = '<button class="btn btn-sm btn-danger" onclick="deleteRow(' +
                             row.id + ')">Delete</button>';
 
-                        return editButton + ' ' + deleteButton;
+                        return deleteButton;
                     }
                 }
             ]

@@ -1,8 +1,3 @@
-<!--begin::Post-->
-<div class="formProduk" style="display: none;">
-    @include('toko.keranjang.form')
-</div>
-
 <div class="row">
     <div class="col-md-8">
         <div class="card">
@@ -52,14 +47,13 @@
             </div>
             <div class="card-body">
                 <div class="mb-4">
+                    <h4>Petugas Kasir</h4>
+                    <p>Nama Petugas: {{ auth()->user()->name }}</p>
+                </div>
+                <div class="mb-4">
                     <h4>Informasi Pelanggan</h4>
                     <form action="javascript:startTransaksi()" method="post" id="formTransaksi" name="formTransaksi"
                         autocomplete="off" enctype="multipart/form-data"> <!-- Filter Kategori -->
-                        <div class="mb-3">
-                            <label for="notransaksi">Nomor Transaksi :</label>
-                            <input type="text" class="form-control" id="notransaksi" name="notransaksi"
-                                placeholder="Nomor Transaksi" disabled value="TRS-001">
-                        </div>
                         <div class="mb-3">
                             <label for="nama">Nama:</label>
                             <input type="text" class="form-control" id="nama_pelanggan" name="nama_pelanggan"
@@ -76,14 +70,6 @@
                                 placeholder="Email">
                         </div>
                 </div>
-
-                <!-- Petugas Kasir -->
-                <div class="mb-4">
-                    <h4>Petugas Kasir</h4>
-                    <p>Nama Petugas: John Doe</p>
-                </div>
-
-                <!-- Cart -->
                 <div class="mb-4">
                     <h4>Keranjang</h4>
                     <!-- Tampilkan barang yang dipilih dan jumlahnya di sini -->
@@ -113,11 +99,6 @@
                 </div>
                 <div class="mb-4"> <!-- Tampilkan barang yang dipilih dan jumlahnya di sini -->
                     <!-- Contoh: -->
-                    <div class="mb-3">
-                        <label for="pajak">Pajak :</label>
-                        <input type="number" class="form-control" id="pajak_ptransaksi" name="pajak_transaksi"
-                            placeholder="%">
-                    </div>
                     <div class="mb-3">
                         <label for="nama">Total Harga :</label>
                         <input type="text" class="form-control" id="total_harga" name="total_harga"

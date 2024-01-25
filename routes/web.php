@@ -68,8 +68,10 @@ Route::middleware([loginCheck::class])->group(function () {
         Route::get('/toko/keranjang', function () {
             return view('toko.keranjang.index');
         })->name('keranjang');
+        Route::get('/toko/report-penjualan', function () {
+            return view('toko.report-penjualan.index');
+        })->name('report-penjualan');
         //controller
-
        
     });
 
@@ -105,7 +107,7 @@ Route::middleware([loginCheck::class])->group(function () {
         }
     });
     Route::controller(PaymentController::class)->group(function () {
-        foreach (['initiatePayment'] as $key => $value) {
+        foreach (['initiatePayment', 'saveTransaction', 'showTransaction'] as $key => $value) {
             Route::post('/pay/' . $value, $value);
         }
     });

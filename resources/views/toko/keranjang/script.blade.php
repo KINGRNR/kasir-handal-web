@@ -52,7 +52,7 @@
                             <div class="card-body">
                                 <p class="card-text mb-2">${v.nama_kategori}</p>
                                 <h6 class="card-title mb-2">${v.nama_produk}</h6>
-                                <p class="card-text mb-2"><span class="badge bg-success">Rp.${v.harga_produk}</span>
+                                <p class="card-text mb-2"><span class="badge bg-success">${quick.formatRupiah(v.harga_produk)}</span>
                                 </p>
                                 <p class="card-text">Tersedia : ${v.stok_produk}</p>
                                 <button class="btn btn-sm btn-primary" id="tambahkeranjang${v.id_produk}" onclick="tambahKeranjang(${v.id_produk})">Tambah ke Keranjang</button>
@@ -127,9 +127,7 @@
         var form = "formTransaksi";
         var formData = new FormData($('[name="' + form + '"]')[0]);
 
-        // Dynamically detect the number of sections
         var numberOfSections = $('.id_produk').length;
-        // Loop through each dynamic section
         for (var id = 1; id <= numberOfSections; id++) {
             formData.append('id_produk' + id, $('#id_produk' + id).val());
             formData.append('nama_produk' + id, $('#nama_produk' + id).val());
@@ -156,17 +154,25 @@
                     .then(response => {
                         console.log(response)
                         let token = response.data
-                        window.snap.pay(token);
-                        if (response.data.success) {
-                            quick.toastNotif({
-                                title: 'success',
-                                icon: 'success',
-                                timer: 500,
-                                callback: function() {
-                                    window.location.reload()
-                                }
-                            });
-                        }
+                        window.snap.pay(token.snapToken, {
+                            onSuccess: function(result) {
+                                alert("payment success!");
+                                console.log(result);
+                                console.log('data yang perlu dibawa lagi =' + response.data)
+                                saveTransaction(response.data.dataPenjualan, result);
+                            },
+                            onPending: function(result) {
+                                alert("wating your payment!");
+                                console.log(result);
+                            },
+                            onError: function(result) {
+                                alert("payment failed!");
+                                console.log(result);
+                            },
+                            onClose: function() {
+                                alert('you closed the popup without finishing the payment');
+                            }
+                        })
                     })
                     .catch(error => {
                         console.error('There has been a problem with your Axios operation:', error);
@@ -174,6 +180,22 @@
             }
         });
     };
+
+    function saveTransaction(data, result) {
+        axios.post("/pay/saveTransaction", { data: data, result: result }, {
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => {
+                console.log(response)
+                window.location.href = '/report-penjualan?invoice='+ response.data.id_penjualan;
+            })
+            .catch(error => {
+                console.error('Ada masalah dengan operasi Axios menyimpan transaksi:', error);
+            });
+    }
 
     function incrementQuantity(maxQuantity, harga, id) {
         var currentQuantity = parseInt($('#quantity' + id).text());

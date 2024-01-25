@@ -14,6 +14,11 @@
         init();
         $('.menu-link').removeClass('active');
         $('.kategori').addClass('active');
+        const urlParams = new URLSearchParams(window.location.search);
+        const invoiceParam = urlParams.get('invoice');
+        if (invoiceParam) {
+            changePage(invoiceParam);
+        }
     });
 
     init = async () => {
@@ -24,11 +29,15 @@
         $(`input, select`).removeAttr('disabled');
     });
     //filter
+
+    function changePage(invoice) {
+        
+    }
     var filterDatatable = [];
     var menutable = null;
 
     function initializeDataTables(filterDatatable) {
-        menutable = $('#table-kategori').DataTable({
+        menutable = $('#table-report').DataTable({
             processing: true,
             serverSide: true,
             clickable: true,
@@ -36,7 +45,7 @@
             searching: true,
             destroyAble: true,
             ajax: {
-                url: APP_URL + 'kategori/showKategori',
+                url: APP_URL + 'pay/showTransaction',
                 type: "POST",
                 dataType: "json",
                 headers: {
@@ -51,23 +60,23 @@
                     }
                 },
                 {
-                    data: 'kode_kategori',
-                    name: 'kode_kategori'
+                    data: 'penjualan_id',
+                    name: 'penjualan_id'
                 },
                 {
-                    data: 'nama_kategori',
-                    name: 'nama_kategori'
-                },
-                {
-                    data: 'id_kategori',
+                    data: 'penjualan_total_harga',
                     render: function(data, type, row) {
-                        var editButton = '<button class="btn btn-sm btn-warning" onclick="edit(' +
-                            row.id_kategori + ')">Edit</button>';
-
-                        var deleteButton = '<button class="btn btn-sm btn-danger" onclick="deleteRow(' +
-                            row.id_kategori + ')">Delete</button>';
-
-                        return editButton + ' ' + deleteButton;
+                        return quick.formatRupiah(row.penjualan_total_harga);
+                    }
+                },
+                {
+                    data: 'nama_pelanggan',
+                    name: 'nama_pelanggan'
+                },
+                {
+                    data: 'penjualan_created_at',
+                    render: function(data, type, row) {
+                        return quick.convertDate(row.penjualan_created_at);;
                     }
                 }
             ]

@@ -14,7 +14,13 @@ var quick = {
 
         return day + ' ' + month + ' ' + year;
     },
-
+    formatRupiah(amount) {
+        var reversedAmount = amount.toString().split('').reverse().join('');
+        var groups = reversedAmount.match(/\d{1,3}/g);
+        var formattedAmount = groups.join('.').split('').reverse().join('');
+    
+        return 'Rp ' + formattedAmount;
+    },
     leafletMapSelector: function (id, a , b) {
         var map = L.map(id).setView([-2.5489, 118.0149], 5); 
     

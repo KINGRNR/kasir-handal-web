@@ -143,7 +143,7 @@
                 {
                     data: 'harga_produk',
                     render: function(data, type, row) {
-                        return `<span class="badge bg-success">Rp. ${row.harga_produk}</span>`;
+                        return `<span class="badge bg-success">${quick.formatRupiah(row.harga_produk)}</span>`;
                     }
                 },
                 {

@@ -38,7 +38,7 @@
 					<div id="kt_content_container" class="mt-5 d-flex flex-column-fluid align-items-start container-fluid">
 						{{-- @include('toko.header.sidebar') --}}
 						<div class="content flex-row-fluid" id="kt_content">
-							@include('toko.kategori.table')
+							@include('toko.report-penjualan.table')
 						</div>
 					</div>
 					<div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
@@ -73,6 +73,6 @@
 	</body>
 
         @include('layouts.support.bundle.bundlefooter')
-		@include('toko.kategori.script')
+		@include('toko.report-penjualan.script')
 
 </html>
