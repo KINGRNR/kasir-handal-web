@@ -2,7 +2,7 @@
 <html lang="en">
     @include('layouts.support.bundle.bundleheader')    
 	
-    <body id="kt_body" style="background-image: url(../assets/media/patterns/header-bg.jpg)" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled aside-enabled">
+    <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled aside-enabled">
 		<!--begin::Main-->
 		<!--begin::Root-->
 		<div class="d-flex flex-column flex-root">
@@ -11,14 +11,14 @@
 				<!--begin::Wrapper-->
 				<div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
 					<!--begin::Header-->
-					<div id="kt_header" class="header align-items-stretch" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{default: '200px', lg: '300px'}">
+					<div id="kt_header" class="header align-items-stretch " data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{default: '200px', lg: '300px'}" name="header" data-kt-sticky-offset="{default: '200px', lg: '300px'}" style="background: radial-gradient(circle at 0% 50%, #2F3281 0%, #40A0B6 67%, #08C0B5 82.29%);">
 						<!--begin::Container-->
 						@include('toko.header.header')
 						<!--end::Container-->
 					</div>
 					<!--end::Header-->
 					<!--begin::Toolbar-->
-					<div class="toolbar py-5 py-lg-15" id="kt_toolbar">
+					{{-- <div class="toolbar py-5 py-lg-15" id="kt_toolbar">
 						<div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
 							<div class="page-title d-flex flex-column me-3">
 								<h1 class="d-flex text-white fw-bolder my-1 fs-3">Kategori</h1>
@@ -34,8 +34,8 @@
 							</div>
 						</div>
 						<!--end::Container-->
-					</div>
-					<div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
+					</div> --}}
+					<div id="kt_content_container" class="mt-5 d-flex flex-column-fluid align-items-start container-xxl">
 						@include('toko.header.sidebar')
 						<div class="content flex-row-fluid" id="kt_content">
 							@include('toko.kategori.table')
@@ -68,6 +68,8 @@
 			</span>
 			<!--end::Svg Icon-->
 		</div>
+		@include('toko.bottomnavbar.botnav')
+
 	</body>
 
         @include('layouts.support.bundle.bundlefooter')

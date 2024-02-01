@@ -12,12 +12,12 @@
                         <div class="card">
                             <div class="card-body">
                                 <input type="hidden" name="id_kategori" id="id_kategori">
-                                {{-- <div class="fv-row mb-5">
+                                <div class="fv-row mb-5">
                                     <label for="" class="required form-label">Kode Kategori</label>
                                     <input type="text" name="kode_kategori" id="kode_kategori"
                                         class="form-control form-control-sm form-control-solid input-required"
                                         required />
-                                </div> --}}
+                                </div>
 
                                 <div class="fv-row mb-5">
                                     <label for="" class="required form-label">Nama Kategori</label>

@@ -90,11 +90,32 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                            <div class="fv-row mb-5">
+                            <div class="fv-row mb-2">
                                 <label class="form-label fw-bolder text-dark fs-6">Confirm Password</label>
                                 <input id="password-confirm" type="password"
                                     class="form-control form-control-lg form-control-solid" name="password_confirmation"
                                     required autocomplete="new-password">
+                            </div>
+                            <div class="text-center mb-5">
+                                <!--begin::Title-->
+                                <h1 class="text-dark mb-3">Hubungkan ke Midtrans anda</h1>
+                                <!--end::Title-->
+                                <!--begin::Link-->
+                                <!--end::Link-->
+                            </div>
+                            <div class="fv-row mb-5">
+                                <label class="form-label fw-bolder text-dark fs-6">Server Key</label>
+                                <input id="server_key" type="text
+                                "
+                                    class="form-control form-control-lg form-control-solid" name="server_key"
+                                    required>
+                            </div>
+                            <div class="fv-row mb-5">
+                                <label class="form-label fw-bolder text-dark fs-6">Client Key</label>
+                                <input id="client_key" type="text
+                                "
+                                    class="form-control form-control-lg form-control-solid" name="client_key"
+                                    required>
                             </div>
                             <div class="fv-row mb-10">
                                 <label class="form-check form-check-custom form-check-solid form-check-inline">

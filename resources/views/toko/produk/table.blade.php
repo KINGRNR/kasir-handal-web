@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="card-toolbar">
-            <button type="button" class="btn btn-primary me-2 reset-filter" onclick="switchForm()">Tambah Produk</button>
+            <button type="button" class="btn btn-primary me-2 reset-filter" data-bs-toggle="modal" data-bs-target="#modalProduk">Tambah Produk</button>
             <div class="d-flex">
                 <button type="button" class="btn btn-sm btn-danger deleted-selected"
                     data-kt-customer-table-select="delete_selected" style="display: none;"
@@ -52,7 +52,7 @@
                         <th class="min-w-100px">Foto Produk</th>
                         <th class="min-w-125px">Nama Produk</th>
                         <th class="min-w-125px">Harga Produk</th>
-                        <th class="min-w-125px">Stok</th>
+                        <th class="min-w-75px">Stok</th>
                         <th class="min-w-125px">Kategori</th>
                         <th class="min-w-125px">Kode Kategori</th>
                         <th class="min-w-125px">Button</th>
@@ -66,6 +66,6 @@
     </div>
 </div>
 
-<div class="formProduk" style="display: none;">
+<div class="modal fade" id="modalProduk" tabindex="-1" aria-labelledby="modalProduk" aria-hidden="true">
     @include('toko.produk.form')
 </div>
