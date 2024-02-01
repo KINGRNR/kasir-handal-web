@@ -11,6 +11,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "midtrans/midtrans-php": "^2.5",
+        "tymon/jwt-auth": "^2.0",
         "yajra/laravel-datatables": "10.0"
     },
     "require-dev": {
