@@ -40,7 +40,8 @@
                 type: "POST",
                 dataType: "json",
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Authorization': 'Bearer ' + localStorage.getItem('bearerToken')
                 },
             },
             columns: [{
@@ -61,7 +62,6 @@
                 {
                     data: 'id_kategori',
                     render: function(data, type, row) {
-                        console.log(row);
                         var editButton = '<button class="btn btn-sm btn-warning" onclick="edit(' +
                             row.id_kategori + ')">Edit</button>';
 
@@ -97,7 +97,6 @@
     function edit(id) {
         $('#formKategori').trigger('reset');
         $('#id_kategori').val(null);
-
         $.ajax({
             url: "/kategori/detail",
             type: "POST",

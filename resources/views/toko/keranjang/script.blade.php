@@ -12,7 +12,48 @@
     data-client-key="SB-Mid-client-UQCyL2vrXEl4EHhd"></script>
 <script>
     APP_URL = "{{ getenv('APP_URL') }}/";
+    $(document).ready(function() {
+        // Event listener for keyup on the input fields
+        $('#check_no_telp').on('keyup', function() {
+            var noTelp = $('#check_no_telp').val();
 
+            axios.post('/pay/cekpelanggan', {
+                    no_telp: noTelp,
+                })
+                .then(function(response) {
+                    updateCustomerDropdown(response.data);
+                })
+                .catch(function(error) {
+                    console.error(error);
+                });
+        });
+
+        // Function to update the customer dropdown
+        // Function to update the customer dropdown
+        function updateCustomerDropdown(customer) {
+            var dropdown = $('#customerDropdown');
+            dropdown.empty(); // Clear existing options
+
+            // Add default option
+            dropdown.append($('<option>').text('Pilih Pelanggan').val(''));
+
+            // Add option for the customer
+            dropdown.append($('<option>').text(customer.nama_pelanggan).val(JSON.stringify(customer)));
+        }
+
+
+        $('#customerDropdown').on('change', function() {
+            var selectedCustomer = JSON.parse($(this).val());
+
+            if (selectedCustomer) {
+                $('#nama_pelanggan').val(selectedCustomer.nama_pelanggan);
+                $('#no_telp').val(selectedCustomer.no_hp);
+                $('#email_pelanggan').val(selectedCustomer.email_pelanggan);
+            } else {
+                $('#nama_pelanggan, #no_telp, #email_pelanggan').val('');
+            }
+        });
+    });
     $(() => {
         console.log("tes")
         init();
@@ -52,7 +93,7 @@
                             <div class="card-body">
                                 <p class="card-text mb-2">${v.nama_kategori}</p>
                                 <h6 class="card-title mb-2">${v.nama_produk}</h6>
-                                <p class="card-text mb-2"><span class="badge bg-success">Rp.${v.harga_produk}</span>
+                                <p class="card-text mb-2"><span class="badge bg-success">${quick.formatRupiah(v.harga_produk)}</span>
                                 </p>
                                 <p class="card-text">Tersedia : ${v.stok_produk}</p>
                                 <button class="btn btn-sm btn-primary" id="tambahkeranjang${v.id_produk}" onclick="tambahKeranjang(${v.id_produk})">Tambah ke Keranjang</button>
@@ -127,9 +168,7 @@
         var form = "formTransaksi";
         var formData = new FormData($('[name="' + form + '"]')[0]);
 
-        // Dynamically detect the number of sections
         var numberOfSections = $('.id_produk').length;
-        // Loop through each dynamic section
         for (var id = 1; id <= numberOfSections; id++) {
             formData.append('id_produk' + id, $('#id_produk' + id).val());
             formData.append('nama_produk' + id, $('#nama_produk' + id).val());
@@ -156,17 +195,25 @@
                     .then(response => {
                         console.log(response)
                         let token = response.data
-                        window.snap.pay(token);
-                        if (response.data.success) {
-                            quick.toastNotif({
-                                title: 'success',
-                                icon: 'success',
-                                timer: 500,
-                                callback: function() {
-                                    window.location.reload()
-                                }
-                            });
-                        }
+                        window.snap.pay(token.snapToken, {
+                            onSuccess: function(result) {
+                                alert("payment success!");
+                                console.log(result);
+                                quick.blockPage();
+                                saveTransaction(response.data.dataPenjualan, result);
+                            },
+                            onPending: function(result) {
+                                alert("wating your payment!");
+                                console.log(result);
+                            },
+                            onError: function(result) {
+                                alert("payment failed!");
+                                console.log(result);
+                            },
+                            onClose: function() {
+                                alert('you closed the popup without finishing the payment');
+                            }
+                        })
                     })
                     .catch(error => {
                         console.error('There has been a problem with your Axios operation:', error);
@@ -174,6 +221,57 @@
             }
         });
     };
+
+    function saveTransaction(data, result) {
+        axios.post("/pay/saveTransaction", {
+                data: data,
+                result: result
+            }, {
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => {
+                console.log(response)
+                quick.unblockPage();
+                var data = response.data.data
+                console.log(data)
+                openStruk(data)
+                // window.location.href = '/toko/report-penjualan?invoice='+ response.data.id_penjualan;
+            })
+            .catch(error => {
+                console.error('Ada masalah dengan operasi Axios menyimpan transaksi:', error);
+            });
+    }
+
+    function openStruk(data) {
+        $("#itemDetailsContainer").empty();
+
+        // Iterate over item details and append to the modal
+        for (let i = 1; i <= 3; i++) {
+            const productIdKey = 'id_produk' + i;
+            const productNameKey = 'nama_produk' + i;
+            const productPriceKey = 'harga_produk' + i;
+            const productQtyKey = 'qty_produk' + i;
+
+            if (
+                data[productIdKey] &&
+                data[productNameKey] &&
+                data[productPriceKey] &&
+                data[productQtyKey]
+            ) {
+                const itemDetail = `
+          <p>ID: ${data[productIdKey]}</p>
+          <p>Name: ${data[productNameKey]}</p>
+          <p>Price: ${data[productPriceKey]}</p>
+          <p>Quantity: ${data[productQtyKey]}</p>
+          <hr>
+        `;
+                $("#itemDetailsContainer").append(itemDetail);
+            }
+        }
+    }
 
     function incrementQuantity(maxQuantity, harga, id) {
         var currentQuantity = parseInt($('#quantity' + id).text());

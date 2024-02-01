@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="card-toolbar">
-            <button type="button" class="btn btn-primary me-2 reset-filter" onclick="switchForm()">Tambah Petugas</button>
+            <button type="button" class="btn btn-primary me-2 reset-filter" data-bs-toggle="modal" data-bs-target="#modalPetugas" onclick="wipeData()">Tambah Petugas</button>
             <div class="d-flex">
                 <button type="button" class="btn btn-sm btn-danger deleted-selected"
                     data-kt-customer-table-select="delete_selected" style="display: none;"
@@ -52,7 +52,7 @@
                         <th class="min-w-125px">Nama Petugas</th>
                         <th class="min-w-125px">Email</th>
                         <th class="min-w-125px">Tanggal Bergabung</th>
-                        <th class="min-w-125px">Button</th>
+                        <th class="min-w-125px">Aksi</th>
                     </tr>
                     <!--end::Table row-->
                 </thead>
@@ -63,6 +63,6 @@
     </div>
 </div>
 
-<div class="form" style="display: none;">
+<div class="modal fade" id="modalPetugas" tabindex="-1" aria-labelledby="modalPetugas" aria-hidden="true">
     @include('toko.petugas.form')
 </div>

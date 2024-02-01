@@ -3,6 +3,7 @@
     crossorigin="anonymous"></script>
 <script src="../assets/plugins/custom/datatables/datatables.bundle.js"></script>
 <link href="../assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+<script src="../assets/js/quickact.js"></script>
 
 <script>
     APP_URL = "{{ getenv('APP_URL') }}/";
@@ -62,12 +63,11 @@
                 }, {
                     data: 'id',
                     render: function(data, type, row) {
-                        console.log(row);
-                        var editButton = '<button class="btn btn-sm btn-warning" onclick="editRow(' +
-                            row.id + ')">Edit</button>';
-
-                        var deleteButton = '<button class="btn btn-sm btn-danger" onclick="deleteRow(' +
-                            row.id + ')">Delete</button>';
+                        var editButton = '<button class="btn btn-sm btn-warning edit-btn" onclick="edit(this)" data-id="' +
+                            row.id + '">Edit</button>';
+                        var deleteButton =
+                            '<button class="btn btn-sm btn-danger delete-btn"  data-id="' + row.id +
+                            '">Delete</button>';
 
                         return editButton + ' ' + deleteButton;
                     }
@@ -95,17 +95,49 @@
         // }).css('cursor', 'pointer');
     }
 
-    function switchForm() {
-        $('.table-switch-petugas').fadeOut(100);
-        $('.form').fadeIn();
+    // function switchForm() {
+    //     $('.table-switch-petugas').fadeOut(100);
+    //     $('.form').fadeIn();
+    // }
+
+    // function switchTable() {
+    //     $('.form').fadeOut(100);
+    //     $('.table-switch-petugas').fadeIn();
+    // }
+
+    function wipeData() {
+        $('#formPetugas').trigger('reset');
+        $('#id').val(null);
+
     }
 
-    function switchTable() {
-        $('.form').fadeOut(100);
-        $('.table-switch-petugas').fadeIn();
+    function edit(atr) {
+        $('#formPetugas').trigger('reset');
+        $('#id').val(null);
+        var id = $(atr).attr('data-id');
+        axios.post("/user/detail", {
+                id: id
+            }, {
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    // 'Content-Type': 'multipart/form-data',
+                }
+            })
+            .then(response => {
+                let data = response.data
+                console.log(data);
+                $('#id').val(data.id);
+                $('#name').val(data.name);
+                $('#email').val(data.email)
+                $('#modalPetugas').modal('show');
+
+            })
+            .catch(error => {
+                console.error('There has been a problem with your Axios operation:', error);
+            });
     }
 
-    function createPetugas() {
+    function save() {
         var form = "formPetugas";
         var data = new FormData($('[name="' + form + '"]')[0]);
         // $('#submit-btn').prop('disabled', true);
@@ -120,7 +152,7 @@
             cancelButtonText: 'Tidak'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post("/user/createPetugas", data, {
+                axios.post("/user/savePetugas", data, {
                         headers: {
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',
                             'Content-Type': 'multipart/form-data',
@@ -135,7 +167,7 @@
                                 icon: 'success',
                                 timer: 500,
                                 callback: function() {
-                                    quick.reload('makemodule')
+                                    location.reload()
                                 }
                             });
                         }

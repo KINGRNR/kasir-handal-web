@@ -14,7 +14,13 @@ var quick = {
 
         return day + ' ' + month + ' ' + year;
     },
-
+    formatRupiah(amount) {
+        var reversedAmount = amount.toString().split('').reverse().join('');
+        var groups = reversedAmount.match(/\d{1,3}/g);
+        var formattedAmount = groups.join('.').split('').reverse().join('');
+    
+        return 'Rp ' + formattedAmount;
+    },
     leafletMapSelector: function (id, a , b) {
         var map = L.map(id).setView([-2.5489, 118.0149], 5); 
     
@@ -67,18 +73,27 @@ var quick = {
     },
 
     blockPage: function () {
+        // const loadingDiv = $(
+        //     `<div class="loading loading-spinner-overlay" id="loading-spinner"><button class="btn btn-primary" type="button" disabled>
+        //     <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+        //     <span role="status">Loading...</span>
+        //   </button></div>`
+        // );
         const loadingDiv = $(
-            `<div class="loading loading-spinner-overlay" id="loading-spinner"><button class="btn btn-primary" type="button" disabled>
-            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-            <span role="status">Loading...</span>
-          </button></div>`
-        );
-        loadingDiv.hide().appendTo("#pagecontainer").fadeIn(100);
+            `<div class="loading-spinner">
+            <div class="loading loading-spinner-overlay" id="loading-spinner"><button class="btn btn-primary" type="button"
+                    disabled>
+                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                    <span role="status">Loading...</span>
+                </button></div>
+        </div>`
+        )
+        loadingDiv.hide().appendTo(".loading").fadeIn(100);
     },
 
     unblockPage: function (data) {
-        $("#pagecontainer").find(".loading").fadeOut();
-        removeSkeleton();
+        $(".loading").fadeOut();
+        // removeSkeleton();
     },
 
     toastNotif: function(data) {
