@@ -192,7 +192,7 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
         $credentials = $request->only('email', 'password');
-        // print_r($credentials); exit;
+    
         $token = Auth::attempt($credentials);
         if (!$token) {
             return response()->json([
@@ -201,10 +201,16 @@ class AuthController extends Controller
             ], 401);
         }
         $user = Auth::user();
-
+        if ($user->users_role_id == 'BfiwyVUDrXOpmStr') {
+            $detailed_user = DB::table('toko')->where('toko_user_id', $user->id)->first();
+        } else if ($user->users_role_id == 'TKQR2DSJlQ5b31V2') {
+            $detailed_user = DB::table('petugas')->where('petugas_user_id', $user->id)->first();
+            $detailed_user['toko_id'] = $detailed_user->petugas_toko_id;
+        }
         return response()->json([
             'status' => 'success',
             'user' => $user,
+            'data_user' => $detailed_user,
             'auth' => [
                 'token' => $token,
                 'type' => 'bearer',
