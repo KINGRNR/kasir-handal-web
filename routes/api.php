@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KategoriProdukController;
+use App\Http\Controllers\ProdukController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,10 +36,15 @@ Route::controller(AuthController::class)->group(function () {
 });
 Route::middleware('auth:api')->group(function () {
     Route::middleware(['cors'])->group(function () {
-    
+
         Route::controller(KategoriProdukController::class)->group(function () {
             foreach (['showKategori', 'save', 'detail', 'delete'] as $key => $value) {
                 Route::post('/kategori/' . $value, $value);
+            }
+        });
+        Route::controller(ProdukController::class)->group(function () {
+            foreach (['showProdukMobile'] as $key => $value) {
+                Route::post('/produk/' . $value, $value);
             }
         });
     });

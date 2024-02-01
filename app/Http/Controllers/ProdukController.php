@@ -24,6 +24,19 @@ class ProdukController extends Controller
     return DataTables::of($operation)
       ->toJson();
   }
+  public function showProdukMobile(Request $request)
+  {
+    $id = $request->post();
+    // dd($id);
+
+    // $id_toko = DB::table('toko')->where('toko_user_id', $id)->select('toko_id')->first();
+
+    // $operation = DB::table('users')->where('users_role_id','TKQR2DSJlQ5b31V2')->get();
+    $operation = DB::table('v_produk')->where('id_kategori_toko', $id)->get();
+
+    return response()->json($operation);
+
+  }
 
   public function getKategori()
   {
