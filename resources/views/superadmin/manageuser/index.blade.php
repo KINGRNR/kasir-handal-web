@@ -18,7 +18,7 @@
                     data-kt-sticky-offset="{default: '200px', lg: '300px'}"
                     style="background: radial-gradient(circle at 0% 50%, #2F3281 0%, #40A0B6 67%, #08C0B5 82.29%);">
                     <!--begin::Container-->
-                    @include('toko.header.header')
+                    @include('superadmin.header.header')
                     <!--end::Container-->
                 </div>
                 <!--end::Header-->
@@ -26,7 +26,7 @@
                 {{-- <div class="toolbar py-5 py-lg-15" id="kt_toolbar">
                         <div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
                             <div class="page-title d-flex flex-column me-3">
-                                <h1 class="d-flex text-white fw-bolder my-1 fs-3">Petugas</h1>
+                                <h1 class="d-flex text-white fw-bolder my-1 fs-3">manageuser</h1>
                                 <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
                                     <li class="breadcrumb-item text-white opacity-75">
                                         <a href="../../demo2/dist/index.html"
@@ -35,16 +35,16 @@
                                     <li class="breadcrumb-item">
                                         <span class="bullet bg-white opacity-75 w-5px h-2px"></span>
                                     </li>
-                                    <li class="breadcrumb-item text-white opacity-75">Petugas</li>
+                                    <li class="breadcrumb-item text-white opacity-75">manageuser</li>
                                 </ul>
                             </div>
                         </div>
                         <!--end::Container-->
                     </div> --}}
                 <div id="kt_content_container" class="mt-5 d-flex flex-column-fluid align-items-start container-xxl">
-                    @include('toko.header.sidebar')
+                    @include('superadmin.header.sidebar')
                     <div class="content flex-row-fluid" id="kt_content">
-                        @include('toko.petugas.table')
+                        @include('superadmin.manageuser.table')
                     </div>
                 </div>
                 <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
@@ -79,11 +79,11 @@
         </span>
         <!--end::Svg Icon-->
     </div>
-    @include('toko.bottomnavbar.botnav')
+    @include('superadmin.bottomnavbar.botnav')
 
 </body>
 
 @include('layouts.support.bundle.bundlefooter')
-@include('toko.petugas.script')
+@include('superadmin.manageuser.script')
 
 </html>

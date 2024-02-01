@@ -201,8 +201,8 @@
                          </div>
                          <!--begin::Menu item-->
                          <div class="menu-item px-5">
-                             <a href="javascript:logout()" class="menu-link px-5">Sign Out</a>
-                             {{-- <button onclick="logout()" class="menu-link px-5">Sign Out</button> --}}
+                             {{-- <a href="../postlogout" class="menu-link px-5">Sign Out</a> --}}
+                             <button onclick="logout()" class="menu-link px-5">Sign Out</button>
                          </div>
                          <!--end::Menu item-->
                          <!--begin::Menu separator-->

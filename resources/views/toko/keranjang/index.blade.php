@@ -1,18 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('layouts.support.bundle.bundleheader')
+<style>
+    .loading-spinner {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        /* Hitam dengan opasitas 0.8 */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        /* Menempatkan di atas elemen-elemen lain */
+    }
 
-<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled">
+    .loading-spinner-overlay {
+        text-align: center;
+    }
+</style>
+
+<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled aside-enabled">
     <!--begin::Main-->
     <!--begin::Root-->
+    <div class="loading">
+        {{-- <div class="loading-spinner">
+            <div class="loading loading-spinner-overlay" id="loading-spinner"><button class="btn btn-primary" type="button"
+                    disabled>
+                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                    <span role="status">Loading...</span>
+                </button></div>
+        </div> --}}
+    </div>
+
     <div class="d-flex flex-column flex-root">
         <!--begin::Page-->
         <div class="page d-flex flex-row flex-column-fluid">
             <!--begin::Wrapper-->
             <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
                 <!--begin::Header-->
-                <div id="kt_header" class="header align-items-stretch" data-kt-sticky="true" data-kt-sticky-name="header"
-                    data-kt-sticky-offset="{default: '200px', lg: '300px'}"
+                <div id="kt_header" class="header align-items-stretch" data-kt-sticky="true"
+                    data-kt-sticky-name="header" data-kt-sticky-offset="{default: '200px', lg: '300px'}"
                     style="background: radial-gradient(circle at 0% 50%, #2F3281 0%, #40A0B6 67%, #08C0B5 82.29%); color: var(--white);">
                     <!--begin::Container-->
                     @include('toko.header.header')
@@ -38,8 +68,8 @@
 						</div>
 						<!--end::Container-->
 					</div> --}}
-                <div id="kt_content_container" class=" mt-5 d-flex flex-column-fluid align-items-start container-fluid">
-                    {{-- @include('toko.header.sidebar') --}}
+                <div id="kt_content_container" class=" mt-5 d-flex flex-column-fluid align-items-start container-xxl">
+                    @include('toko.header.sidebar')
                     <div class="content flex-row-fluid" id="kt_content">
 
                         @include('toko.keranjang.invoice')
@@ -77,6 +107,7 @@
         </span>
         <!--end::Svg Icon-->
     </div>
+    @include('toko.keranjang.form')
     @include('toko.bottomnavbar.botnav')
 
 </body>

@@ -40,7 +40,8 @@
                 type: "POST",
                 dataType: "json",
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Authorization': 'Bearer ' + localStorage.getItem('bearerToken')
                 },
             },
             columns: [{
@@ -96,7 +97,6 @@
     function edit(id) {
         $('#formKategori').trigger('reset');
         $('#id_kategori').val(null);
-
         $.ajax({
             url: "/kategori/detail",
             type: "POST",

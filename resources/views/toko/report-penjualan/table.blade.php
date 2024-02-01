@@ -129,8 +129,8 @@
             </div>
         </div>
         <div class="card-toolbar">
-            <button type="button" class="btn btn-success me-2 reset-filter" data-bs-toggle="modal"
-                data-bs-target="#modalKategori" onclick="wipeData()">Export Excel</button>
+                {{-- <button type="button" class="btn btn-success me-2 reset-filter" data-bs-toggle="modal"
+                    data-bs-target="#modalKategori" onclick="wipeData()">Export Excel</button> --}}
             <div class="d-flex">
                 <button type="button" class="btn btn-sm btn-danger deleted-selected"
                     data-kt-customer-table-select="delete_selected" style="display: none;"

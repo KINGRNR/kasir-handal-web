@@ -88,11 +88,11 @@
         </div>
 
         <div class="invoice-details">
-            <p><strong>Nama Pelanggan:</strong> John Doe</p>
-            <p><strong>No. Telepon:</strong> 123-456-789</p>
-            <p><strong>Email:</strong> john.doe@example.com</p>
-            <p><strong>Transaksi Nomor:</strong> INV-123456</p>
-            <p><strong>Tanggal Transaksi:</strong> 25 Januari 2024 : 09.45</p>
+            <p><strong>Nama Pelanggan:</strong> {{ $transaction['nama_pelanggan'] }}</p>
+            <p><strong>No. Telepon:</strong> {{ $transaction['no_telp'] }}</p>
+            <p><strong>Email:</strong> {{$transaction['email_pelanggan']}}</p>
+            <p><strong>Transaksi Nomor:</strong> {{$penjualan_id}}</p>
+            <p><strong>Tanggal Transaksi:</strong> {{$waktu_transaksi}}</p>
         </div>
 
         <table class="table">
@@ -105,23 +105,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Product A</td>
-                    <td>2</td>
-                    <td>Rp. 50.000</td>
-                    <td>Rp. 100.000</td>
-                </tr>
-                <tr>
-                    <td>Product B</td>
-                    <td>1</td>
-                    <td>Rp. 75.000</td>
-                    <td>Rp. 75.000</td>
-                </tr>
+                @foreach($itemDetails as $item)
+                    <tr>
+                        <td>{{ $item['name'] }}</td>
+                        <td>{{ $item['quantity'] }}</td>
+                        <td>Rp. {{ number_format($item['price'], 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}</td>
+                    </tr>
+                @endforeach
             </tbody>
+            
         </table>
 
         <div class="total">
-            <p><strong>Total:</strong> Rp. 175.000</p>
+            <p><strong>Total:</strong> Rp. {{number_format($transaction['total_harga'], 0, ',', '.') }}</p>
         </div>
 
         <div class="footer">

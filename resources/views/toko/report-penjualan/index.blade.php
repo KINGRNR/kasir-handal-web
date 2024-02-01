@@ -2,7 +2,7 @@
 <html lang="en">
     @include('layouts.support.bundle.bundleheader')    
 	
-    <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled">
+    <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled aside-enabled">
 		<!--begin::Main-->
 		<!--begin::Root-->
 		<div class="d-flex flex-column flex-root">
@@ -35,7 +35,7 @@
 						</div>
 						<!--end::Container-->
 					</div> --}}
-					<div id="kt_content_container" class="mt-5 d-flex flex-column-fluid align-items-start container-fluid">
+					<div id="kt_content_container" class="mt-5 d-flex flex-column-fluid align-items-start container-xxl">
 						{{-- @include('toko.header.sidebar') --}}
 						<div class="content flex-row-fluid" id="kt_content">
 							@include('toko.report-penjualan.table')

@@ -70,8 +70,8 @@ class KategoriProdukController extends Controller
     public function detail(Request $request)
     {
         $data = $request->post();
-        // print_r($id); exit;
-
+        // print_r($data); exit;
+        dd($data);
         $opr = Kategori::where('id_kategori', $data['id'])->first();
         return response()->json($opr);
     }

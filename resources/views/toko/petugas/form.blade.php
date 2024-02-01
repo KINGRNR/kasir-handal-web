@@ -6,7 +6,7 @@
         </div>
         <div class="modal-body">
             <div class="container-form">
-                <form action="javascript:createPetugas()" method="post" id="formPetugas" name="formPetugas"
+                <form action="javascript:save()" method="post" id="formPetugas" name="formPetugas"
                     autocomplete="off" enctype="multipart/form-data">
                     @csrf
 

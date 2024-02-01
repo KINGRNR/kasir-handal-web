@@ -8,8 +8,7 @@
             </div>
             <div class="card-body">
                 <!-- Filter dan Search -->
-                <div class="mb-4">
-
+                <div class="row">
                     <div class="col-md-4 mb-3">
                         <select class="form-select" id="kategori">
                             <option value="" disabled selected>Semua Kategori</option>
@@ -21,11 +20,10 @@
                     <!-- Fitur Pencarian -->
                     <div class="col-md-6 mb-3">
                         <input type="text" class="form-control" id="search" placeholder="Cari...">
-
-
                     </div>
+
                     <div class="col-md-2 mb-3">
-                        <button type="submit" class="btn btn-primary">Sync Stok </button>
+                        <button type="submit" class="btn btn-primary">Sync Stok</button>
                     </div>
                 </div>
 
@@ -48,10 +46,23 @@
             <div class="card-body">
                 <div class="mb-4">
                     <h4>Petugas Kasir</h4>
-                    <p>Nama Petugas: {{ auth()->user()->name }}</p>
+                    {{-- <p>Nama Petugas: {{ auth()->user()->name }}</p> --}}
                 </div>
                 <div class="mb-4">
+                    <h4>Cari Existing Pelanggan</h4>
+
+                    <div class="mb-3">
+                        <label for="noTelp">No. Telp:</label>
+                        <input type="tel" class="form-control" id="check_no_telp" name="check_no_telp"
+                            placeholder="No. Telp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="customerDropdown">Pilih Pelanggan:</label>
+                        <select id="customerDropdown" class="form-control"></select>
+                    </div>
+
                     <h4>Informasi Pelanggan</h4>
+
                     <form action="javascript:startTransaksi()" method="post" id="formTransaksi" name="formTransaksi"
                         autocomplete="off" enctype="multipart/form-data"> <!-- Filter Kategori -->
                         <div class="mb-3">
@@ -69,6 +80,9 @@
                             <input type="email" class="form-control" id="email_pelanggan" name="email_pelanggan"
                                 placeholder="Email">
                         </div>
+
+                        <!-- Dropdown to display customer details -->
+
                 </div>
                 <div class="mb-4">
                     <h4>Keranjang</h4>
@@ -85,6 +99,7 @@
                                     <th class="min-w-125px">Nama</th>
                                     <th class="min-w-125px">Jumlah</th>
                                     <th class="min-w-125px">Harga</th>
+                                    {{-- <th class="min-w-125px"></th> --}}
                                 </tr>
                                 <!--end::Table row-->
                             </thead>
