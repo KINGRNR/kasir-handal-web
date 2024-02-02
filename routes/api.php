@@ -38,7 +38,7 @@ Route::middleware('auth:api')->group(function () {
     Route::middleware(['cors'])->group(function () {
 
         Route::controller(KategoriProdukController::class)->group(function () {
-            foreach (['showKategori', 'save', 'detail', 'delete'] as $key => $value) {
+            foreach (['showKategoriMobile', 'save', 'detail', 'delete'] as $key => $value) {
                 Route::post('/kategori/' . $value, $value);
             }
         });
