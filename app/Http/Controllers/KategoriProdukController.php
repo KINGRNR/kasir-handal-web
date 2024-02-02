@@ -25,7 +25,17 @@ class KategoriProdukController extends Controller
         return DataTables::of($operation)
             ->toJson();
     }
+    public function showKategoriMobile(Request $request)
+    {
+        $id = $request->post();
 
+        // $id_toko = DB::table('toko')->where('toko_user_id', $id)->select('toko_id')->first();
+
+        // $operation = DB::table('users')->where('users_role_id','TKQR2DSJlQ5b31V2')->get();
+        $operation = DB::table('kategori')->where('id_kategori_toko', $id)->where('kategori_deleted_at', null)->get();
+
+        return response()->json($operation);
+    }
     public function save(Request $request)
     {
         $data = $request->post();
@@ -71,7 +81,7 @@ class KategoriProdukController extends Controller
     {
         $data = $request->post();
         // print_r($data); exit;
-        dd($data);
+        // dd($data);
         $opr = Kategori::where('id_kategori', $data['id'])->first();
         return response()->json($opr);
     }
