@@ -76,6 +76,48 @@ class KategoriProdukController extends Controller
             ]);
         }
     }
+    public function saveMob(Request $request)
+    {
+        $data = $request->post();
+
+        try {
+            if ($data['id_kategori']) {
+                $kategori = Kategori::findOrFail($data['id_kategori']);
+                $kategori->update($data);
+            } else {
+                // print_r($data); exit;
+                // $data['id_kategori_toko'] = session()->get('toko_id');
+                // $prefix = strtoupper(substr($data['nama_kategori'], 0, 2));
+
+                // $latestKategori = Kategori::where('id_kategori_toko', $data['id_kategori_toko'])
+                //     ->orderBy('kode_kategori', 'desc')
+                //     ->first();
+
+                // $sequenceNumber = $latestKategori ? intval(substr($latestKategori->kode_kategori, 3)) + 1 : 1;
+
+                // $formattedSequence = sprintf('%04d', $sequenceNumber);
+                // $data['kode_kategori'] = $prefix . '-' . $formattedSequence;
+
+                Kategori::create($data);
+            }
+
+            return response()->json([
+                'success' =>  true,
+                'status' =>  'Success',
+                'title' => 'Sukses!',
+                'message' => 'Data Berhasil Tersimpan!',
+                'code' => 201
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code' => 400,
+                'success' =>  false,
+                'status' =>  'error',
+                'title' => 'Gagal!',
+                'message' => 'Terjadi Kesalahan di Sistem!',
+            ]);
+        }
+    }
 
     public function detail(Request $request)
     {
