@@ -137,8 +137,25 @@ class ProdukController extends Controller
   
       $formData['harga_produk'] = str_replace(',', '', str_replace('.', '', $formData['harga_produk']));
   
-      // ... (rest of your code)
+      if ($formData['id_produk']) {
+        $existingProduk = Produk::find($formData['id_produk']);
   
+        if ($request->hasFile('foto_produk')) {
+          // Remove the old image
+          if (file_exists(public_path('file/produk_foto/') . $existingProduk->foto_produk)) {
+            unlink(public_path('file/produk_foto/') . $existingProduk->foto_produk);
+          }
+  
+          // Update with the new image
+          $existingProduk->update($formData);
+        } else {
+          // If no new image, update without changing the existing image
+          $existingProduk->update($request->except('foto_produk'));
+        }
+      } else {
+        // Create a new record
+        Produk::create($formData);
+      }  
       return response()->json([
           'success' => true,
           'status' => 'Success',
