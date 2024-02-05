@@ -106,7 +106,48 @@ class ProdukController extends Controller
     ]);
   }
 
-
+  public function saveMobile(Request $request)
+  {
+      $validator = Validator::make($request->all(), [
+          'foto_produk' => 'base64image|mimes:jpeg,png,jpg,gif|max:2048', // Add 'base64image' rule
+      ]);
+  
+      if ($validator->fails()) {
+          return response()->json([
+              'success' => false,
+              'status' => 'Validation Error',
+              'title' => 'Gagal!',
+              'message' => 'Validasi tidak berhasil. Pastikan gambar berformat JPEG, PNG, atau GIF dan tidak lebih dari 2MB.',
+              'code' => 422,
+              'errors' => $validator->errors(),
+          ]);
+      }
+  
+      $formData = $request->except('foto_produk');
+  
+      if ($request->has('foto_produk')) {
+          $base64Image = $request->input('foto_produk');
+          $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64Image));
+  
+          $filename = 'produk_' . time() . '.png'; // You can change the extension based on the actual image type
+  
+          file_put_contents(public_path('file/produk_foto/') . $filename, $imageData);
+          $formData['foto_produk'] = $filename;
+      }
+  
+      $formData['harga_produk'] = str_replace(',', '', str_replace('.', '', $formData['harga_produk']));
+  
+      // ... (rest of your code)
+  
+      return response()->json([
+          'success' => true,
+          'status' => 'Success',
+          'title' => 'Sukses!',
+          'message' => 'Data Berhasil Tersimpan!',
+          'code' => 201
+      ]);
+  }
+  
 
   public function save(Request $request)
   {

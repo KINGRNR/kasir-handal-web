@@ -43,7 +43,7 @@ Route::middleware('auth:api')->group(function () {
             }
         });
         Route::controller(ProdukController::class)->group(function () {
-            foreach (['showProdukMobile', 'saveMob', 'delete'] as $key => $value) {
+            foreach (['showProdukMobile', 'saveMob', 'delete', 'saveMobile'] as $key => $value) {
                 Route::post('/produk/' . $value, $value);
             }
         });
