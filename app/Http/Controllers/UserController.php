@@ -97,5 +97,19 @@ class UserController extends Controller
       'message' => 'Successfully logged out',
     ]);
   }
+  public function delete(Request $request)
+  {
+      $data = $request->post();
+      $id = $data['id'];
+
+      $user = User::find($id);
+
+      if (!$user) {
+          return response()->json(['error' => 'User not found.'], 404);
+      }
+      $user->delete();
+
+      return response()->json(['success' => 'User deleted successfully.']);
+  }
 }
 // }

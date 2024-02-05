@@ -104,7 +104,7 @@ Route::middleware(['web'])->group(function () {
             }
         });
         Route::controller(ProdukController::class)->group(function () {
-            foreach (['showProduk', 'getKategori', 'save', 'showProdukCart', 'addCart'] as $key => $value) {
+            foreach (['showProduk', 'getKategori', 'save', 'saveMob' , 'showProdukCart', 'addCart', 'delete'] as $key => $value) {
                 Route::post('/produk/' . $value, $value);
             }
         });
