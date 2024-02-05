@@ -49,7 +49,7 @@ class ProdukController extends Controller
 
   public function saveMob(Request $request)
   {
-    dd($request->all());
+    print_r($request->all()); exit;
 
     $validator = Validator::make($request->all(), [
       'foto_produk' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Max size 2MB
