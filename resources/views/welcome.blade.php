@@ -23,8 +23,8 @@
                                     <!-- Content on the left (Removed "tes") -->
                                 </div>
                                 <div class="me-5 gap-2">
-                                    <a href="/register" class="text-white">Daftar</a>
-                                    <a href="/login" class="text-white">Login</a>
+                                    <a href="/register" class="text-white" style="margin-right: 12px;"><strong>Daftar</strong></a>
+                                    <a href="/login" class="text-white"><strong>Masuk</strong></a>
                                 </div>
                             </div>
                         </div>
@@ -83,13 +83,13 @@
                                     data-kt-swapper-mode="prepend"
                                     data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav_wrapper'}">
                                     <!--begin::Menu-->
-                                    <div class="menu menu-column flex-nowrap menu-rounded menu-lg-row menu-title-gray-500 menu-state-title-primary nav nav-flush fs-5 fw-bold"
+                                    <div class="menu menu-column flex-nowrap menu-rounded menu-lg-row menu-title-blue-800 menu-state-title-primary nav nav-flush fs-5 fw-bold"
                                         id="kt_landing_menu">
                                         <!--begin::Menu item-->
                                         <div class="menu-item">
                                             <!--begin::Menu link-->
                                             <a class="menu-link nav-link active py-3 px-4 px-xxl-6" href="#kt_body"
-                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Home</a>
+                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Beranda</a>
                                             <!--end::Menu link-->
                                         </div>
                                         <!--end::Menu item-->
@@ -97,8 +97,7 @@
                                         <div class="menu-item">
                                             <!--begin::Menu link-->
                                             <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#how-it-works"
-                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">How it
-                                                Works</a>
+                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Fitur Unggulan</a>
                                             <!--end::Menu link-->
                                         </div>
                                         <!--end::Menu item-->
@@ -107,34 +106,11 @@
                                             <!--begin::Menu link-->
                                             <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#achievements"
                                                 data-kt-scroll-toggle="true"
-                                                data-kt-drawer-dismiss="true">Achievements</a>
+                                                data-kt-drawer-dismiss="true">tentang kami</a>
                                             <!--end::Menu link-->
                                         </div>
                                         <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin::Menu link-->
-                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#team"
-                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Team</a>
-                                            <!--end::Menu link-->
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin::Menu link-->
-                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#portfolio"
-                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Portfolio</a>
-                                            <!--end::Menu link-->
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin::Menu link-->
-                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#pricing"
-                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Pricing</a>
-                                            <!--end::Menu link-->
-                                        </div>
-                                        <!--end::Menu item-->
+                                        
                                     </div>
                                     <!--end::Menu-->
                                 </div>
@@ -162,7 +138,7 @@
                         <img src="assets/assets_foto/kasir.png" class="img-fluid position-absolute start-0 top-0 height-100" alt="" style="height: 500px; width: 1040px;">
                     
                         <!-- SVG overlay on the right -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="996" height="500" viewBox="0 0 884 460" fill="none" style="position: absolute; top: 0; right: 0; width: 959px; height: 500px; flex-shrink: 0;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="600" height="460" viewBox="0 0 600 460" fill="none" style="position: absolute; top: 0; right: 0; width: 959px; min-height: 500px; flex-shrink: 0;">
                             <path d="M113.965 2.4156C114.859 0.889945 116.47 0 118.239 0H879C881.762 0 884 2.23858 884 5V455C884 457.761 881.762 460 879 460H118.161C116.435 460 114.859 459.155 113.951 457.686C100.728 436.285 0.5 272.828 0.5 235C0.5 197.158 100.797 24.8709 113.965 2.4156Z" fill="url(#paint0_linear_98_941)"/>
                             <defs>
                                 <linearGradient id="paint0_linear_98_941" x1="884" y1="230" x2="-229.471" y2="207.59" gradientUnits="userSpaceOnUse">
@@ -171,6 +147,22 @@
                                     <stop offset="1" stop-color="#08C0B5"/>
                                 </linearGradient>
                             </defs>
+                            <path d="M113.965 2.4156C114.859 0.889945 116.47 0 118.239 0H879C881.762 0 884 2.23858 884 5V455C884 457.761 881.762 460 879 460H118.161C116.435 460 114.859 459.155 113.951 457.686C100.728 436.285 0.5 272.828 0.5 235C0.5 197.158 100.797 24.8709 113.965 2.4156Z" fill="url(#paint0_linear_98_941)"/>
+
+                        <!-- Add text element -->
+                            <text x="30%" y="20%" dominant-baseline="middle" fill="#FFFFFF" font-size="32" font-family="Poppins" font-weight="550">
+                                <tspan text-anchor="start">Kasir Handal</tspan>
+                                <tspan dy="1.5em" x="30%" text-anchor="start">Lebih Mudah &amp; Praktis</tspan>
+                            </text>
+                            <text x="30%" y="50%" dominant-baseline="middle" fill="#FFFFFF" font-size="20" font-family="Poppins" font-weight="400">
+                                <tspan text-anchor="start">Solusi tepat untuk berbagai toko swalayan anda,</tspan>
+                                <tspan dy="1.5em" x="30%" text-anchor="start"> dengan fitur yang lengkap dan gratis.</tspan>
+                            </text>
+                         <!-- Tombol Daftarkan Toko Anda -->
+                         <rect x="30%" y="70%" width="227" height="38" fill="#2A77A3" stroke="#FFFFFF" stroke-width="2" rx="5" ry="5" cursor="pointer"/>
+                        <text x="49%" y="74.5%" dominant-baseline="middle" text-anchor="middle" fill="#FFFFFF" font-size="16" font-family="Poppins" font-weight="500" cursor="pointer">
+                            DAFTARKAN TOKO ANDA
+                        </text>
                         </svg>
                     
                         <!-- Your additional content goes here -->
@@ -193,10 +185,11 @@
                 <!--begin::Container-->
                 <div class="container">
                     <!--begin::Heading-->
-                    <div class="text-center mt-5 mb-17">
+                    <div class="text-center mt-15 mb-15">
                         <!--begin::Title-->
-                        <h3 class="fs-2hx text-dark mb-5" id="how-it-works"
+                        <h3 class="fs-2hx text-custom mb-5" id="how-it-works"
                             data-kt-scroll-offset="{default: 100, lg: 150}">Fitur Unggulan</h3>
+        
                         <!--end::Title-->
                         <!--end::Text-->
                     </div>
@@ -205,8 +198,9 @@
                     <div class="row w-100 gy-10 mb-md-20">
                         <!--begin::Col-->
                         <div class="col-md-4 px-5">
-                            <!--begin::Story-->
-                            <div class="text-center mb-10 mb-md-0 border">
+                            <!--begin::St
+                            ory-->
+                            <div class="text-center mb-10 mb-md-0" style="border: 2px solid #40A0B6; padding: 1rem;">
                                 <!--begin::Illustration-->
                                 {{-- <img src="assets/media/illustrations/sigma-1/2.png" class="mh-125px mb-9"
                                     alt="" /> --}}
@@ -218,28 +212,32 @@
                                     <!--begin::Badge-->
                                     <!--end::Badge-->
                                     <!--begin::Title-->
-                                    <div class="fs-5 fs-lg-3 fw-bolder text-dark">Laporan Penjualan</div>
+                                    <div class="fs-5 fs-lg-3 fw-bolder" style="color: #2F3281;">Laporan Penjualan</div>
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Heading-->
                                 <!--begin::Description-->
-                                <div class="fw-bold fs-6 fs-lg-4 text-muted">Kasir Handal menyediakan
-                                    <br />Laporan Penjualan Toko Anda
-                                    <br />setiap bulannya.
+                                <div class=" fs-6 fs-lg-4 " style="font-weight:400; color: #667085;">
+                                        Kasir Handal menyediakan
+                                <br />Laporan Penjualan Toko Anda
+                                <br />setiap bulannya.
+                                <br />
+                                <br>
                                 </div>
+
                                 <!--end::Description-->
                             </div>
                             <!--end::Story-->
                         </div>
                         <!--end::Col-->
                         <!--begin::Col-->
-                        <div class="col-md-4 px-5 border">
+                        <div class="col-md-4 px-5 ">
                             <!--begin::Story-->
-                            <div class="text-center mb-10 mb-md-0">
+                            <div class="text-center mb-10 mb-md-0" style="border: 2px solid #40A0B6; padding: 1rem;">
                                 <!--begin::Illustration-->
                                 {{-- <img src="assets/media/illustrations/sigma-1/8.png" class="mh-125px mb-9"
                                     alt="" /> --}}
-                                    <img src="assets/assets_foto/2.png" class="mh-125px mb-9"/>
+                                    <img src="assets/assets_foto/2.png" class="mh-125px mb-9" />
                                                                                                 
                                 <!--end::Illustration-->
                                 <!--begin::Heading-->
@@ -247,14 +245,16 @@
                                     <!--begin::Badge-->
                                     <!--end::Badge-->
                                     <!--begin::Title-->
-                                    <div class="fs-5 fs-lg-3 fw-bolder text-dark">Transaksi Lebih Mudah</div>
+                                    <div class="fs-5 fs-lg-3 fw-bolder" style="color: #2F3281; ">Transaksi Lebih Mudah</div>
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Heading-->
                                 <!--begin::Description-->
-                                <div class="fw-bold fs-6 fs-lg-4 text-muted">Kasir Handal menyediakan banyak
-                                    <br />metode pembayaran, pelanggan
+                                <div class=" fs-6 fs-lg-4 " style="font-weight:400; color: #667085; ">
+                                    metode pembayaran, pelanggan
                                     <br />bisa membayar lewat e-wallet maupun mobile banking. 
+                                    <br/>
+                                    <br/>
                                 </div>
                                 <!--end::Description-->
                             </div>
@@ -264,7 +264,7 @@
                         <!--begin::Col-->
                         <div class="col-md-4 px-5 ">
                             <!--begin::Story-->
-                            <div class="text-center mb-10 mb-md-0 border">
+                            <div class="text-center mb-10 mb-md-0" style="border: 2px solid #40A0B6; padding: 1rem;">
                                 <!--begin::Illustration-->
                                 {{-- <img src="assets/media/illustrations/sigma-1/12.png" class="mh-125px mb-9" --}}
                                     {{-- alt="" /> --}}
@@ -276,12 +276,17 @@
                                     <!--begin::Badge-->
                                     <!--end::Badge-->
                                     <!--begin::Title-->
-                                    <div class="fs-5 fs-lg-3 fw-bolder text-dark">Perhitungan Tepat</div>
+                                    <div class="fs-5 fs-lg-3 fw-bolder" style="color: #2F3281;">Perhitungan Tepat</div>
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Heading-->
                                 <!--begin::Description-->
-                                <div class="fw-bold fs-6 fs-lg-4 text-muted">Dengan menggunakan Kasir Handal anda tidak akan mengalami kesalahan perhitungan.
+                                <div class=" fs-6 fs-lg-4 " style="font-weight:400; color: #667085;">
+                                    Dengan menggunakan Kasir Handal 
+                                    <br/>anda tidak akan mengalami
+                                    <br/>kesalahan perhitungan.
+                                    <br/>
+                                    <br/>
                                 </div>
                                 <!--end::Description-->
                             </div>
@@ -290,243 +295,48 @@
                         <!--end::Col-->
                     </div>
                     <!--end::Row-->
-                    <!--begin::Product slider-->
-                    <div class="tns tns-default">
-                        <!--begin::Slider-->
-                        <div data-tns="true" data-tns-loop="true" data-tns-swipe-angle="false" data-tns-speed="2000"
-                            data-tns-autoplay="true" data-tns-autoplay-timeout="18000" data-tns-controls="true"
-                            data-tns-nav="false" data-tns-items="1" data-tns-center="false" data-tns-dots="false"
-                            data-tns-prev-button="#kt_team_slider_prev1" data-tns-next-button="#kt_team_slider_next1">
-                            <!--begin::Item-->
-                            <div class="text-center px-5 pt-5 pt-lg-10 px-lg-10">
-                                <img src="assets/media/product-demos/demo1.png" class="card-rounded shadow mw-100"
-                                    alt="" />
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Item-->
-                            <div class="text-center px-5 pt-5 pt-lg-10 px-lg-10">
-                                <img src="assets/media/product-demos/demo2.png" class="card-rounded shadow mw-100"
-                                    alt="" />
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Item-->
-                            <div class="text-center px-5 pt-5 pt-lg-10 px-lg-10">
-                                <img src="assets/media/product-demos/demo4.png" class="card-rounded shadow mw-100"
-                                    alt="" />
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Item-->
-                            <div class="text-center px-5 pt-5 pt-lg-10 px-lg-10">
-                                <img src="assets/media/product-demos/demo5.png" class="card-rounded shadow mw-100"
-                                    alt="" />
-                            </div>
-                            <!--end::Item-->
-                        </div>
-                        <!--end::Slider-->
-                        <!--begin::Slider button-->
-                        <button class="btn btn-icon btn-active-color-primary" id="kt_team_slider_prev1">
-                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr074.svg-->
-                            <span class="svg-icon svg-icon-3x">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M11.2657 11.4343L15.45 7.25C15.8642 6.83579 15.8642 6.16421 15.45 5.75C15.0358 5.33579 14.3642 5.33579 13.95 5.75L8.40712 11.2929C8.01659 11.6834 8.01659 12.3166 8.40712 12.7071L13.95 18.25C14.3642 18.6642 15.0358 18.6642 15.45 18.25C15.8642 17.8358 15.8642 17.1642 15.45 16.75L11.2657 12.5657C10.9533 12.2533 10.9533 11.7467 11.2657 11.4343Z"
-                                        fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </button>
-                        <!--end::Slider button-->
-                        <!--begin::Slider button-->
-                        <button class="btn btn-icon btn-active-color-primary" id="kt_team_slider_next1">
-                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr071.svg-->
-                            <span class="svg-icon svg-icon-3x">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z"
-                                        fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </button>
-                        <!--end::Slider button-->
-                    </div>
-                    <!--end::Product slider-->
+
                 </div>
-                <!--end::Container-->
+                    <!--end::How It Works Section-->
+                    <!--begin::Statistics Section-->
+
+                    <!--begin::Wrapper-->
+                    <div class="pb-15 landing-dark-bg" style="background-color: #D1E9FF; padding-top: 100px; padding-bottom: 100px;">
+    <!--begin::Container-->
+    <div class="container">
+        <!-- Spasi atas -->
+        <div style="height: 3px;"></div>
+
+        <!--begin::Heading-->
+        <div class="text-center mb-18" id="achievements" data-kt-scroll-offset="{default: 100, lg: 150}" style="margin-top: -70px;">
+            <!--begin::Title-->
+            <h3 class="fs-2hx fw-bolder mb-5" style="color:#2F3281;">Tentang Kami</h3>
+            <!--end::Title-->
+        </div>
+        <!--end::Heading-->
+
+        <!-- Foto -->
+        <div class="row">
+            <div class="col-md-6" style="margin-top: -50px;">
+                <img src="assets/assets_foto/4.png" alt="Foto Tentang Kami" style="width: 85%; height: auto; margin-left: -15%;">
             </div>
-            <!--end::How It Works Section-->
-            <!--begin::Statistics Section-->
-            <div class="mt-sm-n10">
-                <!--begin::Curve top-->
-                <div class="landing-curve landing-dark-color">
-                    <svg viewBox="15 -1 1470 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M1 48C4.93573 47.6644 8.85984 47.3311 12.7725 47H1489.16C1493.1 47.3311 1497.04 47.6644 1501 48V47H1489.16C914.668 -1.34764 587.282 -1.61174 12.7725 47H1V48Z"
-                            fill="currentColor"></path>
-                    </svg>
-                </div>
-                <!--end::Curve top-->
-                <!--begin::Wrapper-->
-                <div class="pb-15 pt-18 landing-dark-bg">
-                    <!--begin::Container-->
-                    <div class="container">
-                        <!--begin::Heading-->
-                        <div class="text-center mt-15 mb-18" id="achievements"
-                            data-kt-scroll-offset="{default: 100, lg: 150}">
-                            <!--begin::Title-->
-                            <h3 class="fs-2hx text-white fw-bolder mb-5">We Make Things Better</h3>
-                            <!--end::Title-->
-                            <!--begin::Description-->
-                            <div class="fs-5 text-gray-700 fw-bold">Save thousands to millions of bucks by using single
-                                tool
-                                <br />for different amazing and great useful admin
-                            </div>
-                            <!--end::Description-->
-                        </div>
-                        <!--end::Heading-->
-                        <!--begin::Statistics-->
-                        <div class="d-flex flex-center">
-                            <!--begin::Items-->
-                            <div class="d-flex flex-wrap flex-center justify-content-lg-between mb-15 mx-auto w-xl-900px">
-                                <!--begin::Item-->
-                                <div class="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain"
-                                    style="background-image: url('assets/media/svg/misc/octagon.svg')">
-                                    <!--begin::Symbol-->
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                                    <span class="svg-icon svg-icon-2tx svg-icon-white mb-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none">
-                                            <rect x="2" y="2" width="9" height="9" rx="2"
-                                                fill="black" />
-                                            <rect opacity="0.3" x="13" y="2" width="9" height="9"
-                                                rx="2" fill="black" />
-                                            <rect opacity="0.3" x="13" y="13" width="9" height="9"
-                                                rx="2" fill="black" />
-                                            <rect opacity="0.3" x="2" y="13" width="9" height="9"
-                                                rx="2" fill="black" />
-                                        </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                    <!--end::Symbol-->
-                                    <!--begin::Info-->
-                                    <div class="mb-0">
-                                        <!--begin::Value-->
-                                        <div class="fs-lg-2hx fs-2x fw-bolder text-white d-flex flex-center">
-                                            <div class="min-w-70px" data-kt-countup="true" data-kt-countup-value="700"
-                                                data-kt-countup-suffix="+">0</div>
-                                        </div>
-                                        <!--end::Value-->
-                                        <!--begin::Label-->
-                                        <span class="text-gray-600 fw-bold fs-5 lh-0">Known Companies</span>
-                                        <!--end::Label-->
-                                    </div>
-                                    <!--end::Info-->
-                                </div>
-                                <!--end::Item-->
-                                <!--begin::Item-->
-                                <div class="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain"
-                                    style="background-image: url('assets/media/svg/misc/octagon.svg')">
-                                    <!--begin::Symbol-->
-                                    <!--begin::Svg Icon | path: icons/duotune/graphs/gra008.svg-->
-                                    <span class="svg-icon svg-icon-2tx svg-icon-white mb-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none">
-                                            <path
-                                                d="M13 10.9128V3.01281C13 2.41281 13.5 1.91281 14.1 2.01281C16.1 2.21281 17.9 3.11284 19.3 4.61284C20.7 6.01284 21.6 7.91285 21.9 9.81285C22 10.4129 21.5 10.9128 20.9 10.9128H13Z"
-                                                fill="black" />
-                                            <path opacity="0.3"
-                                                d="M13 12.9128V20.8129C13 21.4129 13.5 21.9129 14.1 21.8129C16.1 21.6129 17.9 20.7128 19.3 19.2128C20.7 17.8128 21.6 15.9128 21.9 14.0128C22 13.4128 21.5 12.9128 20.9 12.9128H13Z"
-                                                fill="black" />
-                                            <path opacity="0.3"
-                                                d="M11 19.8129C11 20.4129 10.5 20.9129 9.89999 20.8129C5.49999 20.2129 2 16.5128 2 11.9128C2 7.31283 5.39999 3.51281 9.89999 3.01281C10.5 2.91281 11 3.41281 11 4.01281V19.8129Z"
-                                                fill="black" />
-                                        </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                    <!--end::Symbol-->
-                                    <!--begin::Info-->
-                                    <div class="mb-0">
-                                        <!--begin::Value-->
-                                        <div class="fs-lg-2hx fs-2x fw-bolder text-white d-flex flex-center">
-                                            <div class="min-w-70px" data-kt-countup="true" data-kt-countup-value="80"
-                                                data-kt-countup-suffix="K+">0</div>
-                                        </div>
-                                        <!--end::Value-->
-                                        <!--begin::Label-->
-                                        <span class="text-gray-600 fw-bold fs-5 lh-0">Statistic Reports</span>
-                                        <!--end::Label-->
-                                    </div>
-                                    <!--end::Info-->
-                                </div>
-                                <!--end::Item-->
-                                <!--begin::Item-->
-                                <div class="d-flex flex-column flex-center h-200px w-200px h-lg-250px w-lg-250px m-3 bgi-no-repeat bgi-position-center bgi-size-contain"
-                                    style="background-image: url('assets/media/svg/misc/octagon.svg')">
-                                    <!--begin::Symbol-->
-                                    <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm002.svg-->
-                                    <span class="svg-icon svg-icon-2tx svg-icon-white mb-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none">
-                                            <path
-                                                d="M21 10H13V11C13 11.6 12.6 12 12 12C11.4 12 11 11.6 11 11V10H3C2.4 10 2 10.4 2 11V13H22V11C22 10.4 21.6 10 21 10Z"
-                                                fill="black" />
-                                            <path opacity="0.3"
-                                                d="M12 12C11.4 12 11 11.6 11 11V3C11 2.4 11.4 2 12 2C12.6 2 13 2.4 13 3V11C13 11.6 12.6 12 12 12Z"
-                                                fill="black" />
-                                            <path opacity="0.3"
-                                                d="M18.1 21H5.9C5.4 21 4.9 20.6 4.8 20.1L3 13H21L19.2 20.1C19.1 20.6 18.6 21 18.1 21ZM13 18V15C13 14.4 12.6 14 12 14C11.4 14 11 14.4 11 15V18C11 18.6 11.4 19 12 19C12.6 19 13 18.6 13 18ZM17 18V15C17 14.4 16.6 14 16 14C15.4 14 15 14.4 15 15V18C15 18.6 15.4 19 16 19C16.6 19 17 18.6 17 18ZM9 18V15C9 14.4 8.6 14 8 14C7.4 14 7 14.4 7 15V18C7 18.6 7.4 19 8 19C8.6 19 9 18.6 9 18Z"
-                                                fill="black" />
-                                        </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                    <!--end::Symbol-->
-                                    <!--begin::Info-->
-                                    <div class="mb-0">
-                                        <!--begin::Value-->
-                                        <div class="fs-lg-2hx fs-2x fw-bolder text-white d-flex flex-center">
-                                            <div class="min-w-70px" data-kt-countup="true" data-kt-countup-value="35"
-                                                data-kt-countup-suffix="M+">0</div>
-                                        </div>
-                                        <!--end::Value-->
-                                        <!--begin::Label-->
-                                        <span class="text-gray-600 fw-bold fs-5 lh-0">Secure Payments</span>
-                                        <!--end::Label-->
-                                    </div>
-                                    <!--end::Info-->
-                                </div>
-                                <!--end::Item-->
-                            </div>
-                            <!--end::Items-->
-                        </div>
-                        <!--end::Statistics-->
-                        <!--begin::Testimonial-->
-                        <div class="fs-2 fw-bold text-muted text-center mb-3">
-                            <span class="fs-1 lh-1 text-gray-700">“</span>When you care about your topic, you’ll write
-                            about it in a
-                            <br />
-                            <span class="text-gray-700 me-1">more powerful</span>, emotionally expressive way
-                            <span class="fs-1 lh-1 text-gray-700">“</span>
-                        </div>
-                        <!--end::Testimonial-->
-                        <!--begin::Author-->
-                        <div class="fs-2 fw-bold text-muted text-center">
-                            <a href="../../demo7/dist/account/security.html" class="link-primary fs-4 fw-bolder">Marcus
-                                Levy,</a>
-                            <span class="fs-4 fw-bolder text-gray-600">KeenThemes CEO</span>
-                        </div>
-                        <!--end::Author-->
-                    </div>
-                    <!--end::Container-->
-                </div>
+            <div class="col-md-6" style="margin-top: -20px; margin-left: -10%;">
+            <p style="font-family: 'Poppins', sans-serif; font-size: 35px; color: #2F3281; font-weight: 600; margin-top: 0;">Kasir Handal Solusi Tepat Untuk Bisnis Anda</p>
+            <p style="font-family: 'Poppins', sans-serif; font-size: 23px; color: #3E4784; font-weight: 500; margin-bottom: 20px;">segera daftarkan toko anda sekarang juga</p>
+            <p style="font-family: 'Poppins', sans-serif; font-size: 18px; color: #717BBC; font-weight: 450;  ">
+            Sistem layanan yang kami hadirkan difokuskan secara khusus untuk memenuhi kebutuhan toko swalayan, 
+            menyediakan beragam fitur yang memungkinkan Anda untuk tidak hanya melihat dengan mudah laporan penjualan 
+            dan melakukan pendataan barang, tetapi juga untuk menganalisis data secara mendalam </p>
+            </div>
+        </div>
+    </div>
+    
+
                 <!--end::Wrapper-->
                 <!--begin::Curve bottom-->
                 <div class="landing-curve landing-dark-color">
                     <svg viewBox="15 12 1470 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M0 11C3.93573 11.3356 7.85984 11.6689 11.7725 12H1488.16C1492.1 11.6689 1496.04 11.3356 1500 11V12H1488.16C913.668 60.3476 586.282 60.6117 11.7725 12H0V11Z"
-                            fill="currentColor"></path>
+                       
                     </svg>
                 </div>
                 <!--end::Curve bottom-->
