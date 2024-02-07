@@ -1,4 +1,3 @@
-
 @include('layouts.support.bundle.bundleheader')
 
 <body id="kt_body" class="app-blank">
@@ -40,7 +39,7 @@
                                 <label class="form-label fs-14 fw-bolder text-dark">Email</label>
                                 <input
                                     class="form-control @error('email') is-invalid @enderror form-control-lg fs-14 form-control-solid border border-gray-200 text-gray-900"
-                                    id="email" type="email" name="email" value="admin@admin.com" placeholder="Enter your E-mail"
+                                    id="email" type="email" name="email" value="kingrnr@gmail.com" placeholder="Enter your E-mail"
                                     required autocomplete="email" autofocus>
                                 {{-- value="{{ old('email') }}" --}}
                                 @error('email')
@@ -140,6 +139,6 @@
             }
         }
     </script>
-            @include('layouts.support.bundle.bundlefooter')
+    @include('layouts.support.bundle.bundlefooter')
 
-</body>   
+</body>

@@ -2,7 +2,7 @@
 <html lang="en">
     @include('layouts.support.bundle.bundleheader')    
 	
-    <body id="kt_body" style="background-image: url(../assets/media/patterns/header-bg.jpg)" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled">
+    <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled">
 		<!--begin::Main-->
 		<!--begin::Root-->
 		<div class="d-flex flex-column flex-root">

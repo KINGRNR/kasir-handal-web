@@ -189,7 +189,6 @@
                         <!--begin::Title-->
                         <h3 class="fs-2hx text-custom mb-5" id="how-it-works"
                             data-kt-scroll-offset="{default: 100, lg: 150}">Fitur Unggulan</h3>
-        
                         <!--end::Title-->
                         <!--end::Text-->
                     </div>
@@ -295,7 +294,6 @@
                         <!--end::Col-->
                     </div>
                     <!--end::Row-->
-
                 </div>
                     <!--end::How It Works Section-->
                     <!--begin::Statistics Section-->

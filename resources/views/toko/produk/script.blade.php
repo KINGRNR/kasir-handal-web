@@ -143,7 +143,7 @@
                 {
                     data: 'harga_produk',
                     render: function(data, type, row) {
-                        return `<span class="badge bg-success">Rp. ${row.harga_produk}</span>`;
+                        return `<span class="badge bg-success">${quick.formatRupiah(row.harga_produk)}</span>`;
                     }
                 },
                 {
@@ -193,36 +193,36 @@
         // }).css('cursor', 'pointer');
     }
 
-    function switchForm() {
-        $('.table-switch-produk').animate({
-            top: '250px',
-            opacity: '0'
-        }, function() {
-            $('.formProduk').show();
-            $('.formProduk').animate({
-                top: '0px',
-                opacity: '1'
-            });
-            $('.table-switch-produk').hide();
-        });
-    }
+    // function switchForm() {
+    //     $('.table-switch-produk').animate({
+    //         top: '250px',
+    //         opacity: '0'
+    //     }, function() {
+    //         $('.formProduk').show();
+    //         $('.formProduk').animate({
+    //             top: '0px',
+    //             opacity: '1'
+    //         });
+    //         $('.table-switch-produk').hide();
+    //     });
+    // }
 
-    function switchTable() {
-        // Animate the form upward and fade it out
-        $('.formProduk').animate({
-            top: '-250px',
-            opacity: '0'
-        }, function() {
-            // Animation complete, show the table and hide the form
-            $('.table-switch-produk').show();
-            $('.table-switch-produk').animate({
-                top: '0px',
-                opacity: '1'
-            });
+    // function switchTable() {
+    //     // Animate the form upward and fade it out
+    //     $('.formProduk').animate({
+    //         top: '-250px',
+    //         opacity: '0'
+    //     }, function() {
+    //         // Animation complete, show the table and hide the form
+    //         $('.table-switch-produk').show();
+    //         $('.table-switch-produk').animate({
+    //             top: '0px',
+    //             opacity: '1'
+    //         });
 
-            $('.formProduk').hide();
-        });
-    }
+    //         $('.formProduk').hide();
+    //     });
+    // }
 
     function save() {
         var form = "formProduk";
