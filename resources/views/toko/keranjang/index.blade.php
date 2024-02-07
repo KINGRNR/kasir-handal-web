@@ -22,7 +22,7 @@
     }
 </style>
 
-<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled aside-enabled">
+<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled">
     <!--begin::Main-->
     <!--begin::Root-->
     <div class="loading">
@@ -43,7 +43,7 @@
                 <!--begin::Header-->
                 <div id="kt_header" class="header align-items-stretch" data-kt-sticky="true"
                     data-kt-sticky-name="header" data-kt-sticky-offset="{default: '200px', lg: '300px'}"
-                    style="background: radial-gradient(circle at 0% 50%, #2F3281 0%, #40A0B6 67%, #08C0B5 82.29%); color: var(--white);">
+                    style="background: #2F3281">
                     <!--begin::Container-->
                     @include('toko.header.header')
                     <!--end::Container-->
@@ -69,7 +69,7 @@
 						<!--end::Container-->
 					</div> --}}
                 <div id="kt_content_container" class=" mt-5 d-flex flex-column-fluid align-items-start container-xxl">
-                    @include('toko.header.sidebar')
+                    {{-- @include('toko.header.sidebar') --}}
                     <div class="content flex-row-fluid" id="kt_content">
 
                         @include('toko.keranjang.invoice')

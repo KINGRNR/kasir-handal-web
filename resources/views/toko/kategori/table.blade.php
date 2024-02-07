@@ -49,9 +49,9 @@
                     <!--begin::Table row-->
                     <tr class="text-start align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                         <th class="ps-4" width="20">No</th>
-                        <th class="min-w-125px">Kode Kategori</th>
-                        <th class="min-w-125px">Nama Kategori</th>
-                        <th class="min-w-125px"></th>
+                        <th class="min-w-80px">Kode Kategori</th>
+                        <th class="min-w-80px">Nama Kategori</th>
+                        <th class="min-w-80px"></th>
                     </tr>
                     <!--end::Table row-->
                 </thead>

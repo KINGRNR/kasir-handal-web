@@ -59,14 +59,16 @@
                 },
                 {
                     data: 'created_at',
-                    name: 'created_at'
+                    render: function(data, type, row) {
+                        return quick.convertDate(row.created_at)
+                    }
                 }, {
                     data: 'id',
                     render: function(data, type, row) {
                         var editButton = '<button class="btn btn-sm btn-warning edit-btn" onclick="edit(this)" data-id="' +
                             row.id + '">Edit</button>';
                         var deleteButton =
-                            '<button class="btn btn-sm btn-danger delete-btn"  data-id="' + row.id +
+                            '<button class="btn btn-sm btn-danger delete-btn" onclick="deleteRow(this)" data-id="' + row.id +
                             '">Delete</button>';
 
                         return editButton + ' ' + deleteButton;
@@ -104,7 +106,53 @@
     //     $('.form').fadeOut(100);
     //     $('.table-switch-petugas').fadeIn();
     // }
+    function deleteRow(atr) {
+        var id = $(atr).attr('data-id');
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post("/user/delete", {
+                        id: id
+                    }, {
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'multipart/form-data',
+                        }
+                    })
+                    .then(response => {
+                        if (response.data.success) {
+                            quick.toastNotif({
+                                title: 'success',
+                                icon: 'success',
+                                timer: 500,
+                                callback: function() {
+                                    window.location.reload()
+                                }
+                            });
+                        } else {
+                            quick.toastNotif({
+                                title: response.data.message,
+                                icon: response.data.status,
+                                timer: 2000,
+                            });
+                        }
+                        console.log(response)
 
+                    })
+                    .catch(error => {
+
+                        console.error('There has been a problem with your Axios operation:', error);
+                    });
+            }
+        });
+    };
     function wipeData() {
         $('#formPetugas').trigger('reset');
         $('#id').val(null);

@@ -14,10 +14,9 @@
                             <input type="hidden" name="id_produk" id="id_produk">
                             <div class="fv-row mb-5">
                                 <label for="" class="required form-label">Foto Produk <i>max 2mb</i></label>
-                                <input type="file" id="inputImage" accept="image/*"
+                                <input type="file" id="inputImage" name="foto_produk" accept="image/*"
                                     class="form-control form-control-sm form-control-solid input-required">
                                 <input type="hidden" id="existingImage" value="">
-                                <input type="hidden" id="croppedPhoto" name="croppedPhoto" value="">
 
                                 <!-- You can set the existing image path here -->
                             </div>
@@ -48,7 +47,7 @@
                             <div class="fv-row mb-5">
                                 <label for="" class="required form-label">Pilih Kategori</label>
                                 {{-- <input type="text" name="" id=""> --}}
-                                <select name="kategori_produk" id="kategori_produk"
+                                <select name="id_produk_kategori" id="id_produk_kategori"
                                     class="form-select form-select-sm form-select-solid" required>
                                     <option value="" selected disabled>Pilih Kategori</option>
                                 </select>

@@ -11,7 +11,7 @@
 				<!--begin::Wrapper-->
 				<div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
 					<!--begin::Header-->
-					<div id="kt_header" class="header align-items-stretch " data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{default: '200px', lg: '300px'}" name="header" data-kt-sticky-offset="{default: '200px', lg: '300px'}" style="background: radial-gradient(circle at 0% 50%, #2F3281 0%, #40A0B6 67%, #08C0B5 82.29%);">
+					<div id="kt_header" class="header align-items-stretch " data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{default: '200px', lg: '300px'}" name="header" data-kt-sticky-offset="{default: '200px', lg: '300px'}" style="background: #2F3281">
 						<!--begin::Container-->
 						@include('toko.header.header')
 						<!--end::Container-->

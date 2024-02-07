@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\DetailUser;
+use App\Models\Toko;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
@@ -33,7 +35,7 @@ class AuthController extends Controller
     }
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['loginMobile', 'login', 'register', 'logout']]);
+        $this->middleware('auth:api', ['except' => ['loginMobile', 'login', 'register', 'logout', 'checkaccount', 'aktivasiakun']]);
     }
     /**
      * Display a listing of the resource.
@@ -46,7 +48,55 @@ class AuthController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    public function aktivasiakun(Request $request)
+    {
+        $data = $request->post();
+        if ($data['role'] == 'BfiwyVUDrXOpmStr') {
+            $user = User::where('id', base64_decode($data['id']))->where('access_token', $data['token'])->first();
 
+            if ($user) {
+                $user->update([
+                    'active' => 1,
+                ]);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Aktivasi Toko Berhasil.',
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid token.',
+                ], 400);
+            }
+        } else {
+            $user = User::where('id', base64_decode($data['id']))->where('access_token', $data['token'])->first();
+
+            if ($user) {
+                $user->update([
+                    'active' => 1,
+                    'password' => $data['password']
+                ]);
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Aktivasi Petugas Berhasil.',
+                ]);
+            } else {
+                // Jika token tidak cocok
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid token.',
+                ], 400);
+            }
+        }
+    }
+    public function checkaccount(Request $request)
+    {
+        $id = $request->post();
+        // dd($id);
+        $user = User::where('id', base64_decode($id['id']))->select('email', 'access_token', 'active', 'users_role_id')->first();
+
+        return response()->json($user);
+    }
     public function login(Request $request)
     {
         $validator = $this->validator($request->all());
@@ -57,6 +107,10 @@ class AuthController extends Controller
 
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = User::where('email', $request->email)->firstOrFail();
+
+            if ($user->active == 0) {
+                return response()->json(['success' => false, 'message' => 'Akun Anda tidak aktif.'], 403);
+            }
             if ($user->users_role_id == 'BfiwyVUDrXOpmStr') {
                 $toko = DB::table('toko')->where('toko_user_id', $user->id)->first();
                 session(['toko_id' => $toko->toko_id]);
@@ -74,9 +128,9 @@ class AuthController extends Controller
             session(['user_id' => $user->id]);
             session(['user_role' => $user->users_role_id]);
             session(['token' => $token]);
-                
+
             // session(['jwt'])
-            switch ($user->users_role_id) {
+            switch ($user->users_role_id) { 
                 case 'FOV4Qtgi5lcQ9kCY':
                     $request->session()->regenerate();
                     return redirect()->route('superadmin')->with([
@@ -192,7 +246,7 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
         $credentials = $request->only('email', 'password');
-    
+
         $token = Auth::attempt($credentials);
         if (!$token) {
             return response()->json([
@@ -269,46 +323,66 @@ class AuthController extends Controller
     //     Auth::logout();
     //     return redirect()->route('index');
     // }
-     
+
+
     public function register(Request $request)
     {
-        try {
+        // try {
+        // Validasi input
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|unique:users,email',
+        ]);
 
-            $validator = $this->validator($request->all(), 'register');
-            // print_r($validator);
-            // exit;
-            if ($validator->fails()) {
-                return response()->json(['message' => $validator->errors()], 400);
-            }
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()], 400);
+        }
+        $data = $request->post();
+        // dd($data['owner-name']); 
+        // Lanjutkan dengan proses pendaftaran jika validasi berhasil
+        $randomNumber = rand();
+        $accessToken = 'KSR-' . $randomNumber;
+        $id =  User::generateId();
+        $user = User::create([
+            'id' => $id,
+            'name' => $data['owner-name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'users_role_id' => 'BfiwyVUDrXOpmStr',
+            'access_token' =>  $accessToken,
+            'active' => 0,
+        ]);
+        $toko = Toko::create([
+            'toko_user_id' => $id,
+            'toko_nama' => $data['store-name'],
+            'toko_midtrans_serverkey' => $data['server-key'] ?? null,
+            'toko_midtrans_clientkey' => $data['client-key'] ?? null,
+        ]);
+        Mail::send('mail.aktivasi-toko', ['data' => $data, 'id' => $id, 'token' => $accessToken], function ($message) use ($request, $data, $id) {
+            $message->to($data['email']);
+            $message->subject('Aktivasi Akun Kasir Handal');
+        });
+        if ($user && $toko) {
 
-            $user = User::create([
-                'id' => User::generateId(),
-                'name' => $request->firstName . ' ' . $request->lastName,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-                'users_role_id' => 'BfiwyVUDrXOpmStr'
+            return response()->json([
+                'success' => true,
+                'redirect' => route('login'),
+                'message' => 'Successfully registered user.'
             ]);
-
-            if ($user) {
-                return response()->json([
-                    'success' => true,
-                    'redirect' => route('login'),
-                    'message' => 'Successfully registered user.'
-                ]);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'User registration failed.'
-                ], 400);
-            }
-        } catch (\Exception $e) {
-            $statusCode = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
+        } else {
             return response()->json([
                 'success' => false,
-                'message' => 'An error occurred during user registration.'
-            ], $statusCode);
+                'message' => 'User registration failed.'
+            ], 400);
         }
+        // } catch (\Exception $e) {
+        //     $statusCode = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'An error occurred during user registration.'
+        //     ], $statusCode);
+        // }
     }
+
     public function getCsrfToken()
     {
         $token = Session::token();

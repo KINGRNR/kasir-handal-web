@@ -20,9 +20,19 @@
      <!--end::Heaeder menu toggle-->
      <!--begin::Header Logo-->
      <div class="header-logo me-5 me-md-10 flex-grow-1 flex-lg-grow-0">
-         <a href="../../demo2/dist/index.html">
-             <img alt="Logo" src="../assets/media/logos/logo-demo2.png" class="logo-default h-25px" />
-             <img alt="Logo" src="../assets/media/logos/logo-demo2-sticky.png" class="logo-sticky h-25px" />
+         <a href="/toko/dashboard">
+             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="25" viewBox="0 0 23 25" fill="none">
+                 <path fill-rule="evenodd" clip-rule="evenodd"
+                     d="M11.525 0C8.49212 0 5.72917 1.0232 4.09422 1.85918C3.94651 1.93462 3.80886 2.00868 3.68062 2.08001C3.42682 2.22128 3.21061 2.35295 3.03873 2.46885L4.8986 5.26551L5.77415 5.62144C9.19579 7.38461 13.7844 7.38461 17.2067 5.62144L18.2004 5.09475L19.9589 2.46885C19.5947 2.22612 19.2159 2.00692 18.8248 1.81255C17.198 0.985483 14.5008 0 11.5257 0M7.20028 3.16562C6.54168 3.03975 5.8912 2.87302 5.25245 2.66636C6.78399 1.97165 9.0662 1.23443 11.5257 1.23443C13.2291 1.23443 14.8399 1.58829 16.172 2.0368C14.6109 2.26106 12.9451 2.64167 11.3578 3.11007C10.1089 3.47902 8.64924 3.43925 7.20028 3.16562ZM17.9164 6.63846L17.7512 6.7235C13.9872 8.66292 8.99436 8.66292 5.23029 6.7235L5.07385 6.64258C-0.581655 12.98 -4.89898 24.6864 11.525 24.6864C27.949 24.6864 23.5269 12.7626 17.9164 6.63846ZM10.8274 12.3443C10.4712 12.3443 10.1297 12.4888 9.87782 12.746C9.62599 13.0032 9.48451 13.3521 9.48451 13.7158C9.48451 14.0796 9.62599 14.4285 9.87782 14.6857C10.1297 14.9429 10.4712 15.0874 10.8274 15.0874V12.3443ZM12.1702 10.9727V10.2869H10.8274V10.9727C10.1151 10.9727 9.43195 11.2617 8.92827 11.7761C8.4246 12.2906 8.14163 12.9883 8.14163 13.7158C8.14163 14.4434 8.4246 15.1411 8.92827 15.6555C9.43195 16.17 10.1151 16.459 10.8274 16.459V19.2022C10.2432 19.2022 9.7457 18.8216 9.56038 18.288C9.53288 18.2007 9.48853 18.1199 9.42994 18.0505C9.37135 17.981 9.29971 17.9242 9.21926 17.8835C9.13882 17.8428 9.05119 17.819 8.96158 17.8135C8.87196 17.808 8.78218 17.8209 8.69753 17.8514C8.61288 17.882 8.53509 17.9295 8.46875 17.9913C8.40242 18.0531 8.34889 18.1279 8.31134 18.2112C8.27378 18.2944 8.25296 18.3846 8.25011 18.4762C8.24725 18.5679 8.26243 18.6592 8.29472 18.7447C8.47993 19.2796 8.82293 19.7428 9.2765 20.0703C9.73006 20.3979 10.2719 20.5737 10.8274 20.5738V21.2595H12.1702V20.5738C12.8826 20.5738 13.5657 20.2847 14.0694 19.7703C14.573 19.2559 14.856 18.5581 14.856 17.8306C14.856 17.1031 14.573 16.4053 14.0694 15.8909C13.5657 15.3764 12.8826 15.0874 12.1702 15.0874V12.3443C12.7544 12.3443 13.2519 12.7249 13.4372 13.2584C13.4647 13.3457 13.5091 13.4265 13.5677 13.496C13.6263 13.5654 13.6979 13.6222 13.7784 13.6629C13.8588 13.7036 13.9464 13.7274 14.036 13.7329C14.1257 13.7385 14.2154 13.7256 14.3001 13.695C14.3847 13.6645 14.4625 13.6169 14.5289 13.5551C14.5952 13.4933 14.6487 13.4186 14.6863 13.3353C14.7238 13.252 14.7447 13.1618 14.7475 13.0702C14.7504 12.9785 14.7352 12.8872 14.7029 12.8017C14.5177 12.2668 14.1747 11.8037 13.7211 11.4761C13.2676 11.1486 12.7257 10.9727 12.1702 10.9727ZM12.1702 16.459V19.2022C12.5264 19.2022 12.868 19.0577 13.1198 18.8004C13.3716 18.5432 13.5131 18.1944 13.5131 17.8306C13.5131 17.4668 13.3716 17.118 13.1198 16.8607C12.868 16.6035 12.5264 16.459 12.1702 16.459Z"
+                     fill="#2F3281" />
+             </svg>
+             <span class="mt-2"
+                 style="color: #fff;
+              font-family: Poppins;
+              font-size: 20px;
+              font-style: normal;
+              font-weight: 500;
+              line-height: 21px; /* 105% */">KasirHandal</span>
          </a>
      </div>
      <!--end::Header Logo-->
@@ -188,6 +198,22 @@
                                      <a href="#"
                                          class="fw-bold text-muted text-hover-primary fs-7">{{ auth()->user()->email }}</a>
                                  </div> --}}
+                                 <div class="d-flex flex-column">
+                                     <div class="fw-bolder d-flex align-items-center fs-5">{{ session('user') }}
+                                         {{-- @if (session('user')->users_role_id == 'BfiwyVUDrXOpmStr')
+                                             <span
+                                                 class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Toko</span>
+                                         @else
+                                             <span
+                                                 class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Petugas
+                                                 Kasir</span>
+                                         @endif --}}
+                                     </div>
+
+                                     <a href="#"
+                                         class="fw-bold text-muted text-hover-primary fs-7">{{ session('user') }}</a>
+
+                                 </div>
                                  <!--end::Username-->
                              </div>
                          </div>
@@ -216,18 +242,21 @@
      </div>
  </div>
  <script>
-    APP_URL = "{{ getenv('APP_URL') }}/";
-    function logout(id_toko) {
-        // Use Axios to send a POST request to the logout endpoint
-        axios.post(APP_URL + 'user/hapusSessionToken', { id_toko: 1 })
-            .then(response => {
-                // Handle the success response
-                console.log(response.data);
-                location.reload(true);
-            })
-            .catch(error => {
-                // Handle the error response
-                console.error('Logout failed:', error);
-            });
-    }
-</script>
+     APP_URL = "{{ getenv('APP_URL') }}/";
+
+     function logout(id_toko) {
+         // Use Axios to send a POST request to the logout endpoint
+         axios.post(APP_URL + 'user/hapusSessionToken', {
+                 id_toko: 1
+             })
+             .then(response => {
+                 // Handle the success response
+                 console.log(response.data);
+                 location.reload(true);
+             })
+             .catch(error => {
+                 // Handle the error response
+                 console.error('Logout failed:', error);
+             });
+     }
+ </script>

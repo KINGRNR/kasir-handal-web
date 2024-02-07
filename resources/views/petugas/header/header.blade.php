@@ -156,18 +156,20 @@
                                  <!--end::Avatar-->
                                  <!--begin::Username-->
                                  <div class="d-flex flex-column">
-                                     <div class="fw-bolder d-flex align-items-center fs-5">{{ auth()->user()->name }}
-                                         @if (auth()->user()->users_role_id == 'BfiwyVUDrXOpmStr')
+                                    <div class="fw-bolder d-flex align-items-center fs-5">{{ session('user') }}
+                                        {{-- @if (session('user')->users_role_id == 'BfiwyVUDrXOpmStr')
                                              <span
                                                  class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Toko</span>
                                          @else
                                              <span
-                                                 class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Petugas Kasir</span>
-                                         @endif
+                                                 class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Petugas
+                                                 Kasir</span>
+                                         @endif --}}
                                      </div>
 
                                      <a href="#"
-                                         class="fw-bold text-muted text-hover-primary fs-7">{{ auth()->user()->email }}</a>
+                                         class="fw-bold text-muted text-hover-primary fs-7">{{ session('user')}}</a>
+
                                  </div>
                                  <!--end::Username-->
                              </div>

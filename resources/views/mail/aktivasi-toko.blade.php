@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice</title>
+    <title>Aktivasi Akun</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -49,12 +49,12 @@
 
     <div class="container">
         <div class="header">
-            <h2>Aktivasi Email Petugas</h2>
+            <h2>Aktivasi Email Toko</h2>
         </div>
 
         <div class="invoice-details">
-            <p><strong>Dear {{ $data['name'] }}</strong> </p>
-            <p>Silakan gunakan token berikut untuk aktivasi email Petugas anda :</p>
+            <p><strong>Dear {{$data['owner-name']}}</strong> </p>
+            <p>Silakan gunakan token berikut untuk aktivasi email Toko {{$data['store-name']}} anda :</p>
         </div>
 
         <p style="width: 750px;
@@ -65,7 +65,7 @@ font-family: Poppins;
 font-size: 20px;
 font-style: normal;
 font-weight: 600;
-line-height: 28px; /* 140% */">{{ $token }}</span>
+line-height: 28px; /* 140% */">{{$token}}</span>
         </p>
 
 
@@ -74,7 +74,7 @@ line-height: 28px; /* 140% */">{{ $token }}</span>
                 ini hanya berlaku untuk jangka waktu tertentu.!</p>
         </div>
         <a href="{{ env('APP_URL') }}/aktivasiakun?id={{ base64_encode($id) }}"
-            style="width: 247px;
+        style="width: 247px;
 height: 55px;
 flex-shrink: 0;border-radius: 5px;
 background: #2E90FA;    border: none; color: #fff;

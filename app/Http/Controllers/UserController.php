@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
@@ -41,12 +42,20 @@ class UserController extends Controller
         $data['password'] = '';
         // print_r($data); 
         // exit;
+        $randomNumber = rand();
+        $accessToken = 'KSR-' . $randomNumber;
+        $data['access_token'] = $accessToken;
+        $data['active'] = 0;
         User::create($data);
         DB::table('petugas')->insert([
           'petugas_user_id' => $data['id'],
           'petugas_toko_id' => $id_toko->toko_id,
         ]);
       }
+      Mail::send('mail.aktivasi-petugas', ['data' => $data, 'id' => $data['id'], 'token' => $accessToken], function ($message) use ($request, $data, $id) {
+        $message->to($data['email']);
+        $message->subject('Aktivasi Akun Kasir Handal');
+    });
       return response()->json([
         'success' =>  true,
         'status' =>  'Success',

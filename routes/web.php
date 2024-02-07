@@ -39,20 +39,22 @@ Route::middleware(['web'])->group(function () {
         Route::get('/register', function () {
             return view('auth.register');
         })->name('register');
+        Route::get('/aktivasiakun', function () {
+            return view('auth.aktivasi');
+        })->name('aktivasi');
         Route::post('/postlogin', [AuthController::class, 'login'])->name('login.store');
-
     });
 
     // Route::middleware([loginCheck::class])->group(function () {
 
-        Route::group(['middleware' => ['roleCheck:FOV4Qtgi5lcQ9kCY']], function () {
-            Route::get('/superadmin/dashboard', function () {
-                return view('superadmin.dashboard.index');
-            })->name('dashboardsumin');
-            Route::get('/superadmin/user', function () {
-                return view('superadmin.manageuser.index');
-            })->name('manageuser');
-        });
+    Route::group(['middleware' => ['roleCheck:FOV4Qtgi5lcQ9kCY']], function () {
+        Route::get('/superadmin/dashboard', function () {
+            return view('superadmin.dashboard.index');
+        })->name('dashboardsumin');
+        Route::get('/superadmin/user', function () {
+            return view('superadmin.manageuser.index');
+        })->name('manageuser');
+    });
 
     Route::group(['middleware' => ['roleCheck:BfiwyVUDrXOpmStr']], function () {
         Route::get('/toko/dashboard', function () {
@@ -74,44 +76,44 @@ Route::middleware(['web'])->group(function () {
             return view('toko.report-penjualan.index');
         })->name('report-penjualan');
         //controller
-       
+
     });
 
 
-        Route::group(['middleware' => ['roleCheck:TKQR2DSJlQ5b31V2']], function () {
-            Route::get('/petugas/dashboard', function () {
-                return view('petugas.dashboard.index');
-            })->name('petugas');
-            Route::get('/petugas/kategori', function () {
-                return view('petugas.kategori.index');
-            })->name('kategori');
-            Route::get('/petugas/produk', function () {
-                return view('petugas.produk.index');
-            })->name('produk');
-            Route::get('/petugas/keranjang', function () {
-                return view('petugas.keranjang.index');
-            })->name('keranjang');
-            //controller
-        });
-        Route::controller(UserController::class)->group(function () {
-            foreach (['showPetugas', 'savePetugas', 'detail' ,'update', 'delete', 'getData', 'hapusSessionToken'] as $key => $value) {
-                Route::post('/user/' . $value, $value);
-            }
-        });
-        Route::controller(KategoriProdukController::class)->group(function () {
-            foreach (['showKategori', 'save', 'detail', 'delete'] as $key => $value) {
-                Route::post('/kategori/' . $value, $value);
-            }
-        });
-        Route::controller(ProdukController::class)->group(function () {
-            foreach (['showProduk', 'getKategori', 'save', 'saveMob' , 'showProdukCart', 'addCart', 'delete'] as $key => $value) {
-                Route::post('/produk/' . $value, $value);
-            }
-        });
-        Route::controller(PaymentController::class)->group(function () {
-            foreach (['initiatePayment', 'saveTransaction', 'showTransaction', 'cekpelanggan'] as $key => $value) {
-                Route::post('/pay/' . $value, $value);
-            }
-        });
+    Route::group(['middleware' => ['roleCheck:TKQR2DSJlQ5b31V2']], function () {
+        Route::get('/petugas/dashboard', function () {
+            return view('petugas.dashboard.index');
+        })->name('petugas');
+        Route::get('/petugas/kategori', function () {
+            return view('petugas.kategori.index');
+        })->name('kategori');
+        Route::get('/petugas/produk', function () {
+            return view('petugas.produk.index');
+        })->name('produk');
+        Route::get('/petugas/keranjang', function () {
+            return view('petugas.keranjang.index');
+        })->name('keranjang');
+        //controller
     });
+    Route::controller(UserController::class)->group(function () {
+        foreach (['showPetugas', 'savePetugas', 'detail', 'update', 'delete', 'getData', 'hapusSessionToken'] as $key => $value) {
+            Route::post('/user/' . $value, $value);
+        }
+    });
+    Route::controller(KategoriProdukController::class)->group(function () {
+        foreach (['showKategori', 'save', 'detail', 'delete'] as $key => $value) {
+            Route::post('/kategori/' . $value, $value);
+        }
+    });
+    Route::controller(ProdukController::class)->group(function () {
+        foreach (['showProduk', 'getKategori', 'save', 'saveMob', 'showProdukCart', 'addCart', 'delete'] as $key => $value) {
+            Route::post('/produk/' . $value, $value);
+        }
+    });
+    Route::controller(PaymentController::class)->group(function () {
+        foreach (['initiatePayment', 'saveTransaction', 'showTransaction', 'cekpelanggan'] as $key => $value) {
+            Route::post('/pay/' . $value, $value);
+        }
+    });
+});
 // });
