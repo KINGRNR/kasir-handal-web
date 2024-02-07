@@ -23,8 +23,8 @@
                                     <!-- Content on the left (Removed "tes") -->
                                 </div>
                                 <div class="me-5 gap-2">
-                                    <a href="/register" class="text-white">Daftar</a>
-                                    <a href="/login" class="text-white">Login</a>
+                                    <a href="/register" class="text-white" style="margin-right: 12px;"><strong>Daftar</strong></a>
+                                    <a href="/login" class="text-white"><strong>Masuk</strong></a>
                                 </div>
                             </div>
                         </div>
@@ -83,13 +83,13 @@
                                     data-kt-swapper-mode="prepend"
                                     data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav_wrapper'}">
                                     <!--begin::Menu-->
-                                    <div class="menu menu-column flex-nowrap menu-rounded menu-lg-row menu-title-gray-500 menu-state-title-primary nav nav-flush fs-5 fw-bold"
+                                    <div class="menu menu-column flex-nowrap menu-rounded menu-lg-row menu-title-blue-800 menu-state-title-primary nav nav-flush fs-5 fw-bold"
                                         id="kt_landing_menu">
                                         <!--begin::Menu item-->
                                         <div class="menu-item">
                                             <!--begin::Menu link-->
                                             <a class="menu-link nav-link active py-3 px-4 px-xxl-6" href="#kt_body"
-                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Home</a>
+                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Beranda</a>
                                             <!--end::Menu link-->
                                         </div>
                                         <!--end::Menu item-->
@@ -97,8 +97,7 @@
                                         <div class="menu-item">
                                             <!--begin::Menu link-->
                                             <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#how-it-works"
-                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">How it
-                                                Works</a>
+                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Fitur Unggulan</a>
                                             <!--end::Menu link-->
                                         </div>
                                         <!--end::Menu item-->
@@ -107,34 +106,11 @@
                                             <!--begin::Menu link-->
                                             <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#achievements"
                                                 data-kt-scroll-toggle="true"
-                                                data-kt-drawer-dismiss="true">Achievements</a>
+                                                data-kt-drawer-dismiss="true">tentang kami</a>
                                             <!--end::Menu link-->
                                         </div>
                                         <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin::Menu link-->
-                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#team"
-                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Team</a>
-                                            <!--end::Menu link-->
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin::Menu link-->
-                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#portfolio"
-                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Portfolio</a>
-                                            <!--end::Menu link-->
-                                        </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin::Menu link-->
-                                            <a class="menu-link nav-link py-3 px-4 px-xxl-6" href="#pricing"
-                                                data-kt-scroll-toggle="true" data-kt-drawer-dismiss="true">Pricing</a>
-                                            <!--end::Menu link-->
-                                        </div>
-                                        <!--end::Menu item-->
+                                        
                                     </div>
                                     <!--end::Menu-->
                                 </div>
@@ -162,7 +138,7 @@
                         <img src="assets/assets_foto/kasir.png" class="img-fluid position-absolute start-0 top-0 height-100" alt="" style="height: 500px; width: 1040px;">
                     
                         <!-- SVG overlay on the right -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="996" height="500" viewBox="0 0 884 460" fill="none" style="position: absolute; top: 0; right: 0; width: 959px; height: 500px; flex-shrink: 0;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="600" height="460" viewBox="0 0 600 460" fill="none" style="position: absolute; top: 0; right: 0; width: 959px; min-height: 500px; flex-shrink: 0;">
                             <path d="M113.965 2.4156C114.859 0.889945 116.47 0 118.239 0H879C881.762 0 884 2.23858 884 5V455C884 457.761 881.762 460 879 460H118.161C116.435 460 114.859 459.155 113.951 457.686C100.728 436.285 0.5 272.828 0.5 235C0.5 197.158 100.797 24.8709 113.965 2.4156Z" fill="url(#paint0_linear_98_941)"/>
                             <defs>
                                 <linearGradient id="paint0_linear_98_941" x1="884" y1="230" x2="-229.471" y2="207.59" gradientUnits="userSpaceOnUse">
@@ -171,6 +147,22 @@
                                     <stop offset="1" stop-color="#08C0B5"/>
                                 </linearGradient>
                             </defs>
+                            <path d="M113.965 2.4156C114.859 0.889945 116.47 0 118.239 0H879C881.762 0 884 2.23858 884 5V455C884 457.761 881.762 460 879 460H118.161C116.435 460 114.859 459.155 113.951 457.686C100.728 436.285 0.5 272.828 0.5 235C0.5 197.158 100.797 24.8709 113.965 2.4156Z" fill="url(#paint0_linear_98_941)"/>
+
+                        <!-- Add text element -->
+                            <text x="30%" y="20%" dominant-baseline="middle" fill="#FFFFFF" font-size="32" font-family="Poppins" font-weight="550">
+                                <tspan text-anchor="start">Kasir Handal</tspan>
+                                <tspan dy="1.5em" x="30%" text-anchor="start">Lebih Mudah &amp; Praktis</tspan>
+                            </text>
+                            <text x="30%" y="50%" dominant-baseline="middle" fill="#FFFFFF" font-size="20" font-family="Poppins" font-weight="400">
+                                <tspan text-anchor="start">Solusi tepat untuk berbagai toko swalayan anda,</tspan>
+                                <tspan dy="1.5em" x="30%" text-anchor="start"> dengan fitur yang lengkap dan gratis.</tspan>
+                            </text>
+                         <!-- Tombol Daftarkan Toko Anda -->
+                         <rect x="30%" y="70%" width="227" height="38" fill="#2A77A3" stroke="#FFFFFF" stroke-width="2" rx="5" ry="5" cursor="pointer"/>
+                        <text x="49%" y="74.5%" dominant-baseline="middle" text-anchor="middle" fill="#FFFFFF" font-size="16" font-family="Poppins" font-weight="500" cursor="pointer">
+                            DAFTARKAN TOKO ANDA
+                        </text>
                         </svg>
                     
                         <!-- Your additional content goes here -->
@@ -193,10 +185,10 @@
                 <!--begin::Container-->
                 <div class="container">
                     <!--begin::Heading-->
-                    <div class="text-center mt-5 mb-17">
+                    <div class="text-center mt-15 mb-15">
                         <!--begin::Title-->
-                        <h3 class="fs-2hx  mb-5" id="how-it-works"
-                            data-kt-scroll-offset="{default: 100, lg: 150}" style="color: #2F3281;">Fitur Unggulan</h3>
+                        <h3 class="fs-2hx text-custom mb-5" id="how-it-works"
+                            data-kt-scroll-offset="{default: 100, lg: 150}">Fitur Unggulan</h3>
                         <!--end::Title-->
                         <!--end::Text-->
                     </div>
@@ -205,8 +197,9 @@
                     <div class="row w-100 gy-10 mb-md-20">
                         <!--begin::Col-->
                         <div class="col-md-4 px-5">
-                            <!--begin::Story-->
-                            <div class="text-center mb-10 mb-md-0 border">
+                            <!--begin::St
+                            ory-->
+                            <div class="text-center mb-10 mb-md-0" style="border: 2px solid #40A0B6; padding: 1rem;">
                                 <!--begin::Illustration-->
                                 {{-- <img src="assets/media/illustrations/sigma-1/2.png" class="mh-125px mb-9"
                                     alt="" /> --}}
@@ -218,28 +211,32 @@
                                     <!--begin::Badge-->
                                     <!--end::Badge-->
                                     <!--begin::Title-->
-                                    <div class="fs-5 fs-lg-3 fw-bolder text-dark">Laporan Penjualan</div>
+                                    <div class="fs-5 fs-lg-3 fw-bolder" style="color: #2F3281;">Laporan Penjualan</div>
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Heading-->
                                 <!--begin::Description-->
-                                <div class="fw-bold fs-6 fs-lg-4 text-muted">Kasir Handal menyediakan
-                                    <br />Laporan Penjualan Toko Anda
-                                    <br />setiap bulannya.
+                                <div class=" fs-6 fs-lg-4 " style="font-weight:400; color: #667085;">
+                                        Kasir Handal menyediakan
+                                <br />Laporan Penjualan Toko Anda
+                                <br />setiap bulannya.
+                                <br />
+                                <br>
                                 </div>
+
                                 <!--end::Description-->
                             </div>
                             <!--end::Story-->
                         </div>
                         <!--end::Col-->
                         <!--begin::Col-->
-                        <div class="col-md-4 px-5 border">
+                        <div class="col-md-4 px-5 ">
                             <!--begin::Story-->
-                            <div class="text-center mb-10 mb-md-0">
+                            <div class="text-center mb-10 mb-md-0" style="border: 2px solid #40A0B6; padding: 1rem;">
                                 <!--begin::Illustration-->
                                 {{-- <img src="assets/media/illustrations/sigma-1/8.png" class="mh-125px mb-9"
                                     alt="" /> --}}
-                                    <img src="assets/assets_foto/2.png" class="mh-125px mb-9"/>
+                                    <img src="assets/assets_foto/2.png" class="mh-125px mb-9" />
                                                                                                 
                                 <!--end::Illustration-->
                                 <!--begin::Heading-->
@@ -247,14 +244,16 @@
                                     <!--begin::Badge-->
                                     <!--end::Badge-->
                                     <!--begin::Title-->
-                                    <div class="fs-5 fs-lg-3 fw-bolder text-dark">Transaksi Lebih Mudah</div>
+                                    <div class="fs-5 fs-lg-3 fw-bolder" style="color: #2F3281; ">Transaksi Lebih Mudah</div>
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Heading-->
                                 <!--begin::Description-->
-                                <div class="fw-bold fs-6 fs-lg-4 text-muted">Kasir Handal menyediakan banyak
-                                    <br />metode pembayaran, pelanggan
+                                <div class=" fs-6 fs-lg-4 " style="font-weight:400; color: #667085; ">
+                                    metode pembayaran, pelanggan
                                     <br />bisa membayar lewat e-wallet maupun mobile banking. 
+                                    <br/>
+                                    <br/>
                                 </div>
                                 <!--end::Description-->
                             </div>
@@ -264,7 +263,7 @@
                         <!--begin::Col-->
                         <div class="col-md-4 px-5 ">
                             <!--begin::Story-->
-                            <div class="text-center mb-10 mb-md-0 border">
+                            <div class="text-center mb-10 mb-md-0" style="border: 2px solid #40A0B6; padding: 1rem;">
                                 <!--begin::Illustration-->
                                 {{-- <img src="assets/media/illustrations/sigma-1/12.png" class="mh-125px mb-9" --}}
                                     {{-- alt="" /> --}}
@@ -276,12 +275,17 @@
                                     <!--begin::Badge-->
                                     <!--end::Badge-->
                                     <!--begin::Title-->
-                                    <div class="fs-5 fs-lg-3 fw-bolder text-dark">Perhitungan Tepat</div>
+                                    <div class="fs-5 fs-lg-3 fw-bolder" style="color: #2F3281;">Perhitungan Tepat</div>
                                     <!--end::Title-->
                                 </div>
                                 <!--end::Heading-->
                                 <!--begin::Description-->
-                                <div class="fw-bold fs-6 fs-lg-4 text-muted">Dengan menggunakan Kasir Handal anda tidak akan mengalami kesalahan perhitungan.
+                                <div class=" fs-6 fs-lg-4 " style="font-weight:400; color: #667085;">
+                                    Dengan menggunakan Kasir Handal 
+                                    <br/>anda tidak akan mengalami
+                                    <br/>kesalahan perhitungan.
+                                    <br/>
+                                    <br/>
                                 </div>
                                 <!--end::Description-->
                             </div>
@@ -290,104 +294,50 @@
                         <!--end::Col-->
                     </div>
                     <!--end::Row-->
-                    <!--begin::Product slider-->
-                    {{-- <div class="tns tns-default">
-                        <!--begin::Slider-->
-                        <div data-tns="true" data-tns-loop="true" data-tns-swipe-angle="false" data-tns-speed="2000"
-                            data-tns-autoplay="true" data-tns-autoplay-timeout="18000" data-tns-controls="true"
-                            data-tns-nav="false" data-tns-items="1" data-tns-center="false" data-tns-dots="false"
-                            data-tns-prev-button="#kt_team_slider_prev1" data-tns-next-button="#kt_team_slider_next1">
-                            <!--begin::Item-->
-                            <div class="text-center px-5 pt-5 pt-lg-10 px-lg-10">
-                                <img src="assets/media/product-demos/demo1.png" class="card-rounded shadow mw-100"
-                                    alt="" />
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Item-->
-                            <div class="text-center px-5 pt-5 pt-lg-10 px-lg-10">
-                                <img src="assets/media/product-demos/demo2.png" class="card-rounded shadow mw-100"
-                                    alt="" />
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Item-->
-                            <div class="text-center px-5 pt-5 pt-lg-10 px-lg-10">
-                                <img src="assets/media/product-demos/demo4.png" class="card-rounded shadow mw-100"
-                                    alt="" />
-                            </div>
-                            <!--end::Item-->
-                            <!--begin::Item-->
-                            <div class="text-center px-5 pt-5 pt-lg-10 px-lg-10">
-                                <img src="assets/media/product-demos/demo5.png" class="card-rounded shadow mw-100"
-                                    alt="" />
-                            </div>
-                            <!--end::Item-->
-                        </div>
-                        <!--end::Slider-->
-                        <!--begin::Slider button-->
-                        <button class="btn btn-icon btn-active-color-primary" id="kt_team_slider_prev1">
-                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr074.svg-->
-                            <span class="svg-icon svg-icon-3x">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M11.2657 11.4343L15.45 7.25C15.8642 6.83579 15.8642 6.16421 15.45 5.75C15.0358 5.33579 14.3642 5.33579 13.95 5.75L8.40712 11.2929C8.01659 11.6834 8.01659 12.3166 8.40712 12.7071L13.95 18.25C14.3642 18.6642 15.0358 18.6642 15.45 18.25C15.8642 17.8358 15.8642 17.1642 15.45 16.75L11.2657 12.5657C10.9533 12.2533 10.9533 11.7467 11.2657 11.4343Z"
-                                        fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </button>
-                        <!--end::Slider button-->
-                        <!--begin::Slider button-->
-                        <button class="btn btn-icon btn-active-color-primary" id="kt_team_slider_next1">
-                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr071.svg-->
-                            <span class="svg-icon svg-icon-3x">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M12.6343 12.5657L8.45001 16.75C8.0358 17.1642 8.0358 17.8358 8.45001 18.25C8.86423 18.6642 9.5358 18.6642 9.95001 18.25L15.4929 12.7071C15.8834 12.3166 15.8834 11.6834 15.4929 11.2929L9.95001 5.75C9.5358 5.33579 8.86423 5.33579 8.45001 5.75C8.0358 6.16421 8.0358 6.83579 8.45001 7.25L12.6343 11.4343C12.9467 11.7467 12.9467 12.2533 12.6343 12.5657Z"
-                                        fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </button>
-                        <!--end::Slider button-->
-                    </div> --}}
-                    <!--end::Product slider-->
                 </div>
-                <!--end::Container-->
+                    <!--end::How It Works Section-->
+                    <!--begin::Statistics Section-->
+
+                    <!--begin::Wrapper-->
+                    <div class="pb-15 landing-dark-bg" style="background-color: #D1E9FF; padding-top: 100px; padding-bottom: 100px;">
+    <!--begin::Container-->
+    <div class="container">
+        <!-- Spasi atas -->
+        <div style="height: 3px;"></div>
+
+        <!--begin::Heading-->
+        <div class="text-center mb-18" id="achievements" data-kt-scroll-offset="{default: 100, lg: 150}" style="margin-top: -70px;">
+            <!--begin::Title-->
+            <h3 class="fs-2hx fw-bolder mb-5" style="color:#2F3281;">Tentang Kami</h3>
+            <!--end::Title-->
+        </div>
+        <!--end::Heading-->
+
+        <!-- Foto -->
+        <div class="row">
+            <div class="col-md-6" style="margin-top: -50px;">
+                <img src="assets/assets_foto/4.png" alt="Foto Tentang Kami" style="width: 85%; height: auto; margin-left: -15%;">
             </div>
-            <!--end::How It Works Section-->
-            <!--begin::Statistics Section-->
-            <div class="mt-10">
-                <div class="pb-15 pt-18 " style="background: #EAECF5;">
-                    <!--begin::Container-->
-                    <div class="container">
-                        <!--begin::Heading-->
-                        <div class="text-center mt-15 mb-18" id="achievements"
-                            data-kt-scroll-offset="{default: 100, lg: 150}">
-                            <!--begin::Title-->
-                            <h3 class="fs-2hx fw-bolder mb-5" style="color: #2F3281;">Kasir Handal Solusi Tepat Untuk Bisnis Anda</h3>
-                            <!--end::Title-->
-                            <!--begin::Description-->
-                            <div class="fs-5 text-gray-700 fw-bold">segera daftarkan toko anda sekarang juga
-                            </div>
-                            <!--end::Description-->
-                        </div> 
-                        <div class="fs-2 fw-bold text-muted text-center mb-3">
-                            <span class="fs-1 lh-1 text-gray-700">Sistem layanan yang berfokus pada toko swalayan yang memudahkan anda untuk melihat laporan penjualan dan pendataan barang. sistem layanan yang berfokus pada toko swalayan yang memudahkan anda untuk melihat laporan penjualan</span>
-                        </div>
-                        <!--end::Testimonial-->
-                        <!--begin::Author-->
-                            {{-- <div class="fs-2 fw-bold text-muted text-center">
-                                <a href="../../demo7/dist/account/security.html" class="link-primary fs-4 fw-bolder">Marcus
-                                    Levy,</a>
-                                <span class="fs-4 fw-bolder text-gray-600">KeenThemes CEO</span>
-                            </div> --}}
-                        <!--end::Author-->
-                    </div>
-                    <!--end::Container-->
-                </div>
+            <div class="col-md-6" style="margin-top: -20px; margin-left: -10%;">
+            <p style="font-family: 'Poppins', sans-serif; font-size: 35px; color: #2F3281; font-weight: 600; margin-top: 0;">Kasir Handal Solusi Tepat Untuk Bisnis Anda</p>
+            <p style="font-family: 'Poppins', sans-serif; font-size: 23px; color: #3E4784; font-weight: 500; margin-bottom: 20px;">segera daftarkan toko anda sekarang juga</p>
+            <p style="font-family: 'Poppins', sans-serif; font-size: 18px; color: #717BBC; font-weight: 450;  ">
+            Sistem layanan yang kami hadirkan difokuskan secara khusus untuk memenuhi kebutuhan toko swalayan, 
+            menyediakan beragam fitur yang memungkinkan Anda untuk tidak hanya melihat dengan mudah laporan penjualan 
+            dan melakukan pendataan barang, tetapi juga untuk menganalisis data secara mendalam </p>
+            </div>
+        </div>
+    </div>
+    
+
                 <!--end::Wrapper-->
+                <!--begin::Curve bottom-->
+                <div class="landing-curve landing-dark-color">
+                    <svg viewBox="15 12 1470 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                       
+                    </svg>
+                </div>
+                <!--end::Curve bottom-->
             </div>
             <!--end::Statistics Section-->
             <!--begin::Team Section-->
