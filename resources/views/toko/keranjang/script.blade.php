@@ -89,7 +89,9 @@
                     var produk = `
                     <div class="col-md-4 mb-4">
                         <div class="card border rounded text-center">
-                            <img src="/file/produk_foto/${v.foto_produk}" class="card-img-top" alt="Product 1">
+                            <div class="ratio ratio-16x9">
+                            <img src="/file/produk_foto/${v.foto_produk}" alt="Product Image" class="img-thumbnail object-fit-cover">
+                        </div>
                             <div class="card-body">
                                 <p class="card-text mb-2">${v.nama_kategori}</p>
                                 <h6 class="card-title mb-2">${v.nama_produk}</h6>

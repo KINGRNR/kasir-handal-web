@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 //     Route::post('me', 'AuthController@me');
 // });
 Route::controller(AuthController::class)->group(function () {
-    foreach (['register', 'loginMobile', 'logout', 'refresh'] as $key => $value) {
+    foreach (['register', 'loginMobile', 'logout', 'refresh', 'checkaccount', 'aktivasiakun'] as $key => $value) {
         Route::post('/auth/' . $value, $value);
     }
 });

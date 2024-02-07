@@ -38,7 +38,7 @@
             .then(response => {
                 var data = response.data
                 $.each(data, function(key, value) {
-                    $('#kategori_produk').append('<option value="' + value.id_kategori + '">' + value
+                    $('#id_produk_kategori').append('<option value="' + value.id_kategori + '">' + value
                         .nama_kategori + '</option>');
                 });
             })
@@ -143,7 +143,7 @@
                 {
                     data: 'harga_produk',
                     render: function(data, type, row) {
-                        return `<span class="badge bg-success">${quick.formatRupiah(row.harga_produk)}</span>`;
+                        return `<span class="">${quick.formatRupiah(row.harga_produk)}</span>`;
                     }
                 },
                 {
@@ -165,7 +165,7 @@
                             row.id + ')">Edit</button>';
 
                         var deleteButton = '<button class="btn btn-sm btn-danger" onclick="deleteRow(' +
-                            row.id + ')">Delete</button>';
+                            row.id_produk + ')">Delete</button>';
 
                         return editButton + ' ' + deleteButton;
                     }
@@ -223,12 +223,59 @@
     //         $('.formProduk').hide();
     //     });
     // }
+    function deleteRow(id) {
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post("/produk/delete", {
+                        id: id
+                    }, {
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'multipart/form-data',
+                        }
+                    })
+                    .then(response => {
+                        if (response.data.success) {
+                            quick.toastNotif({
+                                title: 'success',
+                                icon: 'success',
+                                timer: 500,
+                                callback: function() {
+                                    window.location.reload()
+                                }
+                            });
+                        } else {
+                            quick.toastNotif({
+                                title: response.data.message,
+                                icon: response.data.status,
+                                timer: 2000,
+                            });
+                        }
+                        console.log(response)
+
+                    })
+                    .catch(error => {
+
+                        console.error('There has been a problem with your Axios operation:', error);
+                    });
+            }
+        });
+    };
 
     function save() {
         var form = "formProduk";
         var data = new FormData($('[name="' + form + '"]')[0]);
-        // $('#submit-btn').prop('disabled', true);
-        // console.log(data);
+
+        // Hapus bagian koding Cropper.js dan formulir gambar yang berkaitan
+
         Swal.fire({
             title: 'Apakah data yang anda input sudah benar?',
             icon: 'question',
@@ -239,10 +286,10 @@
             cancelButtonText: 'Tidak'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post("/produk/save", data, {
+                axios.post("/produk/saveMob", data, {
                         headers: {
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Content-Type': 'multipart/form-data',
+                            // 'Content-Type': 'multipart/form-data', // Jangan ditambahkan header ini
                         }
                     })
                     .then(response => {
@@ -265,88 +312,4 @@
             }
         });
     };
-    document.addEventListener('DOMContentLoaded', function() {
-    var image = document.getElementById('image');
-    var existingImage = document.getElementById('existingImage').value;
-    var croppedPreview = document.getElementById('croppedPreview');
-    var inputImage = document.getElementById('inputImage');
-    var editImageBtn = document.getElementById('editImageBtn');
-    var cropper;
-
-    // Load existing image if available
-    if (existingImage) {
-        image.src = existingImage;
-        croppedPreview.src = existingImage;
-    }
-
-    inputImage.addEventListener('change', function(e) {
-        var files = e.target.files;
-        var done = function(url) {
-            inputImage.value = '';
-            image.src = url;
-            croppedPreview.src = url;
-            $('#imageCropModal').modal('show');
-            initCropper();
-        };
-
-        var reader;
-        var file;
-
-        if (files && files.length > 0) {
-            file = files[0];
-            if (URL) {
-                done(URL.createObjectURL(file));
-            } else if (FileReader) {
-                reader = new FileReader();
-                reader.onload = function(e) {
-                    done(reader.result);
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-    });
-
-    // Edit existing image
-    editImageBtn.addEventListener('click', function() {
-        if (existingImage) {
-            $('#imageCropModal').modal('show');
-            initCropper();
-        } else {
-            alert('No existing image to edit. Please upload a new image.');
-        }
-    });
-
-    document.getElementById('cropImage').addEventListener('click', function() {
-        if (cropper) {
-            var canvas = cropper.getCroppedCanvas();
-            if (canvas) {
-                var croppedDataUrl = canvas.toDataURL();
-                console.log('Cropped Data URL:', croppedDataUrl);
-                // Update the preview image
-                $('#croppedPhoto').val(croppedDataUrl)
-                croppedPreview.src = croppedDataUrl;
-            } else {
-                console.error('Canvas is null. Cropper might not have been properly initialized.');
-            }
-        } else {
-            console.error('Cropper is null. Initialization might be missing.');
-        }
-
-        // Close the modal
-        $('#imageCropModal').modal('hide');
-    });
-
-    function initCropper() {
-        if (cropper) {
-            cropper.destroy();
-        }
-
-        // Set aspect ratio and view mode
-        cropper = new Cropper(image, {
-            aspectRatio: 16 / 9, // Set the aspect ratio as needed
-            viewMode: 3, // Change the view mode as needed (1, 2, or 3)
-        });
-    }
-});
-
 </script>
