@@ -182,5 +182,5 @@
 </div>
 
 <div class="modal fade" id="modalKategori" tabindex="-1" aria-labelledby="modalKategori" aria-hidden="true">
-    @include('toko.report-penjualan.form')
+    @include('petugas.report-penjualan.form')
 </div>

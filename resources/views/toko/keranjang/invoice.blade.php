@@ -1,9 +1,27 @@
+{{-- <style>
+.card-keranjang {
+    position: fixed;
+    top: 0;
+    right: -400px; /* Atur posisi keranjang ke kanan layar */
+    width: 400px; /* Lebar keranjang */
+    height: 100%; /* Tinggi keranjang */
+    background-color: white;
+    transition: right 0.3s ease; /* Animasi perubahan posisi */
+    z-index: 1000; /* Pastikan keranjang tampil di atas konten lain */
+}
+</style> --}}
+
 <div class="row">
     <div class="col-md-8">
         <div class="card">
             <div class="card-header" style="background: #53B1FD;">
                 <div class="card-title">
                     <h2 class="text-white">Data Menu</h2>
+                </div>
+                <div class="card-toolbar">
+                    <button id="toggleKeranjang" onclick="toggleKeranjang()" class="btn btn-primary mb-3">Toggle Keranjang</button>
+                    <button id="toggleKeranjang" onclick="toggleKeranjang2()" class="btn btn-primary mb-3">Toggle Keranjang</button>
+
                 </div>
             </div>
             <div class="card-body">
@@ -37,7 +55,7 @@
     </div>
     <div class="col-md-4 mb-4">
         <!-- Informasi Pelanggan -->
-        <div class="card">
+        <div class="card card-keranjang">
             <div class="card-header" style="background: #53B1FD;">
                 <div class="card-title">
                     <h2 class="text-white">Keranjang</h2>

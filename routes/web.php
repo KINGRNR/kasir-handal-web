@@ -46,7 +46,9 @@ Route::middleware(['web'])->group(function () {
     });
 
     // Route::middleware([loginCheck::class])->group(function () {
-
+        Route::group(['middleware' => ['roleCheck:FOV4Qtgi5lcQ9kCY']], function () {
+        
+        });
     Route::group(['middleware' => ['roleCheck:FOV4Qtgi5lcQ9kCY']], function () {
         Route::get('/superadmin/dashboard', function () {
             return view('superadmin.dashboard.index');

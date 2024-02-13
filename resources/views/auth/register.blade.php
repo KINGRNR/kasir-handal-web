@@ -5,9 +5,11 @@
         <!--begin::Authentication - Sign-in -->
         <div class="d-flex flex-column flex-lg-row flex-column-fluid">
             <!--begin::Aside-->
-            <div class="d-flex flex-column flex-lg-row-auto w-xl-900px positon-xl-relative w-xxl-800px"
-                {{-- style="background: linear-gradient(180deg, #2F3281 0%, #40A0B6 66.27%, #08C0B5 100%);"> --}} style="background: #2F3281">
+            <div class="d-flex flex-column flex-lg-row-auto w-xl-900px position-xl-relative w-xxl-800px justify-content-center align-items-center"
+                style="background: #2F3281;">
+                <h1 class="text-center text-white fs-3">KasirHandal</h1>
             </div>
+
             <!--end::Aside-->
             <!--begin::Body-->
             <div class="d-flex flex-column flex-lg-row-fluid py-10">

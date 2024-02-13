@@ -107,10 +107,10 @@
             <tbody>
                 @foreach($itemDetails as $item)
                     <tr>
-                        <td>{{ $item['name'] }}</td>
-                        <td>{{ $item['quantity'] }}</td>
-                        <td>Rp. {{ number_format($item['price'], 0, ',', '.') }}</td>
-                        <td>Rp. {{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}</td>
+                        <td>{{ $item['nama_produk'] }}</td>
+                        <td>{{ $item['qty_produk'] }}</td>
+                        <td>Rp. {{ number_format($item['harga_produk'], 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($item['harga_produk'] * $item['qty_produk'], 0, ',', '.') }}</td>
                     </tr>
                 @endforeach
             </tbody>

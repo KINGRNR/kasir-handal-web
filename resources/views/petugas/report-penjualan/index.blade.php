@@ -2,7 +2,7 @@
 <html lang="en">
     @include('layouts.support.bundle.bundleheader')    
 	
-    <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled">
+    <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled aside-enabled">
 		<!--begin::Main-->
 		<!--begin::Root-->
 		<div class="d-flex flex-column flex-root">
@@ -38,7 +38,7 @@
 					<div id="kt_content_container" class="mt-5 d-flex flex-column-fluid align-items-start container-xxl">
 						{{-- @include('petugas.header.sidebar') --}}
 						<div class="content flex-row-fluid" id="kt_content">
-							@include('petugas.kategori.table')
+							@include('petugas.report-penjualan.table')
 						</div>
 					</div>
 					<div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
@@ -73,6 +73,6 @@
 	</body>
 
         @include('layouts.support.bundle.bundlefooter')
-		@include('petugas.kategori.script')
+		@include('petugas.report-penjualan.script')
 
 </html>

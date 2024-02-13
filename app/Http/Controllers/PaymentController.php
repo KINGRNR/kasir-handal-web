@@ -27,19 +27,16 @@ class PaymentController extends Controller
         $namaPelanggan = $request->input('nama_pelanggan');
         $noTelp = $request->input('no_telp');
         $emailPelanggan = $request->input('email_pelanggan');
-    
+
         $customerExists = DB::table('pelanggan')->Where('no_hp', $noTelp)->first();
 
         return response()->json($customerExists);
     }
-    
     public function initiatePayment(Request $request)
     {
         $data = $request->post();
-        // dd($data['id_produk']);
-
         if (
-            !isset($data['total_harga']) ||
+            !isset($data['produkData']) || // Ganti total_harga dengan produkData
             !isset($data['nama_pelanggan']) ||
             !isset($data['email_pelanggan']) ||
             !isset($data['no_telp'])
@@ -47,34 +44,26 @@ class PaymentController extends Controller
             return response()->json(['error' => 'Missing required data'], 400);
         }
 
+        $produkData = json_decode($data['produkData'], true); // Decode produkData menjadi array
+        // dd($produkData);
+
         $itemDetails = array();
 
-        for ($i = 1; $i <= 3; $i++) {
-            $productIdKey = 'id_produk' . $i;
-            $productNameKey = 'nama_produk' . $i;
-            $productPriceKey = 'harga_produk' . $i;
-            $productQtyKey = 'qty_produk' . $i;
-
-            if (
-                isset($data[$productIdKey]) &&
-                isset($data[$productNameKey]) &&
-                isset($data[$productPriceKey]) &&
-                isset($data[$productQtyKey])
-            ) {
-                $itemDetails[] = array(
-                    'id' => $data[$productIdKey],
-                    'price' => $data[$productPriceKey],
-                    'quantity' => $data[$productQtyKey],
-                    'name' => $data[$productNameKey],
-                );
-            }
+        foreach ($produkData as $produk) { // Loop melalui produkData
+            $itemDetails[] = array(
+                'id' => $produk['id_produk'],
+                'price' => $produk['harga_produk'],
+                'quantity' => $produk['qty_produk'],
+                'name' => $produk['nama_produk'],
+            );
         }
-
+        // dd($itemDetails);
         // Build the parameters array
         $params = array(
             'transaction_details' => array(
                 'order_id' => rand(),
-                'gross_amount' => $data['total_harga'],
+                // Ganti total_harga dengan total harga yang sesuai
+                'gross_amount' => array_sum(array_column($produkData, 'harga_produk')) // Menghitung total harga
             ),
             'customer_details' => array(
                 'first_name' => $data['nama_pelanggan'],
@@ -84,7 +73,6 @@ class PaymentController extends Controller
             'item_details' => $itemDetails, // Set the item details array
         );
 
-        // dd($itemDetails);
         // Get Snap token
         $opr['snapToken'] = \Midtrans\Snap::getSnapToken($params);
         $opr['dataPenjualan'] = $data;
@@ -95,28 +83,9 @@ class PaymentController extends Controller
         $data = $request->post();
         $result = $data['result'];
         $dataTransaction = $data['data'];
-        $itemDetails = array();
 
-        for ($i = 1; $i <= 3; $i++) {
-            $productIdKey = 'id_produk' . $i;
-            $productNameKey = 'nama_produk' . $i;
-            $productPriceKey = 'harga_produk' . $i;
-            $productQtyKey = 'qty_produk' . $i;
-
-            if (
-                isset($dataTransaction[$productIdKey]) &&
-                isset($dataTransaction[$productNameKey]) &&
-                isset($dataTransaction[$productPriceKey]) &&
-                isset($dataTransaction[$productQtyKey])
-            ) {
-                $itemDetails[] = array(
-                    'id' => $dataTransaction[$productIdKey],
-                    'price' => $dataTransaction[$productPriceKey],
-                    'quantity' => $dataTransaction[$productQtyKey],
-                    'name' => $dataTransaction[$productNameKey],
-                );
-            }
-        }
+        // Mendapatkan detail item dari data transaksi
+        $itemDetails = json_decode($dataTransaction['produkData'], true);
 
         $penjualanId = $result['order_id'];
         $idPelangganRaw = DB::table('pelanggan')
@@ -127,7 +96,7 @@ class PaymentController extends Controller
         $idPelanggan = $idPelangganRaw ? $idPelangganRaw->pelanggan_id : null;
 
         if ($idPelanggan) {
-            // Update existing record
+            // Update record yang ada
             DB::table('pelanggan')
                 ->where('no_hp', $dataTransaction['no_telp'])
                 ->update([
@@ -136,7 +105,7 @@ class PaymentController extends Controller
                     'alamat_pelanggan' => $dataTransaction['alamat_pelanggan'] ?? null,
                 ]);
         } else {
-            // Create new record
+            // Buat record baru
             $idPelanggan = rand();
             Pelanggan::create([
                 'pelanggan_id' => $idPelanggan,
@@ -146,27 +115,33 @@ class PaymentController extends Controller
                 'alamat_pelanggan' => $dataTransaction['alamat_pelanggan'] ?? null,
             ]);
         }
-        
-        // dd($idPelanggan);
+
+        // Buat record penjualan
         Penjualan::create([
             'penjualan_id' => $penjualanId,
-            'penjualan_total_harga' => $dataTransaction['total_harga'],
+            'penjualan_total_harga' => array_sum(array_column($itemDetails, 'harga_produk')), // Menghitung total harga
             'penjualan_toko_id' => 1,
             'penjualan_pelanggan_id' => $idPelanggan,
             'penjualan_petugas_id' => 4,
         ]);
 
+        // Buat detail penjualan
         foreach ($itemDetails as $item) {
             DetailPenjualan::create([
                 'penjualan_id' => $penjualanId,
-                'id_barang' => $item['id'],
-                'jumlah_barang' => $item['quantity'],
-                'sub_total' => $item['price'] * $item['quantity']
+                'id_barang' => $item['id_produk'],
+                'jumlah_barang' => $item['qty_produk'],
+                'sub_total' => $item['harga_produk'] * $item['qty_produk']
             ]);
+
+            DB::table('produk')
+                ->where('id_produk', $item['id_produk'])
+                ->decrement('stok_produk', $item['qty_produk']);
         };
 
         $currentDateTime = Carbon::now();
 
+        // Kirim email struk
         Mail::send('mail.struk-digital', ['waktu_transaksi' => $currentDateTime, 'penjualan_id' => $penjualanId, 'itemDetails' => $itemDetails, 'transaction' => $dataTransaction], function ($message) use ($request, $dataTransaction) {
             $message->to($dataTransaction['email_pelanggan']);
             $message->subject('Struk');
@@ -181,6 +156,7 @@ class PaymentController extends Controller
             'code' => 201
         ]);
     }
+
     public function pushEmail(Request $request)
     {
         $data = $request->post();
@@ -196,8 +172,15 @@ class PaymentController extends Controller
     {
         $id = session()->get('toko_id');
         // dd($id);
-        $operation = DB::table('v_transaksi')->where('petugas_toko_id', $id)->where('penjualan_deleted_at', null)->get();
-
+        $filter = $request->post();
+        if (isset($filter['date'])) {
+            $dateRange = explode(' - ', $filter['date']);
+            $startDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[0])->startOfDay();
+            $endDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[1])->endOfDay();
+            $operation = DB::table('v_transaksi')->where('petugas_toko_id', $id)->where('penjualan_deleted_at', null)->whereBetween('penjualan_created_at', [$startDate, $endDate])->get();
+        } else {
+            $operation = DB::table('v_transaksi')->where('petugas_toko_id', $id)->where('penjualan_deleted_at', null)->get();
+        }
         return DataTables::of($operation)
             ->toJson();
     }

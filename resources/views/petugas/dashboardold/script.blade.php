@@ -3,10 +3,6 @@
   integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
   crossorigin="anonymous"></script>
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.10.0/chart.min.js"></script>
-
-
-
 <script>
     $(() => {
         init();
@@ -15,58 +11,10 @@
     });
 
     init = async () => {
-        await loadPie();
-        await loadBar();
-
+        // await loaddata();
     }
     // jobMap();
-    function loadPie() {
-        var data = {
-            labels: ['Label 1', 'Label 2', 'Label 3'],
-            datasets: [{
-                data: [30, 40, 30], // Example data, adjust as needed
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
-            }]
-        };
 
-        // Get the canvas element
-        var ctx = document.getElementById('myPieChart').getContext('2d');
-
-        // Create a pie chart
-        var myPieChart = new Chart(ctx, {
-            type: 'pie',
-            data: data,
-            options: {
-                // Additional options for the chart
-            }
-        });
-    }
-    function loadBar() {
-        var data = {
-            labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4'],
-            datasets: [{
-                label: 'Bar Chart Dataset',
-                data: [50, 30, 40, 20], // Example data, adjust as needed
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
-            }]
-        };
-
-        // Get the canvas element
-        var ctx = document.getElementById('myBarChart').getContext('2d');
-
-        // Create a bar chart
-        var myBarChart = new Chart(ctx, {
-            type: 'bar',
-            data: data,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    }
     loaddata = async () => {
         return new Promise((resolve, reject) => {
             $.ajax({

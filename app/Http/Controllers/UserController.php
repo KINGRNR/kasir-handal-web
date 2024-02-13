@@ -27,42 +27,45 @@ class UserController extends Controller
   public function savePetugas(Request $request)
   {
     $data = $request->post();
-    $id = session()->get('user_id');
-    $id_toko = DB::table('toko')->where('toko_user_id', $id)->select('toko_id')->first();
+    $id_toko = session('toko_id');
+    // dd($id);
+    // $id_toko = DB::table('toko')->where('toko_user_id', $id)->select('toko_id')->first();
     // print_r($id_toko); 
     // exit;
     // try {
-      // dd($data);
-      if ($data['id']) {
-        $oprUpdate = User::findOrFail($data['id']);
-        $oprUpdate->update($data);
-      } else {
-        $data['id'] = User::generateId();
-        $data['users_role_id'] = 'TKQR2DSJlQ5b31V2';
-        $data['password'] = '';
-        // print_r($data); 
-        // exit;
-        $randomNumber = rand();
-        $accessToken = 'KSR-' . $randomNumber;
-        $data['access_token'] = $accessToken;
-        $data['active'] = 0;
-        User::create($data);
-        DB::table('petugas')->insert([
-          'petugas_user_id' => $data['id'],
-          'petugas_toko_id' => $id_toko->toko_id,
-        ]);
-      }
-      Mail::send('mail.aktivasi-petugas', ['data' => $data, 'id' => $data['id'], 'token' => $accessToken], function ($message) use ($request, $data, $id) {
-        $message->to($data['email']);
-        $message->subject('Aktivasi Akun Kasir Handal');
-    });
-      return response()->json([
-        'success' =>  true,
-        'status' =>  'Success',
-        'title' => 'Sukses!',
-        'message' => 'Data Berhasil Tersimpan!',
-        'code' => 201
+    // dd($data);
+    if ($data['id']) {
+      $oprUpdate = User::findOrFail($data['id']);
+      $oprUpdate->update($data);
+    } else {
+      $data['id'] = User::generateId();
+      $data['users_role_id'] = 'TKQR2DSJlQ5b31V2';
+      $data['password'] = '';
+      // print_r($data); 
+      // exit;
+      $randomNumber = rand(100, 999);
+      $randomString = base_convert($randomNumber, 10, 36);
+
+      $accessToken = 'KSR' . strtoupper($randomString);
+      $data['access_token'] = $accessToken;
+      $data['active'] = 0;
+      User::create($data);
+      DB::table('petugas')->insert([
+        'petugas_user_id' => $data['id'],
+        'petugas_toko_id' => $id_toko,
       ]);
+    }
+    Mail::send('mail.aktivasi-petugas', ['data' => $data, 'id' => $data['id'], 'token' => $accessToken], function ($message) use ($request, $data) {
+      $message->to($data['email']);
+      $message->subject('Aktivasi Akun Kasir Handal');
+    });
+    return response()->json([
+      'success' =>  true,
+      'status' =>  'Success',
+      'title' => 'Sukses!',
+      'message' => 'Data Berhasil Tersimpan!',
+      'code' => 201
+    ]);
     // } catch (\Throwable $th) {
     //   return response()->json([
     //     'success' =>  false,
@@ -108,17 +111,17 @@ class UserController extends Controller
   }
   public function delete(Request $request)
   {
-      $data = $request->post();
-      $id = $data['id'];
+    $data = $request->post();
+    $id = $data['id'];
 
-      $user = User::find($id);
+    $user = User::find($id);
 
-      if (!$user) {
-          return response()->json(['error' => 'User not found.'], 404);
-      }
-      $user->delete();
+    if (!$user) {
+      return response()->json(['error' => 'User not found.'], 404);
+    }
+    $user->delete();
 
-      return response()->json(['success' => 'User deleted successfully.']);
+    return response()->json(['success' => 'User deleted successfully.']);
   }
 }
 // }

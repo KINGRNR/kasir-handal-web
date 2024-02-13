@@ -1,8 +1,8 @@
 {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"> --}}
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+{{-- <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
     crossorigin="anonymous"></script>
 <script src="../assets/plugins/custom/datatables/datatables.bundle.js"></script>
-<link href="../assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+<link href="../assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" /> --}}
 {{-- <link  href="../assets/plugins/custom/cropper/cropper.bundle.css" rel="stylesheet">
 <script src="../assets/js/documentation/general/cropper.bundle.js"></script> --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
@@ -32,20 +32,33 @@
         axios.post("/produk/getKategori", {
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    // 'Content-Type': 'multipart/form-data',
                 }
             })
             .then(response => {
-                var data = response.data
-                $.each(data, function(key, value) {
-                    $('#id_produk_kategori').append('<option value="' + value.id_kategori + '">' + value
-                        .nama_kategori + '</option>');
-                });
+                var data = response.data;
+                if (data.length > 0) {
+                    $.each(data, function(key, value) {
+                        $('#id_produk_kategori').append('<option value="' + value.id_kategori + '">' + value
+                            .nama_kategori + '</option>');
+                    });
+                } else {
+                    // Menampilkan SweetAlert jika data kategori kosong
+                    Swal.fire({
+                        title: 'Peringatan!',
+                        text: 'Tidak ada kategori yang tersedia.',
+                        icon: 'warning',
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    });
+                }
             })
             .catch(error => {
                 console.error('There has been a problem with your Axios operation:', error);
             });
     }
+
     $(document).ready(function() {
         $('#harga_produk').on('input', function() {
             var inputValue = $(this).val();
