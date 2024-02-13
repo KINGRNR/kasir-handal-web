@@ -7,61 +7,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        .error_body {
+        body {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             height: 100vh;
-            width: 100%;
-            background: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f9f9f9;
         }
 
-        .error_container .error_heading {
-            color: transparent;
-            font-size: 160px;
-            margin: 0;
-            font-weight: 900;
-            letter-spacing: 20px;
-            background-size: 100% 100%;
+        .error-container {
+            text-align: center;
+        }
+
+        .error-heading {
+            font-size: 6rem;
+            font-weight: bold;
+            color: #6b719b;
             background: linear-gradient(90deg, #6b719b 38%, #9da3cc 53%, #979dce 65%);
             -webkit-background-clip: text;
             -moz-background-clip: text;
-            -ms-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
         }
 
-        @media (max-width: 540px) {
-            .error_container .error_heading {
-                font-size: 120px;
-                letter-spacing: 10px;
-            }
+        .error-message {
+            font-size: 1.5rem;
+            color: #787878;
+            margin-bottom: 10px;
         }
 
-        .error_container .error_btn {
-            background-color: #6e749e !important;
+        .error-paragraph {
+            font-size: 1rem;
+            color: #787878;
+            margin-bottom: 30px;
+        }
+
+        .error-btn {
+            background-color: #6e749e;
             border: none;
             outline: none;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
 
-        .error_container .error_btn:focus {
-            box-shadow: none !important;
-        }
-
-        .error_container .error_message,
-        .error_container .error_paragraph {
-            color: #787878;
+        .error-btn:hover {
+            background-color: #57608f;
         }
     </style>
 </head>
 <body>
-<div class="error_body">
-    <div
-        class="container error_container d-flex justify-content-center align-items-center flex-column w-100 h-100 p-5 text-center">
-        <h2 class="error_message text-center mb-3">Boo! You don't have an internet connection</h2>
-        <p class="error_paragraph text-center mb-5">
-            Please check your network connection and try again.
-        </p>
-        <a href="/" class="btn btn-primary error_btn">Back to Home Page</a>
-    </div>
+<div class="error-container">
+    <h2 class="error-heading">404</h2>
+    <h3 class="error-message">Oops! Page not found</h3>
+    <p class="error-paragraph">The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+    <a href="/" class="error-btn">Back to Home Page</a>
 </div>
 </body>
 </html>

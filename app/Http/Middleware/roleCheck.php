@@ -21,7 +21,7 @@ class roleCheck
         // dd($token);      
         // If the token is valid, proceed to check the user's role
         $userRole = session('user_role');
-        if ($token   != null) {
+        if ($token != null) {
             // dd("true");
             if (in_array($userRole, explode('|', $role))) {
                 return $next($request);

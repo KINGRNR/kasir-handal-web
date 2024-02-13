@@ -1,8 +1,8 @@
 {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"> --}}
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+{{-- <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
     crossorigin="anonymous"></script>
 <script src="../assets/plugins/custom/datatables/datatables.bundle.js"></script>
-<link href="../assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+<link href="../assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" /> --}}
 <script src="../assets/js/quickact.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -40,7 +40,8 @@
                 type: "POST",
                 dataType: "json",
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Authorization': 'Bearer ' + localStorage.getItem('bearerToken')
                 },
             },
             columns: [{
@@ -61,7 +62,6 @@
                 {
                     data: 'id_kategori',
                     render: function(data, type, row) {
-                        console.log(row);
                         var editButton = '<button class="btn btn-sm btn-warning" onclick="edit(' +
                             row.id_kategori + ')">Edit</button>';
 
@@ -97,7 +97,6 @@
     function edit(id) {
         $('#formKategori').trigger('reset');
         $('#id_kategori').val(null);
-
         $.ajax({
             url: "/kategori/detail",
             type: "POST",

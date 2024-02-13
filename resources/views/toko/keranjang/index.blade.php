@@ -48,6 +48,7 @@
                     @include('toko.header.header')
                     <!--end::Container-->
                 </div>
+                {{-- <button id="transitionButton">Transisi</button> --}}
 
                 <!--end::Header-->
                 <!--begin::Toolbar-->
@@ -68,7 +69,7 @@
 						</div>
 						<!--end::Container-->
 					</div> --}}
-                <div id="kt_content_container" class=" mt-5 d-flex flex-column-fluid align-items-start container-xxl">
+                <div id="kt_content_container" class=" mt-5 d-flex flex-column-fluid align-items-start container-xxl" style="transition: all 0.3s ease;">
                     {{-- @include('toko.header.sidebar') --}}
                     <div class="content flex-row-fluid" id="kt_content">
 

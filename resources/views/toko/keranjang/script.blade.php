@@ -1,8 +1,8 @@
 {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"> --}}
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-    crossorigin="anonymous"></script>
-<script src="../assets/plugins/custom/datatables/datatables.bundle.js"></script>
-<link href="../assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+{{-- <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script> --}}
+{{-- <script src="../assets/plugins/custom/datatables/datatables.bundle.js"></script>
+<link href="../assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" /> --}}
 {{-- <link  href="../assets/plugins/custom/cropper/cropper.bundle.css" rel="stylesheet">
 <script src="../assets/js/documentation/general/cropper.bundle.js"></script> --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
@@ -12,8 +12,26 @@
     data-client-key="SB-Mid-client-UQCyL2vrXEl4EHhd"></script>
 <script>
     APP_URL = "{{ getenv('APP_URL') }}/";
+
+    function toggleKeranjang() {
+        $(".card-keranjang").slideToggle(200);
+        if ($(".col-md-8").hasClass("col-md-12")) {
+            $(".col-md-8").animate({
+                width: "66.66666667%"
+            });
+            $(".col-md-3").toggleClass("col-md-4 col-md-3");
+        } else {
+            $(".col-md-8").animate({
+                width: "100%"
+            });
+            $(".col-md-4").toggleClass("col-md-3 col-md-4");
+        }
+        $(".col-md-8").toggleClass("col-md-12");
+    }
+
     $(document).ready(function() {
-        // Event listener for keyup on the input fields
+        $('#kt_content_container').removeClass('container-xxl').addClass('container-fluid');
+
         $('#check_no_telp').on('keyup', function() {
             var noTelp = $('#check_no_telp').val();
 
@@ -28,8 +46,6 @@
                 });
         });
 
-        // Function to update the customer dropdown
-        // Function to update the customer dropdown
         function updateCustomerDropdown(customer) {
             var dropdown = $('#customerDropdown');
             dropdown.empty(); // Clear existing options
@@ -55,7 +71,6 @@
         });
     });
     $(() => {
-        console.log("tes")
         init();
         $('.menu_link').removeClass('active');
         $('.keranjang').addClass('active');
@@ -86,33 +101,40 @@
                 $.each(data, function(i, v) {
                     console.log(v);
 
+                    var stockHabis = v.stok_produk === 0 ? '<div class="position-absolute top-50 start-50 translate-middle bg-danger bg-opacity-50 text-white p-2 rounded">Stok Habis</div>' : ''; // Tambahkan tulisan "Stock Habis" jika stok 0
+
+
+                    var warnaCard = v.stok_produk === 0 ? 'text-muted' :
+                    ''; // Menentukan kelas CSS untuk warna abu-abu jika stok 0
+
                     var produk = `
-                    <div class="col-md-4 mb-4">
-                        <div class="card border rounded text-center">
-                            <div class="ratio ratio-16x9">
+                <div class="col-md-4 mb-4 ">
+                    <div class="card border rounded text-center ${warnaCard}">
+                        
+                        <div class="ratio ratio-16x9 ">
                             <img src="/file/produk_foto/${v.foto_produk}" alt="Product Image" class="img-thumbnail object-fit-cover">
                         </div>
-                            <div class="card-body">
-                                <p class="card-text mb-2">${v.nama_kategori}</p>
-                                <h6 class="card-title mb-2">${v.nama_produk}</h6>
-                                <p class="card-text mb-2"><span class="badge bg-success">${quick.formatRupiah(v.harga_produk)}</span>
-                                </p>
-                                <p class="card-text">Tersedia : ${v.stok_produk}</p>
-                                <button class="btn btn-sm btn-primary" id="tambahkeranjang${v.id_produk}" onclick="tambahKeranjang(${v.id_produk})">Tambah ke Keranjang</button>
-                            </div>
+                        ${stockHabis} 
+                        <div class="card-body">
+                            <p class="card-text mb-2">${v.nama_kategori}</p>
+                            <h6 class="card-title mb-2">${v.nama_produk}</h6>
+                            <p class="card-text mb-2"><span class="badge bg-success">${quick.formatRupiah(v.harga_produk)}</span></p>
+                            <p class="card-text">Tersedia : ${v.stok_produk}</p>
+                            <button class="btn btn-sm btn-primary" id="tambahkeranjang${v.id_produk}" onclick="tambahKeranjang(${v.id_produk})" ${v.stok_produk === 0 ? 'disabled' : ''}>Tambah ke Keranjang</button>
                         </div>
                     </div>
+                </div>
+                `;
 
-              `
-                    $('.produk-container').append(produk)
-                })
-
-
+                    $('.produk-container').append(produk);
+                });
             })
             .catch(error => {
                 console.error('There has been a problem with your Axios operation:', error);
             });
     }
+
+
     var totalPrice = 0;
     var productCounter = 0;
 
@@ -134,27 +156,36 @@
                 var quantity = 1; // Default quantity
                 var id = data.id_produk;
                 var keranjang = `
-                <tr>
-                    <td class="ps-4">#</td>
-                    <td class="min-w-125px">${data.nama_produk}</td>
-                    <td class="min-w-125px quantity-controls">
-                        <button class="btn btn-sm btn-secondary" onclick="decrementQuantity(${maxQuantity}, ${data.harga_produk}, ${id})">-</button>
-                        <span class="mx-2" id="quantity${id}">${quantity}</span>
-                        <button class="btn btn-sm btn-primary" onclick="incrementQuantity(${maxQuantity}, ${data.harga_produk}, ${id})">+</button>
-                    </td>
-                    <td class="min-w-125px" id="harga${id}">${data.harga_produk}</td>
+                                        <tr>
+                                            <td class="ps-4">#</td>
+                                            <td class="min-w-125px">${data.nama_produk}</td>
+                                            <td class="min-w-125px quantity-controls">
+                                                <span onclick="decrementQuantity(${maxQuantity}, ${data.harga_produk}, ${id})" style="cursor: pointer;">
+                                                    <i class="fas fa-minus"></i>
+                                                </span>
+                                                <span class="mx-2" id="quantity${id}">${quantity}</span>
+                                                <span onclick="incrementQuantity(${maxQuantity}, ${data.harga_produk}, ${id})" style="cursor: pointer;">
+                                                    <i class="fas fa-plus"></i>
+                                                </span>
+                                                <span onclick="hapusItemKeranjang(${id}, ${data.harga_produk}, ${productCounter})" style="cursor: pointer;">
+                                                    <i class="fas fa-trash"></i>
+                                                </span>
+                                            </td>
+                                            <td class="min-w-125px" id="harga${id}" >${data.harga_produk}</td>
+                                            
+                                        </tr>
+                                    `;
 
-                </tr>
-            `;
                 var form = `
-                    <input type="text" name="id_produk${productCounter}" id="id_produk${productCounter}" class="min-w-125px id_produk" value="${data.id_produk}"></input>
+                <div id="input-group${productCounter}">
+                        <input type="text" name="id_produk${productCounter}" id="id_produk${productCounter}" class="min-w-125px id_produk" value="${data.id_produk}"></input>
 
-                   <input type="text" name="nama_produk${productCounter}" id="nama_produk${productCounter}" class="min-w-125px" value="${data.nama_produk}"></input>
-                    <input type="text"name="qty_produk${productCounter}" id="qty_produk${productCounter}" class="quantity-controls${id}" value="${quantity}">
-                    </input>
-                    <input type="text" name="harga_produk${productCounter}" id="harga_produk${productCounter}" value="${data.harga_produk}"></input>
-
-            `;
+                    <input type="text" name="nama_produk${productCounter}" id="nama_produk${productCounter}" class="min-w-125px" value="${data.nama_produk}"></input>
+                        <input type="text"name="qty_produk${productCounter}" id="qty_produk${productCounter}" class="quantity-controls${id}" value="${quantity}">
+                        </input>
+                        <input type="text" name="harga_produk${productCounter}" id="harga_produk${productCounter}" value="${data.harga_produk}"></input>
+                    </div>
+                `;
                 $('.form-produk').append(form);
                 $('#idProduk').append(keranjang);
                 updateTotalPrice(totalPrice += data.harga_produk);
@@ -170,13 +201,24 @@
         var form = "formTransaksi";
         var formData = new FormData($('[name="' + form + '"]')[0]);
 
-        var numberOfSections = $('.id_produk').length;
-        for (var id = 1; id <= numberOfSections; id++) {
-            formData.append('id_produk' + id, $('#id_produk' + id).val());
-            formData.append('nama_produk' + id, $('#nama_produk' + id).val());
-            formData.append('qty_produk' + id, $('#qty_produk' + id).val());
-            formData.append('harga_produk' + id, $('#harga_produk' + id).val());
-        }
+        // Mengumpulkan data produk dari input di form HTML
+        var produkData = [];
+        $('.form-produk > div').each(function(index) {
+            var id_produk = $(this).find('input[name^="id_produk"]').val();
+            var nama_produk = $(this).find('input[name^="nama_produk"]').val();
+            var qty_produk = $(this).find('input[name^="qty_produk"]').val();
+            var harga_produk = $(this).find('input[name^="harga_produk"]').val();
+
+            produkData.push({
+                id_produk: id_produk,
+                nama_produk: nama_produk,
+                qty_produk: qty_produk,
+                harga_produk: harga_produk
+            });
+        });
+
+        // Menambahkan data produk ke FormData
+        formData.append('produkData', JSON.stringify(produkData));
 
         Swal.fire({
             title: 'Apakah data yang anda input sudah benar?',
@@ -222,7 +264,17 @@
                     });
             }
         });
-    };
+    }
+
+    // function toggleKeranjang2() {
+    //     var keranjang = document.querySelector('.card-keranjang');
+    //     if (keranjang.style.right === '-400px') {
+    //         keranjang.style.right = '0';
+    //     } else {
+    //         keranjang.style.right = '-400px';
+    //     }
+    // }
+
 
     function saveTransaction(data, result) {
         axios.post("/pay/saveTransaction", {
@@ -235,11 +287,10 @@
                 }
             })
             .then(response => {
-                console.log(response)
                 quick.unblockPage();
                 var data = response.data.data
-                console.log(data)
                 openStruk(data)
+                location.reload()
                 // window.location.href = '/toko/report-penjualan?invoice='+ response.data.id_penjualan;
             })
             .catch(error => {
@@ -301,11 +352,25 @@
         }
     }
 
+    function hapusItemKeranjang(id, harga, inputId) {
+        var currentQuantity = parseInt($('#quantity' + id).text()); // Mendapatkan kuantitas saat ini
+        var subtotal = harga * currentQuantity; // Menghitung subtotal produk yang dihapus
+
+        $(`#id_produk${id}`).remove();
+        $(`#nama_produk${id}`).remove();
+        $(`#qty_produk${id}`).remove();
+        $(`#harga_produk${id}`).remove();
+        $(`#quantity${id}`).closest('tr').remove();
+        $(`#input-group${inputId}`).remove();
+
+        updateTotalPrice(totalPrice - subtotal);
+    }
+
+
     function updateTotalPrice(newTotalPrice) {
         totalPrice = newTotalPrice;
         console.log('Total Price:', totalPrice);
         $('#total_harga').val(totalPrice);
-        // Trigger a custom event
         $(document).trigger('totalPriceChanged', [totalPrice]);
     }
 </script>

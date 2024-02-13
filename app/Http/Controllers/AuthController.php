@@ -102,20 +102,26 @@ class AuthController extends Controller
         $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors(), 'message' => 'inputan tidak sesuai'], 400);
+            return redirect()->route('login')->withErrors($validator)->withInput();
         }
 
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = User::where('email', $request->email)->firstOrFail();
 
             if ($user->active == 0) {
-                return response()->json(['success' => false, 'message' => 'Akun Anda tidak aktif.'], 403);
+                return redirect()->route('login')->withErrors('Akun Anda belum aktif.')->withInput();
+
+                // return response()->json(['success' => false, 'message' => 'Akun Anda tidak aktif.'], 403);
             }
             if ($user->users_role_id == 'BfiwyVUDrXOpmStr') {
                 $toko = DB::table('toko')->where('toko_user_id', $user->id)->first();
                 session(['toko_id' => $toko->toko_id]);
+                session(['toko_nama' => $toko->toko_nama]);
+
             } else if ($user->users_role_id == 'TKQR2DSJlQ5b31V2') {
                 $id = DB::table('petugas')->where('petugas_user_id', $user->id)->first();
+                $toko = DB::table('toko')->where('toko_id', $id->petugas_toko_id)->first();
+                session(['toko_nama' => $toko->toko_nama]);
                 session(['toko_id' => $id->petugas_toko_id]);
                 session(['petugas_id' => $id->petugas_id]);
             }
@@ -125,12 +131,14 @@ class AuthController extends Controller
             $token = Auth::attempt($request->only('email', 'password'));
 
             session(['user' => $user]);
+            session(['name' => $user->name]);
+            session(['email' => $user->email]);
             session(['user_id' => $user->id]);
             session(['user_role' => $user->users_role_id]);
             session(['token' => $token]);
 
             // session(['jwt'])
-            switch ($user->users_role_id) { 
+            switch ($user->users_role_id) {
                 case 'FOV4Qtgi5lcQ9kCY':
                     $request->session()->regenerate();
                     return redirect()->route('superadmin')->with([
@@ -169,9 +177,7 @@ class AuthController extends Controller
                     return response()->json(['data' => $user], 422);
             }
         } else {
-            return response()->json([
-                'success' => false
-            ], 422);
+            return redirect()->route('login')->with('error', 'Invalid credentials. Please try again.')->withInput();
         }
     }
     // public function logout(Request $request)
@@ -199,46 +205,7 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
-    // public function loginMobile(Request $request)
-    // {
-    //     // $validator = $this->validator($request->all());
 
-    //     // if ($validator->fails()) {
-    //     //     return response()->json(['errors' => $validator->errors(), 'message' => 'inputan tidak sesuai'], 400);
-    //     // }
-
-    //     // $credentials = $request->only('email', 'password');
-
-    //     // try {
-    //     //     if (!$token = JWTAuth::attempt($credentials)) {
-    //     //         return response()->json(['success' => false, 'message' => 'Invalid credentials'], 401);
-    //     //     }
-    //     // } catch (JWTException $e) {
-    //     //     return response()->json(['success' => false, 'message' => 'Could not create token'], 500);
-    //     // }
-
-    //     // $user = Auth::user();
-
-    //     // // Optionally, add logic to handle different roles
-    //     // // ...
-
-    //     // // Return the access token and other necessary data
-    //     // $responseData = [
-    //     //     'access_token' => $token,
-    //     //     'user_id' => $user->id,
-    //     //     'user_role' => $user->users_role_id,
-    //     //     // Add other necessary data here
-    //     // ];
-
-    //     // return response()->json($responseData);
-    //     $credentials = request(['email', 'password']);
-    //     if (!$token = auth()->attempt($credentials)) {
-    //         return response()->json(['error' => 'Unauthorized'], 401);
-    //     }
-    //     // print_r($token); 
-    //     // return response()->json(['token' => $token]);
-    //     return $this->respondWithToken($token);
-    // }
     public function loginMobile(Request $request)
     {
         $request->validate([
@@ -339,8 +306,10 @@ class AuthController extends Controller
         $data = $request->post();
         // dd($data['owner-name']); 
         // Lanjutkan dengan proses pendaftaran jika validasi berhasil
-        $randomNumber = rand();
-        $accessToken = 'KSR-' . $randomNumber;
+        $randomNumber = rand(100, 999); 
+        $randomString = base_convert($randomNumber, 10, 36); 
+
+        $accessToken = 'KSR' . strtoupper($randomString);
         $id =  User::generateId();
         $user = User::create([
             'id' => $id,

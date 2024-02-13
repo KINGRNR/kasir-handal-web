@@ -34,17 +34,36 @@
                     {{-- @include('toko.header.sidebar') --}}
                     <div class="content flex-row-fluid" id="kt_content">
                         <div class="row gy-5">
+                            <div class="col-xl-12">
+                                <div class="card" style="background-color: #ffff;">
+                                    <div class="card-body d-flex flex-column">
+                                        <div class="d-flex flex-column flex-grow-1" style="position: relative;">
+                                            <!-- Sisipkan ucapan selamat datang, nama, nama toko, dan peran di sini -->
+                                            <h2>Selamat datang, {{ session('name') }}!</h2>
+                                            <p>Anda terdaftar sebagai <span class="fw-bold">
+                                                    @if (session('user_role') == 'BfiwyVUDrXOpmStr')
+                                                        Pemilik
+                                                    @else
+                                                       Petugas Kasir
+                                                    @endif
+                                                </span> Usaha <span class="fw-bold">{{ session('toko_nama') }}</span>.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div class="col-xl-4 ">
-                                <div class="card card-xl-stretch" style="background-color: #ffff; height: 183px;">
+                                <div class="card" style="background-color: #ffff;">
                                     <div class="card-body d-flex flex-column">
                                         <div class="d-flex flex-column flex-grow-1 m" style="position: relative;">
                                         </div>
-                                        <div class="pt-5 mt-5">
+                                        <div class="pt-5">
                                             <span class="fw-bolder fs-3x me-2 lh-0"
                                                 style="color: #2F3281; display: block;">10</span>
                                             <a href="#" class="fw-bolder fs-3 mt-5"
                                                 style="color: #2F3281; display: block;">Kategori Barang</a>
-                                                {{-- <div class="ms-auto">
+                                            {{-- <div class="ms-auto">
                                                     <img src="/assets/vector/cart.png" alt="" style="margin-left: 10px;">
                                                 </div> --}}
                                             {{-- <span class="text-dark fw-bolder fs-6 lh-0">Jobs</span> --}}
@@ -54,11 +73,11 @@
 
                             </div>
                             <div class="col-xl-4">
-                                <div class="card card-xl-stretch" style="background-color: #fff; height: 183px;">
+                                <div class="card" style="background-color: #fff;">
                                     <div class="card-body d-flex flex-column">
                                         <div class="d-flex flex-column flex-grow-1 m" style="position: relative;">
                                         </div>
-                                        <div class="pt-5 mt-5">
+                                        <div class="pt-5">
                                             <span class="fw-bolder fs-3x me-2 lh-0"
                                                 style="color: #2F3281; display: block;">Rp. 600.000</span>
                                             <a href="#" class="fw-bolder fs-3 mt-5"
@@ -70,11 +89,11 @@
                                 </div>
                             </div>
                             <div class="col-xl-4">
-                                <div class="card card-xl-stretch" style="background-color: #ffff; height: 183px;">
+                                <div class="card" style="background-color: #ffff;">
                                     <div class="card-body d-flex flex-column">
                                         <div class="d-flex flex-column flex-grow-1 m" style="position: relative;">
                                         </div>
-                                        <div class="pt-5 mt-5">
+                                        <div class="pt-5">
                                             <span class="fw-bolder fs-3x me-2 lh-0"
                                                 style="color: #2F3281; display: block;">4</span>
                                             <a href="#" class="fw-bolder fs-3 mt-5"
@@ -100,7 +119,7 @@
                                 <div class="card card-xl-stretch  ">
                                     <div class="card-body d-flex flex-column h-50">
                                         <h5 class="card-title" style="color: #2F3281">Grafik Penjualan</h5>
-                                        <canvas id="myBarChart" width="100" ></canvas>
+                                        <canvas id="myBarChart" width="100"></canvas>
                                     </div>
                                 </div>
                             </div>

@@ -11,11 +11,22 @@
             </div>
             <!--end::Aside-->
             <!--begin::Body-->
+
             <div class="d-flex flex-column flex-lg-row-fluid py-10">
                 <!--begin::Content-->
                 <div class="d-flex flex-center flex-column flex-column-fluid">
                     <!--begin::Wrapper-->
                     <div class="w-lg-500px p-10 p-lg-15 mx-auto">
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    
                         <!--begin::Form-->
                         <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" method="POST"
                             action="{{ route('login.store') }}">
@@ -87,7 +98,7 @@
 
                             <div class="text-center">
 
-                                <button type="submit" id="" class="btn btn-lg w-100 mb-4"
+                                <button type="submit" id="kt_sign_in_submit" class="btn btn-lg w-100 mb-4"
                                     style="background-color: #1B61AD">
                                     <span class="indicator-label text-white">Masuk</span>
                                     <span class="indicator-progress text-white">Tunggu sebentar...
@@ -143,6 +154,8 @@
             }
         }
     </script>
+    <script src="{!! asset('assets/js/custom/authentication/sign-in/general.js') !!}"></script>
+
     @include('layouts.support.bundle.bundlefooter')
 
 </body>

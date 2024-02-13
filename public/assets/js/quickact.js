@@ -95,7 +95,30 @@ var quick = {
         $(".loading").fadeOut();
         // removeSkeleton();
     },
+    dateRangeFilter: function (id) {
+        var start = moment().subtract(29, "days");
+        var end = moment();
 
+        function cb(start, end) {
+            $(id).html(start.format("MMMM D, YYYY") + " - " + end.format("MMMM D, YYYY"));
+        }
+
+        $(id).daterangepicker({
+            startDate: start,
+            endDate: end,
+            ranges: {
+                "Hari Ini": [moment(), moment()],
+                "Kemarin": [moment().subtract(1, "days"), moment().subtract(1, "days")],
+                "7 Hari Terakhir": [moment().subtract(6, "days"), moment()],
+                "30 Hari Terakhir": [moment().subtract(29, "days"), moment()],
+                "Bulan Ini": [moment().startOf("month"), moment().endOf("month")],
+                "Bulan Lalu": [moment().subtract(1, "month").startOf("month"), moment().subtract(1,
+                    "month").endOf("month")]
+            }
+        }, cb);
+
+        cb(start, end);
+    },
     toastNotif: function(data) {
         data = $.extend ( 
             true, 

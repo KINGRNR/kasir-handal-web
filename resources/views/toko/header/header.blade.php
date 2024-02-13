@@ -165,11 +165,12 @@
              <div class="topbar d-flex align-items-stretch flex-shrink-0">
                  <div class="d-flex align-items-center me-n3 ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
                      <!--begin::Menu wrapper-->
-                     <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"
+                     <div class="btn " style="cursor: pointer; "
                          data-kt-menu-trigger="click" data-kt-menu-attach="parent"
                          data-kt-menu-placement="bottom-end">
                          <img class="h-30px w-30px rounded" src="../assets/media/avatars/150-25.jpg"
                              alt="" />
+                             <span class="text-white">{{session('name')}}</span>  
                      </div>
                      <!--begin::Menu-->
                      <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
@@ -181,6 +182,7 @@
                                  <div class="symbol symbol-50px me-5">
                                      <img alt="Logo" src="../assets/media/avatars/150-25.jpg" />
                                  </div>
+                                 
                                  <!--end::Avatar-->
                                  <!--begin::Username-->
                                  {{-- <div class="d-flex flex-column">
@@ -199,19 +201,22 @@
                                          class="fw-bold text-muted text-hover-primary fs-7">{{ auth()->user()->email }}</a>
                                  </div> --}}
                                  <div class="d-flex flex-column">
-                                     <div class="fw-bolder d-flex align-items-center fs-5">{{ session('user') }}
-                                         {{-- @if (session('user')->users_role_id == 'BfiwyVUDrXOpmStr')
+                                     <div class="fw-bolder d-flex align-items-center fs-5">{{ session('name') }}
+                                        
+                                         @if (session('user_role') == 'BfiwyVUDrXOpmStr')
                                              <span
                                                  class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Toko</span>
                                          @else
                                              <span
                                                  class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Petugas
                                                  Kasir</span>
-                                         @endif --}}
+                                         @endif
                                      </div>
-
+                                     <div class="fw-bolder d-flex align-items-center fs-5">
+                                        Toko {{ session('toko_nama') }}
+                                    </div>
                                      <a href="#"
-                                         class="fw-bold text-muted text-hover-primary fs-7">{{ session('user') }}</a>
+                                         class="fw-bold text-muted text-hover-primary fs-7">{{ session('email') }}</a>
 
                                  </div>
                                  <!--end::Username-->
@@ -223,7 +228,7 @@
                          <!--end::Menu separator-->
                          <!--begin::Menu item-->
                          <div class="menu-item px-5">
-                             <a href="../../demo2/dist/account/overview.html" class="menu-link px-5">My Profile</a>
+                             <a href="../../demo2/dist/account/overview.html" class="menu-link px-5">Profile</a>
                          </div>
                          <!--begin::Menu item-->
                          <div class="menu-item px-5">

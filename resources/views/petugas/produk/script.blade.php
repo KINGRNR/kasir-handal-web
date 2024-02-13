@@ -1,8 +1,8 @@
 {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"> --}}
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+{{-- <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
     crossorigin="anonymous"></script>
 <script src="../assets/plugins/custom/datatables/datatables.bundle.js"></script>
-<link href="../assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+<link href="../assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" /> --}}
 {{-- <link  href="../assets/plugins/custom/cropper/cropper.bundle.css" rel="stylesheet">
 <script src="../assets/js/documentation/general/cropper.bundle.js"></script> --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
@@ -32,20 +32,33 @@
         axios.post("/produk/getKategori", {
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    // 'Content-Type': 'multipart/form-data',
                 }
             })
             .then(response => {
-                var data = response.data
-                $.each(data, function(key, value) {
-                    $('#kategori_produk').append('<option value="' + value.id_kategori + '">' + value
-                        .nama_kategori + '</option>');
-                });
+                var data = response.data;
+                if (data.length > 0) {
+                    $.each(data, function(key, value) {
+                        $('#id_produk_kategori').append('<option value="' + value.id_kategori + '">' + value
+                            .nama_kategori + '</option>');
+                    });
+                } else {
+                    // Menampilkan SweetAlert jika data kategori kosong
+                    Swal.fire({
+                        title: 'Peringatan!',
+                        text: 'Tidak ada kategori yang tersedia.',
+                        icon: 'warning',
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    });
+                }
             })
             .catch(error => {
                 console.error('There has been a problem with your Axios operation:', error);
             });
     }
+
     $(document).ready(function() {
         $('#harga_produk').on('input', function() {
             var inputValue = $(this).val();
@@ -143,7 +156,7 @@
                 {
                     data: 'harga_produk',
                     render: function(data, type, row) {
-                        return `<span class="badge bg-success">Rp. ${row.harga_produk}</span>`;
+                        return `<span class="">${quick.formatRupiah(row.harga_produk)}</span>`;
                     }
                 },
                 {
@@ -165,7 +178,7 @@
                             row.id + ')">Edit</button>';
 
                         var deleteButton = '<button class="btn btn-sm btn-danger" onclick="deleteRow(' +
-                            row.id + ')">Delete</button>';
+                            row.id_produk + ')">Delete</button>';
 
                         return editButton + ' ' + deleteButton;
                     }
@@ -193,42 +206,89 @@
         // }).css('cursor', 'pointer');
     }
 
-    function switchForm() {
-        $('.table-switch-produk').animate({
-            top: '250px',
-            opacity: '0'
-        }, function() {
-            $('.formProduk').show();
-            $('.formProduk').animate({
-                top: '0px',
-                opacity: '1'
-            });
-            $('.table-switch-produk').hide();
-        });
-    }
+    // function switchForm() {
+    //     $('.table-switch-produk').animate({
+    //         top: '250px',
+    //         opacity: '0'
+    //     }, function() {
+    //         $('.formProduk').show();
+    //         $('.formProduk').animate({
+    //             top: '0px',
+    //             opacity: '1'
+    //         });
+    //         $('.table-switch-produk').hide();
+    //     });
+    // }
 
-    function switchTable() {
-        // Animate the form upward and fade it out
-        $('.formProduk').animate({
-            top: '-250px',
-            opacity: '0'
-        }, function() {
-            // Animation complete, show the table and hide the form
-            $('.table-switch-produk').show();
-            $('.table-switch-produk').animate({
-                top: '0px',
-                opacity: '1'
-            });
+    // function switchTable() {
+    //     // Animate the form upward and fade it out
+    //     $('.formProduk').animate({
+    //         top: '-250px',
+    //         opacity: '0'
+    //     }, function() {
+    //         // Animation complete, show the table and hide the form
+    //         $('.table-switch-produk').show();
+    //         $('.table-switch-produk').animate({
+    //             top: '0px',
+    //             opacity: '1'
+    //         });
 
-            $('.formProduk').hide();
+    //         $('.formProduk').hide();
+    //     });
+    // }
+    function deleteRow(id) {
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post("/produk/delete", {
+                        id: id
+                    }, {
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'multipart/form-data',
+                        }
+                    })
+                    .then(response => {
+                        if (response.data.success) {
+                            quick.toastNotif({
+                                title: 'success',
+                                icon: 'success',
+                                timer: 500,
+                                callback: function() {
+                                    window.location.reload()
+                                }
+                            });
+                        } else {
+                            quick.toastNotif({
+                                title: response.data.message,
+                                icon: response.data.status,
+                                timer: 2000,
+                            });
+                        }
+                        console.log(response)
+
+                    })
+                    .catch(error => {
+
+                        console.error('There has been a problem with your Axios operation:', error);
+                    });
+            }
         });
-    }
+    };
 
     function save() {
         var form = "formProduk";
         var data = new FormData($('[name="' + form + '"]')[0]);
-        // $('#submit-btn').prop('disabled', true);
-        // console.log(data);
+
+        // Hapus bagian koding Cropper.js dan formulir gambar yang berkaitan
+
         Swal.fire({
             title: 'Apakah data yang anda input sudah benar?',
             icon: 'question',
@@ -239,10 +299,10 @@
             cancelButtonText: 'Tidak'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post("/produk/save", data, {
+                axios.post("/produk/saveMob", data, {
                         headers: {
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Content-Type': 'multipart/form-data',
+                            // 'Content-Type': 'multipart/form-data', // Jangan ditambahkan header ini
                         }
                     })
                     .then(response => {
@@ -265,88 +325,4 @@
             }
         });
     };
-    document.addEventListener('DOMContentLoaded', function() {
-    var image = document.getElementById('image');
-    var existingImage = document.getElementById('existingImage').value;
-    var croppedPreview = document.getElementById('croppedPreview');
-    var inputImage = document.getElementById('inputImage');
-    var editImageBtn = document.getElementById('editImageBtn');
-    var cropper;
-
-    // Load existing image if available
-    if (existingImage) {
-        image.src = existingImage;
-        croppedPreview.src = existingImage;
-    }
-
-    inputImage.addEventListener('change', function(e) {
-        var files = e.target.files;
-        var done = function(url) {
-            inputImage.value = '';
-            image.src = url;
-            croppedPreview.src = url;
-            $('#imageCropModal').modal('show');
-            initCropper();
-        };
-
-        var reader;
-        var file;
-
-        if (files && files.length > 0) {
-            file = files[0];
-            if (URL) {
-                done(URL.createObjectURL(file));
-            } else if (FileReader) {
-                reader = new FileReader();
-                reader.onload = function(e) {
-                    done(reader.result);
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-    });
-
-    // Edit existing image
-    editImageBtn.addEventListener('click', function() {
-        if (existingImage) {
-            $('#imageCropModal').modal('show');
-            initCropper();
-        } else {
-            alert('No existing image to edit. Please upload a new image.');
-        }
-    });
-
-    document.getElementById('cropImage').addEventListener('click', function() {
-        if (cropper) {
-            var canvas = cropper.getCroppedCanvas();
-            if (canvas) {
-                var croppedDataUrl = canvas.toDataURL();
-                console.log('Cropped Data URL:', croppedDataUrl);
-                // Update the preview image
-                $('#croppedPhoto').val(croppedDataUrl)
-                croppedPreview.src = croppedDataUrl;
-            } else {
-                console.error('Canvas is null. Cropper might not have been properly initialized.');
-            }
-        } else {
-            console.error('Cropper is null. Initialization might be missing.');
-        }
-
-        // Close the modal
-        $('#imageCropModal').modal('hide');
-    });
-
-    function initCropper() {
-        if (cropper) {
-            cropper.destroy();
-        }
-
-        // Set aspect ratio and view mode
-        cropper = new Cropper(image, {
-            aspectRatio: 16 / 9, // Set the aspect ratio as needed
-            viewMode: 3, // Change the view mode as needed (1, 2, or 3)
-        });
-    }
-});
-
 </script>
