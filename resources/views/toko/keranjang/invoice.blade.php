@@ -19,8 +19,10 @@
                     <h2 class="text-white">Data Menu</h2>
                 </div>
                 <div class="card-toolbar">
-                    <button id="toggleKeranjang" onclick="toggleKeranjang()" class="btn btn-primary mb-3">Toggle Keranjang</button>
-                    <button id="toggleKeranjang" onclick="toggleKeranjang2()" class="btn btn-primary mb-3">Toggle Keranjang</button>
+                    {{-- <button id="toggleKeranjang" onclick="toggleKeranjang()" class="btn btn-primary mb-3">Toggle
+                        Keranjang</button>
+                    <button id="toggleKeranjang" onclick="toggleKeranjang2()" class="btn btn-primary mb-3">Toggle
+                        Keranjang</button> --}}
 
                 </div>
             </div>
@@ -67,14 +69,18 @@
                     {{-- <p>Nama Petugas: {{ auth()->user()->name }}</p> --}}
                 </div>
                 <div class="mb-4">
-                    <h4>Cari Existing Pelanggan</h4>
-
-                    <div class="mb-3">
+                    <h4>Cari Pelanggan</h4>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="toggleExistingCustomer">
+                        <label class="form-check-label" for="toggleExistingCustomer">Tampilkan Cari Existing
+                            Pelanggan</label>
+                    </div>
+                    <div class="mb-3 carilisting" style="display: none;">
                         <label for="noTelp">No. Telp:</label>
                         <input type="tel" class="form-control" id="check_no_telp" name="check_no_telp"
                             placeholder="No. Telp">
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3 carilisting" style="display: none;"> 
                         <label for="customerDropdown">Pilih Pelanggan:</label>
                         <select id="customerDropdown" class="form-control"></select>
                     </div>
@@ -142,6 +148,7 @@
                     </div>
                     </form>
                 </div>
+
             </div>
         </div>
     </div>

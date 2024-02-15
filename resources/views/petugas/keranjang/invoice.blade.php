@@ -28,7 +28,7 @@
                 <!-- Filter dan Search -->
                 <div class="row">
                     <div class="col-md-4 mb-3">
-                        <select class="form-select" id="kategori">
+                        <select class="form-select" id="list_kategori">
                             <option value="" disabled selected>Semua Kategori</option>
                             {{-- <option value="kategori2">Kategori 2</option> --}}
                             <!-- Tambahkan opsi kategori lainnya sesuai kebutuhan -->

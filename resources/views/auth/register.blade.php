@@ -1,14 +1,46 @@
 @include('layouts.support.bundle.bundleheader')
+<script src="../assets/js/quickact.js"></script>
 
+<style>
+    .loading-spinner {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        /* Hitam dengan opasitas 0.8 */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        /* Menempatkan di atas elemen-elemen lain */
+    }
+
+    .loading-spinner-overlay {
+        text-align: center;
+    }
+</style>
 <body id="kt_body" class="app-blank" style="background: #fff">
+    <div class="loading">
+        {{-- <div class="loading-spinner">
+            <div class="loading loading-spinner-overlay" id="loading-spinner"><button class="btn btn-primary" type="button"
+                    disabled>
+                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                    <span role="status">Loading...</span>
+                </button></div>
+        </div> --}}
+    </div>
+
     <div class="d-flex flex-column flex-root">
         <!--begin::Authentication - Sign-in -->
         <div class="d-flex flex-column flex-lg-row flex-column-fluid">
             <!--begin::Aside-->
             <div class="d-flex flex-column flex-lg-row-auto w-xl-900px position-xl-relative w-xxl-800px justify-content-center align-items-center"
                 style="background: #2F3281;">
-                <h1 class="text-center text-white fs-3">KasirHandal</h1>
+                <h1 class="text-center text-white fs-1 fs-lg-3 fs-xxl-5">KasirHandal</h1>
             </div>
+
 
             <!--end::Aside-->
             <!--begin::Body-->
@@ -171,10 +203,20 @@
                                 <div class="fv-row mb-2">
                                     <label class="form-label fw-bolder text-dark fs-6" for="password-confirm">Konfirmasi
                                         Password</label>
-                                    <input id="password-confirm" type="password"
-                                        class="form-control form-control-lg form-control-solid"
-                                        name="password_confirmation" required autocomplete="new-password"
-                                        placeholder="Ulangi kata sandi">
+                                    <div class="position-relative mb-3">
+                                        <input id="password-confirm" type="password"
+                                            class="form-control form-control-lg form-control-solid"
+                                            name="password_confirmation" required autocomplete="new-password"
+                                            placeholder="Ulangi kata sandi">
+                                        <span
+                                            class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
+                                            onclick="togglePassword('password-confirm')">
+                                            <i class="bi bi-eye-slash fs-2"></i>
+                                            <i class="bi bi-eye fs-2 d-none"></i>
+                                        </span>
+                                    </div>
+                                    <div id="password-confirm-error" class="invalid-feedback" style="display: none;">
+                                    </div>
                                 </div>
                                 {{-- <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#midtransModal">Informasi
                                     Midtrans</button> --}}
@@ -197,8 +239,7 @@
                                         class="form-control form-control-lg form-control-solid" required
                                         placeholder="Masukkan nama pemilik">
                                 </div>
-                                <button class="btn btn-primary" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#midtransModal" id="next-step-2">Lanjut</button>
+                                <button class="btn btn-primary" type="button" id="next-step-2">Lanjut</button>
                                 <button class="btn btn-secondary" type="button" id="prev-step-2">Kembali</button>
                             </div>
 
@@ -230,8 +271,8 @@
                                     Midtrans</button>
                             </div>
                             <div id="step-4" class="step" style="display: none;">
-                                <h2>Term & Condition</h2>
-                                <p>Di sini Anda dapat menambahkan isi Term & Condition.</p>
+                                <h2>Syarat & Ketentuan</h2>
+                                {{-- <p>Di sini Anda dapat menambahkan isi Term & Condition.</p> --}}
                                 <p>Ini adalah contoh Term & Condition:</p>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ut mauris nec felis
                                     hendrerit varius. Duis
@@ -249,7 +290,7 @@
                                     efficitur turpis in
                                     velit pellentesque, nec pretium ligula bibendum.</p>
                                 <!-- Tambahkan checkbox untuk menyetujui Term & Condition -->
-                                <div class="form-check">
+                                <div class="form-check mb-5">
                                     <input class="form-check-input" type="checkbox" value=""
                                         id="agree-checkbox">
                                     <label class="form-check-label" for="agree-checkbox">
@@ -329,6 +370,19 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
+        function togglePassword(inputId) {
+            var input = document.getElementById(inputId);
+            var icon = input.nextElementSibling.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            }
+        }
         $('#form-register').on('submit', function submit(e) {
             e.preventDefault();
             $('#loading-spinner').css('display', '')
@@ -375,20 +429,53 @@
             });
         });
         $(document).ready(function() {
+            // Fungsi validasi password di input konfirmasi password
+            $("#password-confirm").on("input", function() {
+                var password = $("#password").val();
+                var confirmPassword = $(this).val();
+
+                if (password !== confirmPassword) {
+                    $("#password-confirm-error").text("Konfirmasi password tidak cocok.");
+                    $("#password-confirm-error").show();
+                } else {
+                    $("#password-confirm-error").hide();
+                }
+            });
+
+        });
+        $(document).ready(function() {
             function showPasswordError() {
-                $("#password-error").text("Konfirmasi password tidak cocok.");
+                // $("#password-error").text("Konfirmasi password tidak cocok.");
                 $("#password-error").show();
             }
 
             function hidePasswordError() {
                 $("#password-error").hide();
             }
-            $("#password-confirm").on("input", function() {
-                var password = $("#password").val();
-                var confirmPassword = $(this).val();
 
-                if (password !== confirmPassword) {
-                    showPasswordError();
+            function checkPasswordStrength(password) {
+
+
+                var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+                return regex.test(password);
+            }
+            $("#password").on("input", function() {
+                var password = $(this).val();
+                var confirmPassword = $("#password-confirm").val();
+
+                // if (password !== confirmPassword) {
+                //     showPasswordError();
+                //     return;
+                // } else {
+                //     hidePasswordError();
+                // }
+
+                if (!checkPasswordStrength(password)) {
+                    $("#password-error").text(
+                        "Password harus terdiri dari minimal 8 karakter dengan campuran huruf besar, huruf kecil, angka, dan simbol."
+                    );
+                    $("#password-error").show();
                 } else {
                     hidePasswordError();
                 }
@@ -416,7 +503,6 @@
                 var confirmPassword = $("#password-confirm").val();
 
                 if (password !== confirmPassword) {
-                    showPasswordError();
                     return;
                 }
                 if (email.indexOf('@') === -1) {
@@ -455,9 +541,11 @@
                     return;
                 }
                 $("#step-2").hide();
+                $("#midtransModal").modal("show");
                 $("#step-3").show();
                 currentStep = 3;
             });
+
 
             $("#prev-step-2").click(function() {
                 $("#step-2").hide();
@@ -506,6 +594,7 @@
             var data = new FormData($('[name="' + form + '"]')[0]);
 
             // Hapus bagian koding Cropper.js dan formulir gambar yang berkaitan
+            quick.blockPage()
 
             Swal.fire({
                 title: 'Apakah data yang anda input sudah benar?',
@@ -524,6 +613,7 @@
                             }
                         })
                         .then(response => {
+                            
                             if (response.data.success) {
                                 window.location.href = '/login';
                             }

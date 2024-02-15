@@ -5,10 +5,11 @@
         <!--begin::Authentication - Sign-in -->
         <div class="d-flex flex-column flex-lg-row flex-column-fluid">
             <!--begin::Aside-->
-            <div class="d-flex flex-column flex-lg-row-auto w-xl-900px positon-xl-relative w-xxl-800px"
-                {{-- style="background: linear-gradient(180deg, #2F3281 24.41%, #40A0B6 76.35%, #08C0B5 100%)"> --}} style="background: #2F3281">
-
+            <div class="d-flex flex-column flex-lg-row-auto w-xl-900px position-xl-relative w-xxl-800px justify-content-center align-items-center"
+                style="background: #2F3281;">
+                <h1 class="text-center text-white fs-1 fs-lg-3 fs-xxl-5">KasirHandal</h1>
             </div>
+
             <!--end::Aside-->
             <!--begin::Body-->
 
@@ -18,15 +19,15 @@
                     <!--begin::Wrapper-->
                     <div class="w-lg-500px p-10 p-lg-15 mx-auto">
                         @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <!--begin::Form-->
                         <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" method="POST"
                             action="{{ route('login.store') }}">

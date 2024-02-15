@@ -14,6 +14,8 @@
         init();
         $('.menu-link').removeClass('active');
         $('.kategori').addClass('active');
+        // var avatar1 = new KTImageInput('kt_image_1');
+
     });
 
     init = async () => {
@@ -51,14 +53,23 @@
                             '</span>';
                     }
                 },
+                // {
+                //     data: 'kode_kategori',
+                //     name: 'kode_kategori'
+                // },
                 {
-                    data: 'kode_kategori',
-                    name: 'kode_kategori'
+                    data: 'kategori_logo',
+                    render: function(data, type, row) {
+                        return '<img src="/file/kategori_logo/' + row.kategori_logo +
+                            '" alt="Logo Kategori" class="img-thumbnail" width="50" height="50">';
+                    }
+                    
                 },
                 {
                     data: 'nama_kategori',
                     name: 'nama_kategori'
                 },
+
                 {
                     data: 'id_kategori',
                     render: function(data, type, row) {
@@ -111,6 +122,8 @@
                 $('#id_kategori').val(data.id_kategori);
                 $('#kode_kategori').val(data.kode_kategori);
                 $('#nama_kategori').val(data.nama_kategori);
+                $('.image-input-wrapper').css('background-image', 'url("' + APP_URL +
+                    'file/kategori_logo/' + data.kategori_logo + '")');
                 $('#modalKategori').modal('show');
             },
             error: function(error) {
@@ -145,6 +158,8 @@
     // }
 
     function wipeData() {
+        $('.image-input-wrapper').css('background-image', 'url("../file/blank.webp")');
+
         $('#formKategori').trigger('reset');
         $('#id_kategori').val(null);
 

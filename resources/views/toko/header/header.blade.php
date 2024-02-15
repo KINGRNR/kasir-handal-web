@@ -90,7 +90,7 @@
                                          </span>
                                          <!--end::Svg Icon-->
                                      </span>
-                                     <span class="menu-title">Kategori Produk</span>
+                                     <span class="menu-title">Master Merek</span>
                                      <span class="menu-arrow d-lg-none"></span>
                                  </span>
                              </div>
@@ -117,7 +117,7 @@
                                          </span>
                                          <!--end::Svg Icon-->
                                      </span>
-                                     <span class="menu-title">Produk</span>
+                                     <span class="menu-title">Master Produk</span>
                                      <span class="menu-arrow d-lg-none"></span>
                                  </span>
                              </div>
