@@ -30,7 +30,8 @@
             </div>
         </div>
         <div class="card-toolbar">
-            <button type="button" class="btn btn-primary me-2 reset-filter" data-bs-toggle="modal" data-bs-target="#modalKategori" onclick="wipeData()">Tambah Kategori</button>
+            <button type="button" class="btn btn-primary me-2 reset-filter" data-bs-toggle="modal"
+                data-bs-target="#modalKategori" onclick="wipeData()">Tambah Merek</button>
             <div class="d-flex">
                 <button type="button" class="btn btn-sm btn-danger deleted-selected"
                     data-kt-customer-table-select="delete_selected" style="display: none;"
@@ -49,9 +50,10 @@
                     <!--begin::Table row-->
                     <tr class="text-start align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                         <th class="ps-4" width="20">No</th>
-                        <th class="min-w-80px">Kode Kategori</th>
-                        <th class="min-w-80px">Nama Kategori</th>
-                        <th class="min-w-80px"></th>
+                        {{-- <th class="min-w-80px">Kode Kategori</th> --}}
+                        <th class="min-w-125px">Logo Merek</th>
+                        <th class="min-w-125px">Merek</th>
+                        <th class="min-w-125px"></th>
                     </tr>
                     <!--end::Table row-->
                 </thead>

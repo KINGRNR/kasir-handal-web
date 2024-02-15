@@ -1,13 +1,13 @@
-<script
-  src="https://code.jquery.com/jquery-3.7.1.js"
-  integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-  crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.10.0/chart.min.js"></script>
 
 
 
 <script>
+        APP_URL = "{{ getenv('APP_URL') }}/";
+
     $(() => {
         init();
         $('.menu-link').removeClass('active');
@@ -15,7 +15,7 @@
     });
 
     init = async () => {
-        await loadPie();
+        // await loadPie();
         await loadBar();
 
     }
@@ -41,32 +41,61 @@
             }
         });
     }
+
     function loadBar() {
-        var data = {
-            labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4'],
-            datasets: [{
-                label: 'Bar Chart Dataset',
-                data: [50, 30, 40, 20], // Example data, adjust as needed
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
-            }]
-        };
+        // Mengambil data penjualan dari endpoint menggunakan Ajax dengan metode POST
+        $.ajax({
+            url: APP_URL + 'dashboard/loadPenjualan',
+            method: "POST",
+            data: {
+                _token: '{{ csrf_token() }}', // Mengirimkan token CSRF untuk keamanan
+                // Jika ada data tambahan yang perlu dikirim, tambahkan di sini
+            },
+            success: function(response) {
+                // Menyiapkan data untuk grafik
+                var labels = Object.keys(response);
+                var dataPenjualan = labels.map(function(bulan) {
+                    return response[bulan];
+                });
 
-        // Get the canvas element
-        var ctx = document.getElementById('myBarChart').getContext('2d');
+                // Data dan pengaturan grafik
+                var data = {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Penjualan per Bulan',
+                        data: dataPenjualan,
+                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56',
+                            '#4BC0C0'] // Warna untuk setiap batang
+                    }]
+                };
 
-        // Create a bar chart
-        var myBarChart = new Chart(ctx, {
-            type: 'bar',
-            data: data,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+                // Mendapatkan elemen canvas untuk grafik
+                var ctx = document.getElementById('myBarChart').getContext('2d');
+
+                // Membuat grafik batang
+                var myBarChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
                     }
-                }
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Ada masalah dalam mengambil data penjualan:', error);
             }
         });
     }
+
+    // Memanggil fungsi loadBar() saat halaman dimuat
+    $(document).ready(function() {
+        loadBar();
+    });
+
     loaddata = async () => {
         return new Promise((resolve, reject) => {
             $.ajax({

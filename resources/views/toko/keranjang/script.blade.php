@@ -84,47 +84,55 @@
         $(`input, select`).removeAttr('disabled');
     });
 
+    $('#toggleExistingCustomer').change(function() {
+        if ($(this).is(':checked')) {
+            // Tampilkan bagian Cari Existing Pelanggan
+            $('.carilisting').show();
+            $('#nama_pelanggan, #no_telp, #email_pelanggan').prop('disabled', true);
+        } else {
+            // Sembunyikan bagian Cari Existing Pelanggan
+            $('.carilisting').hide();
+            $('#nama_pelanggan, #no_telp, #email_pelanggan').prop('disabled', false);
+        }
+    });
 
     function showProduk() {
-        // $('#formKategori').trigger('reset');
-        // $('#id_kategori').val(null);
-
         axios.post("/produk/showProdukCart", {
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    // 'Content-Type': 'multipart/form-data',
                 }
             })
             .then(response => {
-                let data = response.data
+                let data = response.data;
                 console.log(data);
                 $.each(data, function(i, v) {
                     console.log(v);
 
-                    var stockHabis = v.stok_produk === 0 ? '<div class="position-absolute top-50 start-50 translate-middle bg-danger bg-opacity-50 text-white p-2 rounded">Stok Habis</div>' : ''; // Tambahkan tulisan "Stock Habis" jika stok 0
-
+                    var stockHabis = v.stok_produk === 0 ?
+                        '<div class="position-absolute top-50 start-50 translate-middle bg-danger bg-opacity-50 text-white p-2 rounded">Stok Habis</div>' :
+                        '';
 
                     var warnaCard = v.stok_produk === 0 ? 'text-muted' :
-                    ''; // Menentukan kelas CSS untuk warna abu-abu jika stok 0
+                        '';
 
                     var produk = `
-                <div class="col-md-4 mb-4 ">
-                    <div class="card border rounded text-center ${warnaCard}">
-                        
-                        <div class="ratio ratio-16x9 ">
-                            <img src="/file/produk_foto/${v.foto_produk}" alt="Product Image" class="img-thumbnail object-fit-cover">
-                        </div>
-                        ${stockHabis} 
-                        <div class="card-body">
-                            <p class="card-text mb-2">${v.nama_kategori}</p>
-                            <h6 class="card-title mb-2">${v.nama_produk}</h6>
-                            <p class="card-text mb-2"><span class="badge bg-success">${quick.formatRupiah(v.harga_produk)}</span></p>
-                            <p class="card-text">Tersedia : ${v.stok_produk}</p>
-                            <button class="btn btn-sm btn-primary" id="tambahkeranjang${v.id_produk}" onclick="tambahKeranjang(${v.id_produk})" ${v.stok_produk === 0 ? 'disabled' : ''}>Tambah ke Keranjang</button>
-                        </div>
+            <div class="col-md-4 mb-4 ">
+                <div class="card border rounded text-center ${v.stok_produk === 0 ? 'bg-light' : ''}">
+                    
+                    <div class="ratio ratio-16x9 z-3">
+                        <img src="/file/produk_foto/${v.foto_produk}" alt="Product Image" class="img-thumbnail object-fit-cover">
+                    </div>
+                    ${stockHabis} 
+                    <div class="card-body">
+                        <p class="card-text mb-2">${v.nama_kategori}</p>
+                        <h6 class="card-title mb-2">${v.nama_produk}</h6>
+                        <p class="card-text mb-2"><span class="badge bg-success">${quick.formatRupiah(v.harga_produk)}</span></p>
+                        <p class="card-text">Tersedia : ${v.stok_produk}</p>
+                        <button class="btn btn-sm btn-primary" id="tambahkeranjang${v.id_produk}" onclick="tambahKeranjang(${v.id_produk})" ${v.stok_produk === 0 ? 'disabled' : ''}>Tambah ke Keranjang</button>
                     </div>
                 </div>
-                `;
+            </div>
+            `;
 
                     $('.produk-container').append(produk);
                 });
@@ -355,6 +363,7 @@
     function hapusItemKeranjang(id, harga, inputId) {
         var currentQuantity = parseInt($('#quantity' + id).text()); // Mendapatkan kuantitas saat ini
         var subtotal = harga * currentQuantity; // Menghitung subtotal produk yang dihapus
+        $('#tambahkeranjang' + id).removeClass('d-none');
 
         $(`#id_produk${id}`).remove();
         $(`#nama_produk${id}`).remove();

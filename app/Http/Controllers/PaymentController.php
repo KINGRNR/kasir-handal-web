@@ -115,7 +115,7 @@ class PaymentController extends Controller
                 'alamat_pelanggan' => $dataTransaction['alamat_pelanggan'] ?? null,
             ]);
         }
-
+        
         // Buat record penjualan
         Penjualan::create([
             'penjualan_id' => $penjualanId,

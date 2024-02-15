@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriProdukController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProdukController;
@@ -102,13 +103,18 @@ Route::middleware(['web'])->group(function () {
             Route::post('/user/' . $value, $value);
         }
     });
+    Route::controller(DashboardController::class)->group(function () {
+        foreach (['loadPenjualan'] as $key => $value) {
+            Route::post('/dashboard/' . $value, $value);
+        }
+    });
     Route::controller(KategoriProdukController::class)->group(function () {
         foreach (['showKategori', 'save', 'detail', 'delete'] as $key => $value) {
             Route::post('/kategori/' . $value, $value);
         }
     });
     Route::controller(ProdukController::class)->group(function () {
-        foreach (['showProduk', 'getKategori', 'save', 'saveMob', 'showProdukCart', 'addCart', 'delete'] as $key => $value) {
+        foreach (['showProduk', 'getKategori', 'save', 'saveMob', 'showProdukCart', 'addCart', 'delete', 'updateStok'] as $key => $value) {
             Route::post('/produk/' . $value, $value);
         }
     });

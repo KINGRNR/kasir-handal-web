@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class KategoriProdukController extends Controller
@@ -38,11 +39,39 @@ class KategoriProdukController extends Controller
     }
     public function save(Request $request)
     {
-        $data = $request->post();
+        $data = $request->except('foto_kategori');
+        $validator = Validator::make($request->all(), [
+            'foto_kategori' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Max size 2MB
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'status' => 'Validation Error',
+                'title' => 'Gagal!',
+                'message' => 'Validasi tidak berhasil. Pastikan gambar berformat JPEG, PNG, atau GIF dan tidak lebih dari 2MB.',
+                'code' => 422,
+                'errors' => $validator->errors(),
+            ]);
+        }
+        if ($request->hasFile('foto_kategori')) {
+            $uploadedFile = $request->file('foto_kategori');
 
-        try {
+            $filename = 'logo_' . time() . '.' . $uploadedFile->getClientOriginalExtension();
+
+            $uploadedFile->move(public_path('file/kategori_logo/'), $filename);
+            $data['kategori_logo'] = $filename;
+        }
+
+        // try {
             if ($data['id_kategori']) {
                 $kategori = Kategori::findOrFail($data['id_kategori']);
+
+                if ($request->hasFile('foto_kategori')) {
+                    // Remove the old image
+                    if (file_exists(public_path('file/kategori_logo/') . $kategori->kategori_logo)) {
+                        unlink(public_path('file/kategori_logo/') . $kategori->kategori_logo);
+                    };
+                }
                 $kategori->update($data);
             } else {
                 $data['id_kategori_toko'] = session()->get('toko_id');
@@ -67,14 +96,14 @@ class KategoriProdukController extends Controller
                 'message' => 'Data Berhasil Tersimpan!',
                 'code' => 201
             ]);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'success' =>  false,
-                'status' =>  'error',
-                'title' => 'Gagal!',
-                'message' => 'Terjadi Kesalahan di Sistem!',
-            ]);
-        }
+        // } catch (\Throwable $th) {
+        //     return response()->json([
+        //         'success' =>  false,
+        //         'status' =>  'error',
+        //         'title' => 'Gagal!',
+        //         'message' => 'Terjadi Kesalahan di Sistem!',
+        //     ]);
+        // }
     }
     public function saveMob(Request $request)
     {

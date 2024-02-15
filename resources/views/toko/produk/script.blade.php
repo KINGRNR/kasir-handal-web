@@ -45,12 +45,13 @@
                     // Menampilkan SweetAlert jika data kategori kosong
                     Swal.fire({
                         title: 'Peringatan!',
-                        text: 'Tidak ada kategori yang tersedia.',
+                        text: 'Tidak ada merek yang tersedia.',
                         icon: 'warning',
                         showCancelButton: false,
                         showConfirmButton: false,
                         allowOutsideClick: false,
-                        allowEscapeKey: false
+                        allowEscapeKey: false,
+                        footer: '<a href="/toko/kategori" class="btn btn-primary">Tambah Merek</a>'  
                     });
                 }
             })
@@ -161,21 +162,36 @@
                 },
                 {
                     data: 'stok_produk',
-                    name: 'stok_produk'
+                    name: 'stok_produk',
+                    render: function(data, type, row) {
+                        var stokHtml = '<span class="editable-stok">' + row.stok_produk + '</span>';
+                        stokHtml +=
+                            '<i class="fas fa-pencil-alt ms-2 edit-stok" style="cursor: pointer;" onclick="editStok(this)"></i>';
+                        stokHtml +=
+                            '<i class="fas fa-check ms-2 save-stok d-none" style="cursor: pointer;" onclick="saveStok(' +
+                            row.id_produk + ')"></i>';
+                        return stokHtml;
+                    }
                 },
+
                 {
                     data: 'nama_kategori',
                     name: 'nama_kategori'
                 },
                 {
-                    data: 'kode_kategori',
-                    name: 'kode_kategori'
-                }, {
+                    data: 'kategori_logo',
+                    render: function(data, type, row) {
+                        return '<img src="/file/kategori_logo/' + row.kategori_logo +
+                            '" alt="Logo Kategori" class="img-thumbnail" width="50" height="50">';
+                    }
+
+                },
+                {
                     data: 'id',
                     render: function(data, type, row) {
                         console.log(row);
                         var editButton = '<button class="btn btn-sm btn-warning" onclick="editRow(' +
-                            row.id + ')">Edit</button>';
+                            row.id_produk + ')">Edit</button>';
 
                         var deleteButton = '<button class="btn btn-sm btn-danger" onclick="deleteRow(' +
                             row.id_produk + ')">Delete</button>';
@@ -236,6 +252,58 @@
     //         $('.formProduk').hide();
     //     });
     // }
+    function editStok(icon) {
+        var cell = $(icon).closest('td');
+        var editableStok = cell.find('.editable-stok');
+        var inputStok = $('<input type="number" class="form-control" value="' + editableStok.text() + '">');
+        // Tambahkan max-width
+        inputStok.css('max-width', '100px'); // Sesuaikan dengan kebutuhan lebar maksimum
+        var iconSave = cell.find('.save-stok');
+        var iconCancel = $('<i class="fas fa-times ms-2 cancel-stok" style="cursor: pointer;"></i>'); // Ikon "batal"
+        var container = $('<div class="d-flex align-items-center"></div>'); // Wadah untuk input dan ikon
+        container.append(inputStok);
+        container.append(iconSave);
+        container.append(iconCancel);
+        cell.find('.edit-stok').hide();
+        editableStok.hide();
+        cell.append(container);
+        iconSave.removeClass('d-none');
+        iconCancel.click(function() {
+            inputStok.remove();
+            cell.find('.edit-stok').show();
+            editableStok.show();
+            iconSave.addClass('d-none');
+            iconCancel.remove();
+        });
+    }
+
+    function saveStok(id) {
+        var cell = $('td').has('input[type="number"]');
+        var inputStok = cell.find('input');
+        var newStok = inputStok.val();
+        $.ajax({
+            url: APP_URL + 'produk/updateStok',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id_produk: id,
+                stok_produk: newStok,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                // Tampilkan kembali stok dalam bentuk teks setelah berhasil disimpan
+                inputStok.hide();
+                cell.find('.editable-stok').text(newStok).show();
+                cell.find('.edit-stok').show();
+                cell.find('.save-stok').addClass('d-none'); // Sembunyikan ikon simpan
+            },
+            error: function(xhr, status, error) {
+                // Tambahkan penanganan kesalahan jika diperlukan
+                console.error('Gagal memperbarui stok:', error);
+            }
+        });
+    }
+
     function deleteRow(id) {
         Swal.fire({
             title: 'Apakah anda yakin?',

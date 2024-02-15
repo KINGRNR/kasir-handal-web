@@ -46,6 +46,8 @@
                 });
         });
 
+
+
         function updateCustomerDropdown(customer) {
             var dropdown = $('#customerDropdown');
             dropdown.empty(); // Clear existing options
@@ -78,12 +80,43 @@
 
     init = async () => {
         await showProduk();
-        // quick.unblockPage()
+        await getKategori();
     }
     $('#modal_form').on('hidden.bs.modal', function() {
         $(`input, select`).removeAttr('disabled');
     });
 
+    function getKategori() {
+        axios.post("/produk/getKategori", {
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                }
+            })
+            .then(response => {
+                var data = response.data;
+                if (data.length > 0) {
+                    $.each(data, function(key, value) {
+                        $('#list_kategori').append('<option value="' + value.id_kategori +
+                            '">' + value
+                            .nama_kategori + '</option>');
+                    });
+                } else {
+                    // Menampilkan SweetAlert jika data kategori kosong
+                    Swal.fire({
+                        title: 'Peringatan!',
+                        text: 'Tidak ada kategori yang tersedia.',
+                        icon: 'warning',
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('There has been a problem with your Axios operation:', error);
+            });
+    }
 
     function showProduk() {
         // $('#formKategori').trigger('reset');
@@ -101,11 +134,13 @@
                 $.each(data, function(i, v) {
                     console.log(v);
 
-                    var stockHabis = v.stok_produk === 0 ? '<div class="position-absolute top-50 start-50 translate-middle bg-danger bg-opacity-50 text-white p-2 rounded">Stok Habis</div>' : ''; // Tambahkan tulisan "Stock Habis" jika stok 0
+                    var stockHabis = v.stok_produk === 0 ?
+                        '<div class="position-absolute top-50 start-50 translate-middle bg-danger bg-opacity-50 text-white p-2 rounded">Stok Habis</div>' :
+                        ''; // Tambahkan tulisan "Stock Habis" jika stok 0
 
 
                     var warnaCard = v.stok_produk === 0 ? 'text-muted' :
-                    ''; // Menentukan kelas CSS untuk warna abu-abu jika stok 0
+                        ''; // Menentukan kelas CSS untuk warna abu-abu jika stok 0
 
                     var produk = `
                 <div class="col-md-4 mb-4 ">
