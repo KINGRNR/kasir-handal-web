@@ -60,10 +60,9 @@
                                         <div class="d-flex flex-column flex-grow-1 m" style="position: relative;">
                                         </div>
                                         <div class="pt-5">
-                                            <span class="fw-bolder fs-3x me-2 lh-0"
-                                                style="color: #2F3281; display: block;">10</span>
-                                            <a href="#" class="fw-bolder fs-3 mt-5"
-                                                style="color: #2F3281; display: block;">Kategori Barang</a>
+                                            <span class="fw-bolder fs-3x me-2 lh-0 total_merek" style="display: block;">0</span>
+                                            <a href="#" class="fw-bolder fs-3 mt-5 text-muted"
+                                                style="display: block;">Merek Barang</a>
                                             {{-- <div class="ms-auto">
                                                     <img src="/assets/vector/cart.png" alt="" style="margin-left: 10px;">
                                                 </div> --}}
@@ -79,10 +78,9 @@
                                         <div class="d-flex flex-column flex-grow-1 m" style="position: relative;">
                                         </div>
                                         <div class="pt-5">
-                                            <span class="fw-bolder fs-3x me-2 lh-0"
-                                                style="color: #2F3281; display: block;">Rp. 600.000</span>
-                                            <a href="#" class="fw-bolder fs-3 mt-5"
-                                                style="color: #2F3281; display: block;">Total Penjualan</a>
+                                            <span class="fw-bolder fs-3x me-2 lh-0 total_saldo" style="display: block;">Rp. 0,-</span>
+                                            <a href="#" class="fw-bolder fs-3 mt-5 text-muted"
+                                                style="display: block;">Total Penjualan</a>
 
                                             {{-- <span class="text-dark fw-bolder fs-6 lh-0">Jobs</span> --}}
                                         </div>
@@ -95,10 +93,9 @@
                                         <div class="d-flex flex-column flex-grow-1 m" style="position: relative;">
                                         </div>
                                         <div class="pt-5">
-                                            <span class="fw-bolder fs-3x me-2 lh-0"
-                                                style="color: #2F3281; display: block;">4</span>
-                                            <a href="#" class="fw-bolder fs-3 mt-5"
-                                                style="color: #2F3281; display: block;">Jumlah Customer</a>
+                                            <span class="fw-bolder fs-3x me-2 lh-0 total-pelanggan" style="display: block;">0</span>
+                                            <a href="#" class="fw-bolder fs-3 mt-5 text-muted"
+                                                style="display: block;">Jumlah Pelanggan Terdaftar</a>
 
                                             {{-- <span class="text-dark fw-bolder fs-6 lh-0">Jobs</span> --}}
                                         </div>
@@ -118,8 +115,8 @@
                                     <!--begin::Header-->
                                     <div class="card-header align-items-center border-0 mt-4">
                                         <h3 class="card-title align-items-start flex-column">
-                                            <span class="fw-bolder mb-2 text-dark">Activities</span>
-                                            <span class="text-muted fw-bold fs-7">890,344 Sales</span>
+                                            <span class="fw-bolder mb-2 text-dark">Transaksi Terkini</span>
+                                            {{-- <span class="text-muted fw-bold fs-7">800 Penjualan</span> --}}
                                         </h3>
                                         <div class="card-toolbar">
                                             {{-- <!--begin::Menu-->
@@ -210,10 +207,10 @@
                                             <!--end::Menu--> --}}
                                         </div>
                                     </div>
-                                    <div class="card-body pt-5">
+                                    <div class="card-body pt-3">
                                         <div class="timeline-label">
-                                            <div class="timeline-item">
-                                                <div class="timeline-label fw-bolder text-gray-800 fs-6">08:42</div>
+                                            {{-- <div class="timeline-item placeholder-glow">
+                                                <span class="placeholder col-7"></span>
                                                 <div class="timeline-badge">
                                                     <i class="fa fa-genderless text-warning fs-1"></i>
                                                 </div>
@@ -221,7 +218,6 @@
                                                     <span class="fw-bolder text-gray-800 ps-3">5 Barang Terjual</span>
                                                     <p class="text-primary ps-3">#XF-2356</p>
                                                 </div>
-
                                             </div>
                                             <div class="timeline-item">
                                                 <div class="timeline-label fw-bolder text-gray-800 fs-6">10:00</div>
@@ -264,16 +260,6 @@
                                                 </div>
                                             </div>
                                             <div class="timeline-item">
-                                                <div class="timeline-label fw-bolder text-gray-800 fs-6">16:50</div>
-                                                <div class="timeline-badge">
-                                                    <i class="fa fa-genderless text-primary fs-1"></i>
-                                                </div>
-                                                <div class="timeline-content">
-                                                    <span class="fw-bolder text-gray-800 ps-3">5 Barang Terjual</span>
-                                                    <p class="text-primary ps-3">#XF-2356</p>
-                                                </div>
-                                            </div>
-                                            <div class="timeline-item">
                                                 <div class="timeline-label fw-bolder text-gray-800 fs-6">21:03</div>
                                                 <div class="timeline-badge">
                                                     <i class="fa fa-genderless text-danger fs-1"></i>
@@ -282,7 +268,7 @@
                                                     <span class="fw-bolder text-gray-800 ps-3">5 Barang Terjual</span>
                                                     <p class="text-primary ps-3">#XF-2356</p>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>

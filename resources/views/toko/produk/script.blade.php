@@ -255,7 +255,7 @@
     function editStok(icon) {
         var cell = $(icon).closest('td');
         var editableStok = cell.find('.editable-stok');
-        var inputStok = $('<input type="number" class="form-control" value="' + editableStok.text() + '">');
+        var inputStok = $('<input type="number" class="form-control input-stok" value="' + editableStok.text() + '">');
         // Tambahkan max-width
         inputStok.css('max-width', '100px'); // Sesuaikan dengan kebutuhan lebar maksimum
         var iconSave = cell.find('.save-stok');
@@ -292,10 +292,12 @@
             },
             success: function(response) {
                 // Tampilkan kembali stok dalam bentuk teks setelah berhasil disimpan
-                inputStok.hide();
+                inputStok.remove();
                 cell.find('.editable-stok').text(newStok).show();
                 cell.find('.edit-stok').show();
+                cell.find('.cancel-stok').addClass('d-none');
                 cell.find('.save-stok').addClass('d-none'); // Sembunyikan ikon simpan
+                // cell.find('.input-stok').val('');
             },
             error: function(xhr, status, error) {
                 // Tambahkan penanganan kesalahan jika diperlukan

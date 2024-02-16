@@ -88,11 +88,11 @@
         if ($(this).is(':checked')) {
             // Tampilkan bagian Cari Existing Pelanggan
             $('.carilisting').show();
-            $('#nama_pelanggan, #no_telp, #email_pelanggan').prop('disabled', true);
+            $('#nama_pelanggan, #no_telp, #email_pelanggan').prop('readonly', true);
         } else {
             // Sembunyikan bagian Cari Existing Pelanggan
             $('.carilisting').hide();
-            $('#nama_pelanggan, #no_telp, #email_pelanggan').prop('disabled', false);
+            $('#nama_pelanggan, #no_telp, #email_pelanggan').prop('readonly', false);
         }
     });
 
@@ -205,7 +205,144 @@
             });
     }
 
+    function inputDataHarga() {
+        var totalHarga = $('#total_harga').val();
+        $('#total_harga_cash').val(totalHarga);
+        if (totalHarga) {
+            $('#bayarCashModal').modal('show');
+
+        }
+    }
+
+    function hitungKembalian() {
+        var totalHarga = parseFloat($('#total_harga').val());
+        var jumlahUangCash = parseFloat($('#jumlah_uang_cash').val());
+        var kembalian = jumlahUangCash - totalHarga;
+        $('#kembalian_cash').val(kembalian);
+    }
+
+    function startTransaksiCash() {
+        var form = "formTransaksi";
+        var formData = new FormData($('[name="' + form + '"]')[0]);
+
+        // Mengumpulkan data produk dari input di form HTML
+        var produkData = [];
+        $('.form-produk > div').each(function(index) {
+            var id_produk = $(this).find('input[name^="id_produk"]').val();
+            var nama_produk = $(this).find('input[name^="nama_produk"]').val();
+            var qty_produk = $(this).find('input[name^="qty_produk"]').val();
+            var harga_produk = $(this).find('input[name^="harga_produk"]').val();
+
+            produkData.push({
+                id_produk: id_produk,
+                nama_produk: nama_produk,
+                qty_produk: qty_produk,
+                harga_produk: harga_produk
+            });
+        });
+
+        // Menambahkan data produk ke FormData
+        formData.append('produkData', JSON.stringify(produkData));
+
+        Swal.fire({
+            title: 'Apakah data yang anda input sudah benar?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post("/pay/initiateCashPayment", formData, {
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            'Content-Type': 'application/json',
+                        }
+                    })
+                    .then(response => {
+                        console.log(response)
+                        // let token = response.data
+                        quick.blockPage();
+                        // saveTransaction(response.data.dataPenjualan, result);
+                    })
+                    .catch(error => {
+                        console.error('There has been a problem with your Axios operation:', error);
+                    });
+            }
+        });
+    }
+
     function startTransaksi() {
+        var form = "formTransaksi";
+        var formData = new FormData($('[name="' + form + '"]')[0]);
+
+        // Mengumpulkan data produk dari input di form HTML
+        var produkData = [];
+        $('.form-produk > div').each(function(index) {
+            var id_produk = $(this).find('input[name^="id_produk"]').val();
+            var nama_produk = $(this).find('input[name^="nama_produk"]').val();
+            var qty_produk = $(this).find('input[name^="qty_produk"]').val();
+            var harga_produk = $(this).find('input[name^="harga_produk"]').val();
+
+            produkData.push({
+                id_produk: id_produk,
+                nama_produk: nama_produk,
+                qty_produk: qty_produk,
+                harga_produk: harga_produk
+            });
+        });
+
+        // Menambahkan data produk ke FormData
+        formData.append('produkData', JSON.stringify(produkData));
+
+        Swal.fire({
+            title: 'Apakah data yang anda input sudah benar?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post("/pay/initiatePayment", formData, {
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                            'Content-Type': 'application/json',
+                        }
+                    })
+                    .then(response => {
+                        console.log(response)
+                        let token = response.data
+                        window.snap.pay(token.snapToken, {
+                            onSuccess: function(result) {
+                                alert("payment success!");
+                                console.log(result);
+                                quick.blockPage();
+                                saveTransaction(response.data.dataPenjualan, result);
+                            },
+                            onPending: function(result) {
+                                alert("wating your payment!");
+                                console.log(result);
+                            },
+                            onError: function(result) {
+                                alert("payment failed!");
+                                console.log(result);
+                            },
+                            onClose: function() {
+                                alert('you closed the popup without finishing the payment');
+                            }
+                        })
+                    })
+                    .catch(error => {
+                        console.error('There has been a problem with your Axios operation:', error);
+                    });
+            }
+        });
+    }
+
+    function initiatebayarCash() {
         var form = "formTransaksi";
         var formData = new FormData($('[name="' + form + '"]')[0]);
 

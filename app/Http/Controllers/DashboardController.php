@@ -48,4 +48,42 @@ class DashboardController extends Controller
         // Mengembalikan data dalam format JSON
         return response()->json($dataPenjualanPerHari);
     }
+
+    public function loadRiwayatTransaksi(Request $request)
+    {
+        $id = session()->get('toko_id');
+
+        // Mengambil riwayat transaksi
+        $opr = DB::table('penjualan')
+            ->join('detail_penjualan', 'penjualan.penjualan_id', '=', 'detail_penjualan.penjualan_id')
+            ->where('penjualan.penjualan_toko_id', $id)
+            ->orderBy('penjualan.penjualan_created_at', 'desc')
+            ->select('penjualan.penjualan_id', 'penjualan.penjualan_total_harga', 'penjualan.penjualan_created_at', DB::raw('SUM(detail_penjualan.jumlah_barang) as jumlah_barang_terjual'))
+            ->groupBy('penjualan.penjualan_id', 'penjualan.penjualan_total_harga', 'penjualan.penjualan_created_at')
+            ->limit(6)
+            ->get();
+
+        // Menghitung total saldo dari penjualan
+        $totalSaldo = DB::table('penjualan')
+            ->where('penjualan_toko_id', $id)
+            ->sum('penjualan_total_harga');
+
+        // Menghitung total merek dari table kategori
+        $totalMerek = DB::table('kategori')->count();
+
+        $totalPelanggan = DB::table('pelanggan')
+            ->join('penjualan', 'pelanggan.pelanggan_id', '=', 'penjualan.penjualan_pelanggan_id')
+            ->where('penjualan.penjualan_toko_id', $id) // Hanya mencari pelanggan yang terkait dengan toko tertentu
+            ->distinct() // Hanya ambil pelanggan yang berbeda
+            ->count();
+        // Membuat respons JSON
+        $response = [
+            'riwayat_transaksi' => $opr,
+            'total_saldo' => $totalSaldo,
+            'total_merek' => $totalMerek,
+            'total_pelanggan' => $totalPelanggan
+        ];
+
+        return response()->json($response);
+    }
 }

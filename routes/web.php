@@ -104,7 +104,7 @@ Route::middleware(['web'])->group(function () {
         }
     });
     Route::controller(DashboardController::class)->group(function () {
-        foreach (['loadPenjualan'] as $key => $value) {
+        foreach (['loadPenjualan', 'loadRiwayatTransaksi'] as $key => $value) {
             Route::post('/dashboard/' . $value, $value);
         }
     });
@@ -119,7 +119,7 @@ Route::middleware(['web'])->group(function () {
         }
     });
     Route::controller(PaymentController::class)->group(function () {
-        foreach (['initiatePayment', 'saveTransaction', 'showTransaction', 'cekpelanggan'] as $key => $value) {
+        foreach (['initiatePayment', 'initiateCashPayment' ,'saveTransaction', 'showTransaction', 'cekpelanggan', 'showDetailTransaction'] as $key => $value) {
             Route::post('/pay/' . $value, $value);
         }
     });
