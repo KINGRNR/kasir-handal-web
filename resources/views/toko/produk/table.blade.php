@@ -57,8 +57,8 @@
                         <th class="min-w-125px">Harga Produk</th>
                         <th class="min-w-125px">Stok</th>
                         <th class="min-w-125px">Merek</th>
-                        <th class="min-w-125px">Foto Merek</th>
-                        <th class="min-w-150px"></th>
+                        <th class="min-w-100px">Foto Merek</th>
+                        <th class="min-w-125px">Aksi</th>
                     </tr>
                     <!--end::Table row-->
                 </thead>
@@ -69,9 +69,9 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalUpdateStok" tabindex="-1" aria-labelledby="modalUpdateStok" aria-hidden="true">
+{{-- <div class="modal fade" id="modalUpdateStok" tabindex="-1" aria-labelledby="modalUpdateStok" aria-hidden="true">
     @include('toko.produk.updatestok')
-</div>
+</div> --}}
 
 <div class="modal fade" id="modalProduk" tabindex="-1" aria-labelledby="modalProduk" aria-hidden="true">
     @include('toko.produk.form')

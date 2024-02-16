@@ -19,7 +19,7 @@ var quick = {
         var groups = reversedAmount.match(/\d{1,3}/g);
         var formattedAmount = groups.join('.').split('').reverse().join('');
     
-        return 'Rp ' + formattedAmount;
+        return 'Rp. ' + formattedAmount + ',-';
     },
     leafletMapSelector: function (id, a , b) {
         var map = L.map(id).setView([-2.5489, 118.0149], 5); 

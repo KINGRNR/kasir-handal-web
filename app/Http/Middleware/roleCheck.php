@@ -16,7 +16,7 @@ class roleCheck
         // dd(session('token'));
         // session(['token' => null]);
         $token = session('token');
-        // dd($token);
+        // dd(session('toko_id'));
         // $token = JWTAuth::parseToken()->authenticate();
         // dd($token);      
         // If the token is valid, proceed to check the user's role

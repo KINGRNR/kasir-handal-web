@@ -106,13 +106,16 @@ class AuthController extends Controller
         }
 
         if (Auth::attempt($request->only('email', 'password'))) {
-            $user = User::where('email', $request->email)->firstOrFail();
+            // $user = User::where('email', $request->email)->firstOrFail();
+            $user = DB::table('users')->where('email', $request->email)->first();
 
             if ($user->active == 0) {
                 return redirect()->route('login')->withErrors('Akun Anda belum aktif.')->withInput();
 
                 // return response()->json(['success' => false, 'message' => 'Akun Anda tidak aktif.'], 403);
             }
+            // dd($user->users_role_id);
+
             if ($user->users_role_id == 'BfiwyVUDrXOpmStr') {
                 $toko = DB::table('toko')->where('toko_user_id', $user->id)->first();
                 session(['toko_id' => $toko->toko_id]);

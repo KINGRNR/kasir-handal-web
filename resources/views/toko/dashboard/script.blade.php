@@ -2,11 +2,12 @@
     crossorigin="anonymous"></script>
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.10.0/chart.min.js"></script>
+<script src="../assets/js/quickact.js"></script>
 
 
 
 <script>
-        APP_URL = "{{ getenv('APP_URL') }}/";
+    APP_URL = "{{ getenv('APP_URL') }}/";
 
     $(() => {
         init();
@@ -15,7 +16,7 @@
     });
 
     init = async () => {
-        // await loadPie();
+        await loadRiwayatTransaksi();
         await loadBar();
 
     }
@@ -29,27 +30,59 @@
             }]
         };
 
-        // Get the canvas element
         var ctx = document.getElementById('myPieChart').getContext('2d');
 
         // Create a pie chart
         var myPieChart = new Chart(ctx, {
             type: 'pie',
             data: data,
-            options: {
-                // Additional options for the chart
+            options: {}
+        });
+    }
+
+    function loadRiwayatTransaksi() {
+        $.ajax({
+            url: APP_URL + 'dashboard/loadRiwayatTransaksi',
+            method: "POST",
+            data: {
+                _token: '{{ csrf_token() }}',
+            },
+            success: function(response) {
+                console.log(response);
+                var riwayat = ''; // Deklarasi variabel di luar loop
+                $('.total_saldo').text(quick.formatRupiah(response.total_saldo));
+                $('.total_merek').text(response.total_merek);
+                $('.total-pelanggan').text(response.total_pelanggan)
+                $.each(response.riwayat_transaksi, function(index, transaksi) {
+                    var waktu = new Date(transaksi.penjualan_created_at);
+                    var jamDanMenit = waktu.getHours() + ':' + waktu.getMinutes();
+                    riwayat += `<div class="timeline-item">
+                        <div class="timeline-label fw-bolder text-gray-800 fs-6">${jamDanMenit}</div>
+                        <div class="timeline-badge">
+                            <i class="fa fa-genderless text-warning fs-1"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <span class="fw-bolder text-gray-800 ps-3">${transaksi.jumlah_barang_terjual} Barang Terjual</span>
+                            <p class="text-primary ps-3">#${transaksi.penjualan_id}</p>
+                        </div>
+                    </div>`;
+                });
+                $('.timeline-label').empty().append(riwayat); // Tambahkan semua riwayat setelah loop selesai
+            },
+
+
+            error: function(xhr, status, error) {
+                console.error('Ada masalah dalam mengambil data penjualan:', error);
             }
         });
     }
 
     function loadBar() {
-        // Mengambil data penjualan dari endpoint menggunakan Ajax dengan metode POST
         $.ajax({
             url: APP_URL + 'dashboard/loadPenjualan',
             method: "POST",
             data: {
-                _token: '{{ csrf_token() }}', // Mengirimkan token CSRF untuk keamanan
-                // Jika ada data tambahan yang perlu dikirim, tambahkan di sini
+                _token: '{{ csrf_token() }}',
             },
             success: function(response) {
                 // Menyiapkan data untuk grafik
@@ -58,21 +91,17 @@
                     return response[bulan];
                 });
 
-                // Data dan pengaturan grafik
                 var data = {
                     labels: labels,
                     datasets: [{
                         label: 'Penjualan per Bulan',
                         data: dataPenjualan,
-                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56',
-                            '#4BC0C0'] // Warna untuk setiap batang
+                        backgroundColor: ['#2E90FA']
                     }]
                 };
 
-                // Mendapatkan elemen canvas untuk grafik
                 var ctx = document.getElementById('myBarChart').getContext('2d');
 
-                // Membuat grafik batang
                 var myBarChart = new Chart(ctx, {
                     type: 'bar',
                     data: data,
@@ -91,53 +120,7 @@
         });
     }
 
-    // Memanggil fungsi loadBar() saat halaman dimuat
     $(document).ready(function() {
         loadBar();
     });
-
-    loaddata = async () => {
-        return new Promise((resolve, reject) => {
-            $.ajax({
-                url: '/jobs_detail',
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    id: id
-                },
-                dataType: 'json',
-                success: function(response) {
-                    job = response.jobs;
-                    $.each(job, function(i, v) {
-                        console.log(v.job_description);
-                        $(`#btn-submitjob`).attr('data-id', v.job_id)
-                        $(`#title_job`).text(v.job_name);
-                        $(`#company_name`).text(v.company_name);
-                        $(`#company_website`).html(
-                            '<i class="fa fa-link">&nbsp;</i>' + v
-                            .company_website);
-                        $(`#company_num`).html('<i class="fa fa-phone">&nbsp;</i>' +
-                            v
-                            .company_number);
-                        $(`#company_email`).html(
-                            '<i class="fa fa-envelope">&nbsp;</i>' + v.email);
-                        $(`#company_name`).text(v.company_name);
-                        $(`#company_website`).html(
-                            '<i class="fa fa-link">&nbsp;</i>' + v
-                            .company_website);
-                        $(`.job-desc`).append(v.job_description)
-                        jobOverview(v)
-                        jobMap(v.job_map_latitude, v.job_map_longitude).then(() => {
-                            resolve();
-                        });
-                    })
-                    $('#loading-spinner').css('display', 'none');
-
-                },
-                error: function(error) {
-                    reject(error);
-                }
-            });
-        });
-    }
 </script>

@@ -73,8 +73,35 @@ class PaymentController extends Controller
             'item_details' => $itemDetails, // Set the item details array
         );
 
-        // Get Snap token
         $opr['snapToken'] = \Midtrans\Snap::getSnapToken($params);
+        $opr['dataPenjualan'] = $data;
+        return response()->json($opr);
+    }
+    public function initiateCashPayment(Request $request)
+    {
+        $data = $request->post();
+        if (
+            !isset($data['produkData']) || // Ganti total_harga dengan produkData
+            !isset($data['nama_pelanggan']) ||
+            !isset($data['email_pelanggan']) ||
+            !isset($data['no_telp'])
+        ) {
+            return response()->json(['error' => 'Missing required data'], 400);
+        }
+
+        $produkData = json_decode($data['produkData'], true); // Decode produkData menjadi array
+        // dd($produkData);
+
+        $itemDetails = array();
+
+        foreach ($produkData as $produk) { // Loop melalui produkData
+            $itemDetails[] = array(
+                'id' => $produk['id_produk'],
+                'price' => $produk['harga_produk'],
+                'quantity' => $produk['qty_produk'],
+                'name' => $produk['nama_produk'],
+            );
+        }
         $opr['dataPenjualan'] = $data;
         return response()->json($opr);
     }
@@ -170,18 +197,89 @@ class PaymentController extends Controller
     }
     public function showTransaction(Request $request)
     {
-        $id = session()->get('toko_id');
-        // dd($id);
-        $filter = $request->post();
-        if (isset($filter['date'])) {
-            $dateRange = explode(' - ', $filter['date']);
-            $startDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[0])->startOfDay();
-            $endDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[1])->endOfDay();
-            $operation = DB::table('v_transaksi')->where('petugas_toko_id', $id)->where('penjualan_deleted_at', null)->whereBetween('penjualan_created_at', [$startDate, $endDate])->get();
+        $id = session('toko_id');
+        if (session('petugas_id') !== null){
+            $filter = $request->post();
+            if (isset($filter['date'])) {
+                $dateRange = explode(' - ', $filter['date']);
+                $startDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[0])->startOfDay();
+                $endDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[1])->endOfDay();
+                $operation = DB::table('v_transaksi')->where('petugas_toko_id', session('petugas_id'))->where('penjualan_deleted_at', null)->whereBetween('penjualan_created_at', [$startDate, $endDate])->get();
+            } else {
+                $operation = DB::table('v_transaksi')->where('petugas_toko_id', session('petugas_id'))->where('penjualan_deleted_at', null)->get();
+            }
         } else {
-            $operation = DB::table('v_transaksi')->where('petugas_toko_id', $id)->where('penjualan_deleted_at', null)->get();
+            $filter = $request->post();
+            if (isset($filter['date'])) {
+                $dateRange = explode(' - ', $filter['date']);
+                $startDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[0])->startOfDay();
+                $endDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[1])->endOfDay();
+                $operation = DB::table('v_transaksi')->where('penjualan_toko_id', $id)->where('penjualan_deleted_at', null)->whereBetween('penjualan_created_at', [$startDate, $endDate])->get();
+            } else {
+                $operation = DB::table('v_transaksi')->where('penjualan_toko_id', $id)->where('penjualan_deleted_at', null)->get();
+            }
         }
+        // dd($id);
+       
         return DataTables::of($operation)
             ->toJson();
+    }
+    public function showDetailTransaction(Request $request)
+    {
+        $id = $request->post();
+
+        $data['penjualan'] = DB::table('penjualan')->where('penjualan_id', $id)->first();
+        $data['detail_penjualan'] = DB::table('detail_penjualan')->where('penjualan_id', $id)->get();
+
+        return response()->json($data);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     }
 }
