@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriProdukController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 
 use App\Http\Middleware\roleCheck;
@@ -45,18 +46,17 @@ Route::middleware(['web'])->group(function () {
         })->name('aktivasi');
         Route::post('/postlogin', [AuthController::class, 'login'])->name('login.store');
     });
-
-    // Route::middleware([loginCheck::class])->group(function () {
-        Route::group(['middleware' => ['roleCheck:FOV4Qtgi5lcQ9kCY']], function () {
-        
-        });
+    
     Route::group(['middleware' => ['roleCheck:FOV4Qtgi5lcQ9kCY']], function () {
         Route::get('/superadmin/dashboard', function () {
             return view('superadmin.dashboard.index');
-        })->name('dashboardsumin');
+        })->name('superadmin');
         Route::get('/superadmin/user', function () {
             return view('superadmin.manageuser.index');
         })->name('manageuser');
+        Route::get('/superadmin/toko', function () {
+            return view('superadmin.managetoko.index');
+        })->name('managetoko');
     });
 
     Route::group(['middleware' => ['roleCheck:BfiwyVUDrXOpmStr']], function () {
@@ -78,6 +78,9 @@ Route::middleware(['web'])->group(function () {
         Route::get('/toko/report-penjualan', function () {
             return view('toko.report-penjualan.index');
         })->name('report-penjualan');
+        Route::get('/toko/profile', function () {
+            return view('toko.profile.index');
+        })->name('profiletoko');
         //controller
 
     });
@@ -96,6 +99,9 @@ Route::middleware(['web'])->group(function () {
         Route::get('/petugas/keranjang', function () {
             return view('petugas.keranjang.index');
         })->name('keranjang');
+        Route::get('/petugas/report-penjualan', function () {
+            return view('petugas.report-penjualan.index');
+        })->name('report-penjualan');
         //controller
     });
     Route::controller(UserController::class)->group(function () {
@@ -114,13 +120,18 @@ Route::middleware(['web'])->group(function () {
         }
     });
     Route::controller(ProdukController::class)->group(function () {
-        foreach (['showProduk', 'getKategori', 'save', 'saveMob', 'showProdukCart', 'addCart', 'delete', 'updateStok'] as $key => $value) {
+        foreach (['showProduk', 'detail','getKategori', 'save', 'saveMob', 'showProdukCart', 'addCart', 'delete', 'updateStok'] as $key => $value) {
             Route::post('/produk/' . $value, $value);
         }
     });
     Route::controller(PaymentController::class)->group(function () {
-        foreach (['initiatePayment', 'initiateCashPayment' ,'saveTransaction', 'showTransaction', 'cekpelanggan', 'showDetailTransaction'] as $key => $value) {
+        foreach (['initiatePayment', 'initiateCashPayment' ,'saveTransaction', 'showTransaction', 'cekpelanggan', 'showDetailTransaction', 'sendEmail', 'exportExcel'] as $key => $value) {
             Route::post('/pay/' . $value, $value);
+        }
+    });
+    Route::controller(ProfileController::class)->group(function () {
+        foreach (['indexToko', 'saveMidtransKey', 'saveProfileToko'] as $key => $value) {
+            Route::post('/profile/' . $value, $value);
         }
     });
 });

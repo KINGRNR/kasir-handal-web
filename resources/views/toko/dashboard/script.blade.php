@@ -54,16 +54,15 @@
                 $('.total_merek').text(response.total_merek);
                 $('.total-pelanggan').text(response.total_pelanggan)
                 $.each(response.riwayat_transaksi, function(index, transaksi) {
-                    var waktu = new Date(transaksi.penjualan_created_at);
-                    var jamDanMenit = waktu.getHours() + ':' + waktu.getMinutes();
+                    // var waktu = new Date();
                     riwayat += `<div class="timeline-item">
-                        <div class="timeline-label fw-bolder text-gray-800 fs-6">${jamDanMenit}</div>
+                        <div class="timeline-label fw-bolder text-gray-800 fs-6">${quick.convertHourMinutes(transaksi.penjualan_created_at)}</div>
                         <div class="timeline-badge">
                             <i class="fa fa-genderless text-warning fs-1"></i>
                         </div>
                         <div class="timeline-content">
                             <span class="fw-bolder text-gray-800 ps-3">${transaksi.jumlah_barang_terjual} Barang Terjual</span>
-                            <p class="text-primary ps-3">#${transaksi.penjualan_id}</p>
+                            <a href="/toko/report-penjualan?invoice=${transaksi.penjualan_id}" class="text-primary ps-3">#${transaksi.penjualan_id}</a>
                         </div>
                     </div>`;
                 });

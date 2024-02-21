@@ -15,11 +15,10 @@
                 <!--begin::Header-->
                 <div id="kt_header" class="header align-items-stretch " data-kt-sticky="true" data-kt-sticky-name="header"
                     data-kt-sticky-offset="{default: '200px', lg: '300px'}" name="header"
-                    data-kt-sticky-offset="{default: '200px', lg: '300px'}"
-                    style="background: radial-gradient(circle at 0% 50%, #2F3281 0%, #40A0B6 67%, #08C0B5 82.29%);">
-                    <!--begin::Container-->
+                    data-kt-sticky-offset="{default: '200px', lg: '300px'}" {{-- style="background: radial-gradient(circle at 0% 50%, #2F3281 0%, #40A0B6 67%, #08C0B5 82.29%);"> --}}
+                    style="background: #2F3281">
+
                     @include('superadmin.header.header')
-                    <!--end::Container-->
                 </div>
                 <!--end::Header-->
                 <!--begin::Toolbar-->

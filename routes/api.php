@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KategoriProdukController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProdukController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -43,8 +44,13 @@ Route::middleware('auth:api')->group(function () {
             }
         });
         Route::controller(ProdukController::class)->group(function () {
-            foreach (['showProdukMobile', 'saveMob', 'delete', 'saveMobile'] as $key => $value) {
+            foreach (['showProdukMobile', 'saveMob', 'delete', 'saveMobile', 'detail'] as $key => $value) {
                 Route::post('/produk/' . $value, $value);
+            }
+        });
+        Route::controller(PaymentController::class)->group(function () {
+            foreach (['initiatePayment', 'initiateCashPayment' ,'saveTransaction', 'showTransaction', 'cekpelanggan', 'showDetailTransaction', 'sendEmail', 'exportExcel'] as $key => $value) {
+                Route::post('/pay/' . $value, $value);
             }
         });
     });

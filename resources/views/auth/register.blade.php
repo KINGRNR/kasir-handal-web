@@ -21,6 +21,7 @@
         text-align: center;
     }
 </style>
+
 <body id="kt_body" class="app-blank" style="background: #fff">
     <div class="loading">
         {{-- <div class="loading-spinner">
@@ -37,9 +38,9 @@
         <div class="d-flex flex-column flex-lg-row flex-column-fluid">
             <!--begin::Aside-->
             <div class="d-flex flex-column flex-lg-row-auto w-xl-900px position-xl-relative w-xxl-800px justify-content-center align-items-center"
-                style="background: #2F3281;">
-                <h1 class="text-center text-white fs-1 fs-lg-3 fs-xxl-5">KasirHandal</h1>
-            </div>
+            style="background: #2F3281;">
+            <h1 class="text-center text-white" style="font-size: 70px;">KasirHandal</h1>
+        </div>
 
 
             <!--end::Aside-->
@@ -298,7 +299,8 @@
                                     </label>
                                 </div>
                                 <!-- Tambahkan tombol untuk membuat akun -->
-                                <button class="btn btn-primary" id="create-account-button" disabled>Buat Akun</button>
+                                <button class="btn btn-primary" type="submit" id="create-account-button"
+                                    disabled>Buat Akun</button>
                                 <button class="btn btn-secondary" type="button" id="prev-step-4">Kembali</button>
 
                             </div>
@@ -592,38 +594,48 @@
         function signup() {
             var form = "form-register";
             var data = new FormData($('[name="' + form + '"]')[0]);
+            var button = $('#create-account-button');
 
+            button.html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Mengirim...');
+
+            // Men-disable tombol
+            button.prop('disabled', true);
             // Hapus bagian koding Cropper.js dan formulir gambar yang berkaitan
             quick.blockPage()
 
-            Swal.fire({
-                title: 'Apakah data yang anda input sudah benar?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya',
-                cancelButtonText: 'Tidak'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    axios.post("/api/auth/register", data, {
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                // 'Content-Type': 'multipart/form-data', // Jangan ditambahkan header ini
+            axios.post("/api/auth/register", data, {
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        // 'Content-Type': 'multipart/form-data', // Jangan ditambahkan header ini
+                    }
+                })
+                .then(response => {
+                    quick.unblockPage()
+                    if (response.data.success) {
+                        quick.toastNotif({
+                            title: response.data.message,
+                            icon: 'success',
+                            timer: 1500,
+                            callback: function() {
+                                window.location.href = `/aktivasiakun?id=${response.data.id}`;
                             }
-                        })
-                        .then(response => {
-                            
-                            if (response.data.success) {
-                                window.location.href = '/login';
-                            }
-                        })
-                        .catch(error => {
-                            console.error('There has been a problem with your Axios operation:', error);
                         });
-                }
-            });
-        };
+                    } else {
+                        quick.toastNotif({
+                            title: response.data.message,
+                            icon: 'error',
+                            timer: 3000,
+                            // callback: function() {
+                            //     window.location.reload()
+                            // }
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your Axios operation:', error);
+                });
+        }
     </script>
     @include('layouts.support.bundle.bundlefooter')
 

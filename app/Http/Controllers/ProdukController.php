@@ -58,7 +58,7 @@ class ProdukController extends Controller
         'success' => false,
         'status' => 'Validation Error',
         'title' => 'Gagal!',
-        'message' => 'Validasi tidak berhasil. Pastikan gambar berformat JPEG, PNG, atau GIF dan tidak lebih dari 2MB.',
+        'message' => 'Pastikan gambar berformat JPEG, PNG, atau GIF dan tidak lebih dari 2MB.',
         'code' => 422,
         'errors' => $validator->errors(),
       ]);
@@ -130,7 +130,7 @@ class ProdukController extends Controller
         'success' => false,
         'status' => 'Validation Error',
         'title' => 'Gagal!',
-        'message' => 'Validasi tidak berhasil. Pastikan gambar berformat JPEG, PNG, atau GIF dan tidak lebih dari 2MB.',
+        'message' => 'Pastikan gambar berformat JPEG, PNG, atau GIF dan tidak lebih dari 2MB.',
         'code' => 422,
         'errors' => $validator->errors(),
       ]);
@@ -221,6 +221,13 @@ class ProdukController extends Controller
   {
     $id = session()->get('toko_id');
     $operation = DB::table('v_produk')->where('id_kategori_toko', $id)->where('produk_deleted_at', null)->get();
+
+    return response()->json($operation);
+  }
+  public function detail(Request $request)
+  {
+    $id = $request->post();
+    $operation = DB::table('produk')->where('id_produk', $id)->where('produk_deleted_at', null)->first();
 
     return response()->json($operation);
   }

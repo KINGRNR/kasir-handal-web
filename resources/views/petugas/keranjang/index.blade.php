@@ -45,7 +45,7 @@
                     data-kt-sticky-name="header" data-kt-sticky-offset="{default: '200px', lg: '300px'}"
                     style="background: #2F3281">
                     <!--begin::Container-->
-                    @include('petugas.header.header')
+                    @include('toko.header.header')
                     <!--end::Container-->
                 </div>
                 {{-- <button id="transitionButton">Transisi</button> --}}
@@ -70,25 +70,14 @@
 						<!--end::Container-->
 					</div> --}}
                 <div id="kt_content_container" class=" mt-5 d-flex flex-column-fluid align-items-start container-xxl" style="transition: all 0.3s ease;">
-                    {{-- @include('petugas.header.sidebar') --}}
+                    {{-- @include('toko.header.sidebar') --}}
                     <div class="content flex-row-fluid" id="kt_content">
 
-                        @include('petugas.keranjang.invoice')
+                        @include('toko.keranjang.invoice')
                     </div>
                 </div>
-                <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
-                    <!--begin::Container-->
-                    <div
-                        class="container-xxl d-flex flex-column flex-md-row align-items-center justify-content-between">
-                        <!--begin::Copyright-->
-                        <div class="text-dark order-2 order-md-1">
-                            <span class="text-muted fw-bold me-1">2024©</span>
-                            <a href="https://keenthemes.com" target="_blank"
-                                class="text-gray-800 text-hover-primary">Cashier</a>
-                        </div>
-                    </div>
-                    <!--end::Container-->
-                </div>
+                @include('toko.footer.index')
+
                 <!--end::Footer-->
             </div>
 
@@ -108,12 +97,12 @@
         </span>
         <!--end::Svg Icon-->
     </div>
-    @include('petugas.keranjang.form')
-    @include('petugas.bottomnavbar.botnav')
+    @include('toko.keranjang.form')
+    @include('toko.bottomnavbar.botnav')
 
 </body>
 
 @include('layouts.support.bundle.bundlefooter')
-@include('petugas.keranjang.script')
+@include('toko.keranjang.script')
 
 </html>

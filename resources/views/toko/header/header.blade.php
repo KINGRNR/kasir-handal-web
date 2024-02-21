@@ -51,7 +51,7 @@
                      id="#kt_header_menu" data-kt-menu="true">
                      <div class="menu-item me-lg-1">
                          <a class="menu-link py-3 dashboard" href="/toko/dashboard">
-                             <span class="menu-title text-white">Dashboard</span>
+                             <span class="menu-title text-white">Beranda</span>
                              <span class="menu-arrow d-lg-none"></span>
                          </a>
                      </div>
@@ -123,7 +123,13 @@
                              </div>
                          </div>
                      </div>
-                     <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start"
+                     <div onclick="window.location.href='/toko/report-penjualan'" class="menu-item me-lg-1">
+                         <span class="menu-link py-3 penjualan">
+                             <span class="menu-title text-white">Penjualan</span>
+                             <span class="menu-arrow d-lg-none"></span>
+                         </span>
+                     </div>
+                     {{-- <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start"
                          class="menu-item menu-lg-down-accordion me-lg-1">
                          <span class="menu-link py-3">
                              <span class="menu-title text-white">Penjualan</span>
@@ -145,14 +151,14 @@
                                  </span>
                              </div>
                          </div>
-                     </div>
+                     </div> --}}
 
-                     <div onclick="window.location.href='/toko/petugas'" class="menu-item me-lg-1">
+                     {{-- <div onclick="window.location.href='/toko/petugas'" class="menu-item me-lg-1">
                          <span class="menu-link py-3">
                              <span class="menu-title text-white ">Pengaturan Toko</span>
                              <span class="menu-arrow d-lg-none"></span>
                          </span>
-                     </div>
+                     </div> --}}
                  </div>
                  <!--end::Menu-->
              </div>
@@ -165,12 +171,16 @@
              <div class="topbar d-flex align-items-stretch flex-shrink-0">
                  <div class="d-flex align-items-center me-n3 ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
                      <!--begin::Menu wrapper-->
-                     <div class="btn " style="cursor: pointer; "
-                         data-kt-menu-trigger="click" data-kt-menu-attach="parent"
-                         data-kt-menu-placement="bottom-end">
-                         <img class="h-30px w-30px rounded" src="../assets/media/avatars/150-25.jpg"
-                             alt="" />
-                             <span class="text-white">{{session('name')}}</span>  
+                     <div class="btn " style="cursor: pointer; " data-kt-menu-trigger="click"
+                         data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                         @if (session('toko_foto'))
+                             <img class="h-30px w-30px rounded" src="/file/foto_profile/{{ session('toko_foto') }}"
+                                 style="object-fit: cover;" alt="" />
+                         @else
+                             <img class="h-30px w-30px rounded" src="/file/blank.webp" style="object-fit: cover;"
+                                 alt="" />
+                         @endif
+                         <span class="text-white">{{ session('name') }}</span>
                      </div>
                      <!--begin::Menu-->
                      <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
@@ -180,9 +190,17 @@
                              <div class="menu-content d-flex align-items-center px-3">
                                  <!--begin::Avatar-->
                                  <div class="symbol symbol-50px me-5">
-                                     <img alt="Logo" src="../assets/media/avatars/150-25.jpg" />
+                                     @if (session('toko_foto'))
+                                         <img alt="Logo" class=""
+                                             src="/file/foto_profile/{{ session('toko_foto') }}"
+                                             style="object-fit: cover;" />
+                                     @else
+                                         <img alt="Logo" class="" src="/file/blank.webp"
+                                             style="object-fit: cover;" />
+                                     @endif
+
                                  </div>
-                                 
+
                                  <!--end::Avatar-->
                                  <!--begin::Username-->
                                  {{-- <div class="d-flex flex-column">
@@ -202,21 +220,24 @@
                                  </div> --}}
                                  <div class="d-flex flex-column">
                                      <div class="fw-bolder d-flex align-items-center fs-5">{{ session('name') }}
-                                        
+
                                          @if (session('user_role') == 'BfiwyVUDrXOpmStr')
                                              <span
-                                                 class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Toko</span>
+                                                 class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Pemilik
+                                                 Toko</span>
                                          @else
                                              <span
                                                  class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Petugas
                                                  Kasir</span>
                                          @endif
                                      </div>
-                                     <div class="fw-bolder d-flex align-items-center fs-5">
-                                        Toko {{ session('toko_nama') }}
-                                    </div>
-                                     <a href="#"
-                                         class="fw-bold text-muted text-hover-primary fs-7">{{ session('email') }}</a>
+                                     {{-- <div class="fw-bolder d-flex align-items-center fs-5">
+                                         Toko {{ session('toko_nama') }}
+                                     </div> --}}
+                                     <a href="#" class="fw-bold text-muted text-hover-primary fs-7">
+                                         {{ Str::limit(session('email'), $limit = 22, $end = '...') }}
+                                     </a>
+
 
                                  </div>
                                  <!--end::Username-->
@@ -227,12 +248,12 @@
                          <div class="separator my-2"></div>
                          <!--end::Menu separator-->
                          <!--begin::Menu item-->
-                         <div class="menu-item px-5">
-                             <a href="../../demo2/dist/account/overview.html" class="menu-link px-5">Profile</a>
+                         <div class="menu-item px-5 ">
+                             <a href="/toko/profile" class="menu-link px-5 profile">Profil</a>
                          </div>
                          <!--begin::Menu item-->
                          <div class="menu-item px-5">
-                             <a href="javascript:logout()" class="menu-link px-5">Sign Out</a>
+                             <a href="javascript:logout()" class="menu-link px-5">Keluar</a>
                              {{-- <button onclick="logout()" class="menu-link px-5">Sign Out</button> --}}
                          </div>
                          <!--end::Menu item-->

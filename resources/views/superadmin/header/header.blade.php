@@ -40,18 +40,24 @@
                  <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg  menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch"
                      id="#kt_header_menu" data-kt-menu="true">
                      <div class="menu-item me-lg-1">
-                         <a class="menu-link py-3 dashboard" href="/toko/dashboard">
-                             <span class="menu-title text-white">Dashboard</span>
+                         <a class="menu-link py-3 dashboard" href="/superadmin/dashboard">
+                             <span class="menu-title text-white">Beranda</span>
                              <span class="menu-arrow d-lg-none"></span>
                          </a>
                      </div>
-                     <div onclick="window.location.href='/toko/petugas'" class="menu-item me-lg-1">
-                         <span class="menu-link py-3 petugas">
-                             <span class="menu-title text-white ">Petugas</span>
+                     <div onclick="window.location.href='/superadmin/toko'" class="menu-item me-lg-1">
+                         <span class="menu-link py-3 toko">
+                             <span class="menu-title text-white ">Manajemen Toko</span>
                              <span class="menu-arrow d-lg-none"></span>
                          </span>
                      </div>
-
+                     <div onclick="window.location.href='/superadmin/user'" class="menu-item me-lg-1">
+                         <span class="menu-link py-3 user">
+                             <span class="menu-title text-white">Manajemen User</span>
+                             <span class="menu-arrow d-lg-none"></span>
+                         </span>
+                     </div>
+                     {{-- 
                      <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start"
                          class="menu-item menu-lg-down-accordion me-lg-1">
                          <span class="menu-link py-3">
@@ -60,7 +66,7 @@
                          </span>
                          <div
                              class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px">
-                             <div onclick="window.location.href='/toko/kategori'" class="menu-item me-lg-1">
+                             <div onclick="window.location.href='/superadmin/kategori'" class="menu-item me-lg-1">
                                  <span class="menu-link py-3 kategori">
                                      <span class="menu-icon">
                                          <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm007.svg-->
@@ -84,7 +90,7 @@
                                      <span class="menu-arrow d-lg-none"></span>
                                  </span>
                              </div>
-                             <div onclick="window.location.href='/toko/produk'" class="menu-item me-lg-1">
+                             <div onclick="window.location.href='/superadmin/produk'" class="menu-item me-lg-1">
                                  <span class="menu-link py-3 barang">
                                      <span class="menu-icon">
                                          <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
@@ -122,27 +128,27 @@
                          <div
                              class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px">
 
-                             <div onclick="window.location.href='/toko/report-penjualan'" class="menu-item me-lg-1">
+                             <div onclick="window.location.href='/superadmin/report-penjualan'" class="menu-item me-lg-1">
                                  <span class="menu-link py-3 keranjang">
                                      <span class="menu-title sm-text-dark lg-text-white">Data Penjualan</span>
                                      <span class="menu-arrow d-lg-none"></span>
                                  </span>
                              </div>
-                             <div onclick="window.location.href='/toko/keranjang'" class="menu-item me-lg-1">
+                             <div onclick="window.location.href='/superadmin/keranjang'" class="menu-item me-lg-1">
                                  <span class="menu-link py-3 keranjang">
                                      <span class="menu-title sm-text-dark lg-text-white ">Transaksi</span>
                                      <span class="menu-arrow d-lg-none"></span>
                                  </span>
                              </div>
                          </div>
-                     </div>
+                     </div> --}}
 
-                     <div onclick="window.location.href='/toko/petugas'" class="menu-item me-lg-1">
+                     {{-- <div onclick="window.location.href='/superadmin/petugas'" class="menu-item me-lg-1">
                          <span class="menu-link py-3">
-                             <span class="menu-title text-white ">Pengaturan Toko</span>
+                             <span class="menu-title text-white ">Pengaturan superadmin</span>
                              <span class="menu-arrow d-lg-none"></span>
                          </span>
-                     </div>
+                     </div> --}}
                  </div>
                  <!--end::Menu-->
              </div>
@@ -155,11 +161,10 @@
              <div class="topbar d-flex align-items-stretch flex-shrink-0">
                  <div class="d-flex align-items-center me-n3 ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
                      <!--begin::Menu wrapper-->
-                     <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px"
-                         data-kt-menu-trigger="click" data-kt-menu-attach="parent"
-                         data-kt-menu-placement="bottom-end">
-                         <img class="h-30px w-30px rounded" src="../assets/media/avatars/150-25.jpg"
-                             alt="" />
+                     <div class="btn " style="cursor: pointer; " data-kt-menu-trigger="click"
+                         data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                         <img class="h-30px w-30px rounded" src="/file/superadmin.jpg" alt="" />
+                         <span class="text-white">{{ session('name') }}</span>
                      </div>
                      <!--begin::Menu-->
                      <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px"
@@ -169,25 +174,33 @@
                              <div class="menu-content d-flex align-items-center px-3">
                                  <!--begin::Avatar-->
                                  <div class="symbol symbol-50px me-5">
-                                     <img alt="Logo" src="../assets/media/avatars/150-25.jpg" />
+                                     <img alt="Logo" src="/file/superadmin.jpg" />
                                  </div>
+
                                  <!--end::Avatar-->
                                  <!--begin::Username-->
                                  {{-- <div class="d-flex flex-column">
-                                     <div class="fw-bolder d-flex align-items-center fs-5">{{ auth()->user()->name }}
-                                         @if (auth()->user()->users_role_id == 'BfiwyVUDrXOpmStr')
-                                             <span
-                                                 class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Toko</span>
-                                         @else
-                                             <span
-                                                 class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Petugas
-                                                 Kasir</span>
-                                         @endif
-                                     </div>
+                                    <div class="fw-bolder d-flex align-items-center fs-5">{{ auth()->user()->name }}
+                                        @if (auth()->user()->users_role_id == 'BfiwyVUDrXOpmStr')
+                                            <span
+                                                class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Toko</span>
+                                        @else
+                                            <span
+                                                class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2">Petugas
+                                                Kasir</span>
+                                        @endif
+                                    </div>
 
+                                    <a href="#"
+                                        class="fw-bold text-muted text-hover-primary fs-7">{{ auth()->user()->email }}</a>
+                                </div> --}}
+                                 <div class="d-flex flex-column">
+                                     <div class="fw-bolder d-flex align-items-center fs-5">{{ session('name') }}
+                                     </div>
                                      <a href="#"
-                                         class="fw-bold text-muted text-hover-primary fs-7">{{ auth()->user()->email }}</a>
-                                 </div> --}}
+                                         class="fw-bold text-muted text-hover-primary fs-7">{{ session('email') }}</a>
+
+                                 </div>
                                  <!--end::Username-->
                              </div>
                          </div>
@@ -196,13 +209,13 @@
                          <div class="separator my-2"></div>
                          <!--end::Menu separator-->
                          <!--begin::Menu item-->
-                         <div class="menu-item px-5">
-                             <a href="../../demo2/dist/account/overview.html" class="menu-link px-5">My Profile</a>
+                         <div class="menu-item px-5 ">
+                             <a href="/toko/profile" class="menu-link px-5 profile">Profile</a>
                          </div>
                          <!--begin::Menu item-->
                          <div class="menu-item px-5">
-                             {{-- <a href="../postlogout" class="menu-link px-5">Sign Out</a> --}}
-                             <button onclick="logout()" class="menu-link px-5">Sign Out</button>
+                             <a href="javascript:logout()" class="menu-link px-5">Sign Out</a>
+                             {{-- <button onclick="logout()" class="menu-link px-5">Sign Out</button> --}}
                          </div>
                          <!--end::Menu item-->
                          <!--begin::Menu separator-->
@@ -216,18 +229,21 @@
      </div>
  </div>
  <script>
-    APP_URL = "{{ getenv('APP_URL') }}/";
-    function logout(id_toko) {
-        // Use Axios to send a POST request to the logout endpoint
-        axios.post(APP_URL + 'user/hapusSessionToken', { id_toko: 1 })
-            .then(response => {
-                // Handle the success response
-                console.log(response.data);
-                location.reload(true);
-            })
-            .catch(error => {
-                // Handle the error response
-                console.error('Logout failed:', error);
-            });
-    }
-</script>
+     APP_URL = "{{ getenv('APP_URL') }}/";
+
+     function logout(id_superadmin) {
+         // Use Axios to send a POST request to the logout endpoint
+         axios.post(APP_URL + 'user/hapusSessionToken', {
+                 id_superadmin: 1
+             })
+             .then(response => {
+                 // Handle the success response
+                 console.log(response.data);
+                 location.reload(true);
+             })
+             .catch(error => {
+                 // Handle the error response
+                 console.error('Logout failed:', error);
+             });
+     }
+ </script>

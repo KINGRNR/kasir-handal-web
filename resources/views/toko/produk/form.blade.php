@@ -12,19 +12,7 @@
                     <div class="card">
                         <div class="card-body">
                             <input type="hidden" name="id_produk" id="id_produk">
-                            <div class="fv-row mb-5">
-                                <label for="" class="required form-label">Foto Produk <i>max 2mb</i></label>
-                                <input type="file" id="inputImage" name="foto_produk" accept="image/*"
-                                    class="form-control form-control-sm form-control-solid input-required">
-                                <input type="hidden" id="existingImage" value="">
 
-                                <!-- You can set the existing image path here -->
-                            </div>
-                            <div class="fv-row mb-5">
-                                <label for="" class="required form-label">Preview</label>
-                                <img id="croppedPreview" class="img-fluid" style="max-width: 100%; max-height: 200px;">
-                                <button type="button" id="editImageBtn" class="btn btn-primary">Edit Image</button>
-                            </div>
                             <div class="fv-row mb-5">
                                 <label for="" class="required form-label">Nama Produk</label>
                                 <input type="text" name="nama_produk" id="nama_produk"
@@ -51,6 +39,49 @@
                                     class="form-select form-select-sm form-select-solid" required>
                                     <option value="" selected disabled>Pilih Kategori</option>
                                 </select>
+                            </div>
+                            <div class="fv-row mb-5">
+                                <label for="" class="required form-label">Foto Produk <i>max 2mb</i></label>
+                                <div class="col-lg-12">
+                                    <!--begin::Image input-->
+                                    <div class="image-input image-input-outline" data-kt-image-input="true"
+                                        style="background-image: url(../file/blank.webp)">
+                                        <!--begin::Preview existing avatar-->
+                                        <div class="image-input-wrapper w-125px h-125px"
+                                            style="background-image: url(../file/blank.webp)"></div>
+                                        <!--end::Preview existing avatar-->
+                                        <!--begin::Label-->
+                                        <label
+                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                            data-kt-image-input-action="change" data-bs-toggle="tooltip"
+                                            title="Change avatar">
+                                            <i class="bi bi-pencil-fill fs-7"></i>
+                                            <!--begin::Inputs-->
+                                            <input type="file" name="foto_produk" accept=".png, .jpg, .jpeg" />
+                                            <input type="hidden" name="avatar_remove" />
+                                            <!--end::Inputs-->
+                                        </label>
+                                        <!--end::Label-->
+                                        <!--begin::Cancel-->
+                                        <span
+                                            class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
+                                            data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
+                                            title="Cancel Photo">
+                                            <i class="bi bi-x fs-2"></i>
+                                        </span>
+                                        <!--end::Cancel-->
+                                        <!--begin::Remove-->
+                                        {{-- <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                                            <i class="bi bi-x fs-2"></i>
+                                        </span> --}}
+                                        <!--end::Remove-->
+                                    </div>
+                                    <!--end::Image input-->
+                                    <!--begin::Hint-->
+                                    <div class="form-text">Tipe File: png, jpg, jpeg.</div>
+                                    <!--end::Hint-->
+                                </div>
+                                <!-- You can set the existing image path here -->
                             </div>
                             {{-- <div class="fv-row mb-5">
                 <label for="" class="required form-label">Akses</label>

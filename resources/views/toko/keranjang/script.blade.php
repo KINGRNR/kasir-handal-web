@@ -433,10 +433,10 @@
             })
             .then(response => {
                 quick.unblockPage();
-                var data = response.data.data
-                openStruk(data)
-                location.reload()
-                // window.location.href = '/toko/report-penjualan?invoice='+ response.data.id_penjualan;
+                // var data = response.data.data
+                // openStruk(data)
+                // location.reload()
+                window.location.href = '/toko/report-penjualan?invoice='+ response.data.id_penjualan;
             })
             .catch(error => {
                 console.error('Ada masalah dengan operasi Axios menyimpan transaksi:', error);

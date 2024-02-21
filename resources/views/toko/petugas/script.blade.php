@@ -131,7 +131,7 @@
                             quick.toastNotif({
                                 title: 'success',
                                 icon: 'success',
-                                timer: 500,
+                                timer: 1500,
                                 callback: function() {
                                     window.location.reload()
                                 }
@@ -213,7 +213,7 @@
                             quick.toastNotif({
                                 title: 'success',
                                 icon: 'success',
-                                timer: 500,
+                                timer: 1500,
                                 callback: function() {
                                     location.reload()
                                 }

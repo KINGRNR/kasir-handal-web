@@ -19,7 +19,7 @@ class Penjualan extends Model
 
     protected $nanoidLength = 16;
 
-    protected $fillable = ['penjualan_id','penjualan_pelanggan_id', 'penjualan_toko_id','penjualan_petugas_id', 'penjualan_total_harga', 'penjualan_status'];
+    protected $fillable = ['penjualan_id','penjualan_pelanggan_id', 'penjualan_toko_id','penjualan_petugas_id', 'penjualan_total_harga', 'penjualan_status', 'penjualan_payment_method'];
 
     const CREATED_AT = 'penjualan_created_at';
     const UPDATED_AT = 'penjualan_updated_at';

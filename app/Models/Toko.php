@@ -17,7 +17,8 @@ class Toko extends Model
         'toko_user_id',
         'toko_nama',
         'toko_midtrans_serverkey',
-        'toko_midtrans_clientkey'
+        'toko_midtrans_clientkey',
+        'toko_foto'
     ];
     protected $dates = [];
 

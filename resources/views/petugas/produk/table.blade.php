@@ -30,7 +30,10 @@
             </div>
         </div>
         <div class="card-toolbar">
-            <button type="button" class="btn btn-primary me-2 reset-filter" data-bs-toggle="modal" data-bs-target="#modalProduk">Tambah Produk</button>
+            {{-- <button type="button" class="btn btn-primary me-2 reset-filter" data-bs-toggle="modal" data-bs-target="#modalUpdateStok">Restok Cepat</button> --}}
+
+            <button type="button" class="btn btn-primary me-2 reset-filter" data-bs-toggle="modal" data-bs-target="#modalProduk" onclick="wipeData()">Tambah Produk</button>
+
             <div class="d-flex">
                 <button type="button" class="btn btn-sm btn-danger deleted-selected"
                     data-kt-customer-table-select="delete_selected" style="display: none;"
@@ -50,12 +53,12 @@
                     <tr class="text-start align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                         <th class="ps-4" width="20">No</th>
                         <th class="min-w-100px">Foto Produk</th>
-                        <th class="min-w-125px">Nama Produk</th>
+                        <th class="min-w-100px">Nama Produk</th>
                         <th class="min-w-125px">Harga Produk</th>
-                        <th class="min-w-75px">Stok</th>
-                        <th class="min-w-125px">Kategori</th>
-                        <th class="min-w-125px">Kode Kategori</th>
-                        <th class="min-w-125px">Button</th>
+                        <th class="min-w-125px">Stok</th>
+                        <th class="min-w-125px">Merek</th>
+                        <th class="min-w-100px">Foto Merek</th>
+                        <th class="min-w-125px">Aksi</th>
                     </tr>
                     <!--end::Table row-->
                 </thead>
@@ -66,6 +69,10 @@
     </div>
 </div>
 
+{{-- <div class="modal fade" id="modalUpdateStok" tabindex="-1" aria-labelledby="modalUpdateStok" aria-hidden="true">
+    @include('toko.produk.updatestok')
+</div> --}}
+
 <div class="modal fade" id="modalProduk" tabindex="-1" aria-labelledby="modalProduk" aria-hidden="true">
-    @include('petugas.produk.form')
+    @include('toko.produk.form')
 </div>

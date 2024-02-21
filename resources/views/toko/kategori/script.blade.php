@@ -4,7 +4,7 @@
 <script src="../assets/plugins/custom/datatables/datatables.bundle.js"></script>
 <link href="../assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" /> --}}
 <script src="../assets/js/quickact.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 
 <script>
     APP_URL = "{{ getenv('APP_URL') }}/";
@@ -77,7 +77,7 @@
                             row.id_kategori + ')">Edit</button>';
 
                         var deleteButton = '<button class="btn btn-sm btn-danger" onclick="deleteRow(' +
-                            row.id_kategori + ')">Delete</button>';
+                            row.id_kategori + ')">Hapus</button>';
 
                         return editButton + ' ' + deleteButton;
                     }
@@ -189,7 +189,7 @@
                             quick.toastNotif({
                                 title: 'success',
                                 icon: 'success',
-                                timer: 500,
+                                timer: 1500,
                                 callback: function() {
                                     window.location.reload()
                                 }
@@ -240,7 +240,7 @@
                             quick.toastNotif({
                                 title: 'success',
                                 icon: 'success',
-                                timer: 500,
+                                timer: 1500,
                                 callback: function() {
                                     window.location.reload()
                                 }
