@@ -16,6 +16,7 @@ class roleCheck
         // dd(session('token'));
         // session(['token' => null]);
         $token = session('token');
+        // dd(session('user_role'));
         // dd(session('toko_id'));
         // $token = JWTAuth::parseToken()->authenticate();
         // dd($token);      
@@ -26,8 +27,7 @@ class roleCheck
             if (in_array($userRole, explode('|', $role))) {
                 return $next($request);
             } else {
-                // Handle role-based redirection or response
-                if ($userRole === 'FOV4Qtgi5lcQ9kZ') {
+                if ($userRole === 'FOV4Qtgi5lcQ9kCY') {
                     return redirect()->route('superadmin')->with('message', 'no access');
                 } else if ($userRole === 'BfiwyVUDrXOpmStr') {
                     return redirect()->route('toko')->with('message', 'no access');

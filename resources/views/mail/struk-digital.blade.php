@@ -88,11 +88,11 @@
         </div>
 
         <div class="invoice-details">
-            <p><strong>Nama Pelanggan:</strong> {{ $transaction['nama_pelanggan'] }}</p>
-            <p><strong>No. Telepon:</strong> {{ $transaction['no_telp'] }}</p>
-            <p><strong>Email:</strong> {{$transaction['email_pelanggan']}}</p>
-            <p><strong>Transaksi Nomor:</strong> {{$penjualan_id}}</p>
-            <p><strong>Tanggal Transaksi:</strong> {{$waktu_transaksi}}</p>
+            <p><strong>Nama Pelanggan:</strong> {{ $pelanggan->nama_pelanggan }}</p>
+            <p><strong>No. Telepon:</strong> {{ $pelanggan->no_hp }}</p>
+            <p><strong>Email:</strong> {{ $pelanggan->email_pelanggan }}</p>
+            <p><strong>Transaksi Nomor:</strong> {{ $penjualan_id }}</p>
+            <p><strong>Tanggal Transaksi:</strong> {{ $waktu_transaksi }}</p>
         </div>
 
         <table class="table">
@@ -107,10 +107,10 @@
             <tbody>
                 @foreach($itemDetails as $item)
                     <tr>
-                        <td>{{ $item['nama_produk'] }}</td>
-                        <td>{{ $item['qty_produk'] }}</td>
-                        <td>Rp. {{ number_format($item['harga_produk'], 0, ',', '.') }}</td>
-                        <td>Rp. {{ number_format($item['harga_produk'] * $item['qty_produk'], 0, ',', '.') }}</td>
+                        <td>{{ $item->nama_produk }}</td>
+                        <td>{{ $item->jumlah_barang }}</td>
+                        <td>Rp. {{ number_format($item->harga_produk, 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($item->harga_produk * $item->jumlah_barang, 0, ',', '.') }}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -118,7 +118,7 @@
         </table>
 
         <div class="total">
-            <p><strong>Total:</strong> Rp. {{number_format($transaction['total_harga'], 0, ',', '.') }}</p>
+            <p><strong>Total:</strong> Rp. {{ number_format($transaction->penjualan_total_harga, 0, ',', '.') }}</p>
         </div>
 
         <div class="footer">

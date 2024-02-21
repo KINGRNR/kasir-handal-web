@@ -1,110 +1,13 @@
-<div class="invoice container-xxl d-none">
-
-    <div class="card">
-        <div class="card-body p-lg-20">
-            <div class="d-flex flex-column flex-xl-row">
-                <div class="flex-lg-row-fluid me-xl-18 mb-10 mb-xl-0">
-                    <div class="mt-n1">
-                        <div class="d-flex flex-stack pb-10">
-                            <a href="#">
-                                <img alt="Logo" src="assets/media/svg/brand-logos/code-lab.svg">
-                            </a>
-                            <span class="badge badge-success" style="font-size: 1em;">Sudah di Bayar</span>
-                        </div>
-                        <div class="m-0">
-                            <div class="fw-bolder fs-3 text-gray-800 mb-8">Nama Toko #34782</div>
-                            <div class="row g-5 mb-11">
-                                <div class="col-sm-6">
-                                    <div class="fw-bold fs-7 text-gray-600 mb-1">Metode Pembayaran:</div>
-                                    <div class="fw-bolder fs-6 text-gray-800">Gopay</div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="fw-bold fs-7 text-gray-600 mb-1">Waktu Pembayaran</div>
-                                    <div class="fw-bolder fs-6 text-gray-800 d-flex align-items-center flex-wrap">
-                                        <span class="pe-2">02 May 2021 : 09.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row g-5 mb-12">
-                                <div class="col-sm-6">
-                                    <div class="fw-bold fs-7 text-gray-600 mb-1">Detail Pelanggan:</div>
-                                    <div class="fw-bolder fs-6 text-gray-800">nama pelanggan.</div>
-                                    <div class="fw-bold fs-7 text-gray-600">k@gmail.com</div>
-                                    <div class="fw-bold fs-7 text-gray-600">08125525525</div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="fw-bold fs-7 text-gray-600 mb-1">dari Toko:</div>
-                                    <div class="fw-bolder fs-6 text-gray-800">nama toko.</div>
-                                    <div class="fw-bold fs-7 text-gray-600">toko@gmail.com</div>
-                                </div>
-                            </div>
-                            <div class="flex-grow-1">
-                                <table class="custom-table">
-                                    <thead>
-                                        <tr>
-                                            <th class="min-w-175px pb-2">Nama Produk</th>
-                                            <th class="min-w-70px text-end pb-2">Qty</th>
-                                            <th class="min-w-80px text-end pb-2">Harga Satuan</th>
-                                            <th class="min-w-100px text-end pb-2">Harga</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="d-flex align-items-center pt-6">
-                                                <i class="fa fa-genderless text-danger fs-2 me-2"></i>Nasi Kucing
-                                            </td>
-                                            <td class="pt-6">2</td>
-                                            <td class="pt-6">Rp 10.000</td>
-                                            <td class="pt-6 text-dark fw-boldest">Rp. 20.000</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="d-flex align-items-center">
-                                                <i class="fa fa-genderless text-success fs-2 me-2"></i>Nasi Padang
-                                            </td>
-                                            <td>1</td>
-                                            <td>Rp 20.000</td>
-                                            <td class="fs-5 text-dark fw-boldest">Rp 20.000</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="d-flex align-items-center">
-                                                <i class="fa fa-genderless text-primary fs-2 me-2"></i>Nasi Bakar
-                                            </td>
-                                            <td>2</td>
-                                            <td>Rp 30.000</td>
-                                            <td class="fs-5 text-dark fw-boldest">Rp 60.000</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="d-flex justify-content-end">
-                                    <div class="mw-300px">
-                                        <div class="d-flex flex-stack mb-3">
-                                            <div class="fw-bold pe-10 text-gray-600 fs-7">Subtotal:</div>
-                                            <div class="text-end fw-bolder fs-6 text-gray-800">Rp 200.000</div>
-                                        </div>
-                                        <div class="separator my-5"></div>
-                                        <div class="d-flex flex-stack">
-                                            <div class="fw-bold pe-10 text-gray-600 fs-7">Total</div>
-                                            <div class="text-end fw-bolder fs-6 text-gray-800">Rp 200.000</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+<div class="invoice container-xxl mb-5" style="display: none">
+    
 </div>
-<div class="card mb-5">
+<div class="report-penjualan card mb-5 d-none" style="display: none">
     <div class="card-header">
-        <div class="card-title">
-            <h2>Total Penjualan : Rp.500.000,-</h2>
+        <div class="card-title total-penjualan">
+            {{-- <h2>Total Penjualan : ${quick.formatRupiah(data.penjualan.penjualan_total_harga)}-</h2> --}}
         </div>
         <div class="card-toolbar">
-            <button type="button" class="btn btn-success me-2" onclick="exportToExcel()">Export
-                Excel</button>
+           
         </div>
     </div>
     {{-- <div class="card-body">
@@ -112,7 +15,7 @@
         <p>Total Penjualan: Rp 500.000</p>
     </div> --}}
 </div>
-<div class="card table-switch-petugas">
+<div class="report-penjualan card table-switch-petugas mb-5" style="display: none">
     <div class="card-header py-4">
         <div class="card-title">
             {{-- <h1
@@ -144,16 +47,22 @@
             </div>
         </div>
         <div class="card-toolbar">
-            <button type="button" class="btn btn-primary me-2 reset-filter" onclick="resetFilter()" style="display: none;">Reset Filter</button>
+          
+            <button type="button" class="btn btn-primary me-2 reset-filter" onclick="resetFilter()"
+                style="display: none;">Reset Filter</button>
 
 
             <div class="d-flex">
-                <input class="form-control form-control-solid" placeholder="Pick date rage" id="filter_rtransaksi" name="daterangepicker"/>
-
+                <input class="form-control form-control-solid" placeholder="Pick date rage" id="filter_rtransaksi"
+                    name="daterangepicker" />
+                  
                 <button type="button" class="btn btn-sm btn-danger deleted-selected"
                     data-kt-customer-table-select="delete_selected" style="display: none;"
                     onclick="deleteSelected()">Delete Selected</button>
             </div>
+            <button type="button" class="btn btn-success ms-2" data-bs-toggle="modal"
+            data-bs-target="#exportExcel">Export
+                Excel</button>
         </div>
 
         <!--end::Card header-->
@@ -183,4 +92,7 @@
 
 <div class="modal fade" id="modalKategori" tabindex="-1" aria-labelledby="modalKategori" aria-hidden="true">
     @include('toko.report-penjualan.form')
+</div>
+<div class="modal fade" id="exportExcel" tabindex="-1" aria-labelledby="exportExcel" aria-hidden="true">
+    @include('toko.report-penjualan.exportexcel')
 </div>

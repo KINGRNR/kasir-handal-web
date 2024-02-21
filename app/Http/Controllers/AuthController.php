@@ -120,13 +120,20 @@ class AuthController extends Controller
                 $toko = DB::table('toko')->where('toko_user_id', $user->id)->first();
                 session(['toko_id' => $toko->toko_id]);
                 session(['toko_nama' => $toko->toko_nama]);
-
+                session(['toko_foto' => $toko->toko_foto]);
+                if ($toko->toko_midtrans_clientkey === null || $toko->toko_midtrans_serverkey === null) {
+                    session(['midtrans' => 0]);
+                } else {
+                    session(['midtrans' => 1]);
+                }
             } else if ($user->users_role_id == 'TKQR2DSJlQ5b31V2') {
                 $id = DB::table('petugas')->where('petugas_user_id', $user->id)->first();
                 $toko = DB::table('toko')->where('toko_id', $id->petugas_toko_id)->first();
                 session(['toko_nama' => $toko->toko_nama]);
                 session(['toko_id' => $id->petugas_toko_id]);
                 session(['petugas_id' => $id->petugas_id]);
+                session(['toko_foto' => $toko->toko_foto]);
+
             }
             // }
             // if ($toko) {
@@ -295,64 +302,133 @@ class AuthController extends Controller
     // }
 
 
+    // public function register(Request $request)
+    // {
+    //     // try {
+    //     // Validasi input
+    //     $validator = Validator::make($request->all(), [
+    //         'email' => 'required|email|unique:users,email',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Email Sudah Terdaftar!'
+    //         ], 400);
+    //     }
+    //     $data = $request->post();
+    //     // dd($data['owner-name']); 
+    //     // Lanjutkan dengan proses pendaftaran jika validasi berhasil
+    //     $randomNumber = rand(100, 999);
+    //     $randomString = base_convert($randomNumber, 10, 36);
+
+    //     $accessToken = 'KSR' . strtoupper($randomString);
+    //     $id =  User::generateId();
+    //     $user = User::create([
+    //         'id' => $id,
+    //         'name' => $data['owner-name'],
+    //         'email' => $data['email'],
+    //         'password' => bcrypt($data['password']),
+    //         'users_role_id' => 'BfiwyVUDrXOpmStr',
+    //         'access_token' =>  $accessToken,
+    //         'active' => 0,
+    //     ]);
+    //     $toko = Toko::create([
+    //         'toko_user_id' => $id,
+    //         'toko_nama' => $data['store-name'],
+    //         'toko_midtrans_serverkey' => $data['server-key'] ?? null,
+    //         'toko_midtrans_clientkey' => $data['client-key'] ?? null,
+    //     ]);
+    //     $idUserEncoded = base64_encode($id);
+    //     Mail::send('mail.aktivasi-toko', ['data' => $data, 'id' => $idUserEncoded, 'token' => $accessToken], function ($message) use ($request, $data, $id) {
+    //         $message->to($data['email']);
+    //         $message->subject('Aktivasi Akun Kasir Handal');
+    //     });
+    //     if ($user && $toko) {
+
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Registrasi Berhasil!.',
+    //             'id' => $idUserEncoded
+    //         ]);
+    //     } else {
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Registrasi Gagal!.'
+    //         ], 400);
+    //     }
+    //     // } catch (\Exception $e) {
+    //     //     $statusCode = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
+    //     //     return response()->json([
+    //     //         'success' => false,
+    //     //         'message' => 'An error occurred during user registration.'
+    //     //     ], $statusCode);
+    //     // }
+    // }
     public function register(Request $request)
     {
-        // try {
-        // Validasi input
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|unique:users,email',
-        ]);
+        DB::beginTransaction(); // Mulai transaksi database
 
-        if ($validator->fails()) {
-            return response()->json(['message' => $validator->errors()], 400);
-        }
-        $data = $request->post();
-        // dd($data['owner-name']); 
-        // Lanjutkan dengan proses pendaftaran jika validasi berhasil
-        $randomNumber = rand(100, 999); 
-        $randomString = base_convert($randomNumber, 10, 36); 
+        try {
+            // Validasi input
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email|unique:users,email',
+            ]);
 
-        $accessToken = 'KSR' . strtoupper($randomString);
-        $id =  User::generateId();
-        $user = User::create([
-            'id' => $id,
-            'name' => $data['owner-name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'users_role_id' => 'BfiwyVUDrXOpmStr',
-            'access_token' =>  $accessToken,
-            'active' => 0,
-        ]);
-        $toko = Toko::create([
-            'toko_user_id' => $id,
-            'toko_nama' => $data['store-name'],
-            'toko_midtrans_serverkey' => $data['server-key'] ?? null,
-            'toko_midtrans_clientkey' => $data['client-key'] ?? null,
-        ]);
-        Mail::send('mail.aktivasi-toko', ['data' => $data, 'id' => $id, 'token' => $accessToken], function ($message) use ($request, $data, $id) {
-            $message->to($data['email']);
-            $message->subject('Aktivasi Akun Kasir Handal');
-        });
-        if ($user && $toko) {
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Email Sudah Terdaftar!'
+                ], 400);
+            }
+
+            $data = $request->post();
+
+            $randomNumber = rand(100, 999);
+            $randomString = base_convert($randomNumber, 10, 36);
+            $accessToken = 'KSR' . strtoupper($randomString);
+
+            $id =  User::generateId();
+            $user = User::create([
+                'id' => $id,
+                'name' => $data['owner-name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+                'users_role_id' => 'BfiwyVUDrXOpmStr',
+                'access_token' =>  $accessToken,
+                'active' => 0,
+            ]);
+
+            $toko = Toko::create([
+                'toko_user_id' => $id,
+                'toko_nama' => $data['store-name'],
+                'toko_midtrans_serverkey' => $data['server-key'] ?? null,
+                'toko_midtrans_clientkey' => $data['client-key'] ?? null,
+            ]);
+
+            $idUserEncoded = base64_encode($id);
+
+            Mail::send('mail.aktivasi-toko', ['data' => $data, 'id' => $idUserEncoded, 'token' => $accessToken], function ($message) use ($request, $data, $id) {
+                $message->to($data['email']);
+                $message->subject('Aktivasi Akun Kasir Handal');
+            });
+
+            DB::commit();
 
             return response()->json([
                 'success' => true,
-                'redirect' => route('login'),
-                'message' => 'Successfully registered user.'
+                'message' => 'Registrasi Berhasil!.',
+                'id' => $idUserEncoded
             ]);
-        } else {
+        } catch (\Exception $e) {
+            DB::rollback();
+            $errorMessage = $e instanceof \Illuminate\Database\QueryException ? 'Server Error, silakan coba lagi nanti.' : 'Registrasi Gagal! Silakan ulangi registrasi.';
+
             return response()->json([
                 'success' => false,
-                'message' => 'User registration failed.'
+                'message' => $errorMessage
             ], 400);
         }
-        // } catch (\Exception $e) {
-        //     $statusCode = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500;
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => 'An error occurred during user registration.'
-        //     ], $statusCode);
-        // }
     }
 
     public function getCsrfToken()

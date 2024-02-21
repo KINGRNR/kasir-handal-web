@@ -14,6 +14,32 @@ var quick = {
 
         return day + ' ' + month + ' ' + year;
     },
+    convertDateTime: function (data) {
+        var date = new Date(data);
+    
+        var monthNames = [
+            "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+            "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+        ];
+    
+        var day = date.getDate().toString().padStart(2, '0');
+        var month = monthNames[date.getMonth()];
+        var year = date.getFullYear();
+    
+        var hours = date.getHours().toString().padStart(2, '0');
+        var minutes = date.getMinutes().toString().padStart(2, '0');
+    
+        return day + ' ' + month + ' ' + year + ' ' + hours + ':' + minutes;
+    },
+     convertHourMinutes: function (data) {
+        var date = new Date(data);
+    
+        var hours = date.getHours().toString().padStart(2, '0');
+        var minutes = date.getMinutes().toString().padStart(2, '0');
+    
+        return hours + ':' + minutes;
+    },
+    
     formatRupiah(amount) {
         var reversedAmount = amount.toString().split('').reverse().join('');
         var groups = reversedAmount.match(/\d{1,3}/g);
@@ -81,7 +107,7 @@ var quick = {
         // );
         const loadingDiv = $(
             `<div class="loading-spinner">
-            <div class="loading loading-spinner-overlay" id="loading-spinner"><button class="btn btn-primary" type="button"
+            <div class="loading loading-spinner-overlay" id="loading-spinner"><button class="btn" type="button"
                     disabled>
                     <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                     <span role="status">Loading...</span>

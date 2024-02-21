@@ -69,7 +69,7 @@ class DashboardController extends Controller
             ->sum('penjualan_total_harga');
 
         // Menghitung total merek dari table kategori
-        $totalMerek = DB::table('kategori')->count();
+        $totalMerek = DB::table('kategori')->where('id_kategori_toko', $id)->count();
 
         $totalPelanggan = DB::table('pelanggan')
             ->join('penjualan', 'pelanggan.pelanggan_id', '=', 'penjualan.penjualan_pelanggan_id')

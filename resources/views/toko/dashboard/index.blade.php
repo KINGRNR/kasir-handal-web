@@ -33,6 +33,35 @@
                 <div id="kt_content_container" class="mt-5 d-flex flex-column-fluid align-items-start container-xxl">
                     {{-- @include('toko.header.sidebar') --}}
                     <div class="content flex-row-fluid" id="kt_content">
+                        @if (session('midtrans') == 0)
+                        <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6 mb-5">
+                            <!--begin::Icon-->
+                            <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
+                            <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
+                                    <rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)"
+                                        fill="black" />
+                                    <rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)"
+                                        fill="black" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                            <!--end::Icon-->
+                            <!--begin::Wrapper-->
+                            <div class="d-flex flex-stack flex-grow-1">
+                                <!--begin::Content-->
+                                <div class="fw-bold">
+                                    <h4 class="text-gray-900 fw-bolder">Perhatian!</h4>
+                                    <div class="fs-6 text-gray-700">Metode Pembayaran Cashless belum diaktifkan. Untuk memanfaatkan opsi pembayaran cashless, harap tambahkan 
+                                        <a class="fw-bolder" href="/toko/profile?open=midtrans">akun Midtrans Anda di sini.</a>.
+                                    </div>
+                                </div>
+                                <!--end::Content-->
+                            </div>
+                            <!--end::Wrapper-->
+                        </div>
+                        @endif
                         <div class="row gy-5">
                             <div class="col-xl-12">
                                 <div class="card" style="background-color: #ffff;">
@@ -40,13 +69,13 @@
                                         <div class="d-flex flex-column flex-grow-1" style="position: relative;">
                                             <!-- Sisipkan ucapan selamat datang, nama, nama toko, dan peran di sini -->
                                             <h2>Selamat datang, {{ session('name') }}!</h2>
-                                            <p>Anda terdaftar sebagai <span class="fw-bold">
+                                            <p>Anda terdaftar sebagai <span class="">
                                                     @if (session('user_role') == 'BfiwyVUDrXOpmStr')
                                                         Pemilik
                                                     @else
                                                         Petugas Kasir
                                                     @endif
-                                                </span> Usaha <span class="fw-bold">{{ session('toko_nama') }}</span>.
+                                                </span><span class="fw-bold">{{ session('toko_nama') }}</span>.
                                             </p>
                                         </div>
                                     </div>
@@ -277,7 +306,7 @@
                             <div class="col-xl-9">
                                 <div class="card card-xl-stretch  ">
                                     <div class="card-body d-flex flex-column h-50">
-                                        <h5 class="card-title" style="color: #2F3281">Grafik Penjualan</h5>
+                                        <h5 class="card-title">Grafik Penjualan</h5>
                                         <canvas id="myBarChart" width="100"></canvas>
                                     </div>
                                 </div>
@@ -318,19 +347,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
-                    <!--begin::Container-->
-                    <div
-                        class="container-xxl d-flex flex-column flex-md-row align-items-center justify-content-between">
-                        <!--begin::Copyright-->
-                        <div class="text-dark order-2 order-md-1">
-                            <span class="text-muted fw-bold me-1">2024©</span>
-                            <a href="https://keenthemes.com" target="_blank"
-                                class="text-gray-800 text-hover-primary">Cashier</a>
-                        </div>
-                    </div>
-                    <!--end::Container-->
-                </div>
+                @include('toko.footer.index')
+
                 <!--end::Footer-->
             </div>
 

@@ -35,8 +35,8 @@
                                         style="max-width: 100%; max-height: 200px;">
                                 </div> --}}
                                 <div class="fv-row mb-5">
-                                    <label for="" class="required form-label">Nama Merek</label>
-                                    <div class="col-lg-8">
+                                    <label for="" class="required form-label">Logo Merek</label>
+                                    <div class="col-lg-12">
                                     
                                         <!--begin::Image input-->
                                         <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url(../file/blank.webp)">

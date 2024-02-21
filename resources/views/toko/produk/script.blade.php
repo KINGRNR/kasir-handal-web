@@ -51,7 +51,7 @@
                         showConfirmButton: false,
                         allowOutsideClick: false,
                         allowEscapeKey: false,
-                        footer: '<a href="/toko/kategori" class="btn btn-primary">Tambah Merek</a>'  
+                        footer: '<a href="/toko/kategori" class="btn btn-primary">Tambah Merek</a>'
                     });
                 }
             })
@@ -92,30 +92,6 @@
         });
     });
 
-    function edit(id) {
-        $('#formKategori').trigger('reset');
-        $('#id_kategori').val(null);
-
-        axios.post("/kategori/detail", {
-                id: id
-            }, {
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    // 'Content-Type': 'multipart/form-data',
-                }
-            })
-            .then(response => {
-                let data = response.data
-                $('#id_kategori').val(data.id_kategori);
-                $('#kode_kategori').val(data.kode_kategori);
-                $('#nama_kategori').val(data.nama_kategori)
-                $('#modalKategori').modal('show');
-
-            })
-            .catch(error => {
-                console.error('There has been a problem with your Axios operation:', error);
-            });
-    }
     //filter
     var filterDatatable = [];
     var menutable = null;
@@ -277,6 +253,37 @@
         });
     }
 
+    function editRow(id) {
+        $('#formProduk').trigger('reset');
+        $('#id_produk').val(null);
+        $.ajax({
+            url: "/produk/detail",
+            type: "POST",
+            data: {
+                id: id
+            },
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                // 'Content-Type': 'multipart/form-data',
+            },
+            success: function(data) {
+                console.log(data)
+                $('#id_produk').val(data.id_produk);
+                $('#harga_produk').val(data.harga_produk);
+                $('#nama_produk').val(data.nama_produk);
+                $('.image-input-wrapper').css('background-image', 'url("' + APP_URL +
+                    'file/produk_foto/' + data.foto_produk + '")');
+                $('#stok_produk').val(data.stok_produk)
+                $('#id_produk_kategori').val(data.id_produk_kategori);
+
+                $('#modalProduk').modal('show');
+            },
+            error: function(error) {
+                console.error('There has been a problem with your Ajax operation:', error);
+            }
+        });
+    }
+
     function saveStok(id) {
         var cell = $('td').has('input[type="number"]');
         var inputStok = cell.find('input');
@@ -330,7 +337,7 @@
                             quick.toastNotif({
                                 title: 'success',
                                 icon: 'success',
-                                timer: 500,
+                                timer: 1500,
                                 callback: function() {
                                     window.location.reload()
                                 }
@@ -376,13 +383,23 @@
                         }
                     })
                     .then(response => {
+                        console.log(response)
                         if (response.data.success) {
                             $('#formProduk').trigger('reset');
                             $(".close-modal").trigger('click');
                             quick.toastNotif({
                                 title: 'success',
                                 icon: 'success',
-                                timer: 500,
+                                timer: 1500,
+                                callback: function() {
+                                    menutable.ajax.reload();
+                                }
+                            });
+                        } else {
+                            quick.toastNotif({
+                                title: response.data.message,
+                                icon: 'error',
+                                timer: 4000,
                                 callback: function() {
                                     menutable.ajax.reload();
                                 }
@@ -395,4 +412,12 @@
             }
         });
     };
+
+    function wipeData() {
+        $('.image-input-wrapper').css('background-image', 'url("../file/blank.webp")');
+
+        $('#formProduk').trigger('reset');
+        $('#id_produk').val(null);
+
+    }
 </script>

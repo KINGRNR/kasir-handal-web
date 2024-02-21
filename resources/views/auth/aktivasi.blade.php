@@ -5,10 +5,11 @@
         <!--begin::Authentication - Sign-in -->
         <div class="d-flex flex-column flex-lg-row flex-column-fluid">
             <!--begin::Aside-->
-            <div class="d-flex flex-column flex-lg-row-auto w-xl-900px positon-xl-relative w-xxl-800px"
-                {{-- style="background: linear-gradient(180deg, #2F3281 24.41%, #40A0B6 76.35%, #08C0B5 100%)"> --}} style="background: #2F3281">
-
+            <div class="d-flex flex-column flex-lg-row-auto w-xl-900px position-xl-relative w-xxl-800px justify-content-center align-items-center"
+                style="background: #2F3281;">
+                <h1 class="text-center text-white" style="font-size: 70px;">KasirHandal</h1>
             </div>
+
             <!--end::Aside-->
             <!--begin::Body-->
             <div class="d-flex flex-column flex-lg-row-fluid py-10">
@@ -29,7 +30,12 @@
                             <div class="text-center mb-10">
                                 <!--begin::Title-->
                                 <h1 class="text-dark mb-3">Aktivasi Akun</h1>
+                                <div class="text-gray-400 fw-bold fs-4">Silakan cek email Anda untuk melihat token.
+                                </div>
+                                {{-- <a href="/login" class="link-primary fw-bolder">Tidak menerima email? Klik di sini</a> --}}
                             </div>
+
+
                             <div class="fv-row mb-10">
                                 <input type="hidden" id="id" name="id">
                                 <input type="hidden" id="role" name="role">
@@ -134,6 +140,7 @@
         <!--end::Authentication - Sign-in-->
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../assets/js/quickact.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -202,23 +209,24 @@
                 .then(response => {
                     if (response.data.success) {
                         // Tampilkan SweetAlert sukses
-                        Swal.fire({
+                        quick.toastNotif({
+                            title: response.data.message,
                             icon: 'success',
-                            title: 'Aktivasi Berhasil',
-                            text: response.data.message,
-                            confirmButtonText: 'OK',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
+                            timer: 3000,
+                            callback: function() {
                                 window.location.href = '/login';
                             }
+
                         });
                     } else {
                         // Tampilkan SweetAlert gagal
-                        Swal.fire({
+                        quick.toastNotif({
+                            title: response.data.message,
                             icon: 'error',
-                            title: 'Gagal',
-                            text: response.data.message,
-                            confirmButtonText: 'OK',
+                            timer: 3000,
+                            // callback: function() {
+                            //     window.location.reload()
+                            // }
                         });
                     }
                 })
@@ -228,19 +236,23 @@
                     if (error.response && error.response.status === 400 && error.response.data.message ===
                         'Invalid token.') {
                         // Tampilkan SweetAlert token tidak cocok
-                        Swal.fire({
+                        quick.toastNotif({
+                            title: "Token tidak valid!",
                             icon: 'error',
-                            title: 'Token Invalid',
-                            text: 'Token yang Anda masukkan tidak valid.',
-                            confirmButtonText: 'OK',
-                        });
+                            timer: 3000,
+                            // callback: function() {
+                            //     window.location.reload()
+                            // }
+                        })
                     } else {
                         // Tampilkan SweetAlert error umum
-                        Swal.fire({
+                        quick.toastNotif({
+                            title: "Terjadi kesalahan saat memproses permintaan.",
                             icon: 'error',
-                            title: 'Error',
-                            text: 'Terjadi kesalahan saat memproses permintaan.',
-                            confirmButtonText: 'OK',
+                            timer: 3000,
+                            // callback: function() {
+                            //     window.location.reload()
+                            // }
                         });
                     }
                 });

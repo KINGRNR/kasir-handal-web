@@ -32,7 +32,7 @@
         <div class="card-toolbar">
             {{-- <button type="button" class="btn btn-primary me-2 reset-filter" data-bs-toggle="modal" data-bs-target="#modalUpdateStok">Restok Cepat</button> --}}
 
-            <button type="button" class="btn btn-primary me-2 reset-filter" data-bs-toggle="modal" data-bs-target="#modalProduk">Tambah Produk</button>
+            <button type="button" class="btn btn-primary me-2 reset-filter" data-bs-toggle="modal" data-bs-target="#modalProduk" onclick="wipeData()">Tambah Produk</button>
 
             <div class="d-flex">
                 <button type="button" class="btn btn-sm btn-danger deleted-selected"

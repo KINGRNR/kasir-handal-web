@@ -1,5 +1,16 @@
 <head>
-    <title>Cashier</title>
+    @if (session('user_role') == 'BfiwyVUDrXOpmStr')
+    <title>KasirHandal - Toko</title>
+
+    @elseif(session('user_role') == 'TKQR2DSJlQ5b31V2')
+    <title>KasirHandal - Petugas</title>
+
+    @elseif(session('user_role') == 'FOV4Qtgi5lcQ9kCY')
+    <title>KasirHandal - Superadmin</title>
+
+    @else
+    <title>KasirHandal</title>
+    @endif
     <!-- PWA  -->
     <meta name="theme-color" content="#6777ef" />
     <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
@@ -37,4 +48,24 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://fonts.cdnfonts.com/css/poppins" rel="stylesheet">
     <!--end::Global Stylesheets Bundle-->
+    <style>
+        :root {
+            --shadow: #2F3281;
+            --scrollbarBG: #eee;
+            --thumbBG: #888;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--scrollbarBG);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: var(--thumbBG);
+            box-shadow: 0 -100vh 0 100vh var(--shadow), 0 0 15px 5px black;
+        }
+    </style>
 </head>

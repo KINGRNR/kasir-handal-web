@@ -7,7 +7,7 @@
             <!--begin::Aside-->
             <div class="d-flex flex-column flex-lg-row-auto w-xl-900px position-xl-relative w-xxl-800px justify-content-center align-items-center"
                 style="background: #2F3281;">
-                <h1 class="text-center text-white fs-1 fs-lg-3 fs-xxl-5">KasirHandal</h1>
+                <h1 class="text-center text-white" style="font-size: 70px;">KasirHandal</h1>
             </div>
 
             <!--end::Aside-->
@@ -91,8 +91,8 @@
                                         style="color: var(--fks-secondary, #DAA916); font-family: Poppins; font-size: 14px; font-style: normal; font-weight: 500; line-height: 140%;">Forgot
                                         Password ?</a> --}}
                                     <a href="" class="fs-14 fw-bolder"
-                                        style="color: var(--fks-secondary, #DAA916); font-family: Poppins; font-size: 14px; font-style: normal; font-weight: 500; line-height: 140%;">Forgot
-                                        Password ?</a>
+                                        style="color: var(--fks-secondary, #DAA916); font-family: Poppins; font-size: 14px; font-style: normal; font-weight: 500; line-height: 140%;">Lupa
+                                        Kata Sandi?</a>
                                 </div>
                             </div>
 
@@ -112,11 +112,11 @@
                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                     </button>
                                 </div> --}}
-                                <a href="{{ url('authorized/google') }}"
+                                {{-- <a href="{{ url('authorized/google') }}"
                                     class="btn btn-flex flex-center btn-light btn-lg w-100 mb-5">
                                     <img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg"
                                         class="h-20px me-3">Continue with
-                                    Google</a>
+                                    Google</a> --}}
                         </form>
 
 

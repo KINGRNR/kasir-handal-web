@@ -11,7 +11,7 @@
 }
 </style> --}}
 
-<div class="row">
+<div class="row mt-5">
     <div class="col-md-8">
         <div class="card">
             <div class="card-header" style="background: #53B1FD;">
@@ -148,8 +148,8 @@
                             Cashless</button>
                         <button type="button" class="btn btn-success btn-sm" onclick="inputDataHarga()">Bayar
                             Cash</button>
-                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#modalTransaksiBerhasil">styling Modal berhasil</button>
+                        {{-- <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#modalTransaksiBerhasil">styling Modal berhasil</button> --}}
                     </div>
 
                     </form>

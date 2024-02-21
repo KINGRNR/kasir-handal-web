@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\DetailPenjualan;
 use App\Models\Pelanggan;
 use App\Models\Penjualan;
+use App\Models\Toko;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Intervention\Image\Colors\Rgb\Channels\Red;
 use Midtrans\Config;
 use Midtrans\Snap;
 use Yajra\DataTables\Facades\DataTables;
 
-\Midtrans\Config::$serverKey = 'SB-Mid-server-jDRuFD0sh4u9oaXfNsHwicXp';
 // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
 \Midtrans\Config::$isProduction = false;
 // Set sanitization on (default)
@@ -36,14 +38,17 @@ class PaymentController extends Controller
     {
         $data = $request->post();
         if (
-            !isset($data['produkData']) || // Ganti total_harga dengan produkData
+            !isset($data['produkData']) ||
             !isset($data['nama_pelanggan']) ||
             !isset($data['email_pelanggan']) ||
             !isset($data['no_telp'])
         ) {
             return response()->json(['error' => 'Missing required data'], 400);
         }
-
+        $toko = Toko::first(); // Ambil data toko pertama dari database
+        if (!$toko) {
+            return response()->json(['error' => 'Toko not found'], 404);
+        }
         $produkData = json_decode($data['produkData'], true); // Decode produkData menjadi array
         // dd($produkData);
 
@@ -72,6 +77,7 @@ class PaymentController extends Controller
             ),
             'item_details' => $itemDetails, // Set the item details array
         );
+        \Midtrans\Config::$serverKey = $toko->toko_midtrans_serverkey;
 
         $opr['snapToken'] = \Midtrans\Snap::getSnapToken($params);
         $opr['dataPenjualan'] = $data;
@@ -123,7 +129,6 @@ class PaymentController extends Controller
         $idPelanggan = $idPelangganRaw ? $idPelangganRaw->pelanggan_id : null;
 
         if ($idPelanggan) {
-            // Update record yang ada
             DB::table('pelanggan')
                 ->where('no_hp', $dataTransaction['no_telp'])
                 ->update([
@@ -132,7 +137,6 @@ class PaymentController extends Controller
                     'alamat_pelanggan' => $dataTransaction['alamat_pelanggan'] ?? null,
                 ]);
         } else {
-            // Buat record baru
             $idPelanggan = rand();
             Pelanggan::create([
                 'pelanggan_id' => $idPelanggan,
@@ -142,17 +146,29 @@ class PaymentController extends Controller
                 'alamat_pelanggan' => $dataTransaction['alamat_pelanggan'] ?? null,
             ]);
         }
-        
-        // Buat record penjualan
+        $totalHarga = 0; // Inisialisasi total harga
+
+        foreach ($itemDetails as $item) {
+            $subTotal = $item['harga_produk'] * $item['qty_produk'];
+            $totalHarga += $subTotal;
+        }
+
         Penjualan::create([
             'penjualan_id' => $penjualanId,
-            'penjualan_total_harga' => array_sum(array_column($itemDetails, 'harga_produk')), // Menghitung total harga
+            'penjualan_total_harga' => $totalHarga,
             'penjualan_toko_id' => 1,
             'penjualan_pelanggan_id' => $idPelanggan,
             'penjualan_petugas_id' => 4,
+            'penjualan_payment_method' => 2,
         ]);
+        // Penjualan::create([
+        //     'penjualan_id' => $penjualanId,
+        //     'penjualan_total_harga' => array_sum(array_column($itemDetails, 'harga_produk')),
+        //     'penjualan_toko_id' => 1,
+        //     'penjualan_pelanggan_id' => $idPelanggan,
+        //     'penjualan_petugas_id' => 4,
+        // ]);
 
-        // Buat detail penjualan
         foreach ($itemDetails as $item) {
             DetailPenjualan::create([
                 'penjualan_id' => $penjualanId,
@@ -166,47 +182,30 @@ class PaymentController extends Controller
                 ->decrement('stok_produk', $item['qty_produk']);
         };
 
-        $currentDateTime = Carbon::now();
-
-        // Kirim email struk
-        Mail::send('mail.struk-digital', ['waktu_transaksi' => $currentDateTime, 'penjualan_id' => $penjualanId, 'itemDetails' => $itemDetails, 'transaction' => $dataTransaction], function ($message) use ($request, $dataTransaction) {
-            $message->to($dataTransaction['email_pelanggan']);
-            $message->subject('Struk');
-        });
-
         return response()->json([
             'status' =>  'Success',
             'title' => 'Sukses!',
             'id_penjualan' => $penjualanId,
-            'data' => $data,
+            // 'data' => $data,
             'message' => 'Data Transaksi Berhasil Tersimpan!',
             'code' => 201
         ]);
     }
 
-    public function pushEmail(Request $request)
-    {
-        $data = $request->post();
 
-        $currentDateTime = Carbon::now();
-
-        Mail::send('mail.struk-digital', ['waktu_transaksi' => $currentDateTime, 'penjualan_id' => $penjualanId, 'itemDetails' => $itemDetails, 'transaction' => $dataTransaction], function ($message) use ($request, $dataTransaction) {
-            $message->to($dataTransaction['email_pelanggan']);
-            $message->subject('Struk');
-        });
-    }
     public function showTransaction(Request $request)
     {
         $id = session('toko_id');
-        if (session('petugas_id') !== null){
+        // dd($id);
+        if (session('petugas_id') !== null) {
             $filter = $request->post();
             if (isset($filter['date'])) {
                 $dateRange = explode(' - ', $filter['date']);
                 $startDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[0])->startOfDay();
                 $endDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[1])->endOfDay();
-                $operation = DB::table('v_transaksi')->where('petugas_toko_id', session('petugas_id'))->where('penjualan_deleted_at', null)->whereBetween('penjualan_created_at', [$startDate, $endDate])->get();
+                $operation = DB::table('v_transaksi')->where('penjualan_petugas_id', session('petugas_id'))->where('penjualan_deleted_at', null)->whereBetween('penjualan_created_at', [$startDate, $endDate])->get();
             } else {
-                $operation = DB::table('v_transaksi')->where('petugas_toko_id', session('petugas_id'))->where('penjualan_deleted_at', null)->get();
+                $operation = DB::table('v_transaksi')->where('penjualan_petugas_id', session('petugas_id'))->where('penjualan_deleted_at', null)->get();
             }
         } else {
             $filter = $request->post();
@@ -220,7 +219,7 @@ class PaymentController extends Controller
             }
         }
         // dd($id);
-       
+
         return DataTables::of($operation)
             ->toJson();
     }
@@ -229,57 +228,93 @@ class PaymentController extends Controller
         $id = $request->post();
 
         $data['penjualan'] = DB::table('penjualan')->where('penjualan_id', $id)->first();
-        $data['detail_penjualan'] = DB::table('detail_penjualan')->where('penjualan_id', $id)->get();
-
+        $data['detail_penjualan'] = DB::table('detail_penjualan')
+            ->join('produk', 'detail_penjualan.id_barang', '=', 'produk.id_produk')
+            ->where('detail_penjualan.penjualan_id', $id)
+            ->get();
+        $data['pelanggan'] = DB::table('pelanggan')->where('pelanggan_id', $data['penjualan']->penjualan_pelanggan_id)->first();
+        $data['toko'] = DB::table('toko')->where('toko_id', $data['penjualan']->penjualan_toko_id)->first();
+        // $data['petugas'] = DB::table('petugas')
+        //     ->join('users', 'petugas.petugas_user_id', '=', 'users.id')
+        //     ->where('petugas.petugas_id', $data['penjualan']->penjualan_petugas_id)
+        //     ->select(DB::raw('CONVERT(users.name USING utf8mb4) AS name'))
+        //     ->first();
         return response()->json($data);
+    }
+    public function sendEmail(Request $request)
+    {
+        $id = $request->post('id');
 
+        $transactionData = DB::table('penjualan')
+            ->where('penjualan_id', $id)
+            ->first();
 
+        $detailTransaction = DB::table('detail_penjualan')
+            ->join('produk', 'detail_penjualan.id_barang', '=', 'produk.id_produk')
+            ->where('detail_penjualan.penjualan_id', $id)
+            ->get();
 
+        $customerData = DB::table('pelanggan')
+            ->where('pelanggan_id', $transactionData->penjualan_pelanggan_id)
+            ->first();
 
+        $storeData = DB::table('toko')
+            ->where('toko_id', $transactionData->penjualan_toko_id)
+            ->first();
 
+        $currentDateTime = Carbon::parse($transactionData->penjualan_created_at)->format('d - F - Y : H:i');
+        // return response()->json(['message' => 'Email berhasil dikirim'], 200);
 
+        try {
+            Mail::send('mail.struk-digital', [
+                'waktu_transaksi' => $currentDateTime,
+                'penjualan_id' => $id,
+                'itemDetails' => $detailTransaction,
+                'transaction' => $transactionData,
+                'pelanggan' => $customerData,
+                'toko' => $storeData
+            ], function ($message) use ($customerData) {
+                $message->to($customerData->email_pelanggan);
+                $message->subject('Struk');
+            });
+            return response()->json([
+                'success' =>  true,
+                'status' =>  'Success',
+                'title' => 'Sukses!',
+                'message' => 'Email berhasil dikirim!',
+                'code' => 200
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' =>  false,
+                'status' =>  'error',
+                'title' => 'Gagal!',
+                'message' => 'Terjadi Kesalahan di Sistem!',
+            ]);
+        }
+    }
+    public function exportExcel(Request $request)
+    {
+        $date = $request->post();
 
+        $id = session('toko_id');
+        $opr['penjualan'] = DB::table('v_penjualan')->where('penjualan_toko_id', $id)->get();
+        // $opr['penjualan'] = DB::table/('v_penjualan')->where('penjualan_toko_id', $id)->get();
 
+        // Mencari detail penjualan untuk setiap penjualan
+        foreach ($opr['penjualan'] as $penjualan) {
+            $penjualan->detail = DB::table('v_detail_penjualan')->where('penjualan_id', $penjualan->penjualan_id)->get();
+        }
+        // dd($opr);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
+        // $opr = DB::table('v_all_penjualan')->where('penjualan_toko_id', $id)->get();
+        return response()->json([
+            'success' =>  true,
+            'status' =>  'Success',
+            'title' => 'Sukses!',
+            'data' => $opr,
+            'message' => '',
+            'code' => 200
+        ]);
     }
 }
