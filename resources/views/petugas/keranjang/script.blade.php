@@ -476,10 +476,16 @@
                             let token = response.data
                             window.snap.pay(token.snapToken, {
                                 onSuccess: function(result) {
-                                    alert("payment success!");
-                                    console.log(result);
                                     quick.blockPage();
-                                    saveTransaction(response.data.dataPenjualan, result);
+                                    quick.toastNotif({
+                                        title: 'Transaksi Berhasil!',
+                                        icon: 'success',
+                                        timer: 1000,
+                                        callback: function() {
+                                            saveTransaction(response.data.dataPenjualan,
+                                                result);
+                                        }
+                                    });
                                 },
                                 onPending: function(result) {
                                     alert("wating your payment!");
@@ -575,10 +581,16 @@
                             let token = response.data
                             window.snap.pay(token.snapToken, {
                                 onSuccess: function(result) {
-                                    alert("payment success!");
-                                    console.log(result);
                                     quick.blockPage();
-                                    saveTransaction(response.data.dataPenjualan, result);
+                                    quick.toastNotif({
+                                        title: 'Transaksi Berhasil!',
+                                        icon: 'success',
+                                        timer: 1000,
+                                        callback: function() {
+                                            saveTransaction(response.data.dataPenjualan,
+                                                result);
+                                        }
+                                    });
                                 },
                                 onPending: function(result) {
                                     alert("wating your payment!");
@@ -682,15 +694,15 @@
                 $(`.quantity-controls${id}`).val(currentQuantity - 1);
 
                 var count = currentQuantity - 1;
-                $('#harga' + id).text(harga * count);
+                $('#harga' + id).text(quick.formatRupiah(harga * count));
                 $('#harga_produk' + id).text(harga * count);
                 updateTotalPrice(totalPrice - harga);
             }
         }
 
         function hapusItemKeranjang(id, harga, inputId) {
-            var currentQuantity = parseInt($('#quantity' + id).text()); // Mendapatkan kuantitas saat ini
-            var subtotal = harga * currentQuantity; // Menghitung subtotal produk yang dihapus
+            var currentQuantity = parseInt($('#quantity' + id).text());
+            var subtotal = harga * currentQuantity; 
             $('#tambahkeranjang' + id).removeClass('d-none');
 
             $(`#id_produk${id}`).remove();

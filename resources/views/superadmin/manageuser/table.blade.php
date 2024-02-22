@@ -52,6 +52,7 @@
                         <th class="min-w-125px">EMAIL USER</th>
                         <th class="min-w-125px">Role</th>
                         <th class="min-w-125px">Tanggal Bergabung</th>
+                        <th class="min-w-125px">Status</th>
                         <th class="min-w-125px">Aksi</th>
                     </tr>
                     <!--end::Table row-->

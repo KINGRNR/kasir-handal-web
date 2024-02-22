@@ -124,7 +124,7 @@
                          </div>
                      </div>
                      <div onclick="window.location.href='/toko/report-penjualan'" class="menu-item me-lg-1">
-                         <span class="menu-link py-3 penjualan">
+                         <span class="menu-link py-3 report-penjualan-head">
                              <span class="menu-title text-white">Riwayat Transaksi</span>
                              <span class="menu-arrow d-lg-none"></span>
                          </span>

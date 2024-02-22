@@ -187,7 +187,7 @@
                     .then(response => {
                         if (response.data.success) {
                             quick.toastNotif({
-                                title: 'success',
+                                title: 'Sukses!',
                                 icon: 'success',
                                 timer: 1500,
                                 callback: function() {
@@ -238,7 +238,7 @@
                             $('#formKategori').trigger('reset');
                             $(".close-modal").trigger('click');
                             quick.toastNotif({
-                                title: 'success',
+                                title: 'Sukses!',
                                 icon: 'success',
                                 timer: 1500,
                                 callback: function() {

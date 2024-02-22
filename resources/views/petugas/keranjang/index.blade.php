@@ -45,7 +45,7 @@
                     data-kt-sticky-name="header" data-kt-sticky-offset="{default: '200px', lg: '300px'}"
                     style="background: #2F3281">
                     <!--begin::Container-->
-                    @include('toko.header.header')
+                    @include('petugas.header.header')
                     <!--end::Container-->
                 </div>
                 {{-- <button id="transitionButton">Transisi</button> --}}
@@ -73,10 +73,10 @@
                     {{-- @include('toko.header.sidebar') --}}
                     <div class="content flex-row-fluid" id="kt_content">
 
-                        @include('toko.keranjang.invoice')
+                        @include('petugas.keranjang.invoice')
                     </div>
                 </div>
-                @include('toko.footer.index')
+                @include('petugas.footer.index')
 
                 <!--end::Footer-->
             </div>
@@ -97,12 +97,12 @@
         </span>
         <!--end::Svg Icon-->
     </div>
-    @include('toko.keranjang.form')
-    @include('toko.bottomnavbar.botnav')
+    @include('petugas.keranjang.form')
+    @include('petugas.bottomnavbar.botnav')
 
 </body>
 
 @include('layouts.support.bundle.bundlefooter')
-@include('toko.keranjang.script')
+@include('petugas.keranjang.script')
 
 </html>

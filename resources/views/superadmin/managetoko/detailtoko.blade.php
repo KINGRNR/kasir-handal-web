@@ -7,9 +7,6 @@
                     <!--begin: Pic-->
                     <div class="me-7 mb-4">
                         <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative img-placement">
-
-                            <img src="/file/blank.webp" class="" alt="image"
-                                style="object-fit: cover;">
                         </div>
                     </div>
                     <!--end::Pic-->
@@ -67,9 +64,9 @@
                     <ul
                         class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap">
                         <!--begin::Nav item-->
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link text-active-primary me-6 active link-tab" href="#">Profil</a>
-                        </li>
+                        </li> --}}
                         
                     </ul>
                 </div>
@@ -84,14 +81,16 @@
             <div class="card-header cursor-pointer">
                 <!--begin::Card title-->
                 <div class="card-title m-0">
-                    <h3 class="fw-bolder m-0">Detail Profil
-                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Ubah Profil anda"
-                            data-bs-original-title="Ubah Profil anda">
+                    <h3 class="fw-bolder m-0">Detail Toko
+                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Detail Toko"
+                            data-bs-original-title="Detail Toko">
                             <i class="bi bi-question-circle"></i>
                         </a>
                     </h3>
                 </div>
-
+                <div class="card-toolbar">
+                    <a href="#" onclick="switchShowToko(this)" class="btn btn-secondary align-self-center kembali" style="">Kembali</a>
+                </div>
                 <!--end::Card title-->
                 <!--begin::Action-->
                 <!--end::Action-->

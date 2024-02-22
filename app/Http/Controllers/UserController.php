@@ -24,13 +24,15 @@ class UserController extends Controller
     return DataTables::of($operation)
       ->toJson();
   }
-  public function showToko(Request $request){
+  public function showToko(Request $request)
+  {
     $operation = DB::table('v_toko')->get();
 
     return DataTables::of($operation)
       ->toJson();
   }
-  public function showUser(Request $request){
+  public function showUser(Request $request)
+  {
     $operation = DB::table('users')->get();
 
     return DataTables::of($operation)
@@ -134,6 +136,42 @@ class UserController extends Controller
     $user->delete();
 
     return response()->json(['success' => 'User deleted successfully.']);
+  }
+  public function nonaktifkan(Request $request)
+  {
+    $data = $request->post();
+    $id = $data['id'];
+
+    $user = User::find($id);
+
+    if (!$user) {
+      return response()->json(['error' => 'User not found.'], 404);
+    }
+
+    $user->update(['active' => 0]);
+
+    return response()->json([
+      'status' => 'success',
+      'message' => 'User Berhasil di Nonaktifkan',
+    ]);
+  }
+  public function aktifkan(Request $request)
+  {
+    $data = $request->post();
+    $id = $data['id'];
+
+    $user = User::find($id);
+
+    if (!$user) {
+      return response()->json(['error' => 'User not found.'], 404);
+    }
+
+    $user->update(['active' => 1]);
+
+    return response()->json([
+      'status' => 'success',
+      'message' => 'User Berhasil di Aktifkan',
+    ]);
   }
 }
 // }

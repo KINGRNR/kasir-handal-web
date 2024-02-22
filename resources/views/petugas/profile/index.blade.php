@@ -96,7 +96,7 @@
                                                         </span>
                                                         <!--end::Svg Icon-->SF, Bay Area</a> --}}
                                                     <a href="#"
-                                                        class="d-flex align-items-center text-gray-400 text-hover-primary mb-2 email-header">
+                                                        class="d-flex align-items-center text-gray-600 text-hover-primary mb-2 email-header">
                                                         <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
                                                         <span class="svg-icon svg-icon-4 me-1">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -109,7 +109,10 @@
                                                                     fill="black" />
                                                             </svg>
                                                         </span>
+                                                        <span class="badge badge-light-success fw-bolder fs-8 ms-2">Petugas
+                                                            Kasir</span>
                                                         <!--end::Svg Icon-->-</a>
+                                                    
                                                 </div>
                                                 <!--end::Info-->
                                             </div>
@@ -377,10 +380,6 @@
                                             <a class="nav-link text-active-primary me-6 link-tab" href="#"
                                                 onclick="switchSandi(this)">Ubah Sandi</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link text-active-primary me-6 link-tab midtrans-key "
-                                                href="#" onclick="switchMidtrans(this)">Midtrans Key</a>
-                                        </li>
                                     </ul>
                                 </div>
                                 <!--begin::Navs-->
@@ -404,11 +403,7 @@
 
                                 <!--end::Card title-->
                                 <!--begin::Action-->
-                                <a href="#" onclick="switchEditProfil(this)"
-                                    class="btn btn-primary align-self-center edit-prof">Edit Profile</a>
-                                <a href="#" onclick="switchShowProfil(this)"
-                                    class="btn btn-secondary align-self-center kembali"
-                                    style="display: none">Kembali</a>
+                             
                                 <!--end::Action-->
                             </div>
                             <!--begin::Card header-->
@@ -419,7 +414,7 @@
 
                                     <div class="row mb-7">
                                         <!--begin::Label-->
-                                        <label class="col-lg-3 fw-bold text-muted">Nama Pemilik</label>
+                                        <label class="col-lg-3 fw-bold text-muted">Nama Petugas</label>
                                         <div class="col-lg-5">
                                             <span class="fw-bolder fs-6 text-gray-800 val_nama">-</span>
                                         </div>
@@ -453,113 +448,7 @@
                                         <!--end::Col-->
                                     </div>
                                 </div>
-                                <div class="container-form" style="display: none">
-                                    <form action="javascript:saveProfileToko()" method="post" id="formProfileToko"
-                                        name="formProfileToko" autocomplete="off" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="row mb-7">
-                                            <!--begin::Label-->
-                                            <input type="hidden" name="id" id="id"
-                                                class="form-control form-control-sm form-control-solid input-required"
-                                                placeholder="" required="">
-                                            <label class="col-lg-3 fw-bold text-muted required">Nama Pemilik</label>
-                                            <div class="col-lg-5">
-                                                <input type="text" name="nama_pemilik" id="nama_pemilik"
-                                                    class="form-control form-control-sm form-control-solid input-required"
-                                                    placeholder="Masukkan Nama Pemilik Baru" required="">
-                                            </div>
-                                        </div>
-                                        <!--end::Row-->
-                                        <!--begin::Input group-->
-                                        <div class="row mb-7">
-                                            <!--begin::Label-->
-                                            <label class="col-lg-3 fw-bold text-muted required">Nama Toko</label>
-                                            <!--end::Label-->
-                                            <!--begin::Col-->
-                                            <div class="col-lg-5 fv-row">
-                                                <input type="text" name="nama_toko" id="nama_toko"
-                                                    class="form-control form-control-sm form-control-solid input-required"
-                                                    placeholder="Masukkan Nama Toko Baru" required="">
-                                            </div>
-                                            <!--end::Col-->
-                                        </div>
-                                
-                                        <!--end::Input group-->
-                                        <!--begin::Input group-->
-
-                                        <!--end::Input group-->
-                                        <!--begin::Input group-->
-                                        <div class="row mb-7 d-none">
-                                            <!--begin::Label-->
-                                            <label class="col-lg-3 fw-bold text-muted required">Email</label>
-                                            <!--end::Label-->
-                                            <!--begin::Col-->
-                                            <div class="col-lg-5">
-                                                <input type="text" name="email" id="email"
-                                                    class="form-control form-control-sm form-control-solid input-required"
-                                                    disabled placeholder="Masukkan Email Baru" required="">
-                                            </div>
-                                            <!--end::Col-->
-                                        </div>
-                                        <div class="row mb-7">
-                                            <label for="" class="col-lg-3 required text-muted form-label">Foto Produk <i>max
-                                                    2mb</i></label>
-                                            <div class="col-lg-5">
-                                                <!--begin::Image input-->
-                                                <div class="image-input image-input-outline"
-                                                    data-kt-image-input="true"
-                                                    style="background-image: url(../file/blank.webp)">
-                                                    <!--begin::Preview existing avatar-->
-                                                    <div class="image-input-wrapper w-125px h-125px"
-                                                        style="background-image: url(../file/blank.webp)"></div>
-                                                    <!--end::Preview existing avatar-->
-                                                    <!--begin::Label-->
-                                                    <label
-                                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                        data-kt-image-input-action="change" data-bs-toggle="tooltip"
-                                                        title="Change avatar">
-                                                        <i class="bi bi-pencil-fill fs-7"></i>
-                                                        <!--begin::Inputs-->
-                                                        <input type="file" name="foto_profile"
-                                                            accept=".png, .jpg, .jpeg" />
-                                                        <input type="hidden" name="avatar_remove" />
-                                                        <!--end::Inputs-->
-                                                    </label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Cancel-->
-                                                    <span
-                                                        class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                                                        data-kt-image-input-action="cancel" data-bs-toggle="tooltip"
-                                                        title="Cancel Photo">
-                                                        <i class="bi bi-x fs-2"></i>
-                                                    </span>
-                                                    <!--end::Cancel-->
-                                                    <!--begin::Remove-->
-                                                    {{-- <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
-                                                    <i class="bi bi-x fs-2"></i>
-                                                     </span> --}}
-                                                    <!--end::Remove-->
-                                                </div>
-                                                <!--end::Image input-->
-                                                <!--begin::Hint-->
-                                                <div class="form-text">Tipe File: png, jpg, jpeg.</div>
-                                                <!--end::Hint-->
-                                            </div>
-                                        </div>
-                                        <div class="row mb-7">
-                                            <!--begin::Label-->
-                                            <label class="col-lg-3 fw-bold text-muted"></label>
-                                            <!--end::Label-->
-                                            <!--begin::Col-->
-                                            <div class="col-lg-5 d-flex justify-content-end">
-                                                <button type="submit" class="btn btn-primary">
-                                                    Simpan
-                                                </button>
-                                            </div>
-                                            <!--end::Col-->
-                                        </div>
-                                    </form>
-                                </div>
+                          
                                 <!--end::Input group-->
                                 <!--begin::Input group-->
                                 {{-- <div class="row mb-7">
@@ -703,108 +592,7 @@
                             <!--end::Card body-->
                         </div>
                         {{-- DETAIL MIDTRANS --}}
-                        <div class="card mb-5 mb-xl-10 detail-all detail-midtrans" id="kt_profile_details_view"
-                            style="display: none;">
-                            <!--begin::Card header-->
-                            <div class="card-header cursor-pointer">
-                                <!--begin::Card title-->
-                                <div class="card-title m-0">
-                                    <h3 class="fw-bolder m-0">Konfigurasi Midtrans
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#detailModal"
-                                            data-bs-placement="top" title="Klik untuk informasi tambahan">
-                                            <i class="bi bi-question-circle"></i>
-                                        </a>
-                                    </h3>
-                                </div>
-                                <!--end::Card title-->
-                            </div>
-                            <!--begin::Card header-->
-                            <!--begin::Card body-->
-                            <div class="card-body p-9">
-                                <!--begin::Row-->
-                                <form action="javascript:saveMidtransKey()" method="post" id="formMidtrans"
-                                    name="formMidtrans" autocomplete="off" enctype="multipart/form-data">
-                                    @csrf
-                                    <input type="hidden" name="toko_id" id="toko_id"
-                                        class="form-control form-control-sm form-control-solid input-required"
-                                        placeholder="Server Key" required="">
-                                    <div class="row mb-7">
-                                        <!--begin::Label-->
-                                        <label class="col-lg-3 fw-bold text-muted required">Server Key</label>
-                                        <div class="col-lg-5">
-                                            <input type="text" name="server_key" id="server_key"
-                                                class="form-control form-control-sm form-control-solid input-required"
-                                                placeholder="Server Key" required="">
-                                        </div>
-                                    </div>
-                                    <!--end::Row-->
-                                    <!--begin::Input group-->
-                                    <div class="row mb-7">
-                                        <!--begin::Label-->
-                                        <label class="col-lg-3 fw-bold text-muted required">Client Key</label>
-                                        <!--end::Label-->
-                                        <!--begin::Col-->
-                                        <div class="col-lg-5 fv-row">
-                                            <input type="text" name="client_key" id="client_key"
-                                                class="form-control form-control-sm form-control-solid input-required"
-                                                placeholder="Client Key" required="">
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
-                                    <div class="row mb-7">
-                                        <!--begin::Label-->
-                                        <label class="col-lg-3 fw-bold text-muted"></label>
-                                        <!--end::Label-->
-                                        <!--begin::Col-->
-                                        <div class="col-lg-5 d-flex justify-content-end">
-                                            <button type="submit" class="btn btn-primary">
-                                                Simpan
-                                            </button>
-                                        </div>
-                                        <!--end::Col-->
-                                    </div>
-                                    <!--end::Input group-->
-                                    <!--begin::Input group-->
-
-                                    <!--end::Input group-->
-                                    <!--begin::Input group-->
-                                    <!--end::Input group-->
-                                    <!--begin::Input group-->
-                                    {{-- <div class="row mb-7">
-                                    <!--begin::Label-->
-                                    <label class="col-lg-4 fw-bold text-muted">Country
-                                        <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
-                                            title="Country of origination"></i></label>
-                                    <!--end::Label-->
-                                    <!--begin::Col-->
-                                    <div class="col-lg-8">
-                                        <span class="fw-bolder fs-6 text-gray-800">Germany</span>
-                                    </div>
-                                    <!--end::Col-->
-                                </div> --}}
-                                    <!--end::Input group-->
-                                    <!--begin::Input group-->
-                                    {{-- <div class="row mb-10">
-                                    <!--begin::Label-->
-                                    <label class="col-lg-4 fw-bold text-muted">Communication</label>
-                                    <!--end::Label-->
-                                    <!--begin::Col-->
-                                    <div class="col-lg-8">
-                                        <span class="fw-bolder fs-6 text-gray-800">Email, Phone</span>
-                                    </div>
-                                    <!--end::Col-->
-                                </div> --}}
-                                    <!--end::Input group-->
-                                    <!--begin::Input group-->
-
-                                    <!--end::Input group-->
-                                    <!--begin::Notice-->
-
-                                    <!--end::Notice-->
-                                </form>
-                            </div>
-                            <!--end::Card body-->
-                        </div>
+            
                         <!--end::details View-->
                         <!--begin::Row-->
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kategori;
 use App\Models\Penjualan;
 use App\Models\Produk;
-
+use App\Models\Toko;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -85,5 +85,31 @@ class DashboardController extends Controller
         ];
 
         return response()->json($response);
+    }
+    public function loadDetail()
+    {
+        $data['user_count'] = User::count();
+        $data['toko_count'] = Toko::count();
+        $role = 'BfiwyVUDrXOpmStr';
+
+        $today = Carbon::today();
+        $data['toko_perhari'] = User::where('users_role_id', $role)
+            ->whereDate('created_at', $today)
+            ->count();
+
+        $data['toko_urut'] = DB::table('v_toko')->orderBy('created_at', 'desc')->get();
+        $data['toko_terlaris'] = DB::table('penjualan')
+            ->join('toko', 'penjualan.penjualan_toko_id', '=', 'toko.toko_id')
+            ->select(
+                'toko.toko_nama',
+                DB::raw('SUM(penjualan.penjualan_total_harga) as total_penjualan'),
+                DB::raw('COUNT(penjualan.penjualan_id) as total_transaksi')
+            )
+            ->groupBy('penjualan.penjualan_toko_id', 'toko.toko_nama')
+            ->orderByDesc('total_penjualan')
+            ->get();
+
+
+        return response()->json($data);
     }
 }

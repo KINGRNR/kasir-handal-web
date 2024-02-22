@@ -43,7 +43,8 @@
                 <div id="kt_content_container" class="mt-5 d-flex flex-column-fluid align-items-start container-xxl">
                     {{-- @include('superadmin.header.sidebar') --}}
                     <div class="content flex-row-fluid" id="kt_content">
-                        @include('superadmin.managetoko.table') @include('superadmin.managetoko.detailtoko')
+                        @include('superadmin.managetoko.table') 
+                        @include('superadmin.managetoko.detailtoko')
                     </div>
                 </div>
                 @include('superadmin.footer.index')

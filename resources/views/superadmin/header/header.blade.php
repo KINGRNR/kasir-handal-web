@@ -56,7 +56,7 @@
                          </a>
                      </div>
                      <div onclick="window.location.href='/superadmin/toko'" class="menu-item me-lg-1">
-                         <span class="menu-link py-3 toko">
+                         <span class="menu-link py-3 manajemen_toko">
                              <span class="menu-title text-white ">Manajemen Toko</span>
                              <span class="menu-arrow d-lg-none"></span>
                          </span>
@@ -220,7 +220,7 @@
                          <!--end::Menu separator-->
                          <!--begin::Menu item-->
                          <div class="menu-item px-5 ">
-                             <a href="/toko/profile" class="menu-link px-5 profile">Profile</a>
+                             <a href="/superadmin/profile" class="menu-link px-5 profile">Profile</a>
                          </div>
                          <!--begin::Menu item-->
                          <div class="menu-item px-5">

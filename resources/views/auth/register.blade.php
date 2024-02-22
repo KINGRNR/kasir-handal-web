@@ -266,7 +266,7 @@
                                 </div>
 
                                 <!-- Step 3: Hubungkan ke Midtrans dengan input server key dan client key -->
-                                <div id="step-3" class="step" style="display: none;">
+                                {{-- <div id="step-3" class="step" style="display: none;">
                                     <div class="text-center mb-4">
                                         <h1 class="text-dark mb-3">Sambungkan Midtrans</h1>
                                     </div>
@@ -293,7 +293,7 @@
                                     <button class="btn btn-info" type="button" data-bs-toggle="modal"
                                         data-bs-target="#midtransModal">Informasi
                                         Midtrans</button>
-                                </div>
+                                </div> --}}
                                 <div id="step-4" class="step" style="display: none;">
                                     <h2 class="text-center">Syarat & Ketentuan</h2>
                                     <ol>
@@ -552,8 +552,8 @@
                         return;
                     }
                     $("#step-2").hide();
-                    $("#midtransModal").modal("show");
-                    $("#step-3").show();
+                    // $("#midtransModal").modal("show");
+                    $("#step-4").show();
                     currentStep = 3;
                 });
 

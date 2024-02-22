@@ -188,7 +188,7 @@ class AuthController extends Controller
                     return response()->json(['data' => $user], 422);
             }
         } else {
-            return redirect()->route('login')->with('error', 'Invalid credentials. Please try again.')->withInput();
+            return redirect()->route('login')->with('error', 'Email atau password salah. Silakan coba lagi.')->withInput();
         }
     }
     // public function logout(Request $request)

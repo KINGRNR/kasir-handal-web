@@ -15,7 +15,7 @@ class ProdukController extends Controller
 {
 
   public function showProduk(Request $request)
-  {
+{
     $id = session()->get('toko_id');
 
     // $id_toko = DB::table('toko')->where('toko_user_id', $id)->select('toko_id')->first();

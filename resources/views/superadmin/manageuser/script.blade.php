@@ -63,16 +63,16 @@
                         var roleClass = '';
                         if (role == 'BfiwyVUDrXOpmStr') {
                             roleDisplay = 'Toko';
-                            roleClass = 'badge-primary'; 
+                            roleClass = 'badge-light-warning';
                         } else if (role == 'TKQR2DSJlQ5b31V2') {
                             roleDisplay = 'Petugas';
-                            roleClass = 'badge-success'; 
+                            roleClass = 'badge-light-danger';
                         } else if (role == 'FOV4Qtgi5lcQ9kCY') {
                             roleDisplay = 'Superadmin';
-                            roleClass = 'badge-danger'; 
+                            roleClass = 'badge-light-primary';
                         } else {
                             roleDisplay = 'Tidak Diketahui';
-                            roleClass = 'badge-secondary'; 
+                            roleClass = 'badge-light-secondary';
                         }
 
                         // Menampilkan role dengan gaya badge
@@ -86,18 +86,43 @@
                     render: function(data, type, row) {
                         return quick.convertDate(row.created_at)
                     }
-                }, {
+                },
+                {
+                    data: 'active',
+                    render: function(data, type, row) {
+                        var aktif = row.active;
+                        var display = '';
+
+                        var classBp = '';
+                        if (aktif == 1) {
+                            display = 'Aktif';
+                            classBp = 'badge-light-success';
+                        } else {
+                            display = 'Nonaktif';
+                            classBp = 'badge-light-danger';
+                        }
+
+                        // Menampilkan role dengan gaya badge
+                        return '<span class="badge ' + classBp + '" style="opacity: 0.8;">' +
+                            display + '</span>';
+                    },
+                },
+                {
                     data: 'id',
                     render: function(data, type, row) {
-                        var editButton =
-                            '<button class="btn btn-sm btn-primary edit-btn" onclick="edit(this)" data-id="' +
-                            row.id + '">Buka</button>';
-                        var deleteButton =
-                            '<button class="btn btn-sm btn-danger delete-btn" onclick="deleteRow(this)" data-id="' +
-                            row.id +
-                            '">Delete</button>';
+                        var actionButton = '';
 
-                        return editButton + ' ' + deleteButton;
+                        if (row.active == 1) {
+                            actionButton =
+                                '<button class="btn btn-sm btn-danger delete-btn" onclick="nonaktifkanRow(this)" data-id="' +
+                                row.id + '">Nonaktifkan</button>';
+                        } else {
+                            actionButton =
+                                '<button class="btn btn-sm btn-success activate-btn" onclick="aktifkanRow(this)" data-id="' +
+                                row.id + '">Aktifkan</button>';
+                        }
+
+                        return actionButton;
                     }
                 }
             ]
@@ -132,7 +157,7 @@
     //     $('.form').fadeOut(100);
     //     $('.table-switch-petugas').fadeIn();
     // }
-    function deleteRow(atr) {
+    function nonaktifkanRow(atr) {
         var id = $(atr).attr('data-id');
         Swal.fire({
             title: 'Apakah anda yakin?',
@@ -144,7 +169,7 @@
             cancelButtonText: 'Tidak'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post("/user/delete", {
+                axios.post("/user/nonaktifkan", {
                         id: id
                     }, {
                         headers: {
@@ -155,7 +180,7 @@
                     .then(response => {
                         if (response.data.success) {
                             quick.toastNotif({
-                                title: 'success',
+                                title: response.data.message,
                                 icon: 'success',
                                 timer: 1500,
                                 callback: function() {
@@ -167,6 +192,9 @@
                                 title: response.data.message,
                                 icon: response.data.status,
                                 timer: 2000,
+                                callback: function() {
+                                    window.location.reload()
+                                }
                             });
                         }
                         console.log(response)
@@ -179,7 +207,56 @@
             }
         });
     };
+    function aktifkanRow(atr) {
+        var id = $(atr).attr('data-id');
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post("/user/aktifkan", {
+                        id: id
+                    }, {
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'multipart/form-data',
+                        }
+                    })
+                    .then(response => {
+                        if (response.data.success) {
+                            quick.toastNotif({
+                                title: response.data.message,
+                                icon: 'success',
+                                timer: 1500,
+                                callback: function() {
+                                    window.location.reload()
+                                }
+                            });
+                        } else {
+                            quick.toastNotif({
+                                title: response.data.message,
+                                icon: response.data.status,
+                                timer: 2000,
+                                callback: function() {
+                                    window.location.reload()
+                                }
+                            });
+                        }
+                        console.log(response)
 
+                    })
+                    .catch(error => {
+
+                        console.error('There has been a problem with your Axios operation:', error);
+                    });
+            }
+        });
+    };
     function wipeData() {
         $('#formPetugas').trigger('reset');
         $('#id').val(null);

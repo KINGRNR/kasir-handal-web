@@ -63,7 +63,6 @@ class PaymentController extends Controller
             );
         }
         // dd($itemDetails);
-        // Build the parameters array
         $params = array(
             'transaction_details' => array(
                 'order_id' => rand(),

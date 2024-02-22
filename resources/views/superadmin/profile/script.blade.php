@@ -25,7 +25,7 @@
 
     function loadProfile() {
         $.ajax({
-            url: APP_URL + 'profile/indexPetugas',
+            url: APP_URL + 'profile/indexSuperadmin',
             method: "POST",
             data: {
                 _token: '{{ csrf_token() }}',
@@ -37,14 +37,11 @@
                 // var riwayat = ''
                 // $('.total_saldo').text(quick.formatRupiah(response.total_saldo));
                 $('.val_nama').text(user.name)
-                $('.val_nama_toko').text(toko.toko_nama)
                 $('.val_email').text(user.email)
-                $('.val_head_name').text(toko.toko_nama)
-                $('.email-header').html(user.name + `<span class="badge badge-light-success fw-bolder fs-8 ms-2">Petugas
-                                                        Kasir</span>`)
-               
-                $('#toko_id').val(toko.toko_id)
-                $('.img-placement').append(`<img src="/file/blank.webp" alt="image" />`)
+                $('.val_head_name').text(user.name)
+                $('.email-header').html(user.email + `<span class="badge badge-light-success fw-bolder fs-8 ms-2">Superadmin</span>`)
+
+                $('.img-placement').append(`<img src="/file/superadmin.jpg" alt="image" />`)
 
              
 
