@@ -40,13 +40,24 @@ var quick = {
         return hours + ':' + minutes;
     },
     
+    // formatRupiah(amount) {
+    //     var reversedAmount = amount.toString().split('').reverse().join('');
+    //     var groups = reversedAmount.match(/\d{1,3}/g);
+    //     var formattedAmount = groups.join('.').split('').reverse().join('');
+    
+    //     return 'Rp. ' + formattedAmount ;
+    // },
     formatRupiah(amount) {
         var reversedAmount = amount.toString().split('').reverse().join('');
         var groups = reversedAmount.match(/\d{1,3}/g);
         var formattedAmount = groups.join('.').split('').reverse().join('');
     
-        return 'Rp. ' + formattedAmount + ',-';
+        // Menghilangkan 2 nol terakhir
+        formattedAmount = formattedAmount.replace(/(\.00)+$/, '');
+    
+        return 'Rp ' + formattedAmount ;
     },
+    
     leafletMapSelector: function (id, a , b) {
         var map = L.map(id).setView([-2.5489, 118.0149], 5); 
     
@@ -182,7 +193,21 @@ var quick = {
     },
     reload: function(param){
         $("[data-code='" + param + "']").trigger('click');
-    }
+    },
+    loadingBtn: function(id){
+        const button = $(id)
+        button.html(
+            '<span class="spinner-border spinner-border-sm text-white" role="status" aria-hidden="true"></span> Tunggu Sebentar...');
+
+        button.prop('disabled', true
+        )    },
+    unloadingBtn: function(id){
+        const button = $(id)
+
+        button.html('Reset Sandi');
+
+        button.prop('disabled', false);
+        }
 };
 
 

@@ -1,4 +1,4 @@
-<div class="card table-switch-petugas">
+<div class="card table-switch">
     <div class="card-header py-4">
         <div class="card-title">
             <h1
@@ -8,7 +8,7 @@
                 font-weight: 600;
                 line-height: 140%; /* 28px */
                 letter-spacing: 0.2px;">
-                    Data Pengguna</h1>
+                    Data Toko</h1>
            
         </div>
         <div class="card-toolbar">
@@ -48,9 +48,8 @@
                     <!--begin::Table row-->
                     <tr class="text-start align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                         <th class="ps-4" width="20">No</th>
-                        <th class="min-w-125px">NAMA USER</th>
-                        <th class="min-w-125px">EMAIL USER</th>
-                        <th class="min-w-125px">Role</th>
+                        <th class="min-w-125px">ID TOKO</th>
+                        <th class="min-w-125px">Nama Toko</th>
                         <th class="min-w-125px">Tanggal Bergabung</th>
                         <th class="min-w-125px">Aksi</th>
                     </tr>
@@ -62,4 +61,3 @@
         </div>
     </div>
 </div>
-

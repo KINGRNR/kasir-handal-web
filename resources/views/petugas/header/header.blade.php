@@ -50,8 +50,8 @@
                  <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg  menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch"
                      id="#kt_header_menu" data-kt-menu="true">
                      <div class="menu-item me-lg-1">
-                         <a class="menu-link py-3 dashboard" href="/petugas/dashboard">
-                             <span class="menu-title text-white">Beranda</span>
+                         <a class="menu-link py-3 keranjang" href="/petugas/keranjang">
+                             <span class="menu-title text-white">Transaksi</span>
                              <span class="menu-arrow d-lg-none"></span>
                          </a>
                      </div>
@@ -67,7 +67,7 @@
                              class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px">
                              <div onclick="window.location.href='/petugas/kategori'" class="menu-item me-lg-1">
                                  <span class="menu-link py-3 kategori">
-                                     <span class="menu-icon">
+                                     {{-- <span class="menu-icon">
                                          <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm007.svg-->
                                          <span class="svg-icon svg-icon-2">
                                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -84,14 +84,14 @@
                                              </svg>
                                          </span>
                                          <!--end::Svg Icon-->
-                                     </span>
+                                     </span> --}}
                                      <span class="menu-title">Master Merek</span>
                                      <span class="menu-arrow d-lg-none"></span>
                                  </span>
                              </div>
                              <div onclick="window.location.href='/petugas/produk'" class="menu-item me-lg-1">
                                  <span class="menu-link py-3 barang">
-                                     <span class="menu-icon">
+                                     {{-- <span class="menu-icon">
                                          <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                          <span class="svg-icon svg-icon-2">
                                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -111,7 +111,7 @@
                                              </svg>
                                          </span>
                                          <!--end::Svg Icon-->
-                                     </span>
+                                     </span> --}}
                                      <span class="menu-title">Master Produk</span>
                                      <span class="menu-arrow d-lg-none"></span>
                                  </span>
@@ -124,7 +124,7 @@
                              <span class="menu-arrow d-lg-none"></span>
                          </span>
                      </div> --}}
-                     <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start"
+                     {{-- <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start"
                          class="menu-item menu-lg-down-accordion me-lg-1">
                          <span class="menu-link py-3">
                              <span class="menu-title text-white">Penjualan</span>
@@ -146,8 +146,13 @@
                                  </span>
                              </div>
                          </div>
-                     </div>
-
+                     </div> --}}
+                     <div class="menu-item me-lg-1">
+                        <a class="menu-link py-3 report-penjualan-head" href="/petugas/report-penjualan">
+                            <span class="menu-title text-white">Riwayat Transaksi</span>
+                            <span class="menu-arrow d-lg-none"></span>
+                        </a>
+                    </div>
                      {{-- <div onclick="window.location.href='/petugas/petugas'" class="menu-item me-lg-1">
                          <span class="menu-link py-3">
                              <span class="menu-title text-white ">Pengaturan toko</span>

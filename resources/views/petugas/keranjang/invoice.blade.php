@@ -30,8 +30,8 @@
                 <!-- Filter dan Search -->
                 <div class="row">
                     <div class="col-md-4 mb-3">
-                        <select class="form-select" id="kategori">
-                            <option value="" disabled selected>Semua Kategori</option>
+                        <select class="form-select" id="kategori_produk" name="kategori_produk">
+                            <option value="all" selected>Semua Kategori</option>
                             {{-- <option value="kategori2">Kategori 2</option> --}}
                             <!-- Tambahkan opsi kategori lainnya sesuai kebutuhan -->
                         </select>
@@ -39,11 +39,11 @@
 
                     <!-- Fitur Pencarian -->
                     <div class="col-md-6 mb-3">
-                        <input type="text" class="form-control" id="search" placeholder="Cari...">
+                        <input type="text" class="form-control" id="search" placeholder="Cari berdasar nama produk...">
                     </div>
 
                     <div class="col-md-2 mb-3">
-                        <button type="submit" class="btn btn-primary">Sync Stok</button>
+                        <button type="button" onclick="showProduk()" class="btn btn-primary">Reload</button>
                     </div>
                 </div>
 
@@ -64,25 +64,37 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="mb-4">
-                    <h4>Petugas Kasir</h4>
-                    <p>{{session('name')}}</p>
-                    <p>{{session('email')}}</p>
-                    {{-- <p>Nama Petugas: {{ auth()->user()->name }}</p> --}}
+                <div class="mb-4 row">
+                    <div class="col-4">
+                        <h4>Petugas Kasir :</h4>
+                    </div>
+                    <div class="col text-right p-0">
+                        <h5 class="card-title">{{ session('name') }}</h5>
+                        <p class="card-text">{{ session('email') }}</p>
+                    </div>
                 </div>
+
+
+
+
                 <div class="mb-4">
-                    <h4>Cari Pelanggan</h4>
-                    <div class="form-check form-switch mb-3">
+                    <h4>Cari Pelanggan Terdaftar</h4>
+                    {{-- <div class="form-check form-switch mb-3">
                         <input class="form-check-input" type="checkbox" id="toggleExistingCustomer">
                         <label class="form-check-label" for="toggleExistingCustomer">Tampilkan Cari Existing
                             Pelanggan</label>
+                    </div> --}}
+                    <div class="mb-3 carilisting">
+                        <label for="noTelp">Email :</label>
+                        <div class="input-group">
+                            <input type="email" class="form-control" id="check_email" name="check_email"
+                            placeholder="Masukkan email pelanggan yang dituju">
+                        <button type="button" onclick="cariPelanggan()" class="btn btn-secondary ml-2">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        </div>
                     </div>
-                    <div class="mb-3 carilisting" style="display: none;">
-                        <label for="noTelp">No. Telp:</label>
-                        <input type="tel" class="form-control" id="check_no_telp" name="check_no_telp"
-                            placeholder="No. Telp">
-                    </div>
-                    <div class="mb-3 carilisting" style="display: none;">
+                    <div class="mb-3 carilisting">
                         <label for="customerDropdown">Pilih Pelanggan:</label>
                         <select id="customerDropdown" class="form-control"></select>
                     </div>
@@ -91,6 +103,7 @@
 
                     <form action="javascript:startTransaksi()" method="post" id="formTransaksi" name="formTransaksi"
                         autocomplete="off" enctype="multipart/form-data"> <!-- Filter Kategori -->
+                        <input type="hidden" id="id_petugas" name="id_petugas" value="{{ session('petugas_id') }}">
                         <div class="mb-3">
                             <label for="nama">Nama:</label>
                             <input type="text" class="form-control" id="nama_pelanggan" name="nama_pelanggan"
@@ -142,7 +155,9 @@
                     <!-- Contoh: -->
                     <div class="mb-3">
                         <label for="nama">Total Harga :</label>
-                        <input type="text" class="form-control" id="total_harga" name="total_harga"
+                        <input type="text" class="form-control" id="total_harga_prev" name="total_harga_prev"
+                            placeholder="Harga" disabled     readonly>
+                        <input type="hidden" class="form-control" id="total_harga" name="total_harga"
                             placeholder="Harga" readonly>
                     </div>
                     <div class="mb-3">

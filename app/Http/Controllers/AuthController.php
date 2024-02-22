@@ -7,6 +7,7 @@ use App\Models\Toko;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -35,7 +37,7 @@ class AuthController extends Controller
     }
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['loginMobile', 'login', 'register', 'logout', 'checkaccount', 'aktivasiakun']]);
+        $this->middleware('auth:api', ['except' => ['loginMobile', 'login', 'register', 'logout', 'checkaccount', 'aktivasiakun', 'kirimResetPass', 'submitResetPasswordForm']]);
     }
     /**
      * Display a listing of the resource.
@@ -133,7 +135,6 @@ class AuthController extends Controller
                 session(['toko_id' => $id->petugas_toko_id]);
                 session(['petugas_id' => $id->petugas_id]);
                 session(['toko_foto' => $toko->toko_foto]);
-
             }
             // }
             // if ($toko) {
@@ -435,5 +436,88 @@ class AuthController extends Controller
     {
         $token = Session::token();
         return response()->json(['csrf_token' => $token]);
+    }
+    public function kirimResetPass(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if ($user) {
+            $token = Str::random(40);
+
+            // Store token in the password_resets table
+            DB::table('password_resets')->insert([
+                'email' => $request->email,
+                'token' => $token,
+                'created_at' => Carbon::now()
+            ]);
+
+            // Send email to the user
+            Mail::send('mail.resetpassword', ['token' => $token, 'name' => $user->name], function ($message) use ($request) {
+                $message->to($request->email);
+                $message->subject('Reset Password');
+            });
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Email Terkirim!.',
+        ]);
+    }
+    public function submitResetPasswordForm(Request $request)
+
+    {
+
+        $request->validate([
+
+            'password' => 'required|string|min:6|confirmed',
+
+            'password_confirmation' => 'required'
+
+        ]);
+
+        if ($request->password !== $request->password_confirmation) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Konfirmasi kata sandi tidak cocok.'
+            ]);
+        }
+
+        $updatePassword = DB::table('password_resets')
+
+            ->where([
+                'token' => $request->token
+            ])
+
+            ->first();
+
+
+
+        if (!$updatePassword) {
+
+            return back()->withInput()->with('error', 'Invalid token!');
+        }
+
+
+
+        $user = User::where('email', $updatePassword->email)
+
+            ->update([
+                'password' => bcrypt($request->password),
+            ]);
+
+
+
+        DB::table('password_resets')->where(['email' => $updatePassword->email])->delete();
+
+
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Kata Sandi Berhasil di Ubah!.',
+        ]);
     }
 }

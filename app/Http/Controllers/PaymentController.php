@@ -30,7 +30,7 @@ class PaymentController extends Controller
         $noTelp = $request->input('no_telp');
         $emailPelanggan = $request->input('email_pelanggan');
 
-        $customerExists = DB::table('pelanggan')->Where('no_hp', $noTelp)->first();
+        $customerExists = DB::table('pelanggan')->Where('email_pelanggan', $emailPelanggan)->first();
 
         return response()->json($customerExists);
     }
@@ -67,15 +67,14 @@ class PaymentController extends Controller
         $params = array(
             'transaction_details' => array(
                 'order_id' => rand(),
-                // Ganti total_harga dengan total harga yang sesuai
-                'gross_amount' => array_sum(array_column($produkData, 'harga_produk')) // Menghitung total harga
+                'gross_amount' => array_sum(array_column($produkData, 'harga_produk'))
             ),
             'customer_details' => array(
                 'first_name' => $data['nama_pelanggan'],
                 'email' => $data['email_pelanggan'],
                 'phone' => $data['no_telp'],
             ),
-            'item_details' => $itemDetails, // Set the item details array
+            'item_details' => $itemDetails,
         );
         \Midtrans\Config::$serverKey = $toko->toko_midtrans_serverkey;
 
@@ -86,8 +85,9 @@ class PaymentController extends Controller
     public function initiateCashPayment(Request $request)
     {
         $data = $request->post();
+        $data['penjualan_payment_method'] = 1;
         if (
-            !isset($data['produkData']) || // Ganti total_harga dengan produkData
+            !isset($data['produkData']) ||
             !isset($data['nama_pelanggan']) ||
             !isset($data['email_pelanggan']) ||
             !isset($data['no_telp'])
@@ -95,7 +95,7 @@ class PaymentController extends Controller
             return response()->json(['error' => 'Missing required data'], 400);
         }
 
-        $produkData = json_decode($data['produkData'], true); // Decode produkData menjadi array
+        $produkData = json_decode($data['produkData'], true);
         // dd($produkData);
 
         $itemDetails = array();
@@ -120,7 +120,7 @@ class PaymentController extends Controller
         // Mendapatkan detail item dari data transaksi
         $itemDetails = json_decode($dataTransaction['produkData'], true);
 
-        $penjualanId = $result['order_id'];
+        $penjualanId = $result['order_id'] ?? rand();
         $idPelangganRaw = DB::table('pelanggan')
             ->where('no_hp', $dataTransaction['no_telp'])
             ->select('pelanggan_id')
@@ -158,8 +158,8 @@ class PaymentController extends Controller
             'penjualan_total_harga' => $totalHarga,
             'penjualan_toko_id' => 1,
             'penjualan_pelanggan_id' => $idPelanggan,
-            'penjualan_petugas_id' => 4,
-            'penjualan_payment_method' => 2,
+            'penjualan_petugas_id' => $dataTransaction['id_petugas'],
+            'penjualan_payment_method' => $dataTransaction['penjualan_payment_method'] ?? 2,
         ]);
         // Penjualan::create([
         //     'penjualan_id' => $penjualanId,
@@ -239,6 +239,7 @@ class PaymentController extends Controller
         //     ->where('petugas.petugas_id', $data['penjualan']->penjualan_petugas_id)
         //     ->select(DB::raw('CONVERT(users.name USING utf8mb4) AS name'))
         //     ->first();
+        $data['petugas'] = DB::table('v_petugas')->where('petugas_id', $data['penjualan']->penjualan_petugas_id)->first();
         return response()->json($data);
     }
     public function sendEmail(Request $request)
@@ -295,19 +296,23 @@ class PaymentController extends Controller
     }
     public function exportExcel(Request $request)
     {
-        $date = $request->post();
+        $dateRange = $request->input('date');
+
+        [$startDateString, $endDateString] = explode(' - ', $dateRange);
+
+        $startDate = date('Y-m-d', strtotime($startDateString));
+        $endDate = date('Y-m-d', strtotime($endDateString));
 
         $id = session('toko_id');
-        $opr['penjualan'] = DB::table('v_penjualan')->where('penjualan_toko_id', $id)->get();
-        // $opr['penjualan'] = DB::table/('v_penjualan')->where('penjualan_toko_id', $id)->get();
+        $opr['penjualan'] = DB::table('v_penjualan')
+            ->where('penjualan_toko_id', $id)
+            ->whereBetween('penjualan_created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59'])
+            ->get();
 
-        // Mencari detail penjualan untuk setiap penjualan
         foreach ($opr['penjualan'] as $penjualan) {
             $penjualan->detail = DB::table('v_detail_penjualan')->where('penjualan_id', $penjualan->penjualan_id)->get();
         }
-        // dd($opr);
 
-        // $opr = DB::table('v_all_penjualan')->where('penjualan_toko_id', $id)->get();
         return response()->json([
             'success' =>  true,
             'status' =>  'Success',

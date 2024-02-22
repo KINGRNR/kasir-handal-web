@@ -44,6 +44,13 @@ Route::middleware(['web'])->group(function () {
         Route::get('/aktivasiakun', function () {
             return view('auth.aktivasi');
         })->name('aktivasi');
+        Route::get('/lupapassword', function () {
+            return view('auth.forgotpassword');
+        })->name('forgotpass');
+        Route::get('/resetpassword', function () {
+            return view('auth.resetpassword');
+        })->name('aktivasi');
+      
         Route::post('/postlogin', [AuthController::class, 'login'])->name('login.store');
     });
     
@@ -72,9 +79,9 @@ Route::middleware(['web'])->group(function () {
         Route::get('/toko/produk', function () {
             return view('toko.produk.index');
         })->name('produk');
-        Route::get('/toko/keranjang', function () {
-            return view('toko.keranjang.index');
-        })->name('keranjang');
+        // Route::get('/toko/keranjang', function () {
+        //     return view('toko.keranjang.index');
+        // })->name('keranjang');
         Route::get('/toko/report-penjualan', function () {
             return view('toko.report-penjualan.index');
         })->name('report-penjualan');
@@ -87,9 +94,9 @@ Route::middleware(['web'])->group(function () {
 
 
     Route::group(['middleware' => ['roleCheck:TKQR2DSJlQ5b31V2']], function () {
-        Route::get('/petugas/dashboard', function () {
-            return view('petugas.dashboard.index');
-        })->name('petugas');
+        // Route::get('/petugas/dashboard', function () {
+        //     return view('petugas.dashboard.index');
+        // })->name('petugas');
         Route::get('/petugas/kategori', function () {
             return view('petugas.kategori.index');
         })->name('kategori');
@@ -98,14 +105,17 @@ Route::middleware(['web'])->group(function () {
         })->name('produk');
         Route::get('/petugas/keranjang', function () {
             return view('petugas.keranjang.index');
-        })->name('keranjang');
+        })->name('petugas');
         Route::get('/petugas/report-penjualan', function () {
             return view('petugas.report-penjualan.index');
         })->name('report-penjualan');
+        Route::get('/petugas/profile', function () {
+            return view('petugas.profile.index');
+        })->name('profilepetugas');
         //controller
     });
     Route::controller(UserController::class)->group(function () {
-        foreach (['showPetugas', 'savePetugas', 'detail', 'update', 'delete', 'getData', 'hapusSessionToken'] as $key => $value) {
+        foreach (['showPetugas', 'savePetugas', 'showToko', 'showUser' ,'detail', 'update', 'delete', 'getData', 'hapusSessionToken', 'submitResetPasswordForm'] as $key => $value) {
             Route::post('/user/' . $value, $value);
         }
     });
@@ -130,7 +140,7 @@ Route::middleware(['web'])->group(function () {
         }
     });
     Route::controller(ProfileController::class)->group(function () {
-        foreach (['indexToko', 'saveMidtransKey', 'saveProfileToko'] as $key => $value) {
+        foreach (['indexToko', 'saveMidtransKey', 'saveProfileToko', 'indexPetugas'] as $key => $value) {
             Route::post('/profile/' . $value, $value);
         }
     });

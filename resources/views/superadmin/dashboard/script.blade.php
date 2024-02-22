@@ -64,7 +64,7 @@
             datasets: [{
                 label: 'Bar Chart Dataset',
                 data: [50, 30, 40, 20], // Example data, adjust as needed
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+                backgroundColor: ['#36A2EB']
             }]
         };
 

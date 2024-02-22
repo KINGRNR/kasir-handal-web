@@ -1,4 +1,4 @@
-<div class="footer py-4 d-flex flex-lg-column" id="kt_footer" style="background: #2F3281;">
+<div class="footer py-4 d-flex flex-lg-column mt-5"  id="kt_footer" style="background: #2F3281;">
     <!--begin::Container-->
     <div class="container-xxl d-flex flex-column flex-md-row align-items-center justify-content-between">
         <!--begin::Copyright-->

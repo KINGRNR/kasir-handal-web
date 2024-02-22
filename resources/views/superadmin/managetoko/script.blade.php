@@ -32,7 +32,7 @@
             searching: true,
             destroyAble: true,
             ajax: {
-                url: APP_URL + 'user/showUser',
+                url: APP_URL + 'user/showToko',
                 type: "POST",
                 dataType: "json",
                 headers: {
@@ -47,54 +47,27 @@
                     }
                 },
                 {
-                    data: 'name',
-                    name: 'name'
+                    data: 'toko_id',
+                    name: 'toko_id'
                 },
                 {
-                    data: 'email',
-                    name: 'email'
+                    data: 'toko_nama',
+                    name: 'toko_nama'
                 },
-                {
-                    data: 'users_role_id',
-                    render: function(data, type, row) {
-                        var role = row.users_role_id;
-                        var roleDisplay = '';
-
-                        var roleClass = '';
-                        if (role == 'BfiwyVUDrXOpmStr') {
-                            roleDisplay = 'Toko';
-                            roleClass = 'badge-primary'; 
-                        } else if (role == 'TKQR2DSJlQ5b31V2') {
-                            roleDisplay = 'Petugas';
-                            roleClass = 'badge-success'; 
-                        } else if (role == 'FOV4Qtgi5lcQ9kCY') {
-                            roleDisplay = 'Superadmin';
-                            roleClass = 'badge-danger'; 
-                        } else {
-                            roleDisplay = 'Tidak Diketahui';
-                            roleClass = 'badge-secondary'; 
-                        }
-
-                        // Menampilkan role dengan gaya badge
-                        return '<span class="badge ' + roleClass + '" style="opacity: 0.8;">' +
-                            roleDisplay + '</span>';
-                    }
-                },
-
                 {
                     data: 'created_at',
                     render: function(data, type, row) {
                         return quick.convertDate(row.created_at)
                     }
                 }, {
-                    data: 'id',
+                    data: 'toko_id',
                     render: function(data, type, row) {
                         var editButton =
-                            '<button class="btn btn-sm btn-primary edit-btn" onclick="edit(this)" data-id="' +
-                            row.id + '">Buka</button>';
+                            '<button class="btn btn-sm btn-primary edit-btn" onclick="detail(this)" data-id="' +
+                            row.toko_id + '">Buka</button>';
                         var deleteButton =
                             '<button class="btn btn-sm btn-danger delete-btn" onclick="deleteRow(this)" data-id="' +
-                            row.id +
+                            row.toko_id +
                             '">Delete</button>';
 
                         return editButton + ' ' + deleteButton;
@@ -186,30 +159,30 @@
 
     }
 
-    function edit(atr) {
-        $('#formPetugas').trigger('reset');
-        $('#id').val(null);
-        var id = $(atr).attr('data-id');
-        axios.post("/user/detail", {
-                id: id
-            }, {
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    // 'Content-Type': 'multipart/form-data',
-                }
-            })
-            .then(response => {
-                let data = response.data
-                console.log(data);
-                $('#id').val(data.id);
-                $('#name').val(data.name);
-                $('#email').val(data.email)
-                $('#modalPetugas').modal('show');
+    function detail(atr) {
+        $('.table-switch').hide();
+        $('.detail-toko').show()
+        
+        // axios.post("/user/detail", {
+        //         id: id
+        //     }, {
+        //         headers: {
+        //             'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        //             // 'Content-Type': 'multipart/form-data',
+        //         }
+        //     })
+        //     .then(response => {
+        //         let data = response.data
+        //         console.log(data);
+        //         $('#id').val(data.id);
+        //         $('#name').val(data.name);
+        //         $('#email').val(data.email)
+        //         $('#modalPetugas').modal('show');
 
-            })
-            .catch(error => {
-                console.error('There has been a problem with your Axios operation:', error);
-            });
+        //     })
+        //     .catch(error => {
+        //         console.error('There has been a problem with your Axios operation:', error);
+        //     });
     }
 
     function save() {

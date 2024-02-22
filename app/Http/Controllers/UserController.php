@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Intervention\Image\Colors\Rgb\Channels\Red;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
@@ -23,7 +24,18 @@ class UserController extends Controller
     return DataTables::of($operation)
       ->toJson();
   }
+  public function showToko(Request $request){
+    $operation = DB::table('v_toko')->get();
 
+    return DataTables::of($operation)
+      ->toJson();
+  }
+  public function showUser(Request $request){
+    $operation = DB::table('users')->get();
+
+    return DataTables::of($operation)
+      ->toJson();
+  }
   public function savePetugas(Request $request)
   {
     $data = $request->post();

@@ -21,7 +21,7 @@
                     <div class=p-10 p-lg-15 mx-auto">
                         <!--begin::Form-->
                         <form class="form w-100     w-lg-500px" novalidate="novalidate" id="kt_sign_in_form" method="POST"
-                            name="form-aktivasi" action="javascript:aktivasiakun()">
+                            name="form-aktivasi" action="javascript:submitResetPasswordForm()">
                             @csrf
                             {{-- <div class="text-center mb-10">
                                 <h1 class="text-dark mb-3">Sign In</h1>
@@ -31,29 +31,15 @@
                             </div> --}}
                             <div class="text-center mb-10">
                                 <!--begin::Title-->
-                                <h1 class="text-dark mb-3">Aktivasi Akun</h1>
-                                <div class="text-gray-400 fw-bold fs-4">Silakan cek email Anda untuk melihat token.
-                                </div>
+                                <h1 class="text-dark mb-3">Ubah Kata Sandi</h1>
+                                {{-- <div class="text-gray-400 fw-bold fs-4">Silakan cek email Anda untuk melihat token.
+                                </div> --}}
                                 {{-- <a href="/login" class="link-primary fw-bolder">Tidak menerima email? Klik di sini</a> --}}
                             </div>
 
 
-                            <div class="fv-row mb-10">
-                                <input type="hidden" id="id" name="id">
-                                <input type="hidden" id="role" name="role">
-                                <label class="form-label fs-14 fw-bolder text-dark">Email</label>
-                                <input
-                                    class="form-control @error('email') is-invalid @enderror form-control-lg fs-14 form-control-solid border border-gray-200 text-gray-900"
-                                    id="email" type="email" name="email" placeholder="Your E-mail" required
-                                    autocomplete="email" disabled>
-                                {{-- value="{{ old('email') }}" --}}
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="mb-10 fv-row password-input d-none" data-kt-password-meter="true">
+                        
+                            <div class="mb-10 fv-row password-input " data-kt-password-meter="true">
                                 <div class="mb-1">
                                     <label class="form-label fw-bolder text-dark fs-6" for="password">Password</label>
                                     <div class="position-relative mb-3">
@@ -91,27 +77,20 @@
                                 @enderror
                             </div>
 
-                            <div class="fv-row mb-2 password-input d-none">
+                            <div class="fv-row mb-10 password-input">
+                                <input type="hidden" name="token" id="token">
                                 <label class="form-label fw-bolder text-dark fs-6" for="password-confirm">Konfirmasi
                                     Password</label>
                                 <input id="password-confirm" type="password"
                                     class="form-control form-control-lg form-control-solid" name="password_confirmation"
                                     required autocomplete="new-password" placeholder="Ulangi kata sandi">
                             </div>
-                            <div class="fv-row mb-10">
-                                <label class="form-label fs-14 fw-bolder text-dark">Kode Aktivasi</label>
-                                <input
-                                    class="form-control form-control-lg fs-14 form-control-solid border border-gray-200 text-gray-900"
-                                    id="token" type="text" name="token" placeholder="Enter your Kode Aktivasi"
-                                    required>
-                                {{-- value="{{ old('email') }}" --}}
-                            </div>
-
+                        
                             <div class="text-center">
 
                                 <button type="submit" id="" class="btn btn-lg w-100 mb-4"
                                     style="background-color: #1B61AD">
-                                    <span class="indicator-label text-white">Aktivasi Akun</span>
+                                    <span class="indicator-label text-white">Ubah Kata Sandi</span>
                                     <span class="indicator-progress text-white">Tunggu sebentar...
                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                 </button>
@@ -148,45 +127,13 @@
         $(document).ready(function() {
             var urlString = window.location.href;
             var url = new URL(urlString);
-            var id = url.searchParams.get("id");
+            var id = url.searchParams.get("token");
             console.log(id);
-            $('#id').val(id)
-
-            axios.post("/api/auth/checkaccount", {
-                    id: id
-                }, {
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        // 'Content-Type': 'multipart/form-data', // Jangan ditambahkan header ini
-                    }
-                })
-                .then(response => {
-                    var data = response.data
-                    if (data.active == 0 && data.users_role_id == "BfiwyVUDrXOpmStr") {
-                        $('#email').val(data.email)
-                        $('#role').val(data.users_role_id)
-
-                        $('.password-input').remove()
-                    } else if (data.active == 0 && data.users_role_id == "TKQR2DSJlQ5b31V2") {
-                        $('#email').val(data.email)
-                        $('#role').val(data.users_role_id)
-
-                        $('.password-input').removeClass('d-none')
-
-                    } else if (data.active == 1) {
-                        location.href = "/login"
-                    } else if (data == null) {
-                        location.href = "/login"
-                    } else {
-                        location.href = "/login"
-                    }
-                })
-                .catch(error => {
-                    console.error('There has been a problem with your Axios operation:', error);
-                });
-            if (!id) {
-                location.href = "/login"
+            if(!id){
+                window.location.href='/login'
             }
+            $('#token').val(id)
+            
         });
 
         togglePassword = () => {
@@ -199,10 +146,10 @@
             }
         }
 
-        function aktivasiakun() {
+        function submitResetPasswordForm() {
             var form = "form-aktivasi";
             var data = new FormData($('[name="' + form + '"]')[0]);
-            axios.post("/api/auth/aktivasiakun", data, {
+            axios.post("/api/auth/submitResetPasswordForm", data, {
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
                         // 'Content-Type': 'multipart/form-data', // Jangan ditambahkan header ini
@@ -249,7 +196,7 @@
                     } else {
                         // Tampilkan SweetAlert error umum
                         quick.toastNotif({
-                            title: "Terjadi kesalahan saat memproses permintaan.",
+                            title: error.response.data.message,
                             icon: 'error',
                             timer: 3000,
                             // callback: function() {
