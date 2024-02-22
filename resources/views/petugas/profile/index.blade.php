@@ -11,11 +11,11 @@
                     data-kt-sticky-offset="{default: '200px', lg: '300px'}" {{-- style="background: radial-gradient(circle at 0% 50%, #2F3281 0%, #40A0B6 67%, #08C0B5 82.29%);"> --}}
                     style="background: #2F3281">
 
-                    @include('toko.header.header')
+                    @include('petugas.header.header')
                 </div>
 
                 <div id="kt_content_container" class="mt-5 d-flex flex-column-fluid align-items-start container-xxl">
-                    {{-- @include('toko.header.sidebar') --}}
+                    {{-- @include('petugas.header.sidebar') --}}
                     <div class="content flex-row-fluid" id="kt_content">
                         <!--begin::Navbar-->
                         <div class="card mb-5 mb-xl-10">
@@ -811,7 +811,7 @@
                         <!--end::Row-->
                     </div>
                 </div>
-                @include('toko.footer.index')
+                @include('petugas.footer.index')
 
                 <!--end::Footer-->
             </div>
@@ -851,10 +851,10 @@
             </div>
         </div>
     </div>
-    @include('toko.bottomnavbar.botnav')
+    @include('petugas.bottomnavbar.botnav')
 
-    {{-- @include('toko.dashboard.script') --}}
-    @include('toko.profile.script')
+    {{-- @include('petugas.dashboard.script') --}}
+    @include('petugas.profile.script')
 
 </body>
 @include('layouts.support.bundle.bundlefooter')

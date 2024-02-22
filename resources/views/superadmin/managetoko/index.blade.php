@@ -15,8 +15,7 @@
                 <!--begin::Header-->
                 <div id="kt_header" class="header align-items-stretch " data-kt-sticky="true" data-kt-sticky-name="header"
                     data-kt-sticky-offset="{default: '200px', lg: '300px'}" name="header"
-                    data-kt-sticky-offset="{default: '200px', lg: '300px'}"
-                    style="background: #2F3281">
+                    data-kt-sticky-offset="{default: '200px', lg: '300px'}" style="background: #2F3281">
                     <!--begin::Container-->
                     @include('superadmin.header.header')
                     <!--end::Container-->
@@ -26,7 +25,7 @@
                 {{-- <div class="toolbar py-5 py-lg-15" id="kt_toolbar">
                         <div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
                             <div class="page-title d-flex flex-column me-3">
-                                <h1 class="d-flex text-white fw-bolder my-1 fs-3">manageuser</h1>
+                                <h1 class="d-flex text-white fw-bolder my-1 fs-3">managetoko</h1>
                                 <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
                                     <li class="breadcrumb-item text-white opacity-75">
                                         <a href="../../demo2/dist/index.html"
@@ -35,7 +34,7 @@
                                     <li class="breadcrumb-item">
                                         <span class="bullet bg-white opacity-75 w-5px h-2px"></span>
                                     </li>
-                                    <li class="breadcrumb-item text-white opacity-75">manageuser</li>
+                                    <li class="breadcrumb-item text-white opacity-75">managetoko</li>
                                 </ul>
                             </div>
                         </div>
@@ -44,7 +43,7 @@
                 <div id="kt_content_container" class="mt-5 d-flex flex-column-fluid align-items-start container-xxl">
                     {{-- @include('superadmin.header.sidebar') --}}
                     <div class="content flex-row-fluid" id="kt_content">
-                        @include('superadmin.manageuser.table')
+                        @include('superadmin.managetoko.table') @include('superadmin.managetoko.detailtoko')
                     </div>
                 </div>
                 @include('superadmin.footer.index')
@@ -73,6 +72,6 @@
 </body>
 
 @include('layouts.support.bundle.bundlefooter')
-@include('superadmin.manageuser.script')
+@include('superadmin.managetoko.script')
 
 </html>

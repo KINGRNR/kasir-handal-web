@@ -72,7 +72,7 @@
                              class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-rounded-0 py-lg-4 w-lg-225px">
                              <div onclick="window.location.href='/toko/kategori'" class="menu-item me-lg-1">
                                  <span class="menu-link py-3 kategori">
-                                     <span class="menu-icon">
+                                     {{-- <span class="menu-icon">
                                          <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm007.svg-->
                                          <span class="svg-icon svg-icon-2">
                                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -89,14 +89,14 @@
                                              </svg>
                                          </span>
                                          <!--end::Svg Icon-->
-                                     </span>
+                                     </span> --}}
                                      <span class="menu-title">Master Merek</span>
                                      <span class="menu-arrow d-lg-none"></span>
                                  </span>
                              </div>
                              <div onclick="window.location.href='/toko/produk'" class="menu-item me-lg-1">
                                  <span class="menu-link py-3 barang">
-                                     <span class="menu-icon">
+                                     {{-- <span class="menu-icon">
                                          <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
                                          <span class="svg-icon svg-icon-2">
                                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -116,7 +116,7 @@
                                              </svg>
                                          </span>
                                          <!--end::Svg Icon-->
-                                     </span>
+                                     </span> --}}
                                      <span class="menu-title">Master Produk</span>
                                      <span class="menu-arrow d-lg-none"></span>
                                  </span>
@@ -125,7 +125,7 @@
                      </div>
                      <div onclick="window.location.href='/toko/report-penjualan'" class="menu-item me-lg-1">
                          <span class="menu-link py-3 penjualan">
-                             <span class="menu-title text-white">Penjualan</span>
+                             <span class="menu-title text-white">Riwayat Transaksi</span>
                              <span class="menu-arrow d-lg-none"></span>
                          </span>
                      </div>

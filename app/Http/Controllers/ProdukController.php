@@ -220,10 +220,29 @@ class ProdukController extends Controller
   public function showProdukCart(Request $request)
   {
     $id = session()->get('toko_id');
-    $operation = DB::table('v_produk')->where('id_kategori_toko', $id)->where('produk_deleted_at', null)->get();
+    $query = $request->post();
 
-    return response()->json($operation);
+    // Mengatur query berdasarkan kategori
+    if ($query['kategori'] == "all") {
+      $operation = DB::table('v_produk')
+        ->where('id_kategori_toko', $id)
+        ->where('produk_deleted_at', null);
+    } else {
+      $operation = DB::table('v_produk')
+        ->where('id_kategori_toko', $id)
+        ->where('id_produk_kategori', $query['kategori'])
+        ->where('produk_deleted_at', null);
+    }
+
+    if (isset($query['search']) && !empty($query['search'])) {
+      $operation->where('nama_produk', 'like', '%' . $query['search'] . '%');
+    }
+
+    $results = $operation->get();
+
+    return response()->json($results);
   }
+
   public function detail(Request $request)
   {
     $id = $request->post();

@@ -25,6 +25,20 @@ class ProfileController extends Controller
     $operation['toko'] = DB::table('toko')->where('toko_user_id', $id)->first();
     return response()->json($operation);
   }
+  public function indexPetugas(Request $request)
+  {
+    $id = session('user_id');
+
+    // dd(session('user_id'));
+    // $id_toko = DB::table('toko')->where('toko_user_id', $id)->select('toko_id')->first();
+
+    // $operation = DB::table('users')->where('users_role_id','TKQR2DSJlQ5b31V2')->get();
+    $operation['user'] = DB::table('users')->where('id', $id)->first();
+    $operation['petugas'] = DB::table('petugas')->where('petugas_user_id', $id)->first();
+    $operation['toko'] = DB::table('toko')->where('toko_id', $operation['petugas']->petugas_toko_id)->first();
+
+    return response()->json($operation);
+  }
   public function saveMidtransKey(Request $request)
   {
     $data = $request->post();

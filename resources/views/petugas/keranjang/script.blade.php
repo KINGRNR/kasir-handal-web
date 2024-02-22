@@ -31,33 +31,6 @@
 
         $(document).ready(function() {
             $('#kt_content_container').removeClass('container-xxl').addClass('container-fluid');
-
-            $('#check_no_telp').on('keyup', function() {
-                var noTelp = $('#check_no_telp').val();
-
-                axios.post('/pay/cekpelanggan', {
-                        no_telp: noTelp,
-                    })
-                    .then(function(response) {
-                        updateCustomerDropdown(response.data);
-                    })
-                    .catch(function(error) {
-                        console.error(error);
-                    });
-            });
-
-            function updateCustomerDropdown(customer) {
-                var dropdown = $('#customerDropdown');
-                dropdown.empty(); // Clear existing options
-
-                // Add default option
-                dropdown.append($('<option>').text('Pilih Pelanggan').val(''));
-
-                // Add option for the customer
-                dropdown.append($('<option>').text(customer.nama_pelanggan).val(JSON.stringify(customer)));
-            }
-
-
             $('#customerDropdown').on('change', function() {
                 var selectedCustomer = JSON.parse($(this).val());
 
@@ -77,6 +50,7 @@
         });
 
         init = async () => {
+            await getKategori();
             await showProduk();
             // quick.unblockPage()
         }
@@ -84,27 +58,136 @@
             $(`input, select`).removeAttr('disabled');
         });
 
-        $('#toggleExistingCustomer').change(function() {
-            if ($(this).is(':checked')) {
-                // Tampilkan bagian Cari Existing Pelanggan
-                $('.carilisting').show();
-                $('#nama_pelanggan, #no_telp, #email_pelanggan').prop('readonly', true);
-            } else {
-                // Sembunyikan bagian Cari Existing Pelanggan
-                $('.carilisting').hide();
-                $('#nama_pelanggan, #no_telp, #email_pelanggan').prop('readonly', false);
-            }
-        });
-
-        function showProduk() {
-            axios.post("/produk/showProdukCart", {
+        function getKategori() {
+            axios.post("/produk/getKategori", {
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     }
                 })
                 .then(response => {
+                    var data = response.data;
+                    if (data.length > 0) {
+                        $.each(data, function(key, value) {
+                            $('#kategori_produk').append('<option value="' + value.id_kategori + '">' + value
+                                .nama_kategori + '</option>');
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your Axios operation:', error);
+                });
+        }
+        // $('#toggleExistingCustomer').change(function() {
+        //     if ($(this).is(':checked')) {
+        //         // Tampilkan bagian Cari Existing Pelanggan
+        //         $('.carilisting').show();
+        //         $('#nama_pelanggan, #no_telp, #email_pelanggan').prop('readonly', true);
+        //     } else {
+        //         // Sembunyikan bagian Cari Existing Pelanggan
+        //         $('.carilisting').hide();
+        //         $('#nama_pelanggan, #no_telp, #email_pelanggan').prop('readonly', false);
+        //     }
+        // });
+        function cariPelanggan() {
+
+            var email_pelanggan = $('#check_email').val();
+
+            axios.post('/pay/cekpelanggan', {
+                    email_pelanggan: email_pelanggan,
+                })
+                .then(function(response) {
+                    if (response.data) {
+                        updateCustomerDropdown(response.data);
+
+                    } else {
+
+                    }
+                })
+                .catch(function(error) {
+                    console.error(error);
+                });
+        }
+
+        function updateCustomerDropdown(customer) {
+            var dropdown = $('#customerDropdown');
+            dropdown.empty();
+
+            dropdown.append($('<option>').text('Pilih Pelanggan').val(''));
+
+            dropdown.append($('<option>').text(customer.nama_pelanggan).val(JSON.stringify(customer)));
+        }
+
+        // function showProduk() {
+        //     axios.post("/produk/showProdukCart", {
+        //             headers: {
+        //                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        //             }
+        //         })
+        //         .then(response => {
+        //             let data = response.data;
+        //             console.log(data);
+        //             $.each(data, function(i, v) {
+        //                 console.log(v);
+
+        //                 var stockHabis = v.stok_produk === 0 ?
+        //                     '<div class="position-absolute top-50 start-50 translate-middle bg-danger bg-opacity-50 text-white p-2 rounded">Stok Habis</div>' :
+        //                     '';
+
+        //                 var warnaCard = v.stok_produk === 0 ? 'text-muted' :
+        //                     '';
+
+        //                 var produk = `
+    //         <div class="col-md-4 mb-4 ">
+    //             <div class="card border rounded text-center ${v.stok_produk === 0 ? 'bg-light' : ''}">
+
+    //                 <div class="ratio ratio-16x9 z-3">
+    //                     <img src="/file/produk_foto/${v.foto_produk}" alt="Product Image" class="img-thumbnail object-fit-cover" style="object-fit: contain;">
+    //                 </div>
+    //                 ${stockHabis} 
+    //                 <div class="card-body">
+    //                     <p class="card-text mb-2">${v.nama_kategori}</p>
+    //                     <h6 class="card-title mb-2">${v.nama_produk}</h6>
+    //                     <p class="card-text mb-2"><span class="badge bg-success">${quick.formatRupiah(v.harga_produk)}</span></p>
+    //                     <p class="card-text">Tersedia : ${v.stok_produk}</p>
+    //                     <button class="btn btn-sm btn-primary" id="tambahkeranjang${v.id_produk}" onclick="tambahKeranjang(${v.id_produk})" ${v.stok_produk === 0 ? 'disabled' : ''}>Tambah ke Keranjang</button>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //         `;
+
+        //                 $('.produk-container').append(produk);
+        //             });
+        //         })
+        //         .catch(error => {
+        //             console.error('There has been a problem with your Axios operation:', error);
+        //         });
+        // }
+        function showProduk() {
+            var kategori = $('#kategori_produk').val();
+            var searchQuery = $('#search').val();
+
+            axios.post("/produk/showProdukCart", {
+                    kategori: kategori,
+                    search: searchQuery,
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    }
+                })
+                .then(response => {
+                    $('.produk-container').empty();
+
                     let data = response.data;
                     console.log(data);
+
+                    if (data.length === 0) {
+                        $('.produk-container').append(
+                            '<div class="text-center">Tidak ada produk yang ditemukan.</div>');
+                        return;
+                    }
+
+                    var produkStokAda = [];
+                    var produkStokHabis = [];
+
                     $.each(data, function(i, v) {
                         console.log(v);
 
@@ -112,28 +195,39 @@
                             '<div class="position-absolute top-50 start-50 translate-middle bg-danger bg-opacity-50 text-white p-2 rounded">Stok Habis</div>' :
                             '';
 
-                        var warnaCard = v.stok_produk === 0 ? 'text-muted' :
-                            '';
+                        var warnaCard = v.stok_produk === 0 ? 'text-muted' : '';
 
                         var produk = `
-                <div class="col-md-4 mb-4 ">
-                    <div class="card border rounded text-center ${v.stok_produk === 0 ? 'bg-light' : ''}">
-                        
-                        <div class="ratio ratio-16x9 z-3">
-                            <img src="/file/produk_foto/${v.foto_produk}" alt="Product Image" class="img-thumbnail object-fit-cover" style="object-fit: contain;">
-                        </div>
-                        ${stockHabis} 
-                        <div class="card-body">
-                            <p class="card-text mb-2">${v.nama_kategori}</p>
-                            <h6 class="card-title mb-2">${v.nama_produk}</h6>
-                            <p class="card-text mb-2"><span class="badge bg-success">${quick.formatRupiah(v.harga_produk)}</span></p>
-                            <p class="card-text">Tersedia : ${v.stok_produk}</p>
-                            <button class="btn btn-sm btn-primary" id="tambahkeranjang${v.id_produk}" onclick="tambahKeranjang(${v.id_produk})" ${v.stok_produk === 0 ? 'disabled' : ''}>Tambah ke Keranjang</button>
+                    <div class="col-md-4 mb-4 ">
+                        <div class="card border rounded text-center ${v.stok_produk === 0 ? 'bg-light' : ''}">
+                            
+                            <div class="ratio ratio-16x9 z-3">
+                                <img src="/file/produk_foto/${v.foto_produk}" alt="Product Image" class="img-thumbnail object-fit-cover" style="object-fit: contain;">
+                            </div>
+                            ${stockHabis} 
+                            <div class="card-body">
+                                <p class="card-text mb-2">${v.nama_kategori}</p>
+                                <h6 class="card-title mb-2">${v.nama_produk}</h6>
+                                <p class="card-text mb-2"><span class="badge bg-success">${quick.formatRupiah(v.harga_produk)}</span></p>
+                                <p class="card-text">Tersedia : ${v.stok_produk}</p>
+                                <button class="btn btn-sm btn-primary" id="tambahkeranjang${v.id_produk}" onclick="tambahKeranjang(${v.id_produk})" ${v.stok_produk === 0 ? 'disabled' : ''}>Tambah ke Keranjang</button>
+                            </div>
                         </div>
                     </div>
-                </div>
                 `;
 
+                        if (v.stok_produk === 0) {
+                            produkStokHabis.push(produk);
+                        } else {
+                            produkStokAda.push(produk);
+                        }
+                    });
+
+                    produkStokAda.forEach(function(produk) {
+                        $('.produk-container').append(produk);
+                    });
+
+                    produkStokHabis.forEach(function(produk) {
                         $('.produk-container').append(produk);
                     });
                 })
@@ -141,6 +235,14 @@
                     console.error('There has been a problem with your Axios operation:', error);
                 });
         }
+
+
+        // Panggil fungsi showProduk saat filter berubah atau pencarian dilakukan
+        $(document).ready(function() {
+            $('#kategori_produk, #search').on('change keyup', function() {
+                showProduk();
+            });
+        });
 
 
         var totalPrice = 0;
@@ -179,7 +281,7 @@
                                                         <i class="fas fa-trash"></i>
                                                     </span>
                                                 </td>
-                                                <td class="min-w-125px" id="harga${id}" >${data.harga_produk}</td>
+                                                <td class="min-w-150px" id="harga${id}" >${quick.formatRupiah(data.harga_produk)}</td>
                                                 
                                             </tr>
                                         `;
@@ -197,7 +299,7 @@
                     $('.form-produk').append(form);
                     $('#idProduk').append(keranjang);
                     console.log(data.harga_produk);
-                    var hargaProduk = parseFloat(data.harga_produk); 
+                    var hargaProduk = parseFloat(data.harga_produk);
                     hargaProduk = Math.floor(hargaProduk);
                     console.log(hargaProduk)
                     updateTotalPrice(totalPrice + hargaProduk);
@@ -210,6 +312,22 @@
         }
 
         function inputDataHarga() {
+            // $('#formTransaksi input[type="text"]').each(function() {
+            //     if ($(this).val() === '') {
+            //         isValid = false;
+            //         return false;
+            //     }
+            // });
+
+            // if (!isValid) {
+            //     quick.toastNotif({
+            //         title: 'Mohon lengkapi semua data produk terlebih dahulu!',
+            //         icon: 'warning',
+            //         timer: 1500,
+            //     });
+            //     // alert("");
+            //     return;
+            // }
             var totalHarga = $('#total_harga').val();
             $('#total_harga_cash').val(totalHarga);
             if (totalHarga) {
@@ -223,13 +341,16 @@
             var jumlahUangCash = parseFloat($('#jumlah_uang_cash').val());
             var kembalian = jumlahUangCash - totalHarga;
             $('#kembalian_cash').val(kembalian);
+            startTransaksiCash()
         }
 
         function startTransaksiCash() {
             var form = "formTransaksi";
             var formData = new FormData($('[name="' + form + '"]')[0]);
-
-            // Mengumpulkan data produk dari input di form HTML
+            var jumlah_uang_cash = $('#jumlah_uang_cash').val();
+            var kembalian_cash = $('#kembalian_cash').val();
+            formData.append('jumlah_uang_cash', jumlah_uang_cash);
+            formData.append('kembalian_cash', kembalian_cash);
             var produkData = [];
             $('.form-produk > div').each(function(index) {
                 var id_produk = $(this).find('input[name^="id_produk"]').val();
@@ -263,12 +384,28 @@
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                                 'Content-Type': 'application/json',
                             }
-                        })
-                        .then(response => {
+                        }).then(response => {
                             console.log(response)
-                            // let token = response.data
-                            quick.blockPage();
-                            // saveTransaction(response.data.dataPenjualan, result);
+                            let dataPenjualan = response.data.dataPenjualan;
+                            let totalPembayaran = dataPenjualan.total_harga;
+                            let kembalian = dataPenjualan.kembalian_cash;
+                            let uangTunai = dataPenjualan.jumlah_uang_cash;
+                            Swal.fire({
+                                title: 'Transaksi Berhasil!',
+                                html: `<p>Metode Pembayaran : Tunai</p>
+                                        <p>Total Harga : ${quick.formatRupiah(totalPembayaran)}</p>
+                                        <p>Total Bayar : ${quick.formatRupiah(uangTunai)}</p>
+                                        <p>Kembalian : ${quick.formatRupiah(kembalian)}</p>`,
+                                icon: 'success',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'Lanjut',
+                                allowOutsideClick: false
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    saveTransaction(response.data.dataPenjualan, null);
+                                }
+                            });
                         })
                         .catch(error => {
                             console.error('There has been a problem with your Axios operation:', error);
@@ -299,7 +436,25 @@
 
             // Menambahkan data produk ke FormData
             formData.append('produkData', JSON.stringify(produkData));
+            // $('#formTransaksi input[type="text"]').each(function() {
+            //     if ($(this).val() === '') {
+            //         isValid = false;
+            //         return false;
+            //     }
+            // });
 
+            // if (!isValid) {
+            //     quick.toastNotif({
+            //         title: 'Mohon lengkapi semua data produk terlebih dahulu!',
+            //         icon: 'warning',
+            //         timer: 1500,
+            //         // callback: function() {
+            //         //     window.location.reload()
+            //         // }
+            //     });
+            //     // alert("");
+            //     return;
+            // }
             Swal.fire({
                 title: 'Apakah data yang anda input sudah benar?',
                 icon: 'question',
@@ -347,6 +502,25 @@
         }
 
         function initiatebayarCash() {
+            $('#formTransaksi input[type="text"]').each(function() {
+                if ($(this).val() === '') {
+                    isValid = false;
+                    return false;
+                }
+            });
+
+            if (!isValid) {
+                quick.toastNotif({
+                    title: 'Mohon lengkapi semua data produk terlebih dahulu!',
+                    icon: 'warning',
+                    timer: 1500,
+                    // callback: function() {
+                    //     window.location.reload()
+                    // }
+                });
+                // alert("");
+                return;
+            }
             var form = "formTransaksi";
             var formData = new FormData($('[name="' + form + '"]')[0]);
 
@@ -368,7 +542,18 @@
 
             // Menambahkan data produk ke FormData
             formData.append('produkData', JSON.stringify(produkData));
+            var isValid = true;
+            $('#formTransaksi input[type="text"]').each(function() {
+                if ($(this).val() === '') {
+                    isValid = false;
+                    return false;
+                }
+            });
 
+            if (!isValid) {
+                alert("Mohon lengkapi semua data produk terlebih dahulu!");
+                return;
+            }
             Swal.fire({
                 title: 'Apakah data yang anda input sudah benar?',
                 icon: 'question',
@@ -482,7 +667,7 @@
                 $(`.quantity-controls${id}`).val(currentQuantity + 1);
                 console.log(id)
                 var count = currentQuantity + 1;
-                $('#harga' + id).text(harga * count);
+                $('#harga' + id).text(quick.formatRupiah(harga * count));
                 $('#harga_produk' + id).text(harga * count);
 
                 console.log(harga)
@@ -523,6 +708,8 @@
             totalPrice = newTotalPrice;
             console.log('Total Price:', totalPrice);
             $('#total_harga').val(totalPrice);
+            $('#total_harga_prev').val(quick.formatRupiah(totalPrice));
+
             console.log(totalPrice)
             $(document).trigger('totalPriceChanged', [totalPrice]);
         }

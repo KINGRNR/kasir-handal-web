@@ -18,7 +18,7 @@
 
         init();
         $('.menu-link').removeClass('active');
-        $('.penjualan').addClass('active');
+        $('.report-penjualan-head').addClass('active');
         const urlParams = new URLSearchParams(window.location.search);
         const invoiceParam = urlParams.get('invoice');
         if (invoiceParam) {
@@ -41,6 +41,11 @@
         $('.invoice').hide();
         $('.invoice').empty();
         $('.report-penjualan').show();
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.delete('invoice');
+
+        // Replace the current URL without the INVOICE parameter
+        window.history.replaceState({}, document.title, window.location.pathname + '?' + urlParams.toString());
     }
 
     function changePage(invoice) {
@@ -82,7 +87,9 @@
                                         <div class="row g-5 mb-11">
                                             <div class="col-sm-6">
                                                 <div class="fw-bold fs-7 text-gray-600 mb-1">Petugas Kasir :</div>
-                                                <div class="fw-bolder fs-6 text-gray-800"></div>
+                                                <div class="fw-bolder fs-6 text-gray-800">${data.petugas.name }</div>
+                                                <div class="fw-bold fs-7 text-gray-600 mb-1">${data.petugas.email }</div>
+
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="fw-bold fs-7 text-gray-600 mb-1">Waktu Pembayaran</div>
@@ -229,13 +236,11 @@
                     render: function(data, type, row) {
                         return quick.convertDate(row.penjualan_created_at);
                     }
-                },
-            
+                }
             ],
             order: [
                 [4, 'desc']
             ],
-
         });
 
         $('#search_menu').on('input', function() {
@@ -243,6 +248,7 @@
             menutable.search(searchValue).draw();
         });
 
+        // Handle row click event
         $('#table-report tbody').on('click', 'tr', function() {
             var rowData = menutable.row(this).data();
             if (rowData) {
@@ -251,6 +257,7 @@
             }
         }).css('cursor', 'pointer');
     }
+
 
     function sendEmail(a) {
         var button = $(a);
@@ -299,10 +306,11 @@
             });
     }
 
-
     function exportToExcel() {
+        var dateRange = $('#filter_rexport').val();
+
         axios.post("/pay/exportExcel", {
-                id: 1
+                date: dateRange
             }, {
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -313,7 +321,8 @@
                 let excelData = [];
 
                 // Push headers
-                excelData.push(['Nomor Transaksi', 'Nama Pelanggan', 'No. HP', 'Email', 'Total Harga',
+                excelData.push(['Nomor Transaksi', 'Tanggal Transaksi', 'Nama Pelanggan', 'No. HP', 'Email',
+                    'Total Harga',
                     'Detail Barang'
                 ]);
 
@@ -333,6 +342,7 @@
                     // Push main transaction data along with concatenated product details
                     excelData.push([
                         item.penjualan_id,
+                        quick.convertDateTime(item.penjualan_created_at),
                         item.nama_pelanggan,
                         item.no_hp,
                         item.email_pelanggan,
@@ -346,18 +356,22 @@
 
                 // Set default column width (example: column A to E width set to 20)
                 const wscols = [{
-                    wch: 20
-                }, {
-                    wch: 20
-                }, {
-                    wch: 20
-                }, {
-                    wch: 20
-                }, {
-                    wch: 20
-                }, {
-                    wch: 100
-                }];
+                        wch: 20
+                    },
+                    {
+                        wch: 20
+                    }, {
+                        wch: 20
+                    }, {
+                        wch: 20
+                    }, {
+                        wch: 20
+                    }, {
+                        wch: 20
+                    }, {
+                        wch: 100
+                    }
+                ];
                 worksheet['!cols'] = wscols;
 
                 // Create workbook

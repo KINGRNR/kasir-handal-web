@@ -108,7 +108,7 @@
                             <div class="col-xl-12">
                                 <div class="card card-xl-stretch  ">
                                     <div class="card-body d-flex flex-column h-50">
-                                        <h5 class="card-title" style="color: #2F3281">Grafik Penjualan</h5>
+                                        <h5 class="card-title" style="color: #2F3281">Grafik Toko Terdaftar</h5>
                                         <canvas id="myBarChart" width="100"></canvas>
                                     </div>
                                 </div>
