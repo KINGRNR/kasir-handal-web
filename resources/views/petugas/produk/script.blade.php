@@ -51,7 +51,7 @@
                         showConfirmButton: false,
                         allowOutsideClick: false,
                         allowEscapeKey: false,
-                        footer: '<a href="/toko/kategori" class="btn btn-primary">Tambah Merek</a>'
+                        footer: '<a href="/petugas/kategori" class="btn btn-primary">Tambah Merek</a>'
                     });
                 }
             })
@@ -335,7 +335,7 @@
                     .then(response => {
                         if (response.data.success) {
                             quick.toastNotif({
-                                title: 'success',
+                                title: 'Sukses!',
                                 icon: 'success',
                                 timer: 1500,
                                 callback: function() {
@@ -388,7 +388,7 @@
                             $('#formProduk').trigger('reset');
                             $(".close-modal").trigger('click');
                             quick.toastNotif({
-                                title: 'success',
+                                title: 'Sukses!',
                                 icon: 'success',
                                 timer: 1500,
                                 callback: function() {

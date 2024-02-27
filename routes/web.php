@@ -64,6 +64,9 @@ Route::middleware(['web'])->group(function () {
         Route::get('/superadmin/toko', function () {
             return view('superadmin.managetoko.index');
         })->name('managetoko');
+        Route::get('/superadmin/profile', function () {
+            return view('superadmin.profile.index');
+        })->name('profile');
     });
 
     Route::group(['middleware' => ['roleCheck:BfiwyVUDrXOpmStr']], function () {
@@ -115,12 +118,12 @@ Route::middleware(['web'])->group(function () {
         //controller
     });
     Route::controller(UserController::class)->group(function () {
-        foreach (['showPetugas', 'savePetugas', 'showToko', 'showUser' ,'detail', 'update', 'delete', 'getData', 'hapusSessionToken', 'submitResetPasswordForm'] as $key => $value) {
+        foreach (['showPetugas', 'savePetugas', 'showToko', 'showUser' ,'detail', 'update', 'delete', 'getData', 'hapusSessionToken', 'submitResetPasswordForm', 'nonaktifkan', 'aktifkan'] as $key => $value) {
             Route::post('/user/' . $value, $value);
         }
     });
     Route::controller(DashboardController::class)->group(function () {
-        foreach (['loadPenjualan', 'loadRiwayatTransaksi'] as $key => $value) {
+        foreach (['loadPenjualan', 'loadRiwayatTransaksi', 'loadDetail'] as $key => $value) {
             Route::post('/dashboard/' . $value, $value);
         }
     });
@@ -140,7 +143,7 @@ Route::middleware(['web'])->group(function () {
         }
     });
     Route::controller(ProfileController::class)->group(function () {
-        foreach (['indexToko', 'saveMidtransKey', 'saveProfileToko', 'indexPetugas'] as $key => $value) {
+        foreach (['indexToko', 'saveMidtransKey', 'saveProfileToko', 'indexPetugas', 'detailToko', 'indexSuperadmin'] as $key => $value) {
             Route::post('/profile/' . $value, $value);
         }
     });

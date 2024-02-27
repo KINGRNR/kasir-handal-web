@@ -12,7 +12,7 @@
         console.log("tes")
         init();
         $('.menu_link').removeClass('active');
-        $('.petugas').addClass('active');
+        $('.manajemen_toko').addClass('active');
     });
 
     init = async () => {
@@ -22,7 +22,7 @@
     //filter
     var filterDatatable = [];
     var menutable = null;
-
+   
     function initializeDataTables(filterDatatable) {
         menutable = $('#table-toko').DataTable({
             processing: true,
@@ -63,14 +63,20 @@
                     data: 'toko_id',
                     render: function(data, type, row) {
                         var editButton =
-                            '<button class="btn btn-sm btn-primary edit-btn" onclick="detail(this)" data-id="' +
-                            row.toko_id + '">Buka</button>';
-                        var deleteButton =
-                            '<button class="btn btn-sm btn-danger delete-btn" onclick="deleteRow(this)" data-id="' +
-                            row.toko_id +
-                            '">Delete</button>';
+                            '<button class="btn btn-sm btn-primary edit-btn" onclick="loadProfile(this)" data-id="' +
+                            row.toko_id + '">Detail</button>';
+                            console.log(row.active)
+                            if (row.active == 1) {
+                            actionButton =
+                                '<button class="btn btn-sm btn-danger delete-btn" onclick="nonaktifkanRow(this)" data-id="' +
+                                row.toko_user_id + '">Nonaktifkan</button>';
+                        } else {
+                            actionButton =
+                                '<button class="btn btn-sm btn-success activate-btn" onclick="aktifkanRow(this)" data-id="' +
+                                row.toko_user_id + '">Aktifkan</button>';
+                        }
 
-                        return editButton + ' ' + deleteButton;
+                        return editButton + ' ' + actionButton;
                     }
                 }
             ]
@@ -105,7 +111,61 @@
     //     $('.form').fadeOut(100);
     //     $('.table-switch-petugas').fadeIn();
     // }
-    function deleteRow(atr) {
+    function loadProfile(a) {
+        var id = $(a).attr('data-id')
+        $('.table-switch').hide()
+        $.ajax({
+            url: APP_URL + 'profile/detailToko',
+            method: "POST",
+            data: {
+                _token: '{{ csrf_token() }}',
+                id: id,
+            },
+            success: function(response) {
+                $('.detail-toko').show()
+                
+                console.log(response);
+                var toko = response.toko
+                var user = response.user
+                // var riwayat = ''
+                // $('.total_saldo').text(quick.formatRupiah(response.total_saldo));
+                $('.val_nama').text(user.name)
+                $('.val_nama_toko').text(toko.toko_nama)
+                $('.val_email').text(user.email)
+                $('#nama_pemilik').val(user.name)
+                $('#id').val(user.id)
+                $('#nama_toko').val(toko.toko_nama)
+                $('#email').val(user.email)
+                $('.val_head_name').text(user.name)
+                $('.email-header').text(user.email)
+                $('#server_key').val(toko.toko_midtrans_serverkey)
+                $('#client_key').val(toko.toko_midtrans_clientkey)
+                $('#toko_id').val(toko.toko_id)
+                $('.img-placement').empty()
+                if (toko.toko_foto) {
+                    $('.img-placement').append(
+                        `<img src="/file/foto_profile/${toko.toko_foto}" class="" alt="image" style="object-fit: cover;" />`
+                    )
+                } else {
+                    $('.img-placement').append(`<img src="/file/blank.webp" alt="image" />`)
+
+                }
+
+            },
+
+
+            error: function(xhr, status, error) {
+                console.error('Ada masalah dalam mengambil data penjualan:', error);
+            }
+        });
+    }
+    function switchShowToko(a) {
+        $('.link-tab').removeClass('active');
+        $(a).addClass('active');
+        $('.detail-toko').hide();
+        $('.table-switch').show();
+    }
+    function nonaktifkanRow(atr) {
         var id = $(atr).attr('data-id');
         Swal.fire({
             title: 'Apakah anda yakin?',
@@ -117,7 +177,7 @@
             cancelButtonText: 'Tidak'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post("/user/delete", {
+                axios.post("/user/nonaktifkan", {
                         id: id
                     }, {
                         headers: {
@@ -128,7 +188,7 @@
                     .then(response => {
                         if (response.data.success) {
                             quick.toastNotif({
-                                title: 'success',
+                                title: response.data.message,
                                 icon: 'success',
                                 timer: 1500,
                                 callback: function() {
@@ -140,6 +200,59 @@
                                 title: response.data.message,
                                 icon: response.data.status,
                                 timer: 2000,
+                                callback: function() {
+                                    window.location.reload()
+                                }
+                            });
+                        }
+                        console.log(response)
+
+                    })
+                    .catch(error => {
+
+                        console.error('There has been a problem with your Axios operation:', error);
+                    });
+            }
+        });
+    };
+    function aktifkanRow(atr) {
+        var id = $(atr).attr('data-id');
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post("/user/aktifkan", {
+                        id: id
+                    }, {
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'multipart/form-data',
+                        }
+                    })
+                    .then(response => {
+                        if (response.data.success) {
+                            quick.toastNotif({
+                                title: response.data.message,
+                                icon: 'success',
+                                timer: 1500,
+                                callback: function() {
+                                    window.location.reload()
+                                }
+                            });
+                        } else {
+                            quick.toastNotif({
+                                title: response.data.message,
+                                icon: response.data.status,
+                                timer: 2000,
+                                callback: function() {
+                                    window.location.reload()
+                                }
                             });
                         }
                         console.log(response)

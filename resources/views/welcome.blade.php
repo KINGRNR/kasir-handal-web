@@ -2,8 +2,9 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 @include('layouts.support.bundle.bundleheader')
 <style>
-    
+
 </style>
+
 <body id="kt_body" data-bs-spy="scroll" data-bs-target="#kt_landing_menu" data-bs-offset="200"
     class="bg-white position-relative">
 
@@ -141,53 +142,63 @@
                 <div class="d-flex flex-column flex-center w-100 min-h-350px min-h-lg-500px px-9 position-relative"
                     style="background: #24B0B6;">
                     <!-- Image in bottom-left corner -->
-                    <img src="assets/assets_foto/kasir.png" class="img-fluid d-sm-none d-lg-block position-lg-absolute start-0 top-0 height-100"
+                    <img src="assets/assets_foto/kasir.png"
+                        class="img-fluid d-sm-none d-lg-block position-lg-absolute start-0 top-0 height-100"
                         alt="" style="height: 500px; width: 1040px;">
 
                     <!-- SVG overlay on the right -->
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" width="600" height="460" viewBox="0 0 600 460"
-                        fill="none" class=""
-                        style="position: absolute; top: 0; right: 0; width: 959px; min-height: 500px; flex-shrink: 0;">
-                        <path
-                            d="M113.965 2.4156C114.859 0.889945 116.47 0 118.239 0H879C881.762 0 884 2.23858 884 5V455C884 457.761 881.762 460 879 460H118.161C116.435 460 114.859 459.155 113.951 457.686C100.728 436.285 0.5 272.828 0.5 235C0.5 197.158 100.797 24.8709 113.965 2.4156Z"
-                            fill="url(#paint0_linear_98_941)" />
-                        <defs>
-                            <linearGradient id="paint0_linear_98_941" x1="884" y1="230" x2="-229.471"
-                                y2="207.59" gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#2F3281" />
-                                <stop offset="0.571924" stop-color="#40A0B6" />
-                                <stop offset="1" stop-color="#08C0B5" />
-                            </linearGradient>
-                        </defs>
-                        <path
-                            d="M113.965 2.4156C114.859 0.889945 116.47 0 118.239 0H879C881.762 0 884 2.23858 884 5V455C884 457.761 881.762 460 879 460H118.161C116.435 460 114.859 459.155 113.951 457.686C100.728 436.285 0.5 272.828 0.5 235C0.5 197.158 100.797 24.8709 113.965 2.4156Z"
-                            fill="url(#paint0_linear_98_941)" />
+                            fill="none" class=""
+                            style="position: absolute; top: 0; right: 0; width: 959px; min-height: 500px; flex-shrink: 0;">
+                            <path
+                                d="M113.965 2.4156C114.859 0.889945 116.47 0 118.239 0H879C881.762 0 884 2.23858 884 5V455C884 457.761 881.762 460 879 460H118.161C116.435 460 114.859 459.155 113.951 457.686C100.728 436.285 0.5 272.828 0.5 235C0.5 197.158 100.797 24.8709 113.965 2.4156Z"
+                                fill="url(#paint0_linear_98_941)" />
+                            <defs>
+                                <linearGradient id="paint0_linear_98_941" x1="884" y1="230" x2="-229.471"
+                                    y2="207.59" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#2F3281" />
+                                    <stop offset="0.571924" stop-color="#40A0B6" />
+                                    <stop offset="1" stop-color="#08C0B5" />
+                                </linearGradient>
+                            </defs>
+                            <path
+                                d="M113.965 2.4156C114.859 0.889945 116.47 0 118.239 0H879C881.762 0 884 2.23858 884 5V455C884 457.761 881.762 460 879 460H118.161C116.435 460 114.859 459.155 113.951 457.686C100.728 436.285 0.5 272.828 0.5 235C0.5 197.158 100.797 24.8709 113.965 2.4156Z"
+                                fill="url(#paint0_linear_98_941)" />
 
-                        <!-- Add text element -->
-                        <text x="30%" y="20%" dominant-baseline="middle" fill="#FFFFFF" font-size="32"
-                            font-family="Poppins" font-weight="550">
-                            <tspan text-anchor="start">Kasir Handal</tspan>
-                            <tspan dy="1.5em" x="30%" text-anchor="start">Lebih Mudah &amp; Praktis</tspan>
-                        </text>
-                        <text x="30%" y="50%" dominant-baseline="middle" fill="#FFFFFF" font-size="20"
-                            font-family="Poppins" font-weight="400">
-                            <tspan text-anchor="start">Solusi tepat untuk berbagai bisnis Gadget anda,</tspan>
-                            <tspan dy="1.5em" x="30%" text-anchor="start"> dengan fitur yang lengkap dan gratis.
-                            </tspan>
-                        </text>
-                        <!-- Tombol Daftarkan Toko Anda -->
-                        <rect x="30%" y="70%" width="227" height="38" fill="#2A77A3" stroke="#FFFFFF"
-                            stroke-width="2" rx="5" ry="5" cursor="pointer" />
-                        <text onclick="window.location.href='/register'" x="49%" y="74.5%" dominant-baseline="middle"
+                            <!-- Add text element -->
+                            <text x="30%" y="20%" dominant-baseline="middle" fill="#FFFFFF" font-size="32"
+                                font-family="Poppins" font-weight="550">
+                                <tspan text-anchor="start">Kasir Handal</tspan>
+                                <tspan dy="1.5em" x="30%" text-anchor="start">Lebih Mudah &amp; Praktis</tspan>
+                            </text>
+                            <text x="30%" y="50%" dominant-baseline="middle" fill="#FFFFFF" font-size="20"
+                                font-family="Poppins" font-weight="400">
+                                <tspan text-anchor="start">Solusi tepat untuk berbagai bisnis Gadget anda,</tspan>
+                                <tspan dy="1.5em" x="30%" text-anchor="start"> dengan fitur yang lengkap dan
+                                    gratis.
+                                </tspan>
+                            </text>
+                            <!-- Tombol Daftarkan Toko Anda -->
+                            <rect x="30%" y="70%" width="227" height="38" fill="#2A77A3" stroke="#FFFFFF"
+                                stroke-width="2" rx="5" ry="5" cursor="pointer" />
+                            @if (session('user_role'))
+                            <text onclick="window.location.href='/toko/dashboard'" x="49%" y="74.5%" dominant-baseline="middle"
                             text-anchor="middle" fill="#FFFFFF" font-size="16" font-family="Poppins"
                             font-weight="500" cursor="pointer">
-                            DAFTARKAN TOKO ANDA
-                        </text>
-                    </svg>
+                            MASUK KE PORTAL
+                            @else
+                                <text onclick="window.location.href='/register'" x="49%" y="74.5%"
+                                    dominant-baseline="middle" text-anchor="middle" fill="#FFFFFF" font-size="16"
+                                    font-family="Poppins" font-weight="500" cursor="pointer">
+                                    DAFTARKAN TOKO ANDA
+                            @endif
+
+                            </text>
+                        </svg>
 
                     </div>
-                    
+
                     <!-- Your additional content goes here -->
                 </div>
             </div>

@@ -63,7 +63,6 @@ class PaymentController extends Controller
             );
         }
         // dd($itemDetails);
-        // Build the parameters array
         $params = array(
             'transaction_details' => array(
                 'order_id' => rand(),
@@ -152,11 +151,12 @@ class PaymentController extends Controller
             $subTotal = $item['harga_produk'] * $item['qty_produk'];
             $totalHarga += $subTotal;
         }
+        $idToko = session('toko_id');
 
         Penjualan::create([
             'penjualan_id' => $penjualanId,
             'penjualan_total_harga' => $totalHarga,
-            'penjualan_toko_id' => 1,
+            'penjualan_toko_id' => $idToko,
             'penjualan_pelanggan_id' => $idPelanggan,
             'penjualan_petugas_id' => $dataTransaction['id_petugas'],
             'penjualan_payment_method' => $dataTransaction['penjualan_payment_method'] ?? 2,
@@ -196,8 +196,8 @@ class PaymentController extends Controller
     public function showTransaction(Request $request)
     {
         $id = session('toko_id');
-        // dd($id);
-        if (session('petugas_id') !== null) {
+        // dd(session('petugas_id'));
+        if (session('petugas_id') != null) {
             $filter = $request->post();
             if (isset($filter['date'])) {
                 $dateRange = explode(' - ', $filter['date']);

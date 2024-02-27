@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark bg-white navbar-expand fixed-bottom d-lg-none d-xl-none">
+{{-- <nav class="navbar navbar-dark bg-white navbar-expand fixed-bottom d-lg-none d-xl-none">
     <ul class="navbar-nav nav-justified w-100">
         <li class="nav-item">
             <a href="/toko/dashboard" class="nav-link">
@@ -83,4 +83,4 @@
             </a>
         </li>
     </ul>
-</nav>
+</nav> --}}

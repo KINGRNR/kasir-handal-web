@@ -61,12 +61,12 @@
     }
 
     $(document).ready(function() {
-        $('#harga_produk').on('input', function() {
-            var inputValue = $(this).val();
-            var numericValue = inputValue.replace(/\D/g, ''); // Remove non-numeric characters
-            var formattedValue = formatRupiah(numericValue);
-            $(this).val(formattedValue);
-        });
+        // $('#harga_produk').on('input', function() {
+        //     var inputValue = $(this).val();
+        //     var numericValue = inputValue.replace(/\D/g, ''); // Remove non-numeric characters
+        //     var formattedValue = formatRupiah(numericValue);
+        //     $(this).val(formattedValue);
+        // });
 
         // Fungsi untuk format rupiah
         function formatRupiah(value) {
@@ -170,7 +170,7 @@
                             row.id_produk + ')">Edit</button>';
 
                         var deleteButton = '<button class="btn btn-sm btn-danger" onclick="deleteRow(' +
-                            row.id_produk + ')">Delete</button>';
+                            row.id_produk + ')">Hapus</button>';
 
                         return editButton + ' ' + deleteButton;
                     }
@@ -335,7 +335,7 @@
                     .then(response => {
                         if (response.data.success) {
                             quick.toastNotif({
-                                title: 'success',
+                                title: 'Sukses!',
                                 icon: 'success',
                                 timer: 1500,
                                 callback: function() {
@@ -360,58 +360,117 @@
         });
     };
 
+    // function save() {
+    //     var form = "formProduk";
+    //     var data = new FormData($('[name="' + form + '"]')[0]);
+
+    //     // Hapus bagian koding Cropper.js dan formulir gambar yang berkaitan
+
+    //     Swal.fire({
+    //         title: 'Apakah data yang anda input sudah benar?',
+    //         icon: 'question',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Ya',
+    //         cancelButtonText: 'Tidak'
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             axios.post("/produk/saveMob", data, {
+    //                     headers: {
+    //                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
+    //                         // 'Content-Type': 'multipart/form-data', // Jangan ditambahkan header ini
+    //                     }
+    //                 })
+    //                 .then(response => {
+    //                     console.log(response)
+    //                     if (response.data.success) {
+    //                         $('#formProduk').trigger('reset');
+    //                         $(".close-modal").trigger('click');
+    //                         quick.toastNotif({
+    //                             title: 'Sukses!',
+    //                             icon: 'success',
+    //                             timer: 1500,
+    //                             callback: function() {
+    //                                 menutable.ajax.reload();
+    //                             }
+    //                         });
+    //                     } else {
+    //                         quick.toastNotif({
+    //                             title: response.data.message,
+    //                             icon: 'error',
+    //                             timer: 4000,
+    //                             callback: function() {
+    //                                 menutable.ajax.reload();
+    //                             }
+    //                         });
+    //                     }
+    //                 })
+    //                 .catch(error => {
+    //                     console.error('There has been a problem with your Axios operation:', error);
+    //                 });
+    //         }
+    //     });
+    // };
     function save() {
-        var form = "formProduk";
-        var data = new FormData($('[name="' + form + '"]')[0]);
+    var form = "formProduk";
+    var data = new FormData($('[name="' + form + '"]')[0]);
 
-        // Hapus bagian koding Cropper.js dan formulir gambar yang berkaitan
+    // Ambil nilai harga_produk dari form
+    // var hargaProduk = data.get('harga_produk');
 
-        Swal.fire({
-            title: 'Apakah data yang anda input sudah benar?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya',
-            cancelButtonText: 'Tidak'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axios.post("/produk/saveMob", data, {
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            // 'Content-Type': 'multipart/form-data', // Jangan ditambahkan header ini
-                        }
-                    })
-                    .then(response => {
-                        console.log(response)
-                        if (response.data.success) {
-                            $('#formProduk').trigger('reset');
-                            $(".close-modal").trigger('click');
-                            quick.toastNotif({
-                                title: 'success',
-                                icon: 'success',
-                                timer: 1500,
-                                callback: function() {
-                                    menutable.ajax.reload();
-                                }
-                            });
-                        } else {
-                            quick.toastNotif({
-                                title: response.data.message,
-                                icon: 'error',
-                                timer: 4000,
-                                callback: function() {
-                                    menutable.ajax.reload();
-                                }
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        console.error('There has been a problem with your Axios operation:', error);
-                    });
-            }
-        });
-    };
+    // // Konversi nilai harga_produk ke dalam format yang diharapkan
+    // var hargaProdukFormatted = parseFloat(hargaProduk).toFixed(2); // Konversi ke format desimal 10,2
+
+    // // Set nilai harga_produk yang telah dikonversi ke dalam FormData
+    // data.set('harga_produk', hargaProdukFormatted);
+
+    Swal.fire({
+        title: 'Apakah data yang anda input sudah benar?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Tidak'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axios.post("/produk/saveMob", data, {
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        // 'Content-Type': 'multipart/form-data', // Jangan ditambahkan header ini
+                    }
+                })
+                .then(response => {
+                    console.log(response)
+                    if (response.data.success) {
+                        $('#formProduk').trigger('reset');
+                        $(".close-modal").trigger('click');
+                        quick.toastNotif({
+                            title: 'Sukses!',
+                            icon: 'success',
+                            timer: 1500,
+                            callback: function() {
+                                menutable.ajax.reload();
+                            }
+                        });
+                    } else {
+                        quick.toastNotif({
+                            title: response.data.message,
+                            icon: 'error',
+                            timer: 4000,
+                            callback: function() {
+                                menutable.ajax.reload();
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your Axios operation:', error);
+                });
+        }
+    });
+};
 
     function wipeData() {
         $('.image-input-wrapper').css('background-image', 'url("../file/blank.webp")');

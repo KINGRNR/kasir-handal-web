@@ -69,7 +69,7 @@
                             row.id + '">Edit</button>';
                         var deleteButton =
                             '<button class="btn btn-sm btn-danger delete-btn" onclick="deleteRow(this)" data-id="' + row.id +
-                            '">Delete</button>';
+                            '">Hapus</button>';
 
                         return editButton + ' ' + deleteButton;
                     }
@@ -186,6 +186,7 @@
     }
 
     function save() {
+        quick.blockPage()
         var form = "formPetugas";
         var data = new FormData($('[name="' + form + '"]')[0]);
         // $('#submit-btn').prop('disabled', true);
