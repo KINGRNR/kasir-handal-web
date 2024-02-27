@@ -69,11 +69,11 @@
                             if (row.active == 1) {
                             actionButton =
                                 '<button class="btn btn-sm btn-danger delete-btn" onclick="nonaktifkanRow(this)" data-id="' +
-                                row.id + '">Nonaktifkan</button>';
+                                row.toko_user_id + '">Nonaktifkan</button>';
                         } else {
                             actionButton =
                                 '<button class="btn btn-sm btn-success activate-btn" onclick="aktifkanRow(this)" data-id="' +
-                                row.id + '">Aktifkan</button>';
+                                row.toko_user_id + '">Aktifkan</button>';
                         }
 
                         return editButton + ' ' + actionButton;

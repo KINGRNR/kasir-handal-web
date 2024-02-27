@@ -69,7 +69,8 @@ class UserController extends Controller
         'petugas_toko_id' => $id_toko,
       ]);
     }
-    Mail::send('mail.aktivasi-petugas', ['data' => $data, 'id' => $data['id'], 'token' => $accessToken], function ($message) use ($request, $data) {
+    $idUserEncoded = base64_encode($data['id']);
+    Mail::send('mail.aktivasi-petugas', ['data' => $data, 'id' => $idUserEncoded, 'token' => $accessToken], function ($message) use ($request, $data) {
       $message->to($data['email']);
       $message->subject('Aktivasi Akun Kasir Handal');
     });

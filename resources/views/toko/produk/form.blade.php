@@ -22,7 +22,7 @@
                                 <label for="" class="required form-label">Harga Produk</label>
                                 <div class="input-group">
                                     <span class="input-group-text">Rp.</span>
-                                    <input type="text" name="harga_produk" id="harga_produk"
+                                    <input type="number" name="harga_produk" id="harga_produk"
                                         class="form-control form-control-sm form-control-solid input-required"
                                         required />
                                 </div>
@@ -33,11 +33,11 @@
                                     class="form-control form-control-sm form-control-solid input-required" required />
                             </div>
                             <div class="fv-row mb-5">
-                                <label for="" class="required form-label">Pilih Kategori</label>
+                                <label for="" class="required form-label">Pilih Merek</label>
                                 {{-- <input type="text" name="" id=""> --}}
                                 <select name="id_produk_kategori" id="id_produk_kategori"
                                     class="form-select form-select-sm form-select-solid" required>
-                                    <option value="" selected disabled>Pilih Kategori</option>
+                                    <option value="" selected disabled>Pilih Merek</option>
                                 </select>
                             </div>
                             <div class="fv-row mb-5">

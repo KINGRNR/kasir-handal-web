@@ -173,12 +173,12 @@
 
                         $('.password-input').removeClass('d-none')
 
-                    } else if (data.active == 1) {
-                        location.href = "/login"
-                    } else if (data == null) {
-                        location.href = "/login"
-                    } else {
-                        location.href = "/login"
+                    // } else if (data.active == 1) {
+                    //     location.href = "/login"
+                    // } else if (data == null) {
+                    //     location.href = "/login"
+                    // } else {
+                    //     location.href = "/login"
                     }
                 })
                 .catch(error => {

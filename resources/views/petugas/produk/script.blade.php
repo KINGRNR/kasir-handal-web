@@ -51,7 +51,7 @@
                         showConfirmButton: false,
                         allowOutsideClick: false,
                         allowEscapeKey: false,
-                        footer: '<a href="/toko/kategori" class="btn btn-primary">Tambah Merek</a>'
+                        footer: '<a href="/petugas/kategori" class="btn btn-primary">Tambah Merek</a>'
                     });
                 }
             })

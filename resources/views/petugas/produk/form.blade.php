@@ -33,11 +33,11 @@
                                     class="form-control form-control-sm form-control-solid input-required" required />
                             </div>
                             <div class="fv-row mb-5">
-                                <label for="" class="required form-label">Pilih Kategori</label>
+                                <label for="" class="required form-label">Pilih Merek</label>
                                 {{-- <input type="text" name="" id=""> --}}
                                 <select name="id_produk_kategori" id="id_produk_kategori"
                                     class="form-select form-select-sm form-select-solid" required>
-                                    <option value="" selected disabled>Pilih Kategori</option>
+                                    <option value="" selected disabled>Pilih Merek</option>
                                 </select>
                             </div>
                             <div class="fv-row mb-5">

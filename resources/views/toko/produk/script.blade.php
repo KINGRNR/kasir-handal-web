@@ -170,7 +170,7 @@
                             row.id_produk + ')">Edit</button>';
 
                         var deleteButton = '<button class="btn btn-sm btn-danger" onclick="deleteRow(' +
-                            row.id_produk + ')">Delete</button>';
+                            row.id_produk + ')">Hapus</button>';
 
                         return editButton + ' ' + deleteButton;
                     }
@@ -417,13 +417,13 @@
     var data = new FormData($('[name="' + form + '"]')[0]);
 
     // Ambil nilai harga_produk dari form
-    var hargaProduk = data.get('harga_produk');
+    // var hargaProduk = data.get('harga_produk');
 
-    // Konversi nilai harga_produk ke dalam format yang diharapkan
-    var hargaProdukFormatted = parseFloat(hargaProduk).toFixed(2); // Konversi ke format desimal 10,2
+    // // Konversi nilai harga_produk ke dalam format yang diharapkan
+    // var hargaProdukFormatted = parseFloat(hargaProduk).toFixed(2); // Konversi ke format desimal 10,2
 
-    // Set nilai harga_produk yang telah dikonversi ke dalam FormData
-    data.set('harga_produk', hargaProdukFormatted);
+    // // Set nilai harga_produk yang telah dikonversi ke dalam FormData
+    // data.set('harga_produk', hargaProdukFormatted);
 
     Swal.fire({
         title: 'Apakah data yang anda input sudah benar?',

@@ -53,7 +53,7 @@
                         {{-- <th class="min-w-80px">Kode Kategori</th> --}}
                         <th class="min-w-125px">Logo Merek</th>
                         <th class="min-w-125px">Merek</th>
-                        <th class="min-w-125px"></th>
+                        <th class="min-w-125px">Aksi</th>
                     </tr>
                     <!--end::Table row-->
                 </thead>

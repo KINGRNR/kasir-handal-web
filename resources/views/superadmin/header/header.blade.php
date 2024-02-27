@@ -220,11 +220,11 @@
                          <!--end::Menu separator-->
                          <!--begin::Menu item-->
                          <div class="menu-item px-5 ">
-                             <a href="/superadmin/profile" class="menu-link px-5 profile">Profile</a>
+                             <a href="/superadmin/profile" class="menu-link px-5 profile">Profil</a>
                          </div>
                          <!--begin::Menu item-->
                          <div class="menu-item px-5">
-                             <a href="javascript:logout()" class="menu-link px-5">Sign Out</a>
+                             <a href="javascript:logout()" class="menu-link px-5">Keluar</a>
                              {{-- <button onclick="logout()" class="menu-link px-5">Sign Out</button> --}}
                          </div>
                          <!--end::Menu item-->
