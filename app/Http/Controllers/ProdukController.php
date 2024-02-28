@@ -38,6 +38,20 @@ class ProdukController extends Controller
 
     return response()->json($operation);
   }
+  public function showTransactionProdukMobile(Request $request)
+{
+    $id = $request->post('id'); // Mendapatkan nilai 'id' dari permintaan POST
+
+    // Mengambil produk yang stok_produk nya tidak 0 untuk kategori toko dengan ID yang diberikan
+    $operation = DB::table('v_produk')
+        ->where('id_kategori_toko', $id)
+        ->where('produk_deleted_at', null)
+        // ->where('stok_produk', '>', 0) // Menambahkan kondisi untuk stok_produk lebih besar dari 0
+        ->get();
+
+    return response()->json($operation);
+}
+
 
   public function getKategori()
   {

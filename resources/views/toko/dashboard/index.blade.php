@@ -124,7 +124,7 @@
                                         <div class="pt-5">
                                             <span class="fw-bolder fs-3x me-2 lh-0 total-pelanggan" style="display: block;">0</span>
                                             <a href="#" class="fw-bolder fs-3 mt-5 text-muted"
-                                                style="display: block;">Jumlah Pelanggan Terdaftar</a>
+                                                style="display: block;">Pelanggan Terdaftar</a>
 
                                             {{-- <span class="text-dark fw-bolder fs-6 lh-0">Jobs</span> --}}
                                         </div>

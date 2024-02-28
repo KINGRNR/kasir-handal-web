@@ -44,12 +44,12 @@ Route::middleware('auth:api')->group(function () {
             }
         });
         Route::controller(ProdukController::class)->group(function () {
-            foreach (['showProdukMobile', 'saveMob', 'delete', 'saveMobile', 'detail'] as $key => $value) {
+            foreach (['showProdukMobile', 'showTransactionProdukMobile', 'saveMob', 'delete', 'saveMobile', 'detail'] as $key => $value) {
                 Route::post('/produk/' . $value, $value);
             }
         });
         Route::controller(PaymentController::class)->group(function () {
-            foreach (['initiatePayment', 'initiateCashPayment' ,'saveTransaction', 'showTransaction', 'cekpelanggan', 'showDetailTransaction', 'sendEmail', 'exportExcel'] as $key => $value) {
+            foreach (['initiatePayment', 'initiatePaymentMob','initiateCashPayment' ,'saveTransaction', 'showTransaction', 'cekpelanggan', 'showDetailTransaction', 'sendEmail', 'exportExcel'] as $key => $value) {
                 Route::post('/pay/' . $value, $value);
             }
         });
