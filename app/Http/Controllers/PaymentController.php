@@ -37,6 +37,7 @@ class PaymentController extends Controller
     public function initiatePayment(Request $request)
     {
         $data = $request->post();
+        // print_r($data); 
         if (
             !isset($data['produkData']) ||
             !isset($data['nama_pelanggan']) ||
@@ -75,11 +76,69 @@ class PaymentController extends Controller
             ),
             'item_details' => $itemDetails,
         );
-        \Midtrans\Config::$serverKey = $toko->toko_midtrans_serverkey;
+        // \Midtrans\Config::$serverKey = $toko->toko_midtrans_serverkey;
+        \Midtrans\Config::$serverKey = 'SB-Mid-server-jDRuFD0sh4u9oaXfNsHwicXp';
 
         $opr['snapToken'] = \Midtrans\Snap::getSnapToken($params);
+        $opr['detail'] = $params;
+
         $opr['dataPenjualan'] = $data;
         return response()->json($opr);
+    }
+    public function initiatePaymentMob(Request $request)
+    {
+        $data = $request->post();
+        try {
+            // print_r($data); 
+            if (
+                !isset($data['produkData']) ||
+                !isset($data['nama_pelanggan']) ||
+                !isset($data['email_pelanggan']) ||
+                !isset($data['no_telp'])
+            ) {
+                return response()->json(['error' => 'Missing required data'], 400);
+            }
+            $toko = Toko::first(); // Ambil data toko pertama dari database
+            if (!$toko) {
+                return response()->json(['error' => 'Toko not found'], 404);
+            }
+            $produkData = json_decode($data['produkData'], true); // Decode produkData menjadi array
+            // dd($produkData);
+
+            // $itemDetails = array();
+
+            foreach ($produkData as $produk) { // Loop melalui produkData
+                $itemDetails[] = array(
+                    'id' => $produk['id_produk'],
+                    'price' => $produk['harga_produk'],
+                    'quantity' => $produk['qty_produk'],
+                    'name' => $produk['nama_produk'],
+                );
+            }
+            // dd($itemDetails);
+            $params = array(
+                'transaction_details' => array(
+                    'order_id' => rand(),
+                    'gross_amount' => array_sum(array_column($produkData, 'harga_produk'))
+                ),
+                'customer_details' => array(
+                    'first_name' => $data['nama_pelanggan'],
+                    'email' => $data['email_pelanggan'],
+                    'phone' => $data['no_telp'],
+                ),
+                'item_details' => $itemDetails,
+            );
+            // // \Midtrans\Config::$serverKey = $toko->toko_midtrans_serverkey;
+            \Midtrans\Config::$serverKey = 'SB-Mid-server-jDRuFD0sh4u9oaXfNsHwicXp';
+
+            $opr['snapToken'] = \Midtrans\Snap::getSnapToken($params);
+            // $opr['detail'] = $params;
+            $opr['dataPenjualan'] = $data;
+            return response()->json($opr);
+        } catch (Exception $e) {
+            // Tangani kesalahan jika terjadi
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
     public function initiateCashPayment(Request $request)
     {
