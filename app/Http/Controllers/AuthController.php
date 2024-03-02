@@ -20,21 +20,7 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
-    public function validator(array $data, $tipe = 'login')
-    {
-        if ($tipe == 'login') {
-            return Validator::make($data, [
-                'email' => ['required', 'string', 'email'],
-                'password' => ['required', 'string', 'min:8'],
-            ]);
-        }
-        return Validator::make($data, [
-            'firstName' => ['required', 'string'],
-            'lastName' => ['required', 'string'],
-            'email' => ['required', 'unique:users', 'string', 'email'],
-            'password' => ['required', 'string', 'min:8'],
-        ]);
-    }
+   
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['loginMobile', 'login', 'register', 'logout', 'checkaccount', 'aktivasiakun', 'kirimResetPass', 'submitResetPasswordForm']]);
@@ -102,22 +88,19 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validator = $this->validator($request->all());
-
+    
         if ($validator->fails()) {
             return redirect()->route('login')->withErrors($validator)->withInput();
         }
-
+    
         if (Auth::attempt($request->only('email', 'password'))) {
             // $user = User::where('email', $request->email)->firstOrFail();
             $user = DB::table('users')->where('email', $request->email)->first();
-
+    
             if ($user->active == 0) {
                 return redirect()->route('login')->withErrors('Akun Anda belum aktif.')->withInput();
-
-                // return response()->json(['success' => false, 'message' => 'Akun Anda tidak aktif.'], 403);
             }
-            // dd($user->users_role_id);
-
+    
             if ($user->users_role_id == 'BfiwyVUDrXOpmStr') {
                 $toko = DB::table('toko')->where('toko_user_id', $user->id)->first();
                 session(['toko_id' => $toko->toko_id]);
@@ -136,19 +119,16 @@ class AuthController extends Controller
                 session(['petugas_id' => $id->petugas_id]);
                 session(['toko_foto' => $toko->toko_foto]);
             }
-            // }
-            // if ($toko) {
-            // }
+    
             $token = Auth::attempt($request->only('email', 'password'));
-
+    
             session(['user' => $user]);
             session(['name' => $user->name]);
             session(['email' => $user->email]);
             session(['user_id' => $user->id]);
             session(['user_role' => $user->users_role_id]);
             session(['token' => $token]);
-
-            // session(['jwt'])
+    
             switch ($user->users_role_id) {
                 case 'FOV4Qtgi5lcQ9kCY':
                     $request->session()->regenerate();
@@ -160,9 +140,8 @@ class AuthController extends Controller
                             'type' => 'bearer',
                         ]
                     ]);
-
+    
                 case 'BfiwyVUDrXOpmStr':
-                    // $request->session()->regenerate();
                     return redirect()->route('toko')->with([
                         'status' => 'success',
                         'user' => $user,
@@ -171,7 +150,7 @@ class AuthController extends Controller
                             'type' => 'bearer',
                         ]
                     ]);
-
+    
                 case 'TKQR2DSJlQ5b31V2':
                     $request->session()->regenerate();
                     return redirect()->route('petugas')->with([
@@ -182,14 +161,35 @@ class AuthController extends Controller
                             'type' => 'bearer',
                         ]
                     ]);
-
+    
                 default:
                     Auth::logout();
                     return response()->json(['data' => $user], 422);
             }
         } else {
-            return redirect()->route('login')->with('error', 'Email atau password salah. Silakan coba lagi.')->withInput();
+            $validator = $this->validator($request->all(), 'login');
+            $validator->errors()->add('validator', 'Email atau password salah. Silakan coba lagi.');
+            return redirect()->route('login')->withErrors($validator)->withInput();
         }
+    }
+    
+    public function validator(array $data, $tipe = 'login')
+    {
+        if ($tipe == 'login') {
+            return Validator::make($data, [
+                'email' => ['required', 'string', 'email'],
+                'password' => ['required', 'string', 'min:8'],
+            ], [
+                'password.required' => 'Password tidak boleh kosong.',
+                'password.min' => 'Password harus memiliki minimal :min karakter.',
+            ]);
+        }
+        return Validator::make($data, [
+            'firstName' => ['required', 'string'],
+            'lastName' => ['required', 'string'],
+            'email' => ['required', 'unique:users', 'string', 'email'],
+            'password' => ['required', 'string', 'min:8'],
+        ]);
     }
     // public function logout(Request $request)
     // {
@@ -232,12 +232,14 @@ class AuthController extends Controller
                 'message' => 'Unauthorized',
             ], 401);
         }
-        $user = Auth::user();
+        // $user = Auth::user();
+        $user = DB::table('users')->where('email', $request->email)->first();
+
         if ($user->users_role_id == 'BfiwyVUDrXOpmStr') {
             $detailed_user = DB::table('toko')->where('toko_user_id', $user->id)->first();
         } else if ($user->users_role_id == 'TKQR2DSJlQ5b31V2') {
             $detailed_user = DB::table('petugas')->where('petugas_user_id', $user->id)->first();
-            $detailed_user['toko_id'] = $detailed_user->petugas_toko_id;
+            // $detailed_user['toko_id'] = $detailed_user->petugas_toko_id;
         }
         return response()->json([
             'status' => 'success',
@@ -389,7 +391,7 @@ class AuthController extends Controller
             $randomString = base_convert($randomNumber, 10, 36);
             $accessToken = 'KSR' . strtoupper($randomString);
 
-            $id =  User::generateId();
+            $id =  rand();
             $user = User::create([
                 'id' => $id,
                 'name' => $data['owner-name'],

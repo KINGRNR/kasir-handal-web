@@ -482,8 +482,7 @@
                                         icon: 'success',
                                         timer: 1000,
                                         callback: function() {
-                                            saveTransaction(response.data.dataPenjualan,
-                                                result);
+                                            saveTransaction(response.data.dataPenjualan,result);
                                         }
                                     });
                                 },
@@ -620,7 +619,6 @@
         //         keranjang.style.right = '-400px';
         //     }
         // }
-
 
         function saveTransaction(data, result) {
             axios.post("/pay/saveTransaction", {

@@ -69,12 +69,13 @@
                                             fdprocessedid="mwa89f">
                                             <i class="far fa-eye"></i>
                                         </button>
-                                    </div>
-                                    @error('password')
+                                        @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                    </div>
+
                                    
                                 </div>
 

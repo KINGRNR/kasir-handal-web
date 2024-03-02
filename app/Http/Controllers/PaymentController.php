@@ -282,6 +282,28 @@ class PaymentController extends Controller
         return DataTables::of($operation)
             ->toJson();
     }
+    public function showTransactionMob(Request $request)
+    {
+        
+        $p = $request->post();
+        $id = $p['id_toko'];
+        // dd(session('petugas_id'));
+
+            $filter = $request->post();
+            if (isset($filter['date'])) {
+                $dateRange = explode(' - ', $filter['date']);
+                $startDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[0])->startOfDay();
+                $endDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[1])->endOfDay();
+                $operation = DB::table('v_transaksi')->where('penjualan_toko_id', $id)->where('penjualan_deleted_at', null)->whereBetween('penjualan_created_at', [$startDate, $endDate])->get();
+            } else {
+                $operation = DB::table('v_transaksi')->where('penjualan_toko_id', $id)->where('penjualan_deleted_at', null)->get();
+            }
+        // dd($id);
+
+        // return DataTables::of($operation)
+        //     ->toJson();
+        return response()->json($operation);
+    }
     public function showDetailTransaction(Request $request)
     {
         $id = $request->post();
