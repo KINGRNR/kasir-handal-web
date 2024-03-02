@@ -20,8 +20,8 @@
                     <!--begin::Wrapper-->
                     <div class=p-10 p-lg-15 mx-auto">
                         <!--begin::Form-->
-                        <form class="form w-100     w-lg-500px" novalidate="novalidate" id="kt_sign_in_form" method="POST"
-                            name="form-aktivasi" action="javascript:submitResetPasswordForm()">
+                        <form class="form w-100     w-lg-500px" novalidate="novalidate" id="kt_sign_in_form"
+                            method="POST" name="form-aktivasi" action="javascript:submitResetPasswordForm()">
                             @csrf
                             {{-- <div class="text-center mb-10">
                                 <h1 class="text-dark mb-3">Sign In</h1>
@@ -36,9 +36,9 @@
                                 </div> --}}
                                 {{-- <a href="/login" class="link-primary fw-bolder">Tidak menerima email? Klik di sini</a> --}}
                             </div>
+                            <input type="hidden" name="token" id="token">
 
 
-                        
                             <div class="mb-10 fv-row password-input " data-kt-password-meter="true">
                                 <div class="mb-1">
                                     <label class="form-label fw-bolder text-dark fs-6" for="password">Password</label>
@@ -68,7 +68,7 @@
                                 <div class="text-muted">Gunakan 8 atau lebih karakter dengan campuran huruf, angka,
                                     dan simbol.
                                 </div>
-                                <div id="password-error" class="invalid-feedback" style="display: none;"></div>
+                                <div id="password-error" class="invalid-feedback" style="display: none;">tes</div>
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -77,18 +77,28 @@
                                 @enderror
                             </div>
 
-                            <div class="fv-row mb-10 password-input">
-                                <input type="hidden" name="token" id="token">
+                            <div class="fv-row mb-10">
                                 <label class="form-label fw-bolder text-dark fs-6" for="password-confirm">Konfirmasi
                                     Password</label>
-                                <input id="password-confirm" type="password"
-                                    class="form-control form-control-lg form-control-solid" name="password_confirmation"
-                                    required autocomplete="new-password" placeholder="Ulangi kata sandi">
+                                <div class="position-relative mb-3">
+                                    <input id="password-confirm" type="password"
+                                        class="form-control form-control-lg form-control-solid"
+                                        name="password_confirmation" required autocomplete="new-password"
+                                        placeholder="Ulangi kata sandi">
+                                    <span
+                                        class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
+                                        onclick="togglePassword('password-confirm')">
+                                        <i class="bi bi-eye-slash fs-2"></i>
+                                        <i class="bi bi-eye fs-2 d-none"></i>
+                                    </span>
+                                </div>
+                                <div id="password-confirm-error" class="invalid-feedback" style="display: none;">
+                                </div>
                             </div>
-                        
+
                             <div class="text-center">
 
-                                <button type="submit" id="" class="btn btn-lg w-100 mb-4"
+                                <button type="submit" id="submit-button" class="btn btn-lg w-100 mb-4 text-white"
                                     style="background-color: #1B61AD">
                                     <span class="indicator-label text-white">Ubah Kata Sandi</span>
                                     <span class="indicator-progress text-white">Tunggu sebentar...
@@ -129,43 +139,78 @@
             var url = new URL(urlString);
             var id = url.searchParams.get("token");
             console.log(id);
-            if(!id){
-                window.location.href='/login'
+            if (!id) {
+                window.location.href = '/login'
             }
             $('#token').val(id)
-            
+
         });
 
-        togglePassword = () => {
-            if ($('#password').attr('type') == 'password') {
-                $('#password').attr('type', 'text')
-                $('.far.fa-eye').removeClass('fa-eye').addClass('fa-eye-slash')
+        function togglePassword(inputId) {
+            var input = document.getElementById(inputId);
+            var icon = input.nextElementSibling.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
             } else {
-                $('.far.fa-eye-slash').removeClass('fa-eye-slash').addClass('fa-eye')
-                $('#password').attr('type', 'password')
+                input.type = 'password';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
             }
         }
 
         function submitResetPasswordForm() {
             var form = "form-aktivasi";
+            var password = $("#password").val();
+            var confirmPassword = $("#password-confirm").val();
+            $("#submit-button").text("Tunggu sebentar...").prop("disabled", true);
+
+            // Validasi password
+            if (!checkPasswordStrength(password)) {
+                $("#password-error").text(
+                    "Sandi harus terdiri minimal 8 karakter dengan campuran huruf, angka, dan simbol"
+                );
+                $("#password-error").show();
+                $("#submit-button").text("Submit").prop("disabled", false);
+
+                return;
+            } else {
+                hidePasswordError()
+            }
+
+            // Validasi konfirmasi password
+            if (password !== confirmPassword) {
+                $("#password-confirm-error").text("Konfirmasi password tidak cocok.");
+                $("#password-confirm-error").show();
+                $("#submit-button").text("Submit").prop("disabled", false);
+
+                return;
+            } else {
+                hideConfirmPasswordError()
+            }
+
+            // Semua validasi berhasil, lanjutkan dengan pengiriman formulir
             var data = new FormData($('[name="' + form + '"]')[0]);
+
             axios.post("/api/auth/submitResetPasswordForm", data, {
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        // 'Content-Type': 'multipart/form-data', // Jangan ditambahkan header ini
                     }
                 })
                 .then(response => {
                     if (response.data.success) {
+                        var url = new URL(window.location.href);
+                        url.searchParams.delete('token');
+                        history.replaceState(null, null, url);
                         // Tampilkan SweetAlert sukses
                         quick.toastNotif({
                             title: response.data.message,
                             icon: 'success',
-                            timer: 3000,
+                            timer: 1000,
                             callback: function() {
                                 window.location.href = '/login';
                             }
-
                         });
                     } else {
                         // Tampilkan SweetAlert gagal
@@ -173,9 +218,6 @@
                             title: response.data.message,
                             icon: 'error',
                             timer: 3000,
-                            // callback: function() {
-                            //     window.location.reload()
-                            // }
                         });
                     }
                 })
@@ -189,9 +231,6 @@
                             title: "Token tidak valid!",
                             icon: 'error',
                             timer: 3000,
-                            // callback: function() {
-                            //     window.location.reload()
-                            // }
                         })
                     } else {
                         // Tampilkan SweetAlert error umum
@@ -199,12 +238,25 @@
                             title: error.response.data.message,
                             icon: 'error',
                             timer: 3000,
-                            // callback: function() {
-                            //     window.location.reload()
-                            // }
                         });
                     }
+                }).finally(() => {
+                    // Mengaktifkan kembali tombol submit dan mengembalikan teks aslinya
+                    $("#submit-button").text("Submit").prop("disabled", false);
                 });
+        }
+
+        function checkPasswordStrength(password) {
+            var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            return regex.test(password);
+        }
+
+        function hidePasswordError() {
+            $("#password-error").hide();
+        }
+
+        function hideConfirmPasswordError() {
+            $("#password-confirm-error").hide();
         }
     </script>
     @include('layouts.support.bundle.bundlefooter')
