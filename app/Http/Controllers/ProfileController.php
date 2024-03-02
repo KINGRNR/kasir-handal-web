@@ -25,6 +25,18 @@ class ProfileController extends Controller
     $operation['toko'] = DB::table('toko')->where('toko_user_id', $id)->first();
     return response()->json($operation);
   }
+  public function indexUserMob(Request $request)
+  {
+    $id = $request->post();
+
+    // dd(session('user_id'));
+    // $id_toko = DB::table('toko')->where('toko_user_id', $id)->select('toko_id')->first();
+
+    // $operation = DB::table('users')->where('users_role_id','TKQR2DSJlQ5b31V2')->get();
+    $operation['user'] = DB::table('users')->where('id', $id)->first();
+    // $operation['toko'] = DB::table('toko')->where('toko_user_id', $id)->first();
+    return response()->json($operation);
+  }
   public function detailToko(Request $request)
   {
     $id = $request->post();

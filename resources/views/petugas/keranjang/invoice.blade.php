@@ -39,7 +39,8 @@
 
                     <!-- Fitur Pencarian -->
                     <div class="col-md-6 mb-3">
-                        <input type="text" class="form-control" id="search" placeholder="Cari berdasar nama produk...">
+                        <input type="text" class="form-control" id="search"
+                            placeholder="Cari berdasar nama produk...">
                     </div>
 
                     <div class="col-md-2 mb-3">
@@ -55,9 +56,9 @@
         </div>
 
     </div>
-    <div class="col-md-4 mb-4">
+    <div class="col-md-4 mb-4 sticky-top">
         <!-- Informasi Pelanggan -->
-        <div class="card card-keranjang">
+        <div class="card card-keranjang" >
             <div class="card-header" style="background: #175CD3;">
                 <div class="card-title">
                     <h2 class="text-white">Keranjang</h2>
@@ -88,10 +89,10 @@
                         <label for="noTelp">Email :</label>
                         <div class="input-group">
                             <input type="email" class="form-control" id="check_email" name="check_email"
-                            placeholder="Masukkan email pelanggan yang dituju">
-                        <button type="button" onclick="cariPelanggan()" class="btn btn-secondary ml-2">
-                            <i class="fas fa-search"></i>
-                        </button>
+                                placeholder="Masukkan email pelanggan yang dituju">
+                            <button type="button" onclick="cariPelanggan()" class="btn btn-secondary ml-2">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="mb-3 carilisting">
@@ -156,7 +157,7 @@
                     <div class="mb-3">
                         <label for="nama">Total Harga :</label>
                         <input type="text" class="form-control" id="total_harga_prev" name="total_harga_prev"
-                            placeholder="Harga" disabled     readonly>
+                            placeholder="Harga" disabled readonly>
                         <input type="hidden" class="form-control" id="total_harga" name="total_harga"
                             placeholder="Harga" readonly>
                     </div>

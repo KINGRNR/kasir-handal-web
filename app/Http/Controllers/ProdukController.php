@@ -89,7 +89,7 @@ class ProdukController extends Controller
       $formData['foto_produk'] = $filename;
     }
 
-    $formData['harga_produk'] = str_replace(',', '', str_replace('.', '', $formData['harga_produk']));
+    // $formData['harga_produk'] = str_replace(',', '', str_replace('.', '', $formData['harga_produk']));
 
     if ($formData['id_produk']) {
       $existingProduk = Produk::find($formData['id_produk']);
