@@ -59,7 +59,7 @@
 
                                 <div class="text-center">
 
-                                    <button type="submit" id="pencet-reset" class="btn btn-lg w-100 mb-4"
+                                    <button type="submit" id="pencet-reset" class="btn btn-lg w-100 mb-4 text-white"
                                         style="background-color: #1B61AD">
                                         <span class="indicator-label text-white">Reset Password</span>
                                         <span class="indicator-progress text-white">Tunggu sebentar...
@@ -112,7 +112,8 @@
             var data = new FormData($('[name="' + form + '"]')[0]);
             // var button = ('#pencet-reset');
             // quick.loadingBtn(button)
-            
+            $("#pencet-reset").text("Tunggu sebentar...").prop("disabled", true);
+
             axios.post("/api/auth/kirimResetPass", data, {
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -122,6 +123,7 @@
                 .then(response => {
                     if (response.data.success) {
                         // quick.unloadingBtn(button)
+                        $("#pencet-reset").text("Submit").prop("disabled", false);
 
                         quick.toastNotif({
                             title: response.data.message,

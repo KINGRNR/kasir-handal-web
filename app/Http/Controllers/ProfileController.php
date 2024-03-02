@@ -34,13 +34,22 @@ class ProfileController extends Controller
 
     // $operation = DB::table('users')->where('users_role_id','TKQR2DSJlQ5b31V2')->get();
     $operation['user'] = DB::table('users')->where('id', $id)->first();
-    // $operation['toko'] = DB::table('toko')->where('toko_user_id', $id)->first();
+    
+    // $detailed_user['toko_id'] = $detailed_user->petugas_toko_id;
+    if ($operation['user']->users_role_id == 'BfiwyVUDrXOpmStr') {
+      $operation['detail_toko'] = DB::table('toko')->where('toko_user_id', $operation['user']->id)->first();
+  } else if ($operation['user']->users_role_id == 'TKQR2DSJlQ5b31V2') {
+      $operation['detail_petugas'] = DB::table('petugas')->where('petugas_user_id', $operation['user']->id)->first();
+      $operation['detail_toko'] = DB::table('toko')->where('toko_id', $operation['detail_petugas']->petugas_toko_id)->first();
+
+      // $detailed_user['toko_id'] = $detailed_user->petugas_toko_id;
+  }    // $operation['toko'] = DB::table('toko')->where('toko_user_id', $id)->first();
     return response()->json($operation);
   }
   public function detailToko(Request $request)
   {
     $id = $request->post();
-    
+
     // dd(session('user_id'));
     // $id_toko = DB::table('toko')->where('toko_user_id', $id)->select('toko_id')->first();
     // dd($id);
@@ -74,7 +83,7 @@ class ProfileController extends Controller
 
     // $operation = DB::table('users')->where('users_role_id','TKQR2DSJlQ5b31V2')->get();
     $operation['user'] = DB::table('users')->where('id', $id)->first();
-   
+
 
     return response()->json($operation);
   }
@@ -131,7 +140,7 @@ class ProfileController extends Controller
         unlink(public_path('file/foto_profile/') . $toko->toko_foto);
       };
     }
-    if(isset($data['toko_foto'])){
+    if (isset($data['toko_foto'])) {
       $toko->update([
         'toko_nama' => $data['nama_toko'],
         'toko_foto' => $data['toko_foto']

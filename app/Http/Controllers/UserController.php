@@ -48,11 +48,13 @@ class UserController extends Controller
     // exit;
     // try {
     // dd($data);
+    $id =  rand();
+
     if ($data['id']) {
       $oprUpdate = User::findOrFail($data['id']);
       $oprUpdate->update($data);
     } else {
-      $data['id'] = User::generateId();
+      $data['id'] = $id;
       $data['users_role_id'] = 'TKQR2DSJlQ5b31V2';
       $data['password'] = '';
       // print_r($data); 

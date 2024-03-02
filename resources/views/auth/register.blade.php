@@ -439,21 +439,9 @@
 
                 });
             });
-            $(document).ready(function() {
                 // Fungsi validasi password di input konfirmasi password
-                $("#password-confirm").on("input", function() {
-                    var password = $("#password").val();
-                    var confirmPassword = $(this).val();
+            
 
-                    if (password !== confirmPassword) {
-                        $("#password-confirm-error").text("Konfirmasi password tidak cocok.");
-                        $("#password-confirm-error").show();
-                    } else {
-                        $("#password-confirm-error").hide();
-                    }
-                });
-
-            });
             $(document).ready(function() {
                 function showPasswordError() {
                     // $("#password-error").text("Konfirmasi password tidak cocok.");
@@ -487,8 +475,21 @@
                             "Sandi harus terdiri minimal 8 karakter dengan campuran huruf, angka, dan simbol"
                         );
                         $("#password-error").show();
+                        return;
+
                     } else {
                         hidePasswordError();
+                    }
+                });
+                $("#password-confirm").on("input", function() {
+                    var password = $("#password").val();
+                    var confirmPassword = $(this).val();
+
+                    if (password !== confirmPassword) {
+                        $("#password-confirm-error").text("Konfirmasi password tidak cocok.");
+                        $("#password-confirm-error").show();
+                    } else {
+                        $("#password-confirm-error").hide();
                     }
                 });
                 $("#email").on("input", function() {
@@ -523,7 +524,9 @@
                     } else {
                         $("#email-error").hide();
                     }
-
+                    if (!checkPasswordStrength(password)) {
+                        return;
+                    } 
                     if (!email || !password || !confirmPassword) {
                         Swal.fire({
                             icon: 'error',

@@ -5,7 +5,8 @@
         <!--begin::Authentication - Sign-in -->
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-6 d-flex flex-column flex-lg-row-auto justify-content-center align-items-center bg-white">
+                <div
+                    class="col-lg-6 d-flex flex-column flex-lg-row-auto justify-content-center align-items-center bg-white">
                     {{-- <h1 class="text-center text-white " style="font-size: 70px;">KasirHandal</h1> --}}
                     <img src="file/vector-kasir-3.png" class="d-none d-lg-block w-75 max-w-100 h-auto"
                         style="max-width: 75%;" alt="Logo Ipsum Logo">
@@ -22,7 +23,8 @@
                         <!--begin::Wrapper-->
                         <div class="p-10 p-lg-15 mx-auto">
                             <!--begin::Form-->
-                            <form class="form w-100 w-lg-500px" novalidate="novalidate" id="kt_sign_in_form" method="POST" action="{{ route('login.store') }}">
+                            <form class="form w-100 w-lg-500px" novalidate="novalidate" id="kt_sign_in_form"
+                                method="POST" action="{{ route('login.store') }}">
 
                                 @csrf
                                 {{-- <div class="text-center mb-10">
@@ -45,14 +47,23 @@
                                     <label class="form-label fs-14 fw-bolder text-dark">Email</label>
                                     <input
                                         class="form-control @error('email') is-invalid @enderror form-control-lg fs-14 form-control-solid border border-gray-200 text-gray-900"
-                                        id="email" type="email" name="email"
-                                        placeholder="Masukkan Email" required autocomplete="email" autofocus>
+                                        id="email" type="email" name="email" placeholder="Masukkan Email"
+                                        required autocomplete="email" autofocus>
                                     {{-- value="{{ old('email') }}" --}}
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                    </button>
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            @foreach ($errors->all() as $error)
+                                                <p>{{ $error }}</p>
+                                            @endforeach
+                                        </div>
+                                    @endif
+
                                 </div>
                                 <div class="fv-row mb-10">
                                     <div class="d-flex flex-stack mb-2">
@@ -70,13 +81,13 @@
                                             <i class="far fa-eye"></i>
                                         </button>
                                         @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
 
-                                   
+
                                 </div>
 
                                 <div class="fv-row mb-10">
@@ -102,14 +113,14 @@
                                                 class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                     </button>
                                 </div>
-                                    {{-- <div class="d-grid">
+                                {{-- <div class="d-grid">
                                     <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
                                         <span class="indicator-label">Masuk</span>
                                         <span class="indicator-progress">Tunggu Sebentar...
                                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                     </button>
                                 </div> --}}
-                                    {{-- <a href="{{ url('authorized/google') }}"
+                                {{-- <a href="{{ url('authorized/google') }}"
                                     class="btn btn-flex flex-center btn-light btn-lg w-100 mb-5">
                                     <img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg"
                                         class="h-20px me-3">Continue with

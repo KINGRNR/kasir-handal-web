@@ -56,7 +56,7 @@
         </div>
 
     </div>
-    <div class="col-md-4 mb-4 sticky-top">
+    <div class="col-md-4 mb-4">
         <!-- Informasi Pelanggan -->
         <div class="card card-keranjang" >
             <div class="card-header" style="background: #175CD3;">

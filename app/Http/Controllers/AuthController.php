@@ -20,7 +20,7 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
-   
+
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['loginMobile', 'login', 'register', 'logout', 'checkaccount', 'aktivasiakun', 'kirimResetPass', 'submitResetPasswordForm']]);
@@ -88,19 +88,19 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validator = $this->validator($request->all());
-    
+
         if ($validator->fails()) {
             return redirect()->route('login')->withErrors($validator)->withInput();
         }
-    
+
         if (Auth::attempt($request->only('email', 'password'))) {
             // $user = User::where('email', $request->email)->firstOrFail();
             $user = DB::table('users')->where('email', $request->email)->first();
-    
+
             if ($user->active == 0) {
                 return redirect()->route('login')->withErrors('Akun Anda belum aktif.')->withInput();
             }
-    
+
             if ($user->users_role_id == 'BfiwyVUDrXOpmStr') {
                 $toko = DB::table('toko')->where('toko_user_id', $user->id)->first();
                 session(['toko_id' => $toko->toko_id]);
@@ -119,16 +119,16 @@ class AuthController extends Controller
                 session(['petugas_id' => $id->petugas_id]);
                 session(['toko_foto' => $toko->toko_foto]);
             }
-    
+
             $token = Auth::attempt($request->only('email', 'password'));
-    
+
             session(['user' => $user]);
             session(['name' => $user->name]);
             session(['email' => $user->email]);
             session(['user_id' => $user->id]);
             session(['user_role' => $user->users_role_id]);
             session(['token' => $token]);
-    
+
             switch ($user->users_role_id) {
                 case 'FOV4Qtgi5lcQ9kCY':
                     $request->session()->regenerate();
@@ -140,7 +140,7 @@ class AuthController extends Controller
                             'type' => 'bearer',
                         ]
                     ]);
-    
+
                 case 'BfiwyVUDrXOpmStr':
                     return redirect()->route('toko')->with([
                         'status' => 'success',
@@ -150,7 +150,7 @@ class AuthController extends Controller
                             'type' => 'bearer',
                         ]
                     ]);
-    
+
                 case 'TKQR2DSJlQ5b31V2':
                     $request->session()->regenerate();
                     return redirect()->route('petugas')->with([
@@ -161,18 +161,16 @@ class AuthController extends Controller
                             'type' => 'bearer',
                         ]
                     ]);
-    
+
                 default:
                     Auth::logout();
                     return response()->json(['data' => $user], 422);
             }
         } else {
-            $validator = $this->validator($request->all(), 'login');
-            $validator->errors()->add('validator', 'Email atau password salah. Silakan coba lagi.');
-            return redirect()->route('login')->withErrors($validator)->withInput();
+            return redirect()->route('login')->withErrors('Credential salah.')->withInput();
         }
     }
-    
+
     public function validator(array $data, $tipe = 'login')
     {
         if ($tipe == 'login') {
@@ -182,6 +180,7 @@ class AuthController extends Controller
             ], [
                 'password.required' => 'Password tidak boleh kosong.',
                 'password.min' => 'Password harus memiliki minimal :min karakter.',
+                'email.required' => 'Email tidak boleh kosong.'
             ]);
         }
         return Validator::make($data, [
@@ -472,7 +471,6 @@ class AuthController extends Controller
     public function submitResetPasswordForm(Request $request)
 
     {
-
         $request->validate([
 
             'password' => 'required|string|min:6|confirmed',
