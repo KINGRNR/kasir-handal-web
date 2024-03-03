@@ -51,13 +51,13 @@
                      id="#kt_header_menu" data-kt-menu="true">
                      <div class="menu-item me-lg-1">
                          <a class="menu-link py-3 dashboard" href="/toko/dashboard">
-                             <span class="menu-title">Beranda</span>
+                             <span class="menu-title text-white">Beranda</span>
                              <span class="menu-arrow d-lg-none"></span>
                          </a>
                      </div>
                      <div onclick="window.location.href='/toko/petugas'" class="menu-item me-lg-1">
                          <span class="menu-link py-3 petugas">
-                             <span class="menu-title ">Petugas</span>
+                             <span class="menu-title text-white ">Petugas</span>
                              <span class="menu-arrow d-lg-none"></span>
                          </span>
                      </div>
@@ -65,7 +65,7 @@
                      <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start"
                          class="menu-item menu-lg-down-accordion me-lg-1">
                          <span class="menu-link py-3">
-                             <span class="menu-title">Manajemen Produk</span>
+                             <span class="menu-title text-white">Manajemen Produk</span>
                              <span class="menu-arrow "></span>
                          </span>
                          <div
@@ -125,14 +125,14 @@
                      </div>
                      <div onclick="window.location.href='/toko/report-penjualan'" class="menu-item me-lg-1">
                          <span class="menu-link py-3 report-penjualan-head">
-                             <span class="menu-title">Riwayat Transaksi</span>
+                             <span class="menu-title text-white">Riwayat Transaksi</span>
                              <span class="menu-arrow d-lg-none"></span>
                          </span>
                      </div>
                      {{-- <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start"
                          class="menu-item menu-lg-down-accordion me-lg-1">
                          <span class="menu-link py-3">
-                             <span class="menu-title text-white">Penjualan</span>
+                             <span class="menu-title text-white text-white">Penjualan</span>
                              <span class="menu-arrow "></span>
                          </span>
                          <div
@@ -140,13 +140,13 @@
 
                              <div onclick="window.location.href='/toko/report-penjualan'" class="menu-item me-lg-1">
                                  <span class="menu-link py-3 keranjang">
-                                     <span class="menu-title sm-text-dark lg-text-white">Data Penjualan</span>
+                                     <span class="menu-title text-white sm-text-dark lg-text-white">Data Penjualan</span>
                                      <span class="menu-arrow d-lg-none"></span>
                                  </span>
                              </div>
                              <div onclick="window.location.href='/toko/keranjang'" class="menu-item me-lg-1">
                                  <span class="menu-link py-3 keranjang">
-                                     <span class="menu-title sm-text-dark lg-text-white ">Transaksi</span>
+                                     <span class="menu-title text-white sm-text-dark lg-text-white ">Transaksi</span>
                                      <span class="menu-arrow d-lg-none"></span>
                                  </span>
                              </div>
@@ -155,7 +155,7 @@
 
                      {{-- <div onclick="window.location.href='/toko/petugas'" class="menu-item me-lg-1">
                          <span class="menu-link py-3">
-                             <span class="menu-title text-white ">Pengaturan Toko</span>
+                             <span class="menu-title text-white text-white ">Pengaturan Toko</span>
                              <span class="menu-arrow d-lg-none"></span>
                          </span>
                      </div> --}}

@@ -161,7 +161,7 @@
                         <input type="hidden" class="form-control" id="total_harga" name="total_harga"
                             placeholder="Harga" readonly>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3 payment-button">
                         <button type="submit" class="btn btn-success btn-sm">Bayar
                             Cashless</button>
                         <button type="button" class="btn btn-success btn-sm" onclick="inputDataHarga()">Bayar
@@ -169,7 +169,11 @@
                         {{-- <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
                             data-bs-target="#modalTransaksiBerhasil">styling Modal berhasil</button> --}}
                     </div>
-
+                    <div class="mb-3 payment-button">
+                        {{-- <button type="submit" class="btn btn-success btn-sm">Bayar
+                            Cashless</button> --}}
+                        <button type="button" class="btn btn-success btn-sm" onclick="inputDataHarga()">Kembali Ke Transaksi</button>
+                    </div>
                     </form>
                 </div>
 

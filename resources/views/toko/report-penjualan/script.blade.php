@@ -134,7 +134,7 @@
                                                 Kirim Email</button>
                                         {{-- <button type="button" onclick="sendWhatsapp()" class="btn btn-success"><i class="fab fa-whatsapp fa-2x"></i>
                                                 Kirim Whatsapp</button> --}}
-                                            <button type="button" onclick="printStruk(data)" class="btn btn-success"><i class="fas fa-print fa-2x"></i> Print
+                                            <button type="button" onclick="printStruk(${data})" class="btn btn-success"><i class="fas fa-print fa-2x"></i> Print
                                                 Struk</button>
                                         </div>
 
@@ -165,6 +165,90 @@
                 console.error('There has been a problem with your Axios operation:', error);
             });
     }
+
+    function printStruk(data) {
+    var strukWindow = window.open('', '_blank');
+    strukWindow.document.write(`
+        <html>
+        <head>
+            <title>Struk Pembayaran</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                }
+                .header {
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                th, td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                }
+                th {
+                    background-color: #f2f2f2;
+                }
+                .total {
+                    margin-top: 20px;
+                    text-align: right;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h2>Struk Pembayaran</h2>
+                <p>Toko: ${data.toko.toko_nama} #${data.penjualan.penjualan_id}</p>
+            </div>
+            <div class="details">
+                <p><strong>Petugas Kasir:</strong> ${data.petugas.name}</p>
+                <p><strong>Email Petugas:</strong> ${data.petugas.email}</p>
+                <p><strong>Waktu Pembayaran:</strong> ${quick.convertDateTime(data.penjualan.penjualan_created_at)}</p>
+                <p><strong>Detail Pelanggan:</strong></p>
+                <ul>
+                    <li>Nama: ${data.pelanggan.nama_pelanggan}</li>
+                    <li>Email: ${data.pelanggan.email_pelanggan}</li>
+                    <li>No Telp: ${data.pelanggan.no_hp}</li>
+                </ul>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Produk</th>
+                        <th>Jumlah</th>
+                        <th>Harga Satuan</th>
+                        <th>Harga Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${generateTableRows(data.detail_penjualan)}
+                </tbody>
+            </table>
+            <div class="total">
+                <p><strong>Total:</strong> ${quick.formatRupiah(data.penjualan.penjualan_total_harga)}</p>
+            </div>
+        </body>
+        </html>
+    `);
+}
+
+function generateTableRows(detailPenjualan) {
+    var rows = '';
+    detailPenjualan.forEach(item => {
+        rows += `
+            <tr>
+                <td>${item.nama_produk}</td>
+                <td>${item.jumlah_barang}</td>
+                <td>${quick.formatRupiah(item.harga_produk)}</td>
+                <td>${quick.formatRupiah(item.sub_total)}</td>
+            </tr>
+        `;
+    });
+    return rows;
+}
+
 
     var filterDatatable = [];
     var menutable = null;
@@ -534,85 +618,5 @@
                     });
             }
         });
-    };
-
-    function printStruk(data) {
-        var content = `
-        <div class="container">
-            <div class="header">
-                <h2>Struk</h2>
-            </div>
-
-            <div class="invoice-details">
-                <p><strong>Nama Pelanggan:</strong> ${data.nama_pelanggan}</p>
-                <p><strong>No. Telepon:</strong> ${data.no_telp}</p>
-                <p><strong>Email:</strong> ${data.email_pelanggan}</p>
-                <p><strong>Transaksi Nomor:</strong> ${data.penjualan_id}</p>
-                <p><strong>Tanggal Transaksi:</strong> ${data.waktu_transaksi}</p>
-            </div>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Produk</th>
-                        <th>Jumlah</th>
-                        <th>Harga Satuan</th>
-                        <th>Harga Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${data.itemDetails.map(item => `
-                        <tr>
-                            <td>${item.nama_produk}</td>
-                            <td>${item.qty_produk}</td>
-                            <td>Rp. ${item.harga_produk.toLocaleString()}</td>
-                            <td>Rp. ${(item.harga_produk * item.qty_produk).toLocaleString()}</td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-
-            <div class="total">
-                <p><strong>Total:</strong> Rp. ${data.total_harga.toLocaleString()}</p>
-            </div>
-
-            <div class="footer">
-                <p>Terima Kasih sudah berbelanja!</p>
-            </div>
-        </div>
-    `;
-
-        var win = window.open('', '_blank');
-        win.document.write('<html><head><title>Print Struk</title>');
-        win.document.write('<style>/* Tambahkan gaya CSS Anda di sini */</style>');
-        win.document.write('</head><body>');
-        win.document.write(content);
-        win.document.write('</body></html>');
-
-        win.onload = function() {
-            win.print();
-            win.close();
-        };
-    }
-
-    // Contoh penggunaan fungsi printStruk
-    var data = {
-        nama_pelanggan: "John Doe",
-        no_telp: "123456789",
-        email_pelanggan: "john@example.com",
-        penjualan_id: "123456",
-        waktu_transaksi: "2024-02-19",
-        itemDetails: [{
-                nama_produk: "Product A",
-                qty_produk: 2,
-                harga_produk: 50000
-            },
-            {
-                nama_produk: "Product B",
-                qty_produk: 1,
-                harga_produk: 75000
-            }
-        ],
-        total_harga: 175000
     };
 </script>
