@@ -49,10 +49,10 @@
                 <thead>
                     <!--begin::Table row-->
                     <tr class="text-start align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                        <th class="ps-4" width="20">No</th>
+                        <th class="ps-4" width="30">No</th>
                         {{-- <th class="min-w-80px">Kode Kategori</th> --}}
                         <th class="min-w-125px">Logo Merek</th>
-                        <th class="min-w-125px">Merek</th>
+                        <th class="min-w-150px">Merek</th>
                         <th class="min-w-125px">Aksi</th>
                     </tr>
                     <!--end::Table row-->

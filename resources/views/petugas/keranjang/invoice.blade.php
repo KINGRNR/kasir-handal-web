@@ -195,7 +195,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="jumlah_uang_cash">Jumlah Uang Cash :</label>
-                    <input type="text" class="form-control" id="jumlah_uang_cash" name="jumlah_uang_cash">
+                    <input type="text" class="form-control" id="jumlah_uang_cash" name="jumlah_uang_cash" oninput="hitungKembalian()" placeholder="Masukkan nominal uang">
                 </div>
                 <div class="mb-3">
                     <label for="kembalian_cash">Kembalian :</label>
@@ -204,7 +204,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-primary" onclick="hitungKembalian()">Bayar</button>
+                <button type="button" id="bayar-cash" class="btn btn-primary" disabled onclick="startTransaksiCash()">Bayar</button>
             </div>
         </div>
     </div>

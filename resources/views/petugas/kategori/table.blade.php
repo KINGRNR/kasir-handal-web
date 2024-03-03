@@ -49,11 +49,11 @@
                 <thead>
                     <!--begin::Table row-->
                     <tr class="text-start align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                        <th class="ps-4" width="20">No</th>
+                        <th class="ps-4" width="30">No</th>
                         {{-- <th class="min-w-80px">Kode Kategori</th> --}}
                         <th class="min-w-125px">Logo Merek</th>
                         <th class="min-w-125px">Merek</th>
-                        <th class="min-w-125px"></th>
+                        <th class="min-w-125px">Aksi</th>
                     </tr>
                     <!--end::Table row-->
                 </thead>
@@ -65,5 +65,5 @@
 </div>
 
 <div class="modal fade" id="modalKategori" tabindex="-1" aria-labelledby="modalKategori" aria-hidden="true">
-    @include('toko.kategori.form')
+    @include('petugas.kategori.form')
 </div>

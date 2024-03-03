@@ -28,6 +28,10 @@
         $(`input, select`).removeAttr('disabled');
     });
 
+    function formatRupiah(a) {
+        quick.formatRupiah(a)
+    }
+
     function getKategori() {
         axios.post("/produk/getKategori", {
                 headers: {
@@ -117,14 +121,16 @@
                     render: function(data, type, row, meta) {
                         return '<span class="ps-3">' + (meta.row + meta.settings._iDisplayStart + 1) +
                             '</span>';
-                    }
+                    },
+                    orderable: false
                 },
                 {
                     data: 'foto_produk',
                     render: function(data, type, row) {
                         return '<img src="/file/produk_foto/' + row.foto_produk +
                             '" alt="Product Image" class="img-thumbnail" width="50" height="50">';
-                    }
+                    },
+                    orderable: false
                 },
                 {
                     data: 'nama_produk',
@@ -159,7 +165,8 @@
                     render: function(data, type, row) {
                         return '<img src="/file/kategori_logo/' + row.kategori_logo +
                             '" alt="Logo Kategori" class="img-thumbnail" width="50" height="50">';
-                    }
+                    },
+                    orderable: false
 
                 },
                 {
@@ -170,10 +177,12 @@
                             row.id_produk + ')">Edit</button>';
 
                         var deleteButton = '<button class="btn btn-sm btn-danger" onclick="deleteRow(' +
-                            row.id_produk + ')">Delete</button>';
+                            row.id_produk + ')">Hapus</button>';
 
                         return editButton + ' ' + deleteButton;
-                    }
+                    },
+                    orderable: false
+
                 }
             ]
 
@@ -197,7 +206,6 @@
         //     }
         // }).css('cursor', 'pointer');
     }
-
     // function switchForm() {
     //     $('.table-switch-produk').animate({
     //         top: '250px',

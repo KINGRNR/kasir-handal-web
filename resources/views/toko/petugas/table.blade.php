@@ -48,7 +48,7 @@
                 <thead>
                     <!--begin::Table row-->
                     <tr class="text-start align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                        <th class="ps-4" width="20">No</th>
+                        <th class="ps-4" width="30">No</th>
                         <th class="min-w-125px">Nama Petugas</th>
                         <th class="min-w-125px">Email</th>
                         <th class="min-w-125px">Tanggal Bergabung</th>

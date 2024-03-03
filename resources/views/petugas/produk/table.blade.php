@@ -51,7 +51,7 @@
                 <thead>
                     <!--begin::Table row-->
                     <tr class="text-start align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                        <th class="ps-4" width="20">No</th>
+                        <th class="ps-4" width="30">No</th>
                         <th class="min-w-100px">Foto Produk</th>
                         <th class="min-w-100px">Nama Produk</th>
                         <th class="min-w-125px">Harga Produk</th>
@@ -74,5 +74,5 @@
 </div> --}}
 
 <div class="modal fade" id="modalProduk" tabindex="-1" aria-labelledby="modalProduk" aria-hidden="true">
-    @include('toko.produk.form')
+    @include('petugas.produk.form')
 </div>

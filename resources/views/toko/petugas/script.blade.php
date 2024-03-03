@@ -47,7 +47,9 @@
                     render: function(data, type, row, meta) {
                         return '<span class="ps-3">' + (meta.row + meta.settings._iDisplayStart + 1) +
                             '</span>';
-                    }
+                    },
+                    orderable: false 
+
                 },
                 {
                     data: 'name',
@@ -72,7 +74,9 @@
                             '">Hapus</button>';
 
                         return editButton + ' ' + deleteButton;
-                    }
+                    },
+                    orderable: false 
+
                 }
             ]
 

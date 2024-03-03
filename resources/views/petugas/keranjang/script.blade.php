@@ -340,8 +340,18 @@
             var totalHarga = parseFloat($('#total_harga').val());
             var jumlahUangCash = parseFloat($('#jumlah_uang_cash').val());
             var kembalian = jumlahUangCash - totalHarga;
-            $('#kembalian_cash').val(kembalian);
-            startTransaksiCash()
+            if (kembalian) {
+                $('#kembalian_cash').val(kembalian);
+            } else {
+                $('#kembalian_cash').val(0);
+ 
+            }
+            if(kembalian < 0) {
+                $('#bayar-cash').prop('disabled', true)
+            } else {
+                $('#bayar-cash').prop('disabled', false)
+
+            }
         }
 
         function startTransaksiCash() {
@@ -482,7 +492,8 @@
                                         icon: 'success',
                                         timer: 1000,
                                         callback: function() {
-                                            saveTransaction(response.data.dataPenjualan,result);
+                                            saveTransaction(response.data.dataPenjualan,
+                                                result);
                                         }
                                     });
                                 },
@@ -700,7 +711,7 @@
 
         function hapusItemKeranjang(id, harga, inputId) {
             var currentQuantity = parseInt($('#quantity' + id).text());
-            var subtotal = harga * currentQuantity; 
+            var subtotal = harga * currentQuantity;
             $('#tambahkeranjang' + id).removeClass('d-none');
 
             $(`#id_produk${id}`).remove();
