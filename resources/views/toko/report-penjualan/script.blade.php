@@ -318,7 +318,7 @@ function generateTableRows(detailPenjualan) {
                 {
                     data: 'penjualan_created_at',
                     render: function(data, type, row) {
-                        return quick.convertDate(row.penjualan_created_at);
+                        return quick.convertDateTime(row.penjualan_created_at);
                     }
                 }
             ],

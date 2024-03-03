@@ -29,7 +29,7 @@ var quick = {
         var hours = date.getHours().toString().padStart(2, '0');
         var minutes = date.getMinutes().toString().padStart(2, '0');
     
-        return day + ' ' + month + ' ' + year + ' ' + hours + ':' + minutes;
+        return day + ' ' + month + ' ' + year + ' ' +  hours + ':' + minutes;
     },
      convertHourMinutes: function (data) {
         var date = new Date(data);
