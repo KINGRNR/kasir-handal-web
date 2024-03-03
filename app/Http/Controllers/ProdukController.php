@@ -96,7 +96,7 @@ class ProdukController extends Controller
 
       if ($request->hasFile('foto_produk')) {
         // Remove the old image
-        if (file_exists(public_path('file/produk_foto/') . $existingProduk->foto_produk)) {
+        if (!empty($existingProduk->foto_produk) && file_exists(public_path('file/produk_foto/') . $existingProduk->foto_produk)) {
           unlink(public_path('file/produk_foto/') . $existingProduk->foto_produk);
         }
 

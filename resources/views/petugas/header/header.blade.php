@@ -51,7 +51,7 @@
                      id="#kt_header_menu" data-kt-menu="true">
                      <div class="menu-item me-lg-1">
                          <a class="menu-link py-3 keranjang" href="/petugas/keranjang">
-                             <span class="menu-title text-white">Transaksi</span>
+                             <span class="menu-title ">Transaksi</span>
                              <span class="menu-arrow d-lg-none"></span>
                          </a>
                      </div>
@@ -60,7 +60,7 @@
                      <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start"
                          class="menu-item menu-lg-down-accordion me-lg-1">
                          <span class="menu-link py-3">
-                             <span class="menu-title text-white">Manajemen Produk</span>
+                             <span class="menu-title ">Manajemen Produk</span>
                              <span class="menu-arrow "></span>
                          </span>
                          <div
@@ -120,14 +120,14 @@
                      </div>
                      {{-- <div onclick="window.location.href='/petugas/report-penjualan'" class="menu-item me-lg-1">
                          <span class="menu-link py-3 penjualan">
-                             <span class="menu-title text-white">Penjualan</span>
+                             <span class="menu-title ">Penjualan</span>
                              <span class="menu-arrow d-lg-none"></span>
                          </span>
                      </div> --}}
                      {{-- <div data-kt-menu-trigger="click" data-kt-menu-placement="bottom-start"
                          class="menu-item menu-lg-down-accordion me-lg-1">
                          <span class="menu-link py-3">
-                             <span class="menu-title text-white">Penjualan</span>
+                             <span class="menu-title ">Penjualan</span>
                              <span class="menu-arrow "></span>
                          </span>
                          <div
@@ -135,13 +135,13 @@
 
                              <div onclick="window.location.href='/petugas/report-penjualan'" class="menu-item me-lg-1">
                                  <span class="menu-link py-3 keranjang">
-                                     <span class="menu-title sm-text-dark lg-text-white">Data Penjualan</span>
+                                     <span class="menu-title sm-text-dark lg-">Data Penjualan</span>
                                      <span class="menu-arrow d-lg-none"></span>
                                  </span>
                              </div>
                              <div onclick="window.location.href='/petugas/keranjang'" class="menu-item me-lg-1">
                                  <span class="menu-link py-3 keranjang">
-                                     <span class="menu-title sm-text-dark lg-text-white ">Transaksi</span>
+                                     <span class="menu-title sm-text-dark lg- ">Transaksi</span>
                                      <span class="menu-arrow d-lg-none"></span>
                                  </span>
                              </div>
@@ -149,13 +149,13 @@
                      </div> --}}
                      <div class="menu-item me-lg-1">
                         <a class="menu-link py-3 report-penjualan-head" href="/petugas/report-penjualan">
-                            <span class="menu-title text-white">Riwayat Transaksi</span>
+                            <span class="menu-title ">Riwayat Transaksi</span>
                             <span class="menu-arrow d-lg-none"></span>
                         </a>
                     </div>
                      {{-- <div onclick="window.location.href='/petugas/petugas'" class="menu-item me-lg-1">
                          <span class="menu-link py-3">
-                             <span class="menu-title text-white ">Pengaturan toko</span>
+                             <span class="menu-title  ">Pengaturan toko</span>
                              <span class="menu-arrow d-lg-none"></span>
                          </span>
                      </div> --}}

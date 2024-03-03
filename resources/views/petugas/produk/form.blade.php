@@ -16,20 +16,25 @@
                             <div class="fv-row mb-5">
                                 <label for="" class="required form-label">Nama Produk</label>
                                 <input type="text" name="nama_produk" id="nama_produk"
+                                    placeholder="Masukkan nama produk"
                                     class="form-control form-control-sm form-control-solid input-required" required />
                             </div>
                             <div class="fv-row mb-5">
                                 <label for="" class="required form-label">Harga Produk</label>
-                                <div class="input-group">
+                                {{-- <div class="input-group">
                                     <span class="input-group-text">Rp.</span>
-                                    <input type="number" name="harga_produk" id="harga_produk"
-                                        class="form-control form-control-sm form-control-solid input-required"
-                                        required />
-                                </div>
+                                   
+
+                                </div> --}}
+                                <input type="text" name="harga_produk" id="harga_produk"
+                                    placeholder="Masukkan harga produk"
+                                    class="form-control form-control-sm form-control-solid input-required" required
+                                    oninput="formatNumber(this)" />
                             </div>
                             <div class="fv-row mb-5">
                                 <label for="" class="required form-label">Stok Produk</label>
                                 <input type="number" name="stok_produk" id="stok_produk"
+                                    placeholder="Masukkan stok produk"
                                     class="form-control form-control-sm form-control-solid input-required" required />
                             </div>
                             <div class="fv-row mb-5">
@@ -124,3 +129,9 @@
         </div>
     </div>
 </div>
+<script>
+    function formatNumber(input) {
+        // Hapus karakter selain angka
+        input.value = input.value.replace(/[^\d]/g, '');
+    }
+</script>

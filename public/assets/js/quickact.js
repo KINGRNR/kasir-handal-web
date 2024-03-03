@@ -57,7 +57,17 @@ var quick = {
     
         return 'Rp ' + formattedAmount ;
     },
+   inputFormatRupiah: function (input) {
+        var amount = input.value;
+        var reversedAmount = amount.replace(/[^\d]/g, '').split('').reverse().join('');
+        var groups = reversedAmount.match(/\d{1,3}/g);
+        var formattedAmount = groups.join('.').split('').reverse().join('');
     
+        formattedAmount = formattedAmount.replace(/(\.00)+$/, '');
+        $(input).val(input.value)
+
+        input.value = 'Rp ' + formattedAmount ;
+    },
     leafletMapSelector: function (id, a , b) {
         var map = L.map(id).setView([-2.5489, 118.0149], 5); 
     

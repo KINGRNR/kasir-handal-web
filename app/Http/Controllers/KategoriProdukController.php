@@ -87,15 +87,17 @@ class KategoriProdukController extends Controller
         // try {
             if ($data['id_kategori']) {
                 $kategori = Kategori::findOrFail($data['id_kategori']);
-
+            
                 if ($request->hasFile('foto_kategori')) {
-                    // Remove the old image
-                    if (file_exists(public_path('file/kategori_logo/') . $kategori->kategori_logo)) {
+                    if (!empty($kategori->kategori_logo) && file_exists(public_path('file/kategori_logo/') . $kategori->kategori_logo)) {
                         unlink(public_path('file/kategori_logo/') . $kategori->kategori_logo);
-                    };
+                    }
+                    $kategori->update($data);
+                } else {
+                    $kategori->update($data);
                 }
-                $kategori->update($data);
-            } else {
+            }
+             else {
                 $data['id_kategori_toko'] = session()->get('toko_id');
                 // $prefix = strtoupper(substr($data['nama_kategori'], 0, 2));
 

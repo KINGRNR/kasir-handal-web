@@ -51,19 +51,17 @@
                     render: function(data, type, row, meta) {
                         return '<span class="ps-3">' + (meta.row + meta.settings._iDisplayStart + 1) +
                             '</span>';
-                    }
+                    },
+                    orderable: false
+
                 },
-                // {
-                //     data: 'kode_kategori',
-                //     name: 'kode_kategori'
-                // },
                 {
                     data: 'kategori_logo',
                     render: function(data, type, row) {
                         return '<img src="/file/kategori_logo/' + row.kategori_logo +
                             '" alt="Logo Kategori" class="img-thumbnail" width="50" height="50">';
-                    }
-                    
+                    },
+                    orderable: false 
                 },
                 {
                     data: 'nama_kategori',
@@ -80,7 +78,7 @@
                             row.id_kategori + ')">Hapus</button>';
 
                         return editButton + ' ' + deleteButton;
-                    }
+                    },
                 }
             ]
 
@@ -90,19 +88,6 @@
             var searchValue = $(this).val();
             menutable.search(searchValue).draw();
         });
-
-        // $('#table-user tbody').on('click', 'tr', function() {
-        //     let rowData = userTable.row(this).data();
-        //     if (rowData) {
-        //         let id = rowData.id;
-        //         onDetail(id);
-        //     } else {
-        //         onReset();
-        //         $('#formExample').find('input, select').removeAttr('disabled');
-        //         $('.actCreate').removeClass('d-none');
-        //         $('.actEdit').addClass('d-none');
-        //     }
-        // }).css('cursor', 'pointer');
     }
 
     function edit(id) {

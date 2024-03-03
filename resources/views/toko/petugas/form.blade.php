@@ -13,13 +13,13 @@
                     <input type="hidden" name="id" id="id">
                     <div class="fv-row mb-5">
                         <label for="" class="required form-label">Nama Petugas</label>
-                        <input type="text" name="name" id="name"
+                        <input type="text" name="name" id="name" placeholder="Masukkan nama petugas"
                             class="form-control form-control-sm form-control-solid input-required" required />
                     </div>
 
                     <div class="fv-row mb-5">
                         <label for="" class="required form-label">Email</label>
-                        <input type="text" name="email" id="email"
+                        <input type="email" name="email" id="email" placeholder="Masukkan email petugas"
                             class="form-control form-control-sm form-control-solid input-required" required />
                     </div>
             </div>

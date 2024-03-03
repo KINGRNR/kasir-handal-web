@@ -22,7 +22,7 @@
                                 <div class="fv-row mb-5">
                                     <label for="" class="required form-label">Nama Merek</label>
                                     <input type="text" name="nama_kategori" id="nama_kategori"
-                                        class="form-control form-control-sm form-control-solid input-required"
+                                        class="form-control form-control-sm form-control-solid input-required" placeholder="Masukkan nama merek"
                                         required />
                                 </div>
                                 {{-- <div class="fv-row mb-5">
@@ -47,7 +47,7 @@
                                             <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
                                                 <i class="bi bi-pencil-fill fs-7"></i>
                                                 <!--begin::Inputs-->
-                                                <input type="file" name="foto_kategori" accept=".png, .jpg, .jpeg"/>
+                                                <input type="file" name="foto_kategori" accept=".png, .jpg, .jpeg" required/>
                                                 <input type="hidden" name="avatar_remove" />
                                                 <!--end::Inputs-->
                                             </label>

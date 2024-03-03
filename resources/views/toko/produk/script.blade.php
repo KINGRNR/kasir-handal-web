@@ -117,14 +117,16 @@
                     render: function(data, type, row, meta) {
                         return '<span class="ps-3">' + (meta.row + meta.settings._iDisplayStart + 1) +
                             '</span>';
-                    }
+                    },
+                    orderable: false 
                 },
                 {
                     data: 'foto_produk',
                     render: function(data, type, row) {
                         return '<img src="/file/produk_foto/' + row.foto_produk +
                             '" alt="Product Image" class="img-thumbnail" width="50" height="50">';
-                    }
+                    },
+                    orderable: false 
                 },
                 {
                     data: 'nama_produk',
@@ -159,7 +161,8 @@
                     render: function(data, type, row) {
                         return '<img src="/file/kategori_logo/' + row.kategori_logo +
                             '" alt="Logo Kategori" class="img-thumbnail" width="50" height="50">';
-                    }
+                    },
+                    orderable: false 
 
                 },
                 {
@@ -173,7 +176,9 @@
                             row.id_produk + ')">Hapus</button>';
 
                         return editButton + ' ' + deleteButton;
-                    }
+                    },
+                    orderable: false 
+
                 }
             ]
 
