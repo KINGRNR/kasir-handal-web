@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DetailPenjualan;
 use App\Models\Pelanggan;
 use App\Models\Penjualan;
+use App\Models\Produk;
 use App\Models\Toko;
 use Carbon\Carbon;
 use Exception;
@@ -34,57 +35,144 @@ class PaymentController extends Controller
 
         return response()->json($customerExists);
     }
+    // public function initiatePayment(Request $request)
+    // {
+    //     $data = $request->post();
+    //     // print_r($data); 
+    //     if (
+    //         !isset($data['produkData']) ||
+    //         !isset($data['nama_pelanggan']) ||
+    //         !isset($data['email_pelanggan']) ||
+    //         !isset($data['no_telp'])
+    //     ) {
+    //         return response()->json(['error' => 'Missing required data'], 400);
+    //     }
+    //     $toko = Toko::first(); // Ambil data toko pertama dari database
+    //     if (!$toko) {
+    //         return response()->json(['error' => 'Toko not found'], 404);
+    //     }
+    //     $produkData = json_decode($data['produkData'], true); // Decode produkData menjadi array
+    //     // dd($produkData);
+
+    //     $itemDetails = array();
+
+    //     foreach ($produkData as $produk) { // Loop melalui produkData
+    //         $itemDetails[] = array(
+    //             'id' => $produk['id_produk'],
+    //             'price' => $produk['harga_produk'],
+    //             'quantity' => $produk['qty_produk'],
+    //             'name' => $produk['nama_produk'],
+    //         );
+    //     }
+    //     // dd($itemDetails);
+    //     $params = array(
+    //         'transaction_details' => array(
+    //             'order_id' => rand(),
+    //             'gross_amount' => array_sum(array_column($produkData, 'harga_produk'))
+    //         ),
+    //         'customer_details' => array(
+    //             'first_name' => $data['nama_pelanggan'],
+    //             'email' => $data['email_pelanggan'],
+    //             'phone' => $data['no_telp'],
+    //         ),
+    //         'item_details' => $itemDetails,
+    //     );
+    //     // \Midtrans\Config::$serverKey = $toko->toko_midtrans_serverkey;
+    //     \Midtrans\Config::$serverKey = 'SB-Mid-server-jDRuFD0sh4u9oaXfNsHwicXp';
+
+    //     $opr['snapToken'] = \Midtrans\Snap::getSnapToken($params);
+    //     $opr['detail'] = $params;
+
+    //     $opr['dataPenjualan'] = $data;
+    //     return response()->json($opr);
+    // }
     public function initiatePayment(Request $request)
     {
-        $data = $request->post();
-        // print_r($data); 
-        if (
-            !isset($data['produkData']) ||
-            !isset($data['nama_pelanggan']) ||
-            !isset($data['email_pelanggan']) ||
-            !isset($data['no_telp'])
-        ) {
-            return response()->json(['error' => 'Missing required data'], 400);
-        }
-        $toko = Toko::first(); // Ambil data toko pertama dari database
-        if (!$toko) {
-            return response()->json(['error' => 'Toko not found'], 404);
-        }
-        $produkData = json_decode($data['produkData'], true); // Decode produkData menjadi array
-        // dd($produkData);
+        try {
+            DB::beginTransaction(); // Mulai transaksi database
+            $data = $request->post();
+            // print_r($data); 
+            if (
+                !isset($data['produkData']) ||
+                !isset($data['nama_pelanggan']) ||
+                !isset($data['email_pelanggan']) ||
+                !isset($data['no_telp'])
+            ) {
+                return response()->json(['error' => 'Missing required data'], 400);
+            }
+            $toko = Toko::first(); // Ambil data toko pertama dari database
+            if (!$toko) {
+                return response()->json(['error' => 'Toko not found'], 404);
+            }
+            $produkData = json_decode($data['produkData'], true); // Decode produkData menjadi array
+            // dd($produkData);
 
-        $itemDetails = array();
+            foreach ($produkData as $produk) { // Loop melalui produkData
+                $stok = Produk::where('id_produk', $produk['id_produk'])->value('stok_produk');
+                $qty = $produk['qty_produk'];
+                if ($stok < $qty) {
+                    DB::rollBack(); // Rollback transaksi jika stok tidak mencukupi
+                    return response()->json(['error' => 'Stok tidak mencukupi: ' . $produk['nama_produk']], 400);
+                }
 
-        foreach ($produkData as $produk) { // Loop melalui produkData
-            $itemDetails[] = array(
-                'id' => $produk['id_produk'],
-                'price' => $produk['harga_produk'],
-                'quantity' => $produk['qty_produk'],
-                'name' => $produk['nama_produk'],
+                // Kurangi stok produk
+                Produk::where('id_produk', $produk['id_produk'])->decrement('stok_produk', $qty);
+            }
+
+            $itemDetails = array();
+
+            foreach ($produkData as $produk) { // Loop melalui produkData
+                $itemDetails[] = array(
+                    'id' => $produk['id_produk'],
+                    'price' => $produk['harga_produk'],
+                    'quantity' => $qty,
+                    'name' => $produk['nama_produk'],
+                );
+            }
+
+            $params = array(
+                'transaction_details' => array(
+                    'order_id' => rand(),
+                    'gross_amount' => array_sum(array_column($produkData, 'harga_produk'))
+                ),
+                'customer_details' => array(
+                    'first_name' => $data['nama_pelanggan'],
+                    'email' => $data['email_pelanggan'],
+                    'phone' => $data['no_telp'],
+                ),
+                'item_details' => $itemDetails,
             );
+            \Midtrans\Config::$serverKey = 'SB-Mid-server-jDRuFD0sh4u9oaXfNsHwicXp';
+
+            $opr['snapToken'] = \Midtrans\Snap::getSnapToken($params);
+            $opr['detail'] = $params;
+
+            $opr['dataPenjualan'] = $data;
+
+            DB::commit(); // Commit transaksi database
+
+            return response()->json($opr);
+        } catch (\Exception $e) {
+            DB::rollBack(); // Rollback transaksi jika terjadi kesalahan
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-        // dd($itemDetails);
-        $params = array(
-            'transaction_details' => array(
-                'order_id' => rand(),
-                'gross_amount' => array_sum(array_column($produkData, 'harga_produk'))
-            ),
-            'customer_details' => array(
-                'first_name' => $data['nama_pelanggan'],
-                'email' => $data['email_pelanggan'],
-                'phone' => $data['no_telp'],
-            ),
-            'item_details' => $itemDetails,
-        );
-        // \Midtrans\Config::$serverKey = $toko->toko_midtrans_serverkey;
-        \Midtrans\Config::$serverKey = 'SB-Mid-server-jDRuFD0sh4u9oaXfNsHwicXp';
-
-        $opr['snapToken'] = \Midtrans\Snap::getSnapToken($params);
-        $opr['detail'] = $params;
-
-        $opr['dataPenjualan'] = $data;
-        return response()->json($opr);
     }
+    public function cancelStok(Request $request)
+    {
+        try {
+            $data = $request->all();
+
+            foreach ($data as $item) {
+                $stok = Produk::where('id_produk', $item['id'])->increment('stok_produk', $item['quantity']);
+            }
+
+            return response()->json(['message' => 'Stok berhasil dikembalikan'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+
     public function initiatePaymentMob(Request $request)
     {
         $data = $request->post();
@@ -284,20 +372,20 @@ class PaymentController extends Controller
     }
     public function showTransactionMob(Request $request)
     {
-        
+
         $p = $request->post();
         $id = $p['id_toko'];
         // dd(session('petugas_id'));
 
-            $filter = $request->post();
-            if (isset($filter['date'])) {
-                $dateRange = explode(' - ', $filter['date']);
-                $startDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[0])->startOfDay();
-                $endDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[1])->endOfDay();
-                $operation = DB::table('v_transaksi')->where('penjualan_toko_id', $id)->where('penjualan_deleted_at', null)->whereBetween('penjualan_created_at', [$startDate, $endDate])->get();
-            } else {
-                $operation = DB::table('v_transaksi')->where('penjualan_toko_id', $id)->where('penjualan_deleted_at', null)->get();
-            }
+        $filter = $request->post();
+        if (isset($filter['date'])) {
+            $dateRange = explode(' - ', $filter['date']);
+            $startDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[0])->startOfDay();
+            $endDate = \Carbon\Carbon::createFromFormat('m/d/Y', $dateRange[1])->endOfDay();
+            $operation = DB::table('v_transaksi')->where('penjualan_toko_id', $id)->where('penjualan_deleted_at', null)->whereBetween('penjualan_created_at', [$startDate, $endDate])->get();
+        } else {
+            $operation = DB::table('v_transaksi')->where('penjualan_toko_id', $id)->where('penjualan_deleted_at', null)->get();
+        }
         // dd($id);
 
         // return DataTables::of($operation)

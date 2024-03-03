@@ -138,7 +138,7 @@ Route::middleware(['web'])->group(function () {
         }
     });
     Route::controller(PaymentController::class)->group(function () {
-        foreach (['initiatePayment', 'initiateCashPayment' ,'saveTransaction', 'showTransaction', 'cekpelanggan', 'showDetailTransaction', 'sendEmail', 'exportExcel'] as $key => $value) {
+        foreach (['initiatePayment', 'cancelStok','initiateCashPayment' ,'saveTransaction', 'showTransaction', 'cekpelanggan', 'showDetailTransaction', 'sendEmail', 'exportExcel'] as $key => $value) {
             Route::post('/pay/' . $value, $value);
         }
     });

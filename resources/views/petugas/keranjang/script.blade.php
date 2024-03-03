@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
     <script src="../assets/js/quickact.js"></script>
-    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
-        data-client-key="SB-Mid-client-UQCyL2vrXEl4EHhd"></script>
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"></script>
     <script>
         APP_URL = "{{ getenv('APP_URL') }}/";
 
@@ -344,9 +343,9 @@
                 $('#kembalian_cash').val(kembalian);
             } else {
                 $('#kembalian_cash').val(0);
- 
+
             }
-            if(kembalian < 0) {
+            if (kembalian < 0) {
                 $('#bayar-cash').prop('disabled', true)
             } else {
                 $('#bayar-cash').prop('disabled', false)
@@ -498,15 +497,18 @@
                                     });
                                 },
                                 onPending: function(result) {
-                                    alert("wating your payment!");
-                                    console.log(result);
+                                    // alert("wating your payment!");
+                                    // console.log(result);
+                                    cancelStok(response.data.detail.item_details)
                                 },
                                 onError: function(result) {
-                                    alert("payment failed!");
-                                    console.log(result);
+                                    // alert("payment failed!");
+                                    // console.log(result);
+                                    cancelStok(response.data.detail.item_details)
                                 },
                                 onClose: function() {
-                                    alert('you closed the popup without finishing the payment');
+                                    // alert('you closed the popup without finishing the payment');
+                                    cancelStok(response.data.detail.item_details)
                                 }
                             })
                         })
@@ -514,6 +516,27 @@
                             console.error('There has been a problem with your Axios operation:', error);
                         });
                 }
+            });
+        }
+
+        function cancelStok(data) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Pembayaran Dibatalkan',
+                text: 'Pembayaran telah dibatalkan.',
+                confirmButtonText: 'Oke',
+            }).then(() => {
+                axios.post('/pay/cancelStok', data)
+                    .then(response => {
+                        quick.toastNotif({
+                            title: 'Stok produk berhasil diperbarui!',
+                            icon: 'warning',
+                            timer: 1500,
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error cancelling stock reduction:', error);
+                    });
             });
         }
 

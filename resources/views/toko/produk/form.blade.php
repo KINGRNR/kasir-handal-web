@@ -21,21 +21,21 @@
                             </div>
                             <div class="fv-row mb-5">
                                 <label for="" class="required form-label">Harga Produk</label>
-                                {{-- <div class="input-group">
+                                <div class="input-group">
                                     <span class="input-group-text">Rp.</span>
-                                   
+                                    <input type="text" name="harga_produk" id="harga_produk"
+                                        placeholder="Masukkan harga produk"
+                                        class="form-control form-control-sm form-control-solid input-required" required
+                                        oninput="formatNumber(this)" />
 
-                                </div> --}}
-                                <input type="text" name="harga_produk" id="harga_produk"
-                                    placeholder="Masukkan harga produk"
-                                    class="form-control form-control-sm form-control-solid input-required" required
-                                    oninput="formatNumber(this)" />
+                                </div>
                             </div>
                             <div class="fv-row mb-5">
                                 <label for="" class="required form-label">Stok Produk</label>
                                 <input type="number" name="stok_produk" id="stok_produk"
                                     placeholder="Masukkan stok produk"
-                                    class="form-control form-control-sm form-control-solid input-required" required />
+                                    class="form-control form-control-sm form-control-solid input-required" required
+                                    oninput="formatNumber(this)" />
                             </div>
                             <div class="fv-row mb-5">
                                 <label for="" class="required form-label">Pilih Merek</label>
@@ -62,7 +62,8 @@
                                             title="Change avatar">
                                             <i class="bi bi-pencil-fill fs-7"></i>
                                             <!--begin::Inputs-->
-                                            <input type="file" name="foto_produk" accept=".png, .jpg, .jpeg" />
+                                            <input type="file" name="foto_produk" accept=".png, .jpg, .jpeg"
+                                                required />
                                             <input type="hidden" name="avatar_remove" />
                                             <!--end::Inputs-->
                                         </label>

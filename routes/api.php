@@ -50,7 +50,7 @@ Route::middleware('auth:api')->group(function () {
             }
         });
         Route::controller(PaymentController::class)->group(function () {
-            foreach (['initiatePayment', 'initiatePaymentMob','initiateCashPayment' ,'saveTransaction', 'showTransaction', 'cekpelanggan', 'showDetailTransaction', 'sendEmail', 'exportExcel', 'showTransactionMob'] as $key => $value) {
+            foreach (['initiatePayment', 'cancelStok' ,'initiatePaymentMob','initiateCashPayment' ,'saveTransaction', 'showTransaction', 'cekpelanggan', 'showDetailTransaction', 'sendEmail', 'exportExcel', 'showTransactionMob'] as $key => $value) {
                 Route::post('/pay/' . $value, $value);
             }
         });
