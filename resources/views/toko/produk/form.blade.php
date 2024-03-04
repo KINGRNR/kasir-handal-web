@@ -32,7 +32,7 @@
                             </div>
                             <div class="fv-row mb-5">
                                 <label for="" class="required form-label">Stok Produk</label>
-                                <input type="number" name="stok_produk" id="stok_produk"
+                                <input type="text" name="stok_produk" id="stok_produk"
                                     placeholder="Masukkan stok produk"
                                     class="form-control form-control-sm form-control-solid input-required" required
                                     oninput="formatNumber(this)" />
@@ -62,7 +62,7 @@
                                             title="Change avatar">
                                             <i class="bi bi-pencil-fill fs-7"></i>
                                             <!--begin::Inputs-->
-                                            <input type="file" name="foto_produk" accept=".png, .jpg, .jpeg"
+                                            <input type="file" name="foto_produk" id="foto_produk" accept=".png, .jpg, .jpeg"
                                                 required />
                                             <input type="hidden" name="avatar_remove" />
                                             <!--end::Inputs-->
@@ -130,9 +130,3 @@
         </div>
     </div>
 </div>
-<script>
-    function formatNumber(input) {
-        // Hapus karakter selain angka
-        input.value = input.value.replace(/[^\d]/g, '');
-    }
-</script>

@@ -130,6 +130,7 @@
                 $('.image-input-wrapper').css('background-image', 'url("' + APP_URL +
                     'file/kategori_logo/' + data.kategori_logo + '")');
                 $('#modalKategori').modal('show');
+                $('#foto_kategori').removeAttr('required');
             },
             error: function(error) {
                 console.error('There has been a problem with your Ajax operation:', error);
@@ -167,7 +168,7 @@
 
         $('#formKategori').trigger('reset');
         $('#id_kategori').val(null);
-
+        $('#foto_kategori').attr('required', true);
     }
 
     function deleteRow(id) {
@@ -192,11 +193,11 @@
                     .then(response => {
                         if (response.data.success) {
                             quick.toastNotif({
-                                title: 'Sukses!',
+                                title: 'Sukses hapus Merek!',
                                 icon: 'success',
-                                timer: 1500,
+                                timer: 1000,
                                 callback: function() {
-                                    window.location.reload()
+                                    menutable.ajax.reload();
                                 }
                             });
                         } else {
@@ -245,9 +246,9 @@
                             quick.toastNotif({
                                 title: 'Sukses!',
                                 icon: 'success',
-                                timer: 1500,
+                                timer: 1000,
                                 callback: function() {
-                                    window.location.reload()
+                                    menutable.ajax.reload();
                                 }
                             });
                         }

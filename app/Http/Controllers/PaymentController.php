@@ -89,18 +89,17 @@ class PaymentController extends Controller
     public function initiatePayment(Request $request)
     {
         try {
-            DB::beginTransaction(); // Mulai transaksi database
+            DB::beginTransaction();
             $data = $request->post();
-            // print_r($data); 
             if (
-                !isset($data['produkData']) ||
-                !isset($data['nama_pelanggan']) ||
-                !isset($data['email_pelanggan']) ||
-                !isset($data['no_telp'])
+                !isset($data['produkData'])
+                // !isset($data['nama_pelanggan']) ||
+                // !isset($data['email_pelanggan']) ||
+                // !isset($data['no_telp'])
             ) {
                 return response()->json(['error' => 'Missing required data'], 400);
             }
-            $toko = Toko::first(); // Ambil data toko pertama dari database
+            $toko = Toko::first();
             if (!$toko) {
                 return response()->json(['error' => 'Toko not found'], 404);
             }
@@ -129,17 +128,25 @@ class PaymentController extends Controller
                     'name' => $produk['nama_produk'],
                 );
             }
-
+            if (
+                empty($data['nama_pelanggan']) ||
+                empty($data['email_pelanggan']) ||
+                empty($data['no_telp'])
+            ) {
+                $customerDetails = array();
+            } else {
+                $customerDetails = array(
+                    'first_name' => $data['nama_pelanggan'],
+                    'email' => $data['email_pelanggan'],
+                    'phone' => $data['no_telp'],
+                );
+            }
             $params = array(
                 'transaction_details' => array(
                     'order_id' => rand(),
                     'gross_amount' => array_sum(array_column($produkData, 'harga_produk'))
                 ),
-                'customer_details' => array(
-                    'first_name' => $data['nama_pelanggan'],
-                    'email' => $data['email_pelanggan'],
-                    'phone' => $data['no_telp'],
-                ),
+                'customer_details' => $customerDetails,
                 'item_details' => $itemDetails,
             );
             \Midtrans\Config::$serverKey = 'SB-Mid-server-jDRuFD0sh4u9oaXfNsHwicXp';
@@ -230,13 +237,15 @@ class PaymentController extends Controller
     }
     public function initiateCashPayment(Request $request)
     {
+        DB::beginTransaction();
+
         $data = $request->post();
         $data['penjualan_payment_method'] = 1;
         if (
-            !isset($data['produkData']) ||
-            !isset($data['nama_pelanggan']) ||
-            !isset($data['email_pelanggan']) ||
-            !isset($data['no_telp'])
+            !isset($data['produkData'])
+            // !isset($data['nama_pelanggan']) ||
+            // !isset($data['email_pelanggan']) ||
+            // !isset($data['no_telp'])
         ) {
             return response()->json(['error' => 'Missing required data'], 400);
         }
@@ -246,7 +255,15 @@ class PaymentController extends Controller
 
         $itemDetails = array();
 
-        foreach ($produkData as $produk) { // Loop melalui produkData
+        foreach ($produkData as $produk) {
+            $stok = Produk::where('id_produk', $produk['id_produk'])->value('stok_produk');
+            $qty = $produk['qty_produk'];
+            if ($stok < $qty) {
+                DB::rollBack();
+                return response()->json(['error' => 'Stok tidak mencukupi: ' . $produk['nama_produk']], 400);
+            }
+
+            Produk::where('id_produk', $produk['id_produk'])->decrement('stok_produk', $qty);
             $itemDetails[] = array(
                 'id' => $produk['id_produk'],
                 'price' => $produk['harga_produk'],
@@ -255,9 +272,94 @@ class PaymentController extends Controller
             );
         }
         $opr['dataPenjualan'] = $data;
+        DB::commit();
         return response()->json($opr);
     }
     public function saveTransaction(Request $request)
+    {
+        $data = $request->post();
+        $result = $data['result'];
+        $dataTransaction = $data['data'];
+
+        // Mendapatkan detail item dari data transaksi
+        $itemDetails = json_decode($dataTransaction['produkData'], true);
+
+        $penjualanId = $result['order_id'] ?? rand();
+        if (isset($dataTransaction['no_telp'])) {
+            $idPelangganRaw = DB::table('pelanggan')
+                ->where('no_hp', $dataTransaction['no_telp'])
+                ->select('pelanggan_id')
+                ->first();
+
+            $idPelanggan = $idPelangganRaw ? $idPelangganRaw->pelanggan_id : null;
+
+            if ($idPelanggan) {
+                DB::table('pelanggan')
+                    ->where('no_hp', $dataTransaction['no_telp'])
+                    ->update([
+                        'nama_pelanggan' => $dataTransaction['nama_pelanggan'],
+                        'email_pelanggan' => $dataTransaction['email_pelanggan'],
+                        'alamat_pelanggan' => $dataTransaction['alamat_pelanggan'] ?? null,
+                    ]);
+            } else {
+                $idPelanggan = rand();
+                Pelanggan::create([
+                    'pelanggan_id' => $idPelanggan,
+                    'nama_pelanggan' => $dataTransaction['nama_pelanggan'],
+                    'no_hp' => $dataTransaction['no_telp'],
+                    'email_pelanggan' => $dataTransaction['email_pelanggan'],
+                    'alamat_pelanggan' => $dataTransaction['alamat_pelanggan'] ?? null,
+                ]);
+            }
+        };
+        $totalHarga = 0; // Inisialisasi total harga
+
+        foreach ($itemDetails as $item) {
+            $subTotal = $item['harga_produk'] * $item['qty_produk'];
+            $totalHarga += $subTotal;
+        }
+        $idToko = session('toko_id');
+
+        Penjualan::create([
+            'penjualan_id' => $penjualanId,
+            'penjualan_total_harga' => $totalHarga,
+            'penjualan_toko_id' => $idToko,
+            'penjualan_pelanggan_id' => $idPelanggan ?? null,
+            'penjualan_petugas_id' => $dataTransaction['id_petugas'],
+            'penjualan_payment_method' => $dataTransaction['penjualan_payment_method'] ?? 2,
+        ]);
+        // Penjualan::create([
+        //     'penjualan_id' => $penjualanId,
+        //     'penjualan_total_harga' => array_sum(array_column($itemDetails, 'harga_produk')),
+        //     'penjualan_toko_id' => 1,
+        //     'penjualan_pelanggan_id' => $idPelanggan,
+        //     'penjualan_petugas_id' => 4,
+        // ]);
+
+        foreach ($itemDetails as $item) {
+            DetailPenjualan::create([
+                'penjualan_id' => $penjualanId,
+                'id_barang' => $item['id_produk'],
+                'jumlah_barang' => $item['qty_produk'],
+                'sub_total' => $item['harga_produk'] * $item['qty_produk']
+            ]);
+
+            // DB::table('produk')
+            //     ->where('id_produk', $item['id_produk'])
+            //     ->decrement('stok_produk', $item['qty_produk']);
+        };
+
+        return response()->json([
+            'status' =>  'Success',
+            'title' => 'Sukses!',
+            'id_penjualan' => $penjualanId,
+            // 'data' => $data,
+            'message' => 'Data Transaksi Berhasil Tersimpan!',
+            'code' => 201
+        ]);
+    }
+
+    public function saveTransactionMobile(Request $request)
     {
         $data = $request->post();
         $result = $data['result'];
@@ -338,8 +440,6 @@ class PaymentController extends Controller
             'code' => 201
         ]);
     }
-
-
     public function showTransaction(Request $request)
     {
         $id = session('toko_id');
@@ -401,6 +501,7 @@ class PaymentController extends Controller
             ->join('produk', 'detail_penjualan.id_barang', '=', 'produk.id_produk')
             ->where('detail_penjualan.penjualan_id', $id)
             ->get();
+        // if ($data['penjualan'])
         $data['pelanggan'] = DB::table('pelanggan')->where('pelanggan_id', $data['penjualan']->penjualan_pelanggan_id)->first();
         $data['toko'] = DB::table('toko')->where('toko_id', $data['penjualan']->penjualan_toko_id)->first();
         // $data['petugas'] = DB::table('petugas')
@@ -413,8 +514,10 @@ class PaymentController extends Controller
     }
     public function sendEmail(Request $request)
     {
-        $id = $request->post('id');
-
+        $data = $request->post();
+        // print_r($data); exit;
+        $id = $data['id_penjualan'];
+        $email = $data['email'];
         $transactionData = DB::table('penjualan')
             ->where('penjualan_id', $id)
             ->first();
@@ -443,8 +546,8 @@ class PaymentController extends Controller
                 'transaction' => $transactionData,
                 'pelanggan' => $customerData,
                 'toko' => $storeData
-            ], function ($message) use ($customerData) {
-                $message->to($customerData->email_pelanggan);
+            ], function ($message) use ($customerData, $email) {
+                $message->to($email);
                 $message->subject('Struk');
             });
             return response()->json([

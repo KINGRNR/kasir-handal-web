@@ -33,7 +33,7 @@
 </style>
 
 <body id="kt_body" class="app-blank" style="background: #fff">
-    <div class="loading">
+    <div class="loading" >
         {{-- <div class="loading-spinner">
             <div class="loading loading-spinner-overlay" id="loading-spinner"><button class="btn btn-primary" type="button"
                     disabled>
@@ -67,7 +67,7 @@
                             <form class="form w-100 w-lg-500px" name="form-register" action="javascript:signup()"
                                 novalidate="novalidate" id="kt_sign_up_form" method="POST">
                                 @csrf
-                                <div class="text-center mb-10">
+                                <div class="text-center mb-7">
                                     <!--begin::Title-->
                                     <h1 class="text-dark mb-3">Buat Akun untuk Melihat Fitur</h1>
                                     <!--end::Title-->
@@ -103,7 +103,7 @@
                                         @enderror
                                     </div>
                                     
-                                    <div class="mb-10 fv-row" data-kt-password-meter="true">
+                                    <div class="mb-7 fv-row" data-kt-password-meter="true">
                                         <div class="mb-1">
                                             <label class="form-label fw-bolder text-dark fs-6" for="password">Password</label>
                                             <div class="position-relative mb-3">
@@ -144,21 +144,21 @@
                                             required autocomplete="new-password" placeholder="Ulangi kata sandi">
                                     </div>
                                     
-                                    <div class="fv-row mb-5">
+                                    <div class="fv-row mb-7">
                                         <label class="form-label fw-bolder text-dark fs-6" for="server_key">Server Key</label>
                                         <input id="server_key" type="text"
                                             class="form-control form-control-lg form-control-solid" name="server_key"
                                             required placeholder="Masukkan kunci server Midtrans">
                                     </div>
                                     
-                                    <div class="fv-row mb-5">
+                                    <div class="fv-row mb-7">
                                         <label class="form-label fw-bolder text-dark fs-6" for="client_key">Client Key</label>
                                         <input id="client_key" type="text"
                                             class="form-control form-control-lg form-control-solid" name="client_key"
                                             required placeholder="Masukkan kunci klien Midtrans">
                                     </div>
                                     
-                                    <div class="fv-row mb-10">
+                                    <div class="fv-row mb-7">
                                         <label class="form-check form-check-custom form-check-solid form-check-inline">
                                             <input class="form-check-input" type="checkbox" name="toc" value="1" required />
                                             <span class="form-check-label fw-bold text-gray-700 fs-6">Saya Setuju dengan
@@ -175,7 +175,7 @@
                                         <div id="email-error" class="invalid-feedback" style="display: none;"></div>
                                     </div>
 
-                                    <div class="mb-10 fv-row" data-kt-password-meter="true">
+                                    <div class="mb-7 fv-row" data-kt-password-meter="true">
                                         <div class="mb-1">
                                             <label class="form-label fw-bolder text-dark fs-6"
                                                 for="password">Password</label>
@@ -242,7 +242,8 @@
                                     {{-- <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#midtransModal">Informasi
                                     Midtrans</button> --}}
 
-                                    <button class="btn btn-primary" type="button" id="next-step-1" style="background-color: #1B61AD">Lanjut</button>
+                                    <button class="btn btn-primary" type="button" id="next-step-1"
+                                        style="background-color: #1B61AD">Lanjut</button>
                                     <!-- Step 2: Masukkan nama toko dan nama pemilik -->
                                 </div>
                                 <div id="step-2" class="step" style="display: none;">
@@ -260,7 +261,8 @@
                                             class="form-control form-control-lg form-control-solid" required
                                             placeholder="Masukkan nama pemilik">
                                     </div>
-                                    <button class="btn btn-primary" type="button" id="next-step-2" style="background-color: #1B61AD">Lanjut</button>
+                                    <button class="btn btn-primary" type="button" id="next-step-2"
+                                        style="background-color: #1B61AD">Lanjut</button>
                                     <button class="btn btn-secondary" type="button"
                                         id="prev-step-2">Kembali</button>
                                 </div>
@@ -316,11 +318,11 @@
                                     </ol>
 
                                     <!-- Tambahkan checkbox untuk menyetujui Term & Condition -->
-                                    <div class="form-check mb-5">
+                                    <div class="form-check mb-7">
                                         <input class="form-check-input" type="checkbox" value=""
                                             id="agree-checkbox">
                                         <label class="form-check-label" for="agree-checkbox">
-                                            Saya menyetujui Syartat & Ketentuan
+                                            Saya menyetujui Syarat & Ketentuan
                                         </label>
                                     </div>
                                     <!-- Tambahkan tombol untuk membuat akun -->
@@ -340,315 +342,323 @@
                 <!--end::Body-->
             </div>
         </div>
-    </div>  
-        <!-- Modal -->
-        <div class="modal fade" id="midtransModal" tabindex="-1" role="dialog" aria-labelledby="midtransModal"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="midtransModal">Informasi Mengenai Midtrans</h5>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Penjelasan tentang keuntungan dan kekurangan Midtrans -->
-                        <p>Midtrans merupakan sebuah platform penyedia payment gateway yang memudahkan semua
-                            pembayaran non tunai</p>
-                        <p>Manfaat dari menggunakan Midtrans di aplikasi ini adalah:</p>
-                        <ul>
-                            <li>Memungkinkan pembayaran online dengan berbagai metode pembayaran.</li>
-                            <li>Memiliki sistem keamanan yang terjamin.</li>
-                        </ul>
-                        <p>Tapi tenang anda masih bisa menggunakan aplikasi kasir ini tanpa penyambungan ke
-                            midtrans, namun hanya bisa menggunakan metode pembayaran tunai</p>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="midtransModal" tabindex="-1" role="dialog" aria-labelledby="midtransModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="midtransModal">Informasi Mengenai Midtrans</h5>
+                </div>
+                <div class="modal-body">
+                    <!-- Penjelasan tentang keuntungan dan kekurangan Midtrans -->
+                    <p>Midtrans merupakan sebuah platform penyedia payment gateway yang memudahkan semua
+                        pembayaran non tunai</p>
+                    <p>Manfaat dari menggunakan Midtrans di aplikasi ini adalah:</p>
+                    <ul>
+                        <li>Memungkinkan pembayaran online dengan berbagai metode pembayaran.</li>
+                        <li>Memiliki sistem keamanan yang terjamin.</li>
+                    </ul>
+                    <p>Tapi tenang anda masih bisa menggunakan aplikasi kasir ini tanpa penyambungan ke
+                        midtrans, namun hanya bisa menggunakan metode pembayaran tunai</p>
 
-                        <!-- Video tutorial tentang penggunaan Midtrans -->
-                        <h3>Tutorial untuk penyambungan akun midtrans anda dengan aplikasi kasir kami</h3>
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <!-- Masukkan kode untuk menampilkan video tutorial -->
-                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/VIDEO_ID"
-                                allowfullscreen></iframe>
-                        </div>
+                    <!-- Video tutorial tentang penggunaan Midtrans -->
+                    <h3>Tutorial untuk penyambungan akun midtrans anda dengan aplikasi kasir kami</h3>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <!-- Masukkan kode untuk menampilkan video tutorial -->
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/VIDEO_ID"
+                            allowfullscreen></iframe>
                     </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" data-bs-dismiss="modal" onclick="showStep4()">Lewati</button>
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Lanjutkan
-                            Penyambungan</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal" onclick="showStep4()">Lewati</button>
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Lanjutkan
+                        Penyambungan</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        <script>
-            function togglePassword(inputId) {
-                var input = document.getElementById(inputId);
-                var icon = input.nextElementSibling.querySelector('i');
-                if (input.type === 'password') {
-                    input.type = 'text';
-                    icon.classList.remove('bi-eye-slash');
-                    icon.classList.add('bi-eye');
-                } else {
-                    input.type = 'password';
-                    icon.classList.remove('bi-eye');
-                    icon.classList.add('bi-eye-slash');
-                }
+    <script>
+        function togglePassword(inputId) {
+            var input = document.getElementById(inputId);
+            var icon = input.nextElementSibling.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
             }
-            $('#form-register').on('submit', function submit(e) {
-                e.preventDefault();
-                $('#loading-spinner').css('display', '')
+        }
+        $('#form-register').on('submit', function submit(e) {
+            e.preventDefault();
+            $('#loading-spinner').css('display', '')
 
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            var formData = $(this).serialize();
+            $.ajax({
+                type: "POST",
+                url: "{{ route('register') }}",
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function(res) {
+                    window.location.href = '/login';
+                },
+                error: function(xhr, status, error) {
+                    var message = xhr.responseJSON.message;
+                    if (message) {
+                        // Menggabungkan pesan-pesan kesalahan menjadi satu pesan
+                        var errorMessage = Object.values(message).join('<br>');
+                        $('#loading-spinner').css('display', 'none')
+
+                        // Menampilkan pesan kesalahan dengan Swal
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            html: errorMessage,
+                        });
+                    }
+                }
+
+            });
+        });
+        // Fungsi validasi password di input konfirmasi password
+
+
+        $(document).ready(function() {
+            function showPasswordError() {
+                // $("#password-error").text("Konfirmasi password tidak cocok.");
+                $("#password-error").show();
+            }
+
+            function hidePasswordError() {
+                $("#password-error").hide();
+            }
+
+            function checkPasswordStrength(password) {
+
+
+                var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+                return regex.test(password);
+            }
+            $("#password").on("input", function() {
+                var password = $(this).val();
+                var confirmPassword = $("#password-confirm").val();
+
+                // if (password !== confirmPassword) {
+                //     showPasswordError();
+                //     return;
+                // } else {
+                //     hidePasswordError();
+                // }
+
+                if (!checkPasswordStrength(password)) {
+                    $("#password-error").text(
+                        "Sandi harus terdiri minimal 8 karakter dengan campuran huruf, angka, dan simbol"
+                    );
+                    $("#password-error").show();
+                    return;
+
+                } else {
+                    hidePasswordError();
+                }
+            });
+            $("#password-confirm").on("input", function() {
+                var password = $("#password").val();
+                var confirmPassword = $(this).val();
+
+                if (password !== confirmPassword) {
+                    $("#password-confirm-error").text("Konfirmasi password tidak cocok.");
+                    $("#password-confirm-error").show();
+                } else {
+                    $("#password-confirm-error").hide();
+                }
+            });
+            $("#email").on("input", function() {
+                var email = $(this).val();
+                var errorDiv = $("#email-error");
+
+                var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (!emailPattern.test(email)) {
+                    errorDiv.text("Alamat email tidak valid.");
+                    errorDiv.show();
+                } else {
+                    errorDiv.hide();
+                }
+            });
+
+            var currentStep = 1;
+            $("#next-step-1").click(function() {
+                var email = $("#email").val();
+                var password = $("#password").val();
+                var confirmPassword = $("#password-confirm").val();
+                var password = $("#password").val();
+                var confirmPassword = $("#password-confirm").val();
+
+                if (password !== confirmPassword) {
+                    return;
+                }
+                if (email.indexOf('@') === -1) {
+                    $("#email-error").text("Alamat email tidak valid.");
+                    $("#email-error").show();
+                    return;
+                } else {
+                    $("#email-error").hide();
+                }
+                if (!checkPasswordStrength(password)) {
+                    return;
+                }
+                if (!email || !password || !confirmPassword) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Mohon lengkapi semua kolom.',
+                    });
+                    return;
+                }
+
+                // Jika semua input valid, lanjutkan ke langkah berikutnya
+                $("#step-1").hide();
+                $("#step-2").show();
+                currentStep = 2;
+            });
+
+
+            $("#next-step-2").click(function() {
+                var toko = $("#store-name").val();
+                var pemilik = $("#owner-name").val();
+                if (!toko || !pemilik) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Mohon lengkapi semua kolom.',
+                    });
+                    return;
+                }
+                $("#step-2").hide();
+                // $("#midtransModal").modal("show");
+                $("#step-4").show();
+                currentStep = 3;
+            });
+
+
+            $("#prev-step-2").click(function() {
+                $("#step-2").hide();
+                $("#step-1").show();
+                currentStep = 1;
+            });
+
+            $("#prev-step-3").click(function() {
+                $("#midtransModal").modal("show");
+
+                $("#step-3").hide();
+                $("#step-2").show();
+                currentStep = 2;
+            });
+            $("#prev-step-4").click(function() {
+                $("#step-4").hide();
+                $("#step-2").show();
+                currentStep = 2;
+            });
+            $("#agree-checkbox").change(function() {
+                if ($(this).is(":checked")) {
+                    $("#create-account-button").prop("disabled", false);
+                } else {
+                    $("#create-account-button").prop("disabled", true);
+                }
+            });
+            $("#skip-step").click(function() {
+                // Jika pengguna memilih untuk melewati langkah, Anda dapat menentukan perilaku di sini
+                // Misalnya, langsung ke halaman login
+            });
+
+            // $("#submit-form").click(function() {
+            //     // Lakukan pengiriman data atau validasi di sini
+            //     // Setelah selesai, Anda dapat mengarahkan pengguna ke halaman login atau ke halaman selanjutnya
+            //     // window.location.href = '/login';
+            // });
+        });
+
+        function showStep4() {
+            $("#step-3").hide();
+            $("#step-4").show();
+        }
+
+        function signup() {
+            var form = "form-register";
+            var data = new FormData($('[name="' + form + '"]')[0]);
+            var button = $('#create-account-button');
+
+            button.html(
+                '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Mengirim...');
+
+            // Men-disable tombol
+            button.prop('disabled', true);
+            // Hapus bagian koding Cropper.js dan formulir gambar yang berkaitan
+            quick.blockPage()
+
+            axios.post("/api/auth/register", data, {
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        // 'Content-Type': 'multipart/form-data', // Jangan ditambahkan header ini
                     }
                 })
-
-                var formData = $(this).serialize();
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('register') }}",
-                    data: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    success: function(res) {
-                        window.location.href = '/login';
-                    },
-                    error: function(xhr, status, error) {
-                        var message = xhr.responseJSON.message;
-                        if (message) {
-                            // Menggabungkan pesan-pesan kesalahan menjadi satu pesan
-                            var errorMessage = Object.values(message).join('<br>');
-                            $('#loading-spinner').css('display', 'none')
-
-                            // Menampilkan pesan kesalahan dengan Swal
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                html: errorMessage,
-                            });
-                        }
-                    }
-
-                });
-            });
-                // Fungsi validasi password di input konfirmasi password
-            
-
-            $(document).ready(function() {
-                function showPasswordError() {
-                    // $("#password-error").text("Konfirmasi password tidak cocok.");
-                    $("#password-error").show();
-                }
-
-                function hidePasswordError() {
-                    $("#password-error").hide();
-                }
-
-                function checkPasswordStrength(password) {
-
-
-                    var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-                    return regex.test(password);
-                }
-                $("#password").on("input", function() {
-                    var password = $(this).val();
-                    var confirmPassword = $("#password-confirm").val();
-
-                    // if (password !== confirmPassword) {
-                    //     showPasswordError();
-                    //     return;
-                    // } else {
-                    //     hidePasswordError();
-                    // }
-
-                    if (!checkPasswordStrength(password)) {
-                        $("#password-error").text(
-                            "Sandi harus terdiri minimal 8 karakter dengan campuran huruf, angka, dan simbol"
-                        );
-                        $("#password-error").show();
-                        return;
-
-                    } else {
-                        hidePasswordError();
-                    }
-                });
-                $("#password-confirm").on("input", function() {
-                    var password = $("#password").val();
-                    var confirmPassword = $(this).val();
-
-                    if (password !== confirmPassword) {
-                        $("#password-confirm-error").text("Konfirmasi password tidak cocok.");
-                        $("#password-confirm-error").show();
-                    } else {
-                        $("#password-confirm-error").hide();
-                    }
-                });
-                $("#email").on("input", function() {
-                    var email = $(this).val();
-                    var errorDiv = $("#email-error");
-
-                    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-                    if (!emailPattern.test(email)) {
-                        errorDiv.text("Alamat email tidak valid.");
-                        errorDiv.show();
-                    } else {
-                        errorDiv.hide();
-                    }
-                });
-
-                var currentStep = 1;
-                $("#next-step-1").click(function() {
-                    var email = $("#email").val();
-                    var password = $("#password").val();
-                    var confirmPassword = $("#password-confirm").val();
-                    var password = $("#password").val();
-                    var confirmPassword = $("#password-confirm").val();
-
-                    if (password !== confirmPassword) {
-                        return;
-                    }
-                    if (email.indexOf('@') === -1) {
-                        $("#email-error").text("Alamat email tidak valid.");
-                        $("#email-error").show();
-                        return;
-                    } else {
-                        $("#email-error").hide();
-                    }
-                    if (!checkPasswordStrength(password)) {
-                        return;
-                    } 
-                    if (!email || !password || !confirmPassword) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'Mohon lengkapi semua kolom.',
+                .then(response => {
+                    quick.unblockPage()
+                    if (response.data.success) {
+                        quick.toastNotif({
+                            title: response.data.message,
+                            icon: 'success',
+                            timer: 1500,
+                            callback: function() {
+                                window.location.href = `/aktivasiakun?id=${response.data.id}`;
+                            }
                         });
-                        return;
-                    }
-
-                    // Jika semua input valid, lanjutkan ke langkah berikutnya
-                    $("#step-1").hide();
-                    $("#step-2").show();
-                    currentStep = 2;
-                });
-
-
-                $("#next-step-2").click(function() {
-                    var toko = $("#store-name").val();
-                    var pemilik = $("#owner-name").val();
-                    if (!toko || !pemilik) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'Mohon lengkapi semua kolom.',
-                        });
-                        return;
-                    }
-                    $("#step-2").hide();
-                    // $("#midtransModal").modal("show");
-                    $("#step-4").show();
-                    currentStep = 3;
-                });
-
-
-                $("#prev-step-2").click(function() {
-                    $("#step-2").hide();
-                    $("#step-1").show();
-                    currentStep = 1;
-                });
-
-                $("#prev-step-3").click(function() {
-                    $("#midtransModal").modal("show");
-
-                    $("#step-3").hide();
-                    $("#step-2").show();
-                    currentStep = 2;
-                });
-                $("#prev-step-4").click(function() {
-                    $("#step-4").hide();
-                    $("#step-2").show();
-                    currentStep = 2;
-                });
-                $("#agree-checkbox").change(function() {
-                    if ($(this).is(":checked")) {
-                        $("#create-account-button").prop("disabled", false);
                     } else {
-                        $("#create-account-button").prop("disabled", true);
+                        quick.toastNotif({
+                            title: response.data.message,
+                            icon: 'error',
+                            timer: 3000,
+                            // callback: function() {
+                            //     window.location.reload()
+                            // }
+                        });
                     }
-                });
-                $("#skip-step").click(function() {
-                    // Jika pengguna memilih untuk melewati langkah, Anda dapat menentukan perilaku di sini
-                    // Misalnya, langsung ke halaman login
-                });
-
-                // $("#submit-form").click(function() {
-                //     // Lakukan pengiriman data atau validasi di sini
-                //     // Setelah selesai, Anda dapat mengarahkan pengguna ke halaman login atau ke halaman selanjutnya
-                //     // window.location.href = '/login';
-                // });
-            });
-
-            function showStep4() {
-                $("#step-3").hide();
-                $("#step-4").show();
-            }
-
-            function signup() {
-                var form = "form-register";
-                var data = new FormData($('[name="' + form + '"]')[0]);
-                var button = $('#create-account-button');
-
-                button.html(
-                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Mengirim...');
-
-                // Men-disable tombol
-                button.prop('disabled', true);
-                // Hapus bagian koding Cropper.js dan formulir gambar yang berkaitan
-                quick.blockPage()
-
-                axios.post("/api/auth/register", data, {
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            // 'Content-Type': 'multipart/form-data', // Jangan ditambahkan header ini
-                        }
-                    })
-                    .then(response => {
-                        quick.unblockPage()
-                        if (response.data.success) {
-                            quick.toastNotif({
-                                title: response.data.message,
-                                icon: 'success',
-                                timer: 1500,
-                                callback: function() {
-                                    window.location.href = `/aktivasiakun?id=${response.data.id}`;
-                                }
-                            });
-                        } else {
-                            quick.toastNotif({
-                                title: response.data.message,
-                                icon: 'error',
-                                timer: 3000,
-                                // callback: function() {
-                                //     window.location.reload()
-                                // }
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        console.error('There has been a problem with your Axios operation:', error);
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your Axios operation:', error.response.data.message);
+                    quick.toastNotif({
+                        title: error.response.data.message,
+                        icon: 'error',
+                        timer: 3000,
+                        // callback: function() {
+                        //     window.location.reload()
+                        // }
                     });
-            }
-        </script>
-        @include('layouts.support.bundle.bundlefooter')
+                });
+        }
+    </script>
+    @include('layouts.support.bundle.bundlefooter')
 
 </body>

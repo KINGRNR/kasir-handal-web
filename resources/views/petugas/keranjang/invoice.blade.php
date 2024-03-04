@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <select class="form-select" id="kategori_produk" name="kategori_produk">
-                            <option value="all" selected>Semua Kategori</option>
+                            <option value="all" selected>Semua Merek</option>
                             {{-- <option value="kategori2">Kategori 2</option> --}}
                             <!-- Tambahkan opsi kategori lainnya sesuai kebutuhan -->
                         </select>
@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="col-md-2 mb-3">
-                        <button type="button" onclick="showProduk()" class="btn btn-primary">Reload</button>
+                        <button type="button" onclick="showProduk()" class="btn btn-primary w-100">Reload</button>
                     </div>
                 </div>
 
@@ -58,7 +58,7 @@
     </div>
     <div class="col-md-4 mb-4">
         <!-- Informasi Pelanggan -->
-        <div class="card card-keranjang" >
+        <div class="card card-keranjang">
             <div class="card-header" style="background: #175CD3;">
                 <div class="card-title">
                     <h2 class="text-white">Keranjang</h2>
@@ -76,28 +76,33 @@
                 </div>
 
 
-
-
-                <div class="mb-4">
-                    <h4>Cari Pelanggan Terdaftar</h4>
-                    {{-- <div class="form-check form-switch mb-3">
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" id="useExistingCustomerInfo" checked>
+                    <label class="form-check-label" for="useExistingCustomerInfo">Gunakan Informasi Pelanggan</label>
+                </div>
+                
+                <div class="pelanggan-terdaftar customer-info-input-hide">
+                    <div class="mb-4">
+                        <h4>Cari Pelanggan Terdaftar</h4>
+                        {{-- <div class="form-check form-switch mb-3">
                         <input class="form-check-input" type="checkbox" id="toggleExistingCustomer">
                         <label class="form-check-label" for="toggleExistingCustomer">Tampilkan Cari Existing
                             Pelanggan</label>
                     </div> --}}
-                    <div class="mb-3 carilisting">
-                        <label for="noTelp">Email :</label>
-                        <div class="input-group">
-                            <input type="email" class="form-control" id="check_email" name="check_email"
-                                placeholder="Masukkan email pelanggan yang dituju">
-                            <button type="button" onclick="cariPelanggan()" class="btn btn-secondary ml-2">
-                                <i class="fas fa-search"></i>
-                            </button>
+                        <div class="mb-3 carilisting">
+                            <label for="noTelp">Email :</label>
+                            <div class="input-group">
+                                <input type="email" class="form-control" id="check_email" name="check_email"
+                                    placeholder="Masukkan email pelanggan yang dituju">
+                                <button type="button" onclick="cariPelanggan()" class="btn btn-secondary ml-2">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mb-3 carilisting">
-                        <label for="customerDropdown">Pilih Pelanggan:</label>
-                        <select id="customerDropdown" class="form-control"></select>
+                        <div class="mb-3 carilisting">
+                            <label for="customerDropdown">Pilih Pelanggan:</label>
+                            <select id="customerDropdown" class="form-control"></select>
+                        </div>
                     </div>
 
                     <h4>Informasi Pelanggan</h4>
@@ -105,22 +110,23 @@
                     <form action="javascript:startTransaksi()" method="post" id="formTransaksi" name="formTransaksi"
                         autocomplete="off" enctype="multipart/form-data"> <!-- Filter Kategori -->
                         <input type="hidden" id="id_petugas" name="id_petugas" value="{{ session('petugas_id') }}">
-                        <div class="mb-3">
-                            <label for="nama">Nama:</label>
-                            <input type="text" class="form-control" id="nama_pelanggan" name="nama_pelanggan"
-                                placeholder="Nama">
+                        <div class="data-pelanggan customer-info-input-hide">
+                            <div class="mb-3">
+                                <label for="nama">Nama:</label>
+                                <input type="text" class="form-control customer-info-input" id="nama_pelanggan"
+                                    name="nama_pelanggan" required placeholder="Nama">
+                            </div>
+                            <div class="mb-3">
+                                <label for="noTelp">No. Telp:</label>
+                                <input type="tel" class="form-control customer-info-input" id="no_telp"
+                                    name="no_telp" required placeholder="No. Telp">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email">Email:</label>
+                                <input type="email" class="form-control customer-info-input" id="email_pelanggan"
+                                    name="email_pelanggan" required placeholder="Email">
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="noTelp">No. Telp:</label>
-                            <input type="tel" class="form-control" id="no_telp" name="no_telp"
-                                placeholder="No. Telp">
-                        </div>
-                        <div class="mb-3">
-                            <label for="email">Email:</label>
-                            <input type="email" class="form-control" id="email_pelanggan" name="email_pelanggan"
-                                placeholder="Email">
-                        </div>
-
                         <!-- Dropdown to display customer details -->
 
                 </div>
@@ -169,11 +175,7 @@
                         {{-- <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
                             data-bs-target="#modalTransaksiBerhasil">styling Modal berhasil</button> --}}
                     </div>
-                    <div class="mb-3 payment-button">
-                        {{-- <button type="submit" class="btn btn-success btn-sm">Bayar
-                            Cashless</button> --}}
-                        <button type="button" class="btn btn-success btn-sm" onclick="inputDataHarga()">Kembali Ke Transaksi</button>
-                    </div>
+
                     </form>
                 </div>
 
@@ -199,7 +201,8 @@
                 </div>
                 <div class="mb-3">
                     <label for="jumlah_uang_cash">Jumlah Uang Cash :</label>
-                    <input type="text" class="form-control" id="jumlah_uang_cash" name="jumlah_uang_cash" oninput="hitungKembalian()" placeholder="Masukkan nominal uang">
+                    <input type="text" class="form-control" id="jumlah_uang_cash" name="jumlah_uang_cash"
+                        oninput="hitungKembalian()" placeholder="Masukkan nominal uang">
                 </div>
                 <div class="mb-3">
                     <label for="kembalian_cash">Kembalian :</label>
@@ -208,7 +211,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="button" id="bayar-cash" class="btn btn-primary" disabled onclick="startTransaksiCash()">Bayar</button>
+                <button type="button" id="bayar-cash" class="btn btn-primary" disabled
+                    onclick="startTransaksiCash()">Bayar</button>
             </div>
         </div>
     </div>
@@ -282,7 +286,6 @@
         </div>
     </div>
 </div>
-
 
 
 

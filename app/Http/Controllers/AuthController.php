@@ -99,6 +99,7 @@ class AuthController extends Controller
 
             if ($user->active == 0) {
                 return redirect()->route('login')->withErrors('Akun Anda belum aktif.')->withInput();
+                
             }
 
             if ($user->users_role_id == 'BfiwyVUDrXOpmStr') {
@@ -106,7 +107,7 @@ class AuthController extends Controller
                 session(['toko_id' => $toko->toko_id]);
                 session(['toko_nama' => $toko->toko_nama]);
                 session(['toko_foto' => $toko->toko_foto]);
-                if ($toko->toko_midtrans_clientkey === null || $toko->toko_midtrans_serverkey === null) {
+                if ($toko->toko_midtrans_serverkey === null) {
                     session(['midtrans' => 0]);
                 } else {
                     session(['midtrans' => 1]);
@@ -167,7 +168,7 @@ class AuthController extends Controller
                     return response()->json(['data' => $user], 422);
             }
         } else {
-            return redirect()->route('login')->withErrors('Credential salah.')->withInput();
+            return redirect()->route('login')->withErrors(['credsal' => 'Pesan error khusus untuk credsal'])->withInput();
         }
     }
 

@@ -28,10 +28,6 @@
         $(`input, select`).removeAttr('disabled');
     });
 
-    function formatRupiah(a) {
-        quick.formatRupiah(a)
-    }
-
     function getKategori() {
         axios.post("/produk/getKategori", {
                 headers: {
@@ -55,7 +51,7 @@
                         showConfirmButton: false,
                         allowOutsideClick: false,
                         allowEscapeKey: false,
-                        footer: '<a href="/petugas/kategori" class="btn btn-primary">Tambah Merek</a>'
+                        footer: '<a href="/toko/kategori" class="btn btn-primary">Tambah Merek</a>'
                     });
                 }
             })
@@ -72,28 +68,28 @@
         //     $(this).val(formattedValue);
         // });
 
-        // // Fungsi untuk format rupiah
-        // function formatRupiah(value) {
-        //     var numberString = value.toString().replace(/\D/g, '');
-        //     var split = numberString.split(',');
-        //     var sisa = split[0].length % 3;
-        //     var rupiah = split[0].substr(0, sisa);
-        //     var ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+        // Fungsi untuk format rupiah
+        function formatRupiah(value) {
+            var numberString = value.toString().replace(/\D/g, '');
+            var split = numberString.split(',');
+            var sisa = split[0].length % 3;
+            var rupiah = split[0].substr(0, sisa);
+            var ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
-        //     if (ribuan) {
-        //         var separator = sisa ? '.' : '';
-        //         rupiah += separator + ribuan.join('.');
-        //     }
+            if (ribuan) {
+                var separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
 
-        //     rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
-        //     return rupiah;
-        // }
+            rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+            return rupiah;
+        }
 
         // When submitting the form, get the numeric value without separators
-        // $('#yourFormId').submit(function() {
-        //     var numericValue = $('#harga_produk').val().replace(/\D/g, '');
-        //     $('#harga_produk').val(numericValue);
-        // });
+        $('#yourFormId').submit(function() {
+            var numericValue = $('#harga_produk').val().replace(/\D/g, '');
+            $('#harga_produk').val(numericValue);
+        });
     });
 
     //filter
@@ -206,6 +202,7 @@
         //     }
         // }).css('cursor', 'pointer');
     }
+
     // function switchForm() {
     //     $('.table-switch-produk').animate({
     //         top: '250px',
@@ -239,7 +236,8 @@
     function editStok(icon) {
         var cell = $(icon).closest('td');
         var editableStok = cell.find('.editable-stok');
-        var inputStok = $('<input type="number" class="form-control input-stok" value="' + editableStok.text() + '">');
+        var inputStok = $('<input type="text" oninput="formatNumber(this)"  class="form-control input-stok" value="' +
+            editableStok.text() + '">');
         // Tambahkan max-width
         inputStok.css('max-width', '100px'); // Sesuaikan dengan kebutuhan lebar maksimum
         var iconSave = cell.find('.save-stok');
@@ -259,6 +257,11 @@
             iconSave.addClass('d-none');
             iconCancel.remove();
         });
+    }
+
+    function formatNumber(input) {
+        // Hapus karakter selain angka
+        input.value = input.value.replace(/[^\d]/g, '');
     }
 
     function editRow(id) {
@@ -283,6 +286,7 @@
                     'file/produk_foto/' + data.foto_produk + '")');
                 $('#stok_produk').val(data.stok_produk)
                 $('#id_produk_kategori').val(data.id_produk_kategori);
+                $('#foto_produk').removeAttr('required');
 
                 $('#modalProduk').modal('show');
             },
@@ -293,7 +297,7 @@
     }
 
     function saveStok(id) {
-        var cell = $('td').has('input[type="number"]');
+        var cell = $('td').has('input[type="text"]');
         var inputStok = cell.find('input');
         var newStok = inputStok.val();
         $.ajax({
@@ -347,7 +351,7 @@
                                 icon: 'success',
                                 timer: 1500,
                                 callback: function() {
-                                    window.location.reload()
+                                    menutable.ajax.reload();
                                 }
                             });
                         } else {
@@ -368,11 +372,70 @@
         });
     };
 
+    // function save() {
+    //     var form = "formProduk";
+    //     var data = new FormData($('[name="' + form + '"]')[0]);
+
+    //     // Hapus bagian koding Cropper.js dan formulir gambar yang berkaitan
+
+    //     Swal.fire({
+    //         title: 'Apakah data yang anda input sudah benar?',
+    //         icon: 'question',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Ya',
+    //         cancelButtonText: 'Tidak'
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             axios.post("/produk/saveMob", data, {
+    //                     headers: {
+    //                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
+    //                         // 'Content-Type': 'multipart/form-data', // Jangan ditambahkan header ini
+    //                     }
+    //                 })
+    //                 .then(response => {
+    //                     console.log(response)
+    //                     if (response.data.success) {
+    //                         $('#formProduk').trigger('reset');
+    //                         $(".close-modal").trigger('click');
+    //                         quick.toastNotif({
+    //                             title: 'Sukses!',
+    //                             icon: 'success',
+    //                             timer: 1500,
+    //                             callback: function() {
+    //                                 menutable.ajax.reload();
+    //                             }
+    //                         });
+    //                     } else {
+    //                         quick.toastNotif({
+    //                             title: response.data.message,
+    //                             icon: 'error',
+    //                             timer: 4000,
+    //                             callback: function() {
+    //                                 menutable.ajax.reload();
+    //                             }
+    //                         });
+    //                     }
+    //                 })
+    //                 .catch(error => {
+    //                     console.error('There has been a problem with your Axios operation:', error);
+    //                 });
+    //         }
+    //     });
+    // };
     function save() {
         var form = "formProduk";
         var data = new FormData($('[name="' + form + '"]')[0]);
 
-        // Hapus bagian koding Cropper.js dan formulir gambar yang berkaitan
+        // Ambil nilai harga_produk dari form
+        // var hargaProduk = data.get('harga_produk');
+
+        // // Konversi nilai harga_produk ke dalam format yang diharapkan
+        // var hargaProdukFormatted = parseFloat(hargaProduk).toFixed(2); // Konversi ke format desimal 10,2
+
+        // // Set nilai harga_produk yang telah dikonversi ke dalam FormData
+        // data.set('harga_produk', hargaProdukFormatted);
 
         Swal.fire({
             title: 'Apakah data yang anda input sudah benar?',
@@ -426,6 +489,7 @@
 
         $('#formProduk').trigger('reset');
         $('#id_produk').val(null);
+        $('#foto_produk').attr('required', true);
 
     }
 </script>

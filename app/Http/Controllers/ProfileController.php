@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
@@ -34,16 +35,16 @@ class ProfileController extends Controller
 
     // $operation = DB::table('users')->where('users_role_id','TKQR2DSJlQ5b31V2')->get();
     $operation['user'] = DB::table('users')->where('id', $id)->first();
-    
+
     // $detailed_user['toko_id'] = $detailed_user->petugas_toko_id;
     if ($operation['user']->users_role_id == 'BfiwyVUDrXOpmStr') {
       $operation['detail_toko'] = DB::table('toko')->where('toko_user_id', $operation['user']->id)->first();
-  } else if ($operation['user']->users_role_id == 'TKQR2DSJlQ5b31V2') {
+    } else if ($operation['user']->users_role_id == 'TKQR2DSJlQ5b31V2') {
       $operation['detail_petugas'] = DB::table('petugas')->where('petugas_user_id', $operation['user']->id)->first();
       $operation['detail_toko'] = DB::table('toko')->where('toko_id', $operation['detail_petugas']->petugas_toko_id)->first();
 
       // $detailed_user['toko_id'] = $detailed_user->petugas_toko_id;
-  }    // $operation['toko'] = DB::table('toko')->where('toko_user_id', $id)->first();
+    }    // $operation['toko'] = DB::table('toko')->where('toko_user_id', $id)->first();
     return response()->json($operation);
   }
   public function detailToko(Request $request)
@@ -92,7 +93,7 @@ class ProfileController extends Controller
     $data = $request->post();
     $toko = Toko::findOrFail($data['toko_id']);
     $toko->update([
-      'toko_midtrans_clientkey' => $data['client_key'],
+      // 'toko_midtrans_clientkey' => $data['client_key'],
       'toko_midtrans_serverkey' => $data['server_key']
     ]);
     session(['midtrans' => 1]);
@@ -165,5 +166,52 @@ class ProfileController extends Controller
       'code' => 200
     ]);
   }
+  // public function ubahPassword(Request $request)
+  // {
+  //   // $request->validate([
+  //   //   'newPassword' => 'required|string|min:6|confirmed',
+  //   //   'oldPassword' => 'required'
+  //   // ]);
+  //   dd($request->post());
+
+  //   // Mendapatkan email pengguna dari sesi atau sesuai dengan kebutuhan aplikasi Anda
+  //   $email = session('email');
+
+  //   // Mengambil data pengguna berdasarkan email
+  //   $user = User::where('email', $email)->first();
+  //   // Memverifikasi kata sandi lama
+  //   if (!Hash::check($request->oldPassword, $user->password)) {
+  //     return response()->json([
+  //       'success' => false,
+  //       'message' => 'Kata sandi lama tidak cocok.'
+  //     ], 401);
+  //   }
+
+  //   // Mengubah kata sandi baru
+  //   $user->password = Hash::make($request->newPassword);
+  //   $user->save();
+
+ 
+  // }
+  public function ubahPassword(Request $request)
+	{
+		$data = $request->post();
+		$userId = session('user_id');
+		$user = (new User())->find($userId);
+		if (password_verify($data['oldPassword'], $user['password'])) {
+			$operation =  User::where('id', $userId)->update([
+				'password' => bcrypt($data['newPassword'])
+			]);
+      return response()->json([
+        'success' => true,
+        'message' => 'Kata Sandi Berhasil di Ubah!.',
+      ]);
+		} else {
+      return response()->json([
+        'success' => false,
+        'message' => 'Kata Sandi Salah/Gagal di Ubah!.',
+      ]);
+		}
+	}
 }
 // }

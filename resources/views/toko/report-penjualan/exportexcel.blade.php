@@ -14,7 +14,7 @@
                             <input type="hidden" name="id_kategori" id="id_kategori">
                             <div class="fv-row mb-5">
                                 <label for="" class="required form-label">Pilih Tanggal</label>
-                                <input class="form-control form-control-solid" placeholder="Pick date rage"
+                                <input class="form-control form-control-solid" placeholder="Pick date range"
                                     id="filter_rexport" name="daterangepicker_export" />
                             </div>
                         </div>
@@ -23,7 +23,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">tutup</button>
-            <button type="button" onclick="exportToExcel()" class="btn btn-success">Export</button>
+            <button type="button" onclick="exportToExcel()" id="export-excel" class="btn btn-success">Export</button>
         </div>
     </div>
     </form>

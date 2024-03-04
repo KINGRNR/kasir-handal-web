@@ -51,6 +51,8 @@
     function changePage(invoice) {
         $('.report-penjualan ').hide();
         $('.invoice ').show();
+        $('#id_penjualan').val('')
+        $('#email').val('')
         axios.post("/pay/showDetailTransaction", {
                 id: invoice
             }, {
@@ -63,89 +65,82 @@
                 let data = response.data
 
                 var invoice = `
-                <div class="mb-3">
-                <button type="button" class="btn btn-secondary" onclick="switchPage()">
-                    <i class="fas fa-arrow-left"></i> Kembali
-                </button>
-                </div>
-                <div class="card">
-                    <div class="card-body p-lg-20">
-                        <div class="d-flex flex-column flex-xl-row">
-                            <div class="flex-lg-row-fluid me-xl-18 mb-10 mb-xl-0">
-                                <div class="mt-n1">
-                                    {{-- <div class="d-flex flex-stack pb-10 align-items-center justify-content-end"> --}}
-                                    {{-- <a href="#">
-                                            <img alt="Logo" src="assets/media/svg/brand-logos/code-lab.svg">
-                                        </a> --}}
-                                    {{-- </div> --}}
-                                    <div class="m-0">
-                                        <div class="d-flex  gap-3">
-                                            <div class="fw-bolder fs-3 text-gray-800">${data.toko.toko_nama } #${data.penjualan.penjualan_id}</div>
-
-                                            <span class="badge badge-success" style="font-size: 1em;">${data.penjualan.penjualan_payment_method == 1 ? 'Tunai' : (data.penjualan.penjualan_payment_method == 2 ? 'Non Tunai' : 'Undefined')}</span>
-                                        </div>
-                                        <div class="row g-5 mb-11">
-                                            <div class="col-sm-6">
-                                                <div class="fw-bold fs-7 text-gray-600 mb-1">Petugas Kasir :</div>
-                                                <div class="fw-bolder fs-6 text-gray-800">${data.petugas.name }</div>
-                                                <div class="fw-bold fs-7 text-gray-600 mb-1">${data.petugas.email }</div>
-
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="fw-bold fs-7 text-gray-600 mb-1">Waktu Pembayaran</div>
-                                                <div class="fw-bolder fs-6 text-gray-800 d-flex align-items-center flex-wrap">
-                                                    <span class="pe-2 waktu-pembayaran">${quick.convertDateTime(data.penjualan.penjualan_created_at)}</span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="row g-5 mb-12">
-                                            <div class="col-sm-6 detail_pelanggan">
-                                                <div class="fw-bold fs-7 text-gray-600 mb-1">Detail Pelanggan:</div>
-                                                <div class="fw-bolder fs-6 text-gray-800">Nama : ${data.pelanggan.nama_pelanggan}</div>
-                                                <div class="fw-bold fs-7 text-gray-600">Email : ${data.pelanggan.email_pelanggan}</div>
-                                                <div class="fw-bold fs-7 text-gray-600">No Telp : ${data.pelanggan.no_hp}</div>
-                                            </div>
-                                            <div class="col-sm-6 detail_toko">
-                                                <div class="fw-bold fs-7 text-gray-600 mb-1">Detail Toko</div>
-                                                <div class="fw-bolder fs-6 text-gray-800">Nama Toko : ${data.toko.toko_nama}</div>
-                                            </div>
-                                        </div>
-                                        <div class="table-responsive">
-                                            <table class="table table-striped table-bordered text-center">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Produk</th>
-                                                        <th>Jumlah</th>
-                                                        <th>Harga Satuan</th>
-                                                        <th>Harga Total</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="total d-flex justify-content-end">
-                                            <p class="m-0"><strong>Total:</strong>${quick.formatRupiah(data.penjualan.penjualan_total_harga)}</p>
-                                        </div>
-
-                                        <div class="d-flex gap-2 mt-3 justify-content-end">
-                                            <button type="button" onclick="sendEmail(this)" data-id="${data.penjualan.penjualan_id}" class="btn btn-success"><i class="fas fa-envelope fa-2x"></i>
-                                                Kirim Email</button>
-                                        {{-- <button type="button" onclick="sendWhatsapp()" class="btn btn-success"><i class="fab fa-whatsapp fa-2x"></i>
-                                                Kirim Whatsapp</button> --}}
-                                            <button type="button" onclick="printStruk(${data})" class="btn btn-success"><i class="fas fa-print fa-2x"></i> Print
-                                                Struk</button>
-                                        </div>
-
+    <div class="mb-3">
+        <button type="button" class="btn btn-secondary" onclick="switchPage()">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+    </div>
+    <div class="card">
+        <div class="card-body p-lg-20">
+            <div class="d-flex flex-column flex-xl-row">
+                <div class="flex-lg-row-fluid me-xl-18 mb-10 mb-xl-0">
+                    <div class="mt-n1">
+                        <div class="m-0">
+                            <div class="d-flex  gap-3">
+                                <div class="fw-bolder fs-3 text-gray-800">${data.toko.toko_nama } #${data.penjualan.penjualan_id}</div>
+                                <span class="badge badge-success" style="font-size: 1em;">
+                                    ${data.penjualan.penjualan_payment_method == 1 ? 'Tunai' : (data.penjualan.penjualan_payment_method == 2 ? 'Non Tunai' : 'Undefined')}
+                                </span>
+                            </div>
+                            <div class="row g-5 mb-11">
+                                <div class="col-sm-6">
+                                    <div class="fw-bold fs-7 text-gray-600 mb-1">Petugas Kasir :</div>
+                                    <div class="fw-bolder fs-6 text-gray-800">${data.petugas.name }</div>
+                                    <div class="fw-bold fs-7 text-gray-600 mb-1">${data.petugas.email }</div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="fw-bold fs-7 text-gray-600 mb-1">Waktu Pembayaran</div>
+                                    <div class="fw-bolder fs-6 text-gray-800 d-flex align-items-center flex-wrap">
+                                        <span class="pe-2 waktu-pembayaran">${quick.convertDateTime(data.penjualan.penjualan_created_at)}</span>
                                     </div>
                                 </div>
+                            </div>
+                            ${data.pelanggan ? 
+                                `<div class="row g-5 mb-12">
+                                    <div class="col-sm-6 detail_pelanggan">
+                                        <div class="fw-bold fs-7 text-gray-600 mb-1">Detail Pelanggan:</div>
+                                        <div class="fw-bolder fs-6 text-gray-800">Nama : ${data.pelanggan.nama_pelanggan}</div>
+                                        <div class="fw-bold fs-7 text-gray-600">Email : ${data.pelanggan.email_pelanggan}</div>
+                                        <div class="fw-bold fs-7 text-gray-600">No Telp : ${data.pelanggan.no_hp}</div>
+                                    </div>
+                                    ` : '' } <div class="col-sm-6 detail_toko">
+                                        <div class="fw-bold fs-7 text-gray-600 mb-1">Detail Toko</div>
+                                        <div class="fw-bolder fs-6 text-gray-800">Nama Toko : ${data.toko.toko_nama}</div>
+                                    </div>
+                                </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered text-center">
+                                    <thead>
+                                        <tr>
+                                            <th>Produk</th>
+                                            <th>Jumlah</th>
+                                            <th>Harga Satuan</th>
+                                            <th>Harga Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="total d-flex justify-content-end">
+                                <p><strong>Total : </strong> ${quick.formatRupiah(data.penjualan.penjualan_total_harga)}</p>
+                            </div>
+                            <div class="d-flex gap-2 mt-3 justify-content-end">
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#kirimStruk" data-id="${data.penjualan.penjualan_id}" class="btn btn-success"><i class="fas fa-envelope fa-2x"></i>
+                                                Kirim Email</button>
+                                {{-- <button type="button" onclick="printStruk(data)" class="btn btn-success">
+    <i class="fas fa-print fa-2x"></i> Print Struk
+</button> --}}
                             </div>
                         </div>
                     </div>
                 </div>
-                `
+            </div>
+        </div>
+    </div>
+`;
                 $('.invoice').append(invoice);
+
                 $('.invoice .table tbody').empty();
 
                 // Append table rows
@@ -160,15 +155,16 @@
                 `;
                     $('.invoice .table tbody').append(tableRow);
                 });
+                $('#id_penjualan').val(data.penjualan.penjualan_id)
+                $('#email').val(data.pelanggan.email_pelanggan)
             })
             .catch(error => {
                 console.error('There has been a problem with your Axios operation:', error);
             });
     }
-
     function printStruk(data) {
-    var strukWindow = window.open('', '_blank');
-    strukWindow.document.write(`
+        var strukWindow = window.open('', '_blank');
+        strukWindow.document.write(`
         <html>
         <head>
             <title>Struk Pembayaran</title>
@@ -227,17 +223,17 @@
                 </tbody>
             </table>
             <div class="total">
-                <p><strong>Total:</strong> ${quick.formatRupiah(data.penjualan.penjualan_total_harga)}</p>
+                <p><strong>Total : </strong> ${quick.formatRupiah(data.penjualan.penjualan_total_harga)}</p>
             </div>
         </body>
         </html>
     `);
-}
+    }
 
-function generateTableRows(detailPenjualan) {
-    var rows = '';
-    detailPenjualan.forEach(item => {
-        rows += `
+    function generateTableRows(detailPenjualan) {
+        var rows = '';
+        detailPenjualan.forEach(item => {
+            rows += `
             <tr>
                 <td>${item.nama_produk}</td>
                 <td>${item.jumlah_barang}</td>
@@ -245,9 +241,9 @@ function generateTableRows(detailPenjualan) {
                 <td>${quick.formatRupiah(item.sub_total)}</td>
             </tr>
         `;
-    });
-    return rows;
-}
+        });
+        return rows;
+    }
 
 
     var filterDatatable = [];
@@ -299,7 +295,8 @@ function generateTableRows(detailPenjualan) {
                     render: function(data, type, row, meta) {
                         return '<span class="ps-3">' + (meta.row + meta.settings._iDisplayStart + 1) +
                             '</span>';
-                    }
+                    },
+                    orderable: false
                 },
                 {
                     data: 'penjualan_id',
@@ -343,8 +340,10 @@ function generateTableRows(detailPenjualan) {
     }
 
 
-    function sendEmail(a) {
-        var button = $(a);
+    function sendEmail() {
+        var button = $('#btn-email');
+        var form = "kirimStruk";
+        var formData = new FormData($('[name="' + form + '"]')[0]);
 
         button.html(
             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Mengirim...');
@@ -352,11 +351,7 @@ function generateTableRows(detailPenjualan) {
         // Men-disable tombol
         button.prop('disabled', true);
 
-        var id = button.attr('data-id');
-
-        axios.post("/pay/sendEmail", {
-                id: id
-            }, {
+        axios.post("/pay/sendEmail", formData, {
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     'Content-Type': 'multipart/form-data',
@@ -368,6 +363,7 @@ function generateTableRows(detailPenjualan) {
 
                 // Mengaktifkan kembali tombol
                 button.prop('disabled', false);
+                $(".close-modal").trigger('click');
 
                 if (response.data.success) {
                     quick.toastNotif({
@@ -390,7 +386,15 @@ function generateTableRows(detailPenjualan) {
             });
     }
 
+
     function exportToExcel() {
+        var button = $('#export-excel');
+
+        button.html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Membuat Excel...');
+
+        // Men-disable tombol
+        button.prop('disabled', true);
         var dateRange = $('#filter_rexport').val();
 
         axios.post("/pay/exportExcel", {
@@ -427,9 +431,9 @@ function generateTableRows(detailPenjualan) {
                     excelData.push([
                         item.penjualan_id,
                         quick.convertDateTime(item.penjualan_created_at),
-                        item.nama_pelanggan,
-                        item.no_hp,
-                        item.email_pelanggan,
+                        item.nama_pelanggan ?? '-',
+                        item.no_hp ?? '-',
+                        item.email_pelanggan ?? '-',
                         quick.formatRupiah(item.penjualan_total_harga),
                         productDetails
                     ]);
@@ -465,13 +469,15 @@ function generateTableRows(detailPenjualan) {
                 // Save the workbook
                 XLSX.writeFile(workbook, 'penjualan.xlsx');
 
+                button.html('Export');
 
+                // Mengaktifkan kembali tombol
+                button.prop('disabled', false);
             })
             .catch(error => {
                 console.error('There has been a problem with your Axios operation:', error);
             });
     }
-
 
 
     function edit(id) {
@@ -492,7 +498,9 @@ function generateTableRows(detailPenjualan) {
                 $('#id_kategori').val(data.id_kategori);
                 $('#kode_kategori').val(data.kode_kategori);
                 $('#nama_kategori').val(data.nama_kategori);
-                $('#modalKategori').modal('show');
+                // $('#modalKategori').modal('show');
+                $(".close-modal").trigger('click');
+
             },
             error: function(error) {
                 console.error('There has been a problem with your Ajax operation:', error);

@@ -48,7 +48,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://fonts.cdnfonts.com/css/poppins" rel="stylesheet">
     <!--end::Global Stylesheets Bundle-->
-    <style>
+    {{-- <style>
         :root {
             --shadow: #2F3281;
             --scrollbarBG: #eee;
@@ -67,5 +67,5 @@
             background-color: var(--thumbBG);
             box-shadow: 0 -100vh 0 100vh var(--shadow), 0 0 15px 5px black;
         }
-    </style>
+    </style> --}}
 </head>

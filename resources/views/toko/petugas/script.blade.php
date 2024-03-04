@@ -133,11 +133,11 @@
                     .then(response => {
                         if (response.data.success) {
                             quick.toastNotif({
-                                title: 'success',
+                                title: 'Sukses Hapus Petugas!',
                                 icon: 'success',
                                 timer: 1500,
                                 callback: function() {
-                                    window.location.reload()
+                                    menutable.ajax.reload();
                                 }
                             });
                         } else {
@@ -160,7 +160,7 @@
     function wipeData() {
         $('#formPetugas').trigger('reset');
         $('#id').val(null);
-
+        $('#email').prop('disabled', false)
     }
 
     function edit(atr) {
@@ -182,6 +182,7 @@
                 $('#name').val(data.name);
                 $('#email').val(data.email)
                 $('#modalPetugas').modal('show');
+                $('#email').prop('disabled', true)
 
             })
             .catch(error => {
@@ -190,7 +191,6 @@
     }
 
     function save() {
-        quick.blockPage()
         var form = "formPetugas";
         var data = new FormData($('[name="' + form + '"]')[0]);
         // $('#submit-btn').prop('disabled', true);
@@ -205,6 +205,8 @@
             cancelButtonText: 'Tidak'
         }).then((result) => {
             if (result.isConfirmed) {
+                quick.blockPage()
+
                 axios.post("/user/savePetugas", data, {
                         headers: {
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -215,12 +217,14 @@
                         if (response.data.success) {
                             $('#formModule').trigger('reset');
                             $(".close-modal").trigger('click');
+                            quick.unblockPage()
+
                             quick.toastNotif({
-                                title: 'success',
+                                title: 'Sukses!',
                                 icon: 'success',
-                                timer: 1500,
+                                timer: 1000,
                                 callback: function() {
-                                    location.reload()
+                                    menutable.ajax.reload();
                                 }
                             });
                         }

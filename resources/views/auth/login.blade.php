@@ -33,7 +33,7 @@
                                     <a href="{{ route('register') }}" class="link-primary fw-bolder">Create an Account</a>
                                 </div>
                                 </div> --}}
-                                <div class="text-center mb-10">
+                                <div class="text-center mb-7">
                                     <!--begin::Title-->
                                     <h1 class="text-dark mb-3">Masuk untuk Melihat Fitur</h1>
                                     <!--end::Title-->
@@ -43,7 +43,7 @@
                                     </div>
                                     <!--end::Link-->
                                 </div>
-                                <div class="fv-row mb-10">
+                                <div class="fv-row mb-7">
                                     <label class="form-label fs-14 fw-bolder text-dark">Email</label>
                                     <input
                                         class="form-control @error('email') is-invalid @enderror form-control-lg fs-14 form-control-solid border border-gray-200 text-gray-900"
@@ -56,16 +56,21 @@
                                         </span>
                                     @enderror
                                     </button>
-                                    @if ($errors->any())
-                                        <div class="alert alert-danger">
+                                    @if ($errors->has('credsal'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('credsal') }}</strong>
+                                        </span>
+                                    @endif
+                                    {{-- @if ($errors->any())
+                                        <span class="">
                                             @foreach ($errors->all() as $error)
                                                 <p>{{ $error }}</p>
                                             @endforeach
-                                        </div>
-                                    @endif
+                                        </span>
+                                    @endif --}}
 
                                 </div>
-                                <div class="fv-row mb-10">
+                                <div class="fv-row mb-7">
                                     <div class="d-flex flex-stack mb-2">
                                         <label class="form-label fw-bolder text-dark fs-14 mb-0">Password</label>
                                     </div>
@@ -90,7 +95,7 @@
 
                                 </div>
 
-                                <div class="fv-row mb-10">
+                                <div class="fv-row mb-7">
                                     <div class="d-flex flex-stack mb-2">
                                         {{-- <label class="form-label fw-bolder text-dark fs-14 mb-0">Password</label> --}}
                                         {{-- <a href="{{ route('password.request') }}" class="fs-14 fw-bolder"
@@ -121,7 +126,7 @@
                                     </button>
                                 </div> --}}
                                 {{-- <a href="{{ url('authorized/google') }}"
-                                    class="btn btn-flex flex-center btn-light btn-lg w-100 mb-5">
+                                    class="btn btn-flex flex-center btn-light btn-lg w-100 mb-7">
                                     <img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg"
                                         class="h-20px me-3">Continue with
                                     Google</a> --}}

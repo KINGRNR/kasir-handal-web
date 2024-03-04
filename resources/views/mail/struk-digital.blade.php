@@ -86,15 +86,16 @@
         <div class="header">
             <h2>Struk</h2>
         </div>
-
         <div class="invoice-details">
-            <p><strong>Nama Pelanggan:</strong> {{ $pelanggan->nama_pelanggan }}</p>
-            <p><strong>No. Telepon:</strong> {{ $pelanggan->no_hp }}</p>
-            <p><strong>Email:</strong> {{ $pelanggan->email_pelanggan }}</p>
-            <p><strong>Transaksi Nomor:</strong> {{ $penjualan_id }}</p>
-            <p><strong>Tanggal Transaksi:</strong> {{ $waktu_transaksi }}</p>
+            @if ($pelanggan)
+                <p><strong>Nama Pelanggan:</strong> {{ $pelanggan->nama_pelanggan }}</p>
+                <p><strong>No. Telepon:</strong> {{ $pelanggan->no_hp }}</p>
+                <p><strong>Email:</strong> {{ $pelanggan->email_pelanggan }}</p>
+                @endif
+                <p><strong>Transaksi Nomor:</strong> {{ $penjualan_id }}</p>
+                <p><strong>Tanggal Transaksi:</strong> {{ $waktu_transaksi }}</p>
         </div>
-
+        
         <table class="table">
             <thead>
                 <tr>

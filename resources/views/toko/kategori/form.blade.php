@@ -41,13 +41,13 @@
                                         <!--begin::Image input-->
                                         <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url(../file/blank.webp)">
                                             <!--begin::Preview existing avatar-->
-                                            <div class="image-input-wrapper w-125px h-125px" style="background-image: url(../file/blank.webp)"></div>
+                                            <div class="image-input-wrapper w-125px h-125px" style="background-image: url(../file/blank.webp); "></div>
                                             <!--end::Preview existing avatar-->
                                             <!--begin::Label-->
                                             <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
                                                 <i class="bi bi-pencil-fill fs-7"></i>
                                                 <!--begin::Inputs-->
-                                                <input type="file" name="foto_kategori" accept=".png, .jpg, .jpeg" required/>
+                                                <input type="file" name="foto_kategori" id="foto_kategori" accept=".png, .jpg, .jpeg" required/>
                                                 <input type="hidden" name="avatar_remove" />
                                                 <!--end::Inputs-->
                                             </label>

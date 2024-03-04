@@ -1,9 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('layouts.support.bundle.bundleheader')
+<style>
+    .loading-spinner {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        /* Hitam dengan opasitas 0.8 */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        /* Menempatkan di atas elemen-elemen lain */
+    }
+
+    .loading-spinner-overlay {
+        text-align: center;
+    }
+</style>
 
 <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed">
-
+    <div class="loading" style="z-index: 9999">
+        {{-- <div class="loading-spinner">
+            <div class="loading loading-spinner-overlay" id="loading-spinner"><button class="btn btn-primary" type="button"
+                    disabled>
+                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                    <span role="status">Loading...</span>
+                </button></div>
+        </div> --}}
+    </div>
 
     <!--begin::Main-->
     <!--begin::Root-->
@@ -15,8 +43,7 @@
                 <!--begin::Header-->
                 <div id="kt_header" class="header align-items-stretch " data-kt-sticky="true" data-kt-sticky-name="header"
                     data-kt-sticky-offset="{default: '200px', lg: '300px'}" name="header"
-                    data-kt-sticky-offset="{default: '200px', lg: '300px'}"
-                    style="background: #2F3281">
+                    data-kt-sticky-offset="{default: '200px', lg: '300px'}" style="background: #2F3281">
                     <!--begin::Container-->
                     @include('toko.header.header')
                     <!--end::Container-->

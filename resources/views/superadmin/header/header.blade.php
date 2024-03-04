@@ -173,7 +173,7 @@
                      <!--begin::Menu wrapper-->
                      <div class="btn " style="cursor: pointer; " data-kt-menu-trigger="click"
                          data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-                         <img class="h-30px w-30px rounded" src="/file/superadmin.jpg" alt="" />
+                         {{-- <img class="h-30px w-30px rounded" src="/file/superadmin.jpg" alt="" /> --}}
                          <span class="text-white">{{ session('name') }}</span>
                      </div>
                      <!--begin::Menu-->
@@ -183,9 +183,9 @@
                          <div class="menu-item px-3">
                              <div class="menu-content d-flex align-items-center px-3">
                                  <!--begin::Avatar-->
-                                 <div class="symbol symbol-50px me-5">
+                                 {{-- <div class="symbol symbol-50px me-5">
                                      <img alt="Logo" src="/file/superadmin.jpg" />
-                                 </div>
+                                 </div> --}}
 
                                  <!--end::Avatar-->
                                  <!--begin::Username-->
