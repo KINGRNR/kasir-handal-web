@@ -118,7 +118,7 @@
                         return '<span class="ps-3">' + (meta.row + meta.settings._iDisplayStart + 1) +
                             '</span>';
                     },
-                    orderable: false 
+                    orderable: false
                 },
                 {
                     data: 'foto_produk',
@@ -126,7 +126,7 @@
                         return '<img src="/file/produk_foto/' + row.foto_produk +
                             '" alt="Product Image" class="img-thumbnail" width="50" height="50">';
                     },
-                    orderable: false 
+                    orderable: false
                 },
                 {
                     data: 'nama_produk',
@@ -162,7 +162,7 @@
                         return '<img src="/file/kategori_logo/' + row.kategori_logo +
                             '" alt="Logo Kategori" class="img-thumbnail" width="50" height="50">';
                     },
-                    orderable: false 
+                    orderable: false
 
                 },
                 {
@@ -177,7 +177,7 @@
 
                         return editButton + ' ' + deleteButton;
                     },
-                    orderable: false 
+                    orderable: false
 
                 }
             ]
@@ -236,7 +236,8 @@
     function editStok(icon) {
         var cell = $(icon).closest('td');
         var editableStok = cell.find('.editable-stok');
-        var inputStok = $('<input type="number" class="form-control input-stok" value="' + editableStok.text() + '">');
+        var inputStok = $('<input type="text" oninput="formatNumber(this)"  class="form-control input-stok" value="' +
+            editableStok.text() + '">');
         // Tambahkan max-width
         inputStok.css('max-width', '100px'); // Sesuaikan dengan kebutuhan lebar maksimum
         var iconSave = cell.find('.save-stok');
@@ -256,6 +257,10 @@
             iconSave.addClass('d-none');
             iconCancel.remove();
         });
+    }
+
+    function formatNumber(input) {
+        input.value = input.value.replace(/[^\d]/g, '');
     }
 
     function editRow(id) {
@@ -280,6 +285,7 @@
                     'file/produk_foto/' + data.foto_produk + '")');
                 $('#stok_produk').val(data.stok_produk)
                 $('#id_produk_kategori').val(data.id_produk_kategori);
+                $('#foto_produk').removeAttr('required');
 
                 $('#modalProduk').modal('show');
             },
@@ -290,7 +296,7 @@
     }
 
     function saveStok(id) {
-        var cell = $('td').has('input[type="number"]');
+        var cell = $('td').has('input[type="text"]');
         var inputStok = cell.find('input');
         var newStok = inputStok.val();
         $.ajax({
@@ -340,11 +346,11 @@
                     .then(response => {
                         if (response.data.success) {
                             quick.toastNotif({
-                                title: 'Sukses!',
+                                title: 'Sukses Hapus Produk!',
                                 icon: 'success',
                                 timer: 1500,
                                 callback: function() {
-                                    window.location.reload()
+                                    menutable.ajax.reload();
                                 }
                             });
                         } else {
@@ -418,70 +424,71 @@
     //     });
     // };
     function save() {
-    var form = "formProduk";
-    var data = new FormData($('[name="' + form + '"]')[0]);
+        var form = "formProduk";
+        var data = new FormData($('[name="' + form + '"]')[0]);
 
-    // Ambil nilai harga_produk dari form
-    // var hargaProduk = data.get('harga_produk');
+        // Ambil nilai harga_produk dari form
+        // var hargaProduk = data.get('harga_produk');
 
-    // // Konversi nilai harga_produk ke dalam format yang diharapkan
-    // var hargaProdukFormatted = parseFloat(hargaProduk).toFixed(2); // Konversi ke format desimal 10,2
+        // // Konversi nilai harga_produk ke dalam format yang diharapkan
+        // var hargaProdukFormatted = parseFloat(hargaProduk).toFixed(2); // Konversi ke format desimal 10,2
 
-    // // Set nilai harga_produk yang telah dikonversi ke dalam FormData
-    // data.set('harga_produk', hargaProdukFormatted);
+        // // Set nilai harga_produk yang telah dikonversi ke dalam FormData
+        // data.set('harga_produk', hargaProdukFormatted);
 
-    Swal.fire({
-        title: 'Apakah data yang anda input sudah benar?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ya',
-        cancelButtonText: 'Tidak'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            axios.post("/produk/saveMob", data, {
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        // 'Content-Type': 'multipart/form-data', // Jangan ditambahkan header ini
-                    }
-                })
-                .then(response => {
-                    console.log(response)
-                    if (response.data.success) {
-                        $('#formProduk').trigger('reset');
-                        $(".close-modal").trigger('click');
-                        quick.toastNotif({
-                            title: 'Sukses!',
-                            icon: 'success',
-                            timer: 1500,
-                            callback: function() {
-                                menutable.ajax.reload();
-                            }
-                        });
-                    } else {
-                        quick.toastNotif({
-                            title: response.data.message,
-                            icon: 'error',
-                            timer: 4000,
-                            callback: function() {
-                                menutable.ajax.reload();
-                            }
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.error('There has been a problem with your Axios operation:', error);
-                });
-        }
-    });
-};
+        Swal.fire({
+            title: 'Apakah data yang anda input sudah benar?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post("/produk/saveMob", data, {
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            // 'Content-Type': 'multipart/form-data', // Jangan ditambahkan header ini
+                        }
+                    })
+                    .then(response => {
+                        console.log(response)
+                        if (response.data.success) {
+                            $('#formProduk').trigger('reset');
+                            $(".close-modal").trigger('click');
+                            quick.toastNotif({
+                                title: 'Sukses!',
+                                icon: 'success',
+                                timer: 1500,
+                                callback: function() {
+                                    menutable.ajax.reload();
+                                }
+                            });
+                        } else {
+                            quick.toastNotif({
+                                title: response.data.message,
+                                icon: 'error',
+                                timer: 4000,
+                                callback: function() {
+                                    menutable.ajax.reload();
+                                }
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('There has been a problem with your Axios operation:', error);
+                    });
+            }
+        });
+    };
 
     function wipeData() {
         $('.image-input-wrapper').css('background-image', 'url("../file/blank.webp")');
 
         $('#formProduk').trigger('reset');
         $('#id_produk').val(null);
+        $('#foto_produk').attr('required', true);
 
     }
 </script>

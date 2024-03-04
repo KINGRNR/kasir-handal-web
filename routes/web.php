@@ -143,7 +143,7 @@ Route::middleware(['web'])->group(function () {
         }
     });
     Route::controller(ProfileController::class)->group(function () {
-        foreach (['indexToko', 'saveMidtransKey', 'saveProfileToko', 'indexPetugas', 'detailToko', 'indexSuperadmin'] as $key => $value) {
+        foreach (['indexToko', 'saveMidtransKey', 'saveProfileToko', 'indexPetugas', 'detailToko', 'indexSuperadmin', 'ubahPassword'] as $key => $value) {
             Route::post('/profile/' . $value, $value);
         }
     });

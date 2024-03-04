@@ -42,18 +42,21 @@ class UserController extends Controller
   {
     $data = $request->post();
     $id_toko = session('toko_id');
-    // dd($id);
+    // dd($data['id']);
     // $id_toko = DB::table('toko')->where('toko_user_id', $id)->select('toko_id')->first();
     // print_r($id_toko); 
     // exit;
     // try {
     // dd($data);
-    $id =  rand();
 
     if ($data['id']) {
       $oprUpdate = User::findOrFail($data['id']);
-      $oprUpdate->update($data);
+      $oprUpdate->update([
+        'name' => $data['name'],
+      ]);
     } else {
+      $id =  rand();
+
       $data['id'] = $id;
       $data['users_role_id'] = 'TKQR2DSJlQ5b31V2';
       $data['password'] = '';
@@ -70,12 +73,12 @@ class UserController extends Controller
         'petugas_user_id' => $data['id'],
         'petugas_toko_id' => $id_toko,
       ]);
+      $idUserEncoded = base64_encode($data['id']);
+      Mail::send('mail.aktivasi-petugas', ['data' => $data, 'id' => $idUserEncoded, 'token' => $accessToken], function ($message) use ($request, $data) {
+        $message->to($data['email']);
+        $message->subject('Aktivasi Akun Kasir Handal');
+      });
     }
-    $idUserEncoded = base64_encode($data['id']);
-    Mail::send('mail.aktivasi-petugas', ['data' => $data, 'id' => $idUserEncoded, 'token' => $accessToken], function ($message) use ($request, $data) {
-      $message->to($data['email']);
-      $message->subject('Aktivasi Akun Kasir Handal');
-    });
     return response()->json([
       'success' =>  true,
       'status' =>  'Success',

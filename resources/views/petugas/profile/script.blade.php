@@ -42,11 +42,11 @@
                 $('.val_head_name').text(toko.toko_nama)
                 $('.email-header').html(user.name + `<span class="badge badge-light-success fw-bolder fs-8 ms-2">Petugas
                                                         Kasir</span>`)
-               
+
                 $('#toko_id').val(toko.toko_id)
                 $('.img-placement').append(`<img src="/file/blank.webp" alt="image" />`)
 
-             
+
 
             },
 
@@ -177,4 +177,83 @@
             }
         });
     };
+
+    function resetPassword() {
+        var oldPassword = document.getElementById('old_pass').value;
+        var newPassword = document.getElementById('new_pass').value;
+        var confirmPassword = document.getElementById('new_pass-confirm').value;
+
+        var passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
+        if (!passwordPattern.test(newPassword)) {
+            $("#password-error").text(
+                "Sandi harus terdiri minimal 8 karakter dengan campuran huruf, angka, dan simbol"
+            );
+            $("#password-error").show();
+            return;
+        } else {
+            $("#password-error").hide();
+        }
+
+        if (newPassword !== confirmPassword) {
+            $("#password-confirm-error").text("Konfirmasi password tidak cocok.");
+            $("#password-confirm-error").show();
+            return;
+        } else {
+            $("#password-confirm-error").hide();
+        }
+
+        // Menampilkan konfirmasi swal
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Jika pengguna menekan tombol "Ya, ubah kata sandi"
+                axios.post('/profile/ubahPassword', {
+                    oldPassword: oldPassword,
+                    newPassword: newPassword
+                }).then(function(response) {
+                    if (response.data.success) {
+                        quick.toastNotif({
+                            title: response.data.message,
+                            icon: 'success',
+                            timer: 1500,
+                            callback: function() {
+                                window.location.reload()
+                            }
+                        });
+                    } else {
+                        quick.toastNotif({
+                            title: 'Kata Sandi lama salah',
+                            icon: 'error',
+                            timer: 1500,
+                        });
+                    }
+                }).catch(function(error) {
+                    if (error.response.status === 401) {
+                        quick.toastNotif({
+                            title: "Error!",
+                            icon: 'error',
+                            timer: 1500,
+                        });
+                    } else {
+                        quick.toastNotif({
+                            title: "Error!",
+                            icon: 'error',
+                            timer: 1500,
+                            callback: function() {
+                                window.location.reload()
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
 </script>

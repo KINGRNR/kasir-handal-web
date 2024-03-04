@@ -26,13 +26,13 @@
                             <form class="form w-100     w-lg-500px" novalidate="novalidate" id="kt_sign_in_form"
                                 method="POST" name="form-resetpass" action="javascript:kirimResetToken()">
                                 @csrf
-                                {{-- <div class="text-center mb-10">
+                                {{-- <div class="text-center mb-7">
                                 <h1 class="text-dark mb-3">Sign In</h1>
                                 <div class="text-gray-400 fw-bold fs-4">New Here?
                                     <a href="{{ route('register') }}" class="link-primary fw-bolder">Create an Account</a>
                                 </div>
                                 </div> --}}
-                                <div class="text-center mb-5">
+                                <div class="text-center mb-7">
                                     <!--begin::Title-->
                                     <h1 class="text-dark mb-3">Lupa Password</h1>
                                     <!--end::Title-->
@@ -42,7 +42,7 @@
                                     </div>
                                     <!--end::Link-->
                                 </div>
-                                <div class="fv-row mb-10">
+                                <div class="fv-row mb-7">
                                     <label class="form-label fs-14 fw-bolder text-dark">Email</label>
                                     <input
                                         class="form-control @error('email') is-invalid @enderror form-control-lg fs-14 form-control-solid border border-gray-200 text-gray-900"
@@ -75,7 +75,7 @@
                                     </button>
                                 </div> --}}
                                 {{-- <a href="{{ url('authorized/google') }}"
-                                    class="btn btn-flex flex-center btn-light btn-lg w-100 mb-5">
+                                    class="btn btn-flex flex-center btn-light btn-lg w-100 mb-7">
                                     <img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg"
                                         class="h-20px me-3">Continue with
                                     Google</a> --}}

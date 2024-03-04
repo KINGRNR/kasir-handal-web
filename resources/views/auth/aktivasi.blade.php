@@ -20,16 +20,16 @@
                     <!--begin::Wrapper-->
                     <div class=p-10 p-lg-15 mx-auto">
                         <!--begin::Form-->
-                        <form class="form w-100     w-lg-500px" novalidate="novalidate" id="kt_sign_in_form" method="POST"
-                            name="form-aktivasi" action="javascript:aktivasiakun()">
+                        <form class="form w-100     w-lg-500px" novalidate="novalidate" id="kt_sign_in_form"
+                            method="POST" name="form-aktivasi" action="javascript:aktivasiakun()">
                             @csrf
-                            {{-- <div class="text-center mb-10">
+                            {{-- <div class="text-center mb-7">
                                 <h1 class="text-dark mb-3">Sign In</h1>
                                 <div class="text-gray-400 fw-bold fs-4">New Here?
                                     <a href="{{ route('register') }}" class="link-primary fw-bolder">Create an Account</a>
                                 </div>
                             </div> --}}
-                            <div class="text-center mb-10">
+                            <div class="text-center mb-7">
                                 <!--begin::Title-->
                                 <h1 class="text-dark mb-3">Aktivasi Akun</h1>
                                 <div class="text-gray-400 fw-bold fs-4">Silakan cek email Anda untuk melihat token.
@@ -38,7 +38,7 @@
                             </div>
 
 
-                            <div class="fv-row mb-10">
+                            <div class="fv-row mb-7">
                                 <input type="hidden" id="id" name="id">
                                 <input type="hidden" id="role" name="role">
                                 <label class="form-label fs-14 fw-bolder text-dark">Email</label>
@@ -53,7 +53,7 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="mb-10 fv-row password-input d-none" data-kt-password-meter="true">
+                            <div class="mb-7 fv-row password-input d-none" data-kt-password-meter="true">
                                 <div class="mb-1">
                                     <label class="form-label fw-bolder text-dark fs-6" for="password">Password</label>
                                     <div class="position-relative mb-3">
@@ -91,14 +91,16 @@
                                 @enderror
                             </div>
 
-                            <div class="fv-row mb-2 password-input d-none">
+                            <div class="fv-row mb-7 password-input d-none">
                                 <label class="form-label fw-bolder text-dark fs-6" for="password-confirm">Konfirmasi
                                     Password</label>
                                 <input id="password-confirm" type="password"
                                     class="form-control form-control-lg form-control-solid" name="password_confirmation"
                                     required autocomplete="new-password" placeholder="Ulangi kata sandi">
                             </div>
-                            <div class="fv-row mb-10">
+                            <div id="password-confirm-error" class="invalid-feedback" style="display: none;">
+                            </div>
+                            <div class="fv-row mb-7">
                                 <label class="form-label fs-14 fw-bolder text-dark">Kode Aktivasi</label>
                                 <input
                                     class="form-control form-control-lg fs-14 form-control-solid border border-gray-200 text-gray-900"
@@ -109,7 +111,7 @@
 
                             <div class="text-center">
 
-                                <button type="submit" id="" class="btn btn-lg w-100 mb-4"
+                                <button type="submit" id="aktivasi-btn" class="btn btn-lg w-100 mb-4" disabled
                                     style="background-color: #1B61AD">
                                     <span class="indicator-label text-white">Aktivasi Akun</span>
                                     <span class="indicator-progress text-white">Tunggu sebentar...
@@ -173,12 +175,12 @@
 
                         $('.password-input').removeClass('d-none')
 
-                    // } else if (data.active == 1) {
-                    //     location.href = "/login"
-                    // } else if (data == null) {
-                    //     location.href = "/login"
-                    // } else {
-                    //     location.href = "/login"
+                        // } else if (data.active == 1) {
+                        //     location.href = "/login"
+                        // } else if (data == null) {
+                        //     location.href = "/login"
+                        // } else {
+                        //     location.href = "/login"
                     }
                 })
                 .catch(error => {
@@ -198,6 +200,64 @@
                 $('#password').attr('type', 'password')
             }
         }
+        $(document).ready(function() {
+            function showPasswordError(message) {
+                $("#password-error").text(message);
+                $("#password-error").show();
+            }
+
+            function hidePasswordError() {
+                $("#password-error").hide();
+            }
+
+            function showConfirmPasswordError(message) {
+                $("#password-confirm-error").text(message);
+                $("#password-confirm-error").show();
+            }
+
+            function hideConfirmPasswordError() {
+                $("#password-confirm-error").hide();
+                $('#aktivasi-btn').prop('disabled', false)
+            }
+
+            function checkPasswordStrength(password) {
+                var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                return regex.test(password);
+            }
+
+            function validatePasswords() {
+                var password = $("#password").val();
+                var confirmPassword = $("#password-confirm").val();
+
+                if (!checkPasswordStrength(password)) {
+                    showPasswordError(
+                        "Sandi harus terdiri minimal 8 karakter dengan campuran huruf, angka, dan simbol");
+                    return false;
+                } else {
+                    hidePasswordError();
+                }
+
+                if (password !== confirmPassword) {
+                    showConfirmPasswordError("Konfirmasi password tidak cocok.");
+                    return false;
+                } else {
+                    hideConfirmPasswordError();
+                }
+
+                return true;
+            }
+
+            $("#password").on("input", function() {
+                validatePasswords();
+            });
+
+            $("#password-confirm").on("input", function() {
+                validatePasswords();
+            });
+
+            // Initial validation on page load
+            validatePasswords();
+        });
 
         function aktivasiakun() {
             var form = "form-aktivasi";

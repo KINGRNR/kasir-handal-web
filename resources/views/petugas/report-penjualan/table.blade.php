@@ -60,9 +60,9 @@
                     data-kt-customer-table-select="delete_selected" style="display: none;"
                     onclick="deleteSelected()">Delete Selected</button>
             </div>
-            <button type="button" class="btn btn-success ms-2" data-bs-toggle="modal"
+            {{-- <button type="button" class="btn btn-success ms-2" data-bs-toggle="modal"
             data-bs-target="#exportExcel">Export
-                Excel</button>
+                Excel</button> --}}
         </div>
 
         <!--end::Card header-->
@@ -93,6 +93,9 @@
 <div class="modal fade" id="modalKategori" tabindex="-1" aria-labelledby="modalKategori" aria-hidden="true">
     @include('toko.report-penjualan.form')
 </div>
-<div class="modal fade" id="exportExcel" tabindex="-1" aria-labelledby="exportExcel" aria-hidden="true">
+{{-- <div class="modal fade" id="exportExcel" tabindex="-1" aria-labelledby="exportExcel" aria-hidden="true">
     @include('toko.report-penjualan.exportexcel')
+</div> --}}
+<div class="modal fade" id="kirimStruk" tabindex="-1" aria-labelledby="kirimStruk" aria-hidden="true">
+    @include('toko.report-penjualan.kirimStruk')
 </div>

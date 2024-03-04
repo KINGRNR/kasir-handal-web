@@ -23,13 +23,13 @@
                         <form class="form w-100     w-lg-500px" novalidate="novalidate" id="kt_sign_in_form"
                             method="POST" name="form-aktivasi" action="javascript:submitResetPasswordForm()">
                             @csrf
-                            {{-- <div class="text-center mb-10">
+                            {{-- <div class="text-center mb-7">
                                 <h1 class="text-dark mb-3">Sign In</h1>
                                 <div class="text-gray-400 fw-bold fs-4">New Here?
                                     <a href="{{ route('register') }}" class="link-primary fw-bolder">Create an Account</a>
                                 </div>
                             </div> --}}
-                            <div class="text-center mb-10">
+                            <div class="text-center mb-7">
                                 <!--begin::Title-->
                                 <h1 class="text-dark mb-3">Ubah Kata Sandi</h1>
                                 {{-- <div class="text-gray-400 fw-bold fs-4">Silakan cek email Anda untuk melihat token.
@@ -39,7 +39,7 @@
                             <input type="hidden" name="token" id="token">
 
 
-                            <div class="mb-10 fv-row password-input " data-kt-password-meter="true">
+                            <div class="mb-7 fv-row password-input " data-kt-password-meter="true">
                                 <div class="mb-1">
                                     <label class="form-label fw-bolder text-dark fs-6" for="password">Password</label>
                                     <div class="position-relative mb-3">
@@ -77,7 +77,7 @@
                                 @enderror
                             </div>
 
-                            <div class="fv-row mb-10">
+                            <div class="fv-row mb-7">
                                 <label class="form-label fw-bolder text-dark fs-6" for="password-confirm">Konfirmasi
                                     Password</label>
                                 <div class="position-relative mb-3">

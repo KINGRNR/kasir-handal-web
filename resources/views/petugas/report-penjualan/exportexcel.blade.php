@@ -14,7 +14,7 @@
                             <input type="hidden" name="id_kategori" id="id_kategori">
                             <div class="fv-row mb-5">
                                 <label for="" class="required form-label">Pilih Tanggal</label>
-                                <input class="form-control form-control-solid" placeholder="Pick date rage"
+                                <input class="form-control form-control-solid" placeholder="Pick date range"
                                     id="filter_rexport" name="daterangepicker_export" />
                             </div>
                         </div>

@@ -124,27 +124,29 @@
                                             <span class="fw-bolder mb-2 text-dark">Toko Terlaris Perbulan</span>
                                             {{-- <span class="text-muted fw-bold fs-7">800 Penjualan</span> --}}
                                         </h3>
-                                        
+
                                     </div>
-                                    <div class= "card-body pt-3">
-                                        <table
-                                            class="table align-middle table-hover  table-row-dashed fs-6  text-center"
+                                    <div class="card-body pt-3">
+                                        <table class="table align-middle table-hover table-row-dashed fs-6 text-center"
                                             id="table-kategori">
                                             <!--begin::Table head-->
                                             <thead>
                                                 <!--begin::Table row-->
                                                 <tr
-                                                    class="text-start align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                                    <th class="min-w-125px">Nama Toko</th>
-                                                    <th class="min-w-125px">Pendapatan</th>
-                                                    <th class="min-w-125px">Total Transaksi</th>
+                                                    class="align-middle text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                                    <th class="min-w-125px text-center">Nama Toko</th>
+                                                    <th class="min-w-125px text-center">Pendapatan</th>
+                                                    <th class="min-w-125px text-center">Total Transaksi</th>
                                                 </tr>
                                                 <!--end::Table row-->
                                             </thead>
-                                            <tbody class="fw-bold text-start align-middle justify-content-center">
+                                            <!--end::Table head-->
+                                            <tbody class="fw-bold text-center align-middle justify-content-center">
+                                                <!-- Table data will be populated here -->
                                             </tbody>
                                         </table>
                                     </div>
+
                                 </div>
                             </div>
 

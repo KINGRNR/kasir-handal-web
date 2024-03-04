@@ -11,6 +11,29 @@
     <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"></script>
     <script>
         APP_URL = "{{ getenv('APP_URL') }}/";
+        $(document).ready(function() {
+            // Saat halaman dimuat, sembunyikan input informasi pelanggan
+            // $(".customer-info-input").prop("disabled", true);
+            // $(".customer-info-input-hide").hide()
+
+            // Saat checkbox diubah, aktifkan atau nonaktifkan input berdasarkan keadaan checkbox
+            $("#useExistingCustomerInfo").change(function() {
+                var isChecked = $(this).is(":checked");
+                $(".customer-info-input").prop("disabled", isChecked);
+
+                if (isChecked) {
+                    // Mengisi data dari informasi pelanggan yang tersedia
+                    $(".customer-info-input").prop("disabled", false);
+                    $(".customer-info-input-hide").fadeIn(200)
+
+                } else {
+                    // Mengosongkan isian input
+                    $(".customer-info-input").prop("disabled", true);
+                    $(".customer-info-input-hide").hide()
+
+                }
+            });
+        });
 
         function toggleKeranjang() {
             $(".card-keranjang").slideToggle(200);
@@ -176,7 +199,6 @@
                     $('.produk-container').empty();
 
                     let data = response.data;
-                    console.log(data);
 
                     if (data.length === 0) {
                         $('.produk-container').append(
@@ -196,6 +218,11 @@
 
                         var warnaCard = v.stok_produk === 0 ? 'text-muted' : '';
 
+                        var disabledAttr = '';
+
+                        if ($('#id-produk' + v.id_produk).length > 0) {
+                            disabledAttr = 'disabled';
+                        }
                         var produk = `
                     <div class="col-md-4 mb-4 ">
                         <div class="card border rounded text-center ${v.stok_produk === 0 ? 'bg-light' : ''}">
@@ -209,12 +236,11 @@
                                 <h6 class="card-title mb-2">${v.nama_produk}</h6>
                                 <p class="card-text mb-2"><span class="badge bg-success">${quick.formatRupiah(v.harga_produk)}</span></p>
                                 <p class="card-text">Tersedia : ${v.stok_produk}</p>
-                                <button class="btn btn-sm btn-primary" id="tambahkeranjang${v.id_produk}" onclick="tambahKeranjang(${v.id_produk})" ${v.stok_produk === 0 ? 'disabled' : ''}>Tambah ke Keranjang</button>
+                                <button class="btn btn-sm btn-primary" id="tambahkeranjang${v.id_produk}" onclick="tambahKeranjang(${v.id_produk})" ${disabledAttr}>Tambah ke Keranjang</button>
                             </div>
                         </div>
                     </div>
                 `;
-
                         if (v.stok_produk === 0) {
                             produkStokHabis.push(produk);
                         } else {
@@ -248,7 +274,8 @@
         var productCounter = 0;
 
         function tambahKeranjang(id) {
-            $('#tambahkeranjang' + id).addClass('d-none');
+
+            $('#tambahkeranjang' + id).prop('disabled', true);
             axios.post("/produk/addCart", {
                     id: id
                 }, {
@@ -265,7 +292,7 @@
                     var quantity = 1; // Default quantity
                     var id = data.id_produk;
                     var keranjang = `
-                                            <tr>
+                                            <tr id="id-produk${data.id_produk}">
                                                 <td class="ps-4">#</td>
                                                 <td class="min-w-125px">${data.nama_produk}</td>
                                                 <td class="min-w-125px quantity-controls">
@@ -735,8 +762,7 @@
         function hapusItemKeranjang(id, harga, inputId) {
             var currentQuantity = parseInt($('#quantity' + id).text());
             var subtotal = harga * currentQuantity;
-            $('#tambahkeranjang' + id).removeClass('d-none');
-
+            $('#tambahkeranjang' + id).prop('disabled', false);
             $(`#id_produk${id}`).remove();
             $(`#nama_produk${id}`).remove();
             $(`#qty_produk${id}`).remove();

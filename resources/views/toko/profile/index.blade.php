@@ -41,7 +41,7 @@
                                                 <!--begin::Name-->
                                                 <div class="d-flex align-items-center">
                                                     <a href="#"
-                                                        class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1 val_head_name">-</a>
+                                                        class="text-gray-900 text-hover-primary fs-2 fw-bolder me-1 val_nama_toko">-</a>
                                                     {{-- <a href="#">
                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen026.svg-->
                                                         <span class="svg-icon svg-icon-1 svg-icon-primary">
@@ -621,29 +621,16 @@
                             <!--begin::Card header-->
                             <!--begin::Card body-->
                             <div class="card-body p-9">
-                                <form action="javascript:ubahPassword()" method="post" id="formUbahPass"
+                                <form action="javascript:resetPassword()" method="post" id="formUbahPass"
                                     name="formUbahPass" autocomplete="off" enctype="multipart/form-data">
                                     @csrf
-                                    <!--begin::Row-->
-                                    <div class="row mb-7">
-                                        <!--begin::Label-->
-
-                                        <label class="col-lg-3 fw-bold text-muted">Password Lama</label>
-                                        <div class="col-lg-5">
-                                            <input type="text" name="old_pass" id="old_pass"
-                                                class="form-control form-control-sm form-control-solid input-required"
-                                                placeholder="Masukkan Password Lama" required="">
-                                        </div>
-                                    </div>
-                                    <!--end::Row-->
-                                    <!--begin::Input group-->
                                     <div class="row mb-7" data-kt-password-meter="true">
                                         <!--begin::Label-->
-                                        <label class="col-lg-3 fw-bold text-muted">Password Baru</label>
+                                        <label class="col-lg-3 fw-bold text-muted">Kata Sandi Lama</label>
                                         <div class="col-lg-5 position-relative">
-                                            <input type="password" name="new_pass" id="new_pass"
+                                            <input type="password" name="old_pass" id="old_pass"
                                                 class="form-control form-control-sm form-control-solid input-required @error('password') is-invalid @enderror"
-                                                placeholder="Masukkan Password Baru" required="">
+                                                placeholder="Masukkan Kata Sandi Lama" required="">
                                             <span
                                                 class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
                                                 data-kt-password-meter-control="visibility">
@@ -652,20 +639,50 @@
                                             </span>
                                         </div>
                                     </div>
-
-                                    <!--end::Input group-->
+                                    
+                                    <!--end::Row-->
                                     <!--begin::Input group-->
-
-                                    <!--end::Input group-->
-                                    <!--begin::Input group-->
-                                    <div class="row mb-7">
+                                    <div class="row mb-7" data-kt-password-meter="true">
                                         <!--begin::Label-->
-                                        <label class="col-lg-3 fw-bold text-muted">Ulangi Password Baru</label>
-                                        <div class="col-lg-5">
-                                            <input type="text" name="new_passtwo" id="new_passtwo"
-                                                class="form-control form-control-sm form-control-solid input-required"
-                                                placeholder="Masukkan Password Baru" required="">
+                                        <label class="col-lg-3 fw-bold text-muted">Kata Sandi Baru</label>
+                                        <div class="col-lg-5 position-relative">
+                                            <input type="password" name="new_pass" id="new_pass"
+                                                class="form-control form-control-sm form-control-solid input-required @error('password') is-invalid @enderror"
+                                                placeholder="Masukkan Kata Sandi Baru" required="">
+                                            <span
+                                                class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
+                                                data-kt-password-meter-control="visibility">
+                                                <i class="bi bi-eye-slash fs-2"></i>
+                                                <i class="bi bi-eye fs-2 d-none"></i>
+                                            </span>
+                                            
                                         </div>
+                                        <div id="password-error" class="invalid-feedback" style="display: none;"></div>
+
+                                    </div>
+
+                                    <!--end::Input group-->
+                                    <!--begin::Input group-->
+
+                                    <!--end::Input group-->
+                                    <!--begin::Input group-->
+                                    <div class="row mb-7" data-kt-password-meter="true">
+                                        <!--begin::Label-->
+                                        <label class="col-lg-3 fw-bold text-muted">Konfirmasi Kata Sandi</label>
+                                        <div class="col-lg-5 position-relative">
+                                            <input type="password" name="new_pass-confirm" id="new_pass-confirm"
+                                                class="form-control form-control-sm form-control-solid input-required @error('password') is-invalid @enderror"
+                                                placeholder="Masukkan Kata Sandi Baru" required="">
+                                            <span
+                                                class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2"
+                                                data-kt-password-meter-control="visibility">
+                                                <i class="bi bi-eye-slash fs-2"></i>
+                                                <i class="bi bi-eye fs-2 d-none"></i>
+                                            </span>
+                                        </div>
+                                        <div id="password-confirm-error" class="invalid-feedback"
+                                        style="display: none;">
+                                    </div>
                                     </div>
                                     <div class="row mb-7">
                                         <!--begin::Label-->
@@ -680,38 +697,7 @@
                                         <!--end::Col-->
                                     </div>
                                     <!--end::Input group-->
-                                    <!--begin::Input group-->
-                                    {{-- <div class="row mb-7">
-                                    <!--begin::Label-->
-                                    <label class="col-lg-4 fw-bold text-muted">Country
-                                        <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip"
-                                            title="Country of origination"></i></label>
-                                    <!--end::Label-->
-                                    <!--begin::Col-->
-                                    <div class="col-lg-8">
-                                        <span class="fw-bolder fs-6 text-gray-800">Germany</span>
-                                    </div>
-                                    <!--end::Col-->
-                                </div> --}}
-                                    <!--end::Input group-->
-                                    <!--begin::Input group-->
-                                    {{-- <div class="row mb-10">
-                                    <!--begin::Label-->
-                                    <label class="col-lg-4 fw-bold text-muted">Communication</label>
-                                    <!--end::Label-->
-                                    <!--begin::Col-->
-                                    <div class="col-lg-8">
-                                        <span class="fw-bolder fs-6 text-gray-800">Email, Phone</span>
-                                    </div>
-                                    <!--end::Col-->
-                                </div> --}}
-                                    <!--end::Input group-->
-                                    <!--begin::Input group-->
-
-                                    <!--end::Input group-->
-                                    <!--begin::Notice-->
-
-                                    <!--end::Notice-->
+                                  
                                 </form>
                             </div>
                             <!--end::Card body-->
@@ -753,7 +739,7 @@
                                     </div>
                                     <!--end::Row-->
                                     <!--begin::Input group-->
-                                    <div class="row mb-7">
+                                    {{-- <div class="row mb-7">
                                         <!--begin::Label-->
                                         <label class="col-lg-3 fw-bold text-muted required">Client Key</label>
                                         <!--end::Label-->
@@ -764,7 +750,7 @@
                                                 placeholder="Client Key" required="">
                                         </div>
                                         <!--end::Col-->
-                                    </div>
+                                    </div> --}}
                                     <div class="row mb-7">
                                         <!--begin::Label-->
                                         <label class="col-lg-3 fw-bold text-muted"></label>

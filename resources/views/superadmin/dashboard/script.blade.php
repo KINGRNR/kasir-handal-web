@@ -86,9 +86,9 @@
                 tableTokoTerlaris.empty(); // Menghapus data sebelumnya
 
                 response.toko_terlaris.forEach(function(toko) {
-                    var row = '<tr>' +
+                    var row = '<tr class="ms-5">' +
                         '<td>' + toko.toko_nama + '</td>' +
-                        '<td>Rp.' + toko.total_penjualan + ',-</td>' +
+                        '<td>' + quick.formatRupiah(toko.total_penjualan) + '</td>' +
                         '<td>' + toko.total_transaksi + 'x</td>' +
                         '</tr>';
                     tableTokoTerlaris.append(row);
