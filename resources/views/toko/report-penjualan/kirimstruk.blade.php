@@ -17,7 +17,7 @@
                                 <input class="form-control form-control-solid" placeholder="Masukkan email" type="text"
                                     id="email" name="email" required/>
                                 <small id="emailHelp" class="form-text text-muted">Jika ada kesalahan email, harap ubah email di
-                                    sini.</small>
+                                    sini.</small> 
                             </div>
 
                         </div>

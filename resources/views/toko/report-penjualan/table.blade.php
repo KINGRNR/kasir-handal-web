@@ -97,5 +97,5 @@
     @include('toko.report-penjualan.exportexcel')
 </div>
 <div class="modal fade" id="kirimStruk" tabindex="-1" aria-labelledby="kirimStruk" aria-hidden="true">
-    @include('toko.report-penjualan.kirimStruk')
+    @include('toko.report-penjualan.kirimstruk')
 </div>

@@ -10,6 +10,14 @@
     <script src="../assets/js/quickact.js"></script>
     <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"></script>
     <script>
+        window.addEventListener('beforeunload', function(e) {
+            var confirmationMessage = 'Anda yakin ingin meninggalkan halaman ini?';
+
+            e.returnValue = confirmationMessage;
+
+            return confirmationMessage;
+        });
+
         APP_URL = "{{ getenv('APP_URL') }}/";
         $(document).ready(function() {
             // Saat halaman dimuat, sembunyikan input informasi pelanggan
@@ -556,7 +564,7 @@
                 axios.post('/pay/cancelStok', data)
                     .then(response => {
                         quick.toastNotif({
-                            title: 'Stok produk berhasil diperbarui!',
+                            title: 'Stok produk berhasil dikembalikan!',
                             icon: 'warning',
                             timer: 1500,
                         });

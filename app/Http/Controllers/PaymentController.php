@@ -110,11 +110,10 @@ class PaymentController extends Controller
                 $stok = Produk::where('id_produk', $produk['id_produk'])->value('stok_produk');
                 $qty = $produk['qty_produk'];
                 if ($stok < $qty) {
-                    DB::rollBack(); // Rollback transaksi jika stok tidak mencukupi
+                    DB::rollBack(); 
                     return response()->json(['error' => 'Stok tidak mencukupi: ' . $produk['nama_produk']], 400);
                 }
 
-                // Kurangi stok produk
                 Produk::where('id_produk', $produk['id_produk'])->decrement('stok_produk', $qty);
             }
 

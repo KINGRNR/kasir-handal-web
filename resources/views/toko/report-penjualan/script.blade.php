@@ -53,6 +53,8 @@
         $('.invoice ').show();
         $('#id_penjualan').val('')
         $('#email').val('')
+        console.log("heh kok iso e")
+
         axios.post("/pay/showDetailTransaction", {
                 id: invoice
             }, {

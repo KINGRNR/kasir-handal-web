@@ -36,7 +36,15 @@ class ProdukController extends Controller
     // $operation = DB::table('users')->where('users_role_id','TKQR2DSJlQ5b31V2')->get();
     $operation = DB::table('v_produk')->where('id_kategori_toko', $id)->where('produk_deleted_at', null)->get();
 
-    return response()->json($operation);
+    // return response()->json($operation);
+    return response()->json([
+      'success' => true,
+      'status' => 'Success',
+      // 'title' => 'Sukses!',
+      // 'message' => 'Data Berhasil Tersimpan!',
+      'data' => $operation,
+      'code' => 200
+    ]);
   }
   public function showTransactionProdukMobile(Request $request)
 {

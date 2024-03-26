@@ -50,6 +50,7 @@
 
     function changePage(invoice) {
         $('.report-penjualan ').hide();
+        $('.invoice ').empty();
         $('.invoice ').show();
         $('#id_penjualan').val('')
         $('#email').val('')
@@ -162,6 +163,7 @@
                 console.error('There has been a problem with your Axios operation:', error);
             });
     }
+
     function printStruk(data) {
         var strukWindow = window.open('', '_blank');
         strukWindow.document.write(`
@@ -333,7 +335,6 @@
         $('#table-report tbody').on('click', 'tr', function() {
             var rowData = menutable.row(this).data();
             if (rowData) {
-                // Redirect or do something with rowData
                 changePage(rowData.penjualan_id);
             }
         }).css('cursor', 'pointer');
@@ -391,7 +392,8 @@
         var button = $('#export-excel');
 
         button.html(
-            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Membuat Excel...');
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Membuat Excel...'
+        );
 
         // Men-disable tombol
         button.prop('disabled', true);
