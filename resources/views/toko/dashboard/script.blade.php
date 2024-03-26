@@ -93,7 +93,7 @@
                 var data = {
                     labels: labels,
                     datasets: [{
-                        label: 'Penjualan per Bulan',
+                        label: 'Penjualan per Hari',
                         data: dataPenjualan,
                         backgroundColor: ['#2E90FA']
                     }]
